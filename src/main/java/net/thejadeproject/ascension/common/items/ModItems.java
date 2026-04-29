@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
 
+import net.thejadeproject.ascension.common.items.artifacts.talismans.*;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.common.items.artifacts.*;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
@@ -160,6 +161,11 @@ public class ModItems {
 
 
     //Artifacts
+
+
+    public static final DeferredItem<Item> SOUL_ANCHOR_TALISMAN = ITEMS.register("soul_anchor_talisman",
+            () -> new SoulAnchorTalisman(new Item.Properties()));
+
 
 
     public static final DeferredItem<Item> SPATIAL_RUPTURE_TALISMAN_T1 = ITEMS.register("spatial_rupture_talisman_t1",

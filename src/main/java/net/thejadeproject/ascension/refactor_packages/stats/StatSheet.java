@@ -57,7 +57,7 @@ public class StatSheet {
         }
     }
     public void log(){
-        System.out.println("Stats on " + FMLEnvironment.dist.toString() +" :");
+//        System.out.println("Stats on " + FMLEnvironment.dist.toString() +" :");
         for(StatInstance instance:sheetStats.values()){
             instance.log();
         }

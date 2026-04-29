@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.common.items.artifacts;
+package net.thejadeproject.ascension.common.items.artifacts.talismans;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

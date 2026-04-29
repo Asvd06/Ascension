@@ -36,10 +36,11 @@ import net.thejadeproject.ascension.common.command.cultivation.GiveSkillCommand;
 import net.thejadeproject.ascension.common.command.cultivation.ResetAscensionCommand;
 import net.thejadeproject.ascension.common.command.cultivation.SetCultivationCommand;
 
+import net.thejadeproject.ascension.common.items.artifacts.talismans.SoulAnchorTalisman;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.events.TeleportationEventHandler;
 
-import net.thejadeproject.ascension.common.items.artifacts.DeathRecallTalisman;
+import net.thejadeproject.ascension.common.items.artifacts.talismans.DeathRecallTalisman;
 
 
 import net.thejadeproject.ascension.common.effects.ModEffects;
@@ -200,23 +201,19 @@ public class AscensionCraft {
     public void onPlayerDeath(LivingDeathEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        // Store talismans in the player's persistent data before they get removed
         CompoundTag playerData = player.getPersistentData();
         ListTag talismansList = new ListTag();
 
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             ItemStack stack = player.getInventory().getItem(i);
             if (stack.getItem() instanceof DeathRecallTalisman talisman) {
-                // Bind the death location
                 talisman.onPlayerDeath(player, stack);
 
-                // Save the stack NBT to restore on respawn
                 CompoundTag itemTag = new CompoundTag();
                 itemTag.putInt("Slot", i);
                 itemTag.put("Item", stack.save(player.registryAccess()));
                 talismansList.add(itemTag);
 
-                // Remove from inventory so it doesn't get dropped
                 player.getInventory().setItem(i, ItemStack.EMPTY);
             }
         }
@@ -265,15 +262,18 @@ public class AscensionCraft {
         }
     }
 
+
     @SubscribeEvent
     public void onPlayerDrops(LivingDropsEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer)) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
-        // Remove any talismans from drops (backup safety check)
         event.getDrops().removeIf(itemEntity ->
                 itemEntity.getItem().getItem() instanceof DeathRecallTalisman
         );
+
+        SoulAnchorTalisman.tryActivateFromDrops(player, event.getDrops());
     }
+
 
     private void onPlayerTick(PlayerTickEvent.Pre event) {
         if (!event.getEntity().level().isClientSide()) {

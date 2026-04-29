@@ -102,7 +102,7 @@ public class AscensionDamageHandler {
         );
         AscensionDamageEvent.Pre preEvent = new AscensionDamageEvent.Pre(finalDamageSource,event.getContainer(),container,event.getEntity());
         NeoForge.EVENT_BUS.post(preEvent);
-        System.out.println("dealt : "+preEvent.getDamage());
+//        System.out.println("dealt : "+preEvent.getDamage());
         AscensionDamageEvent.Post postEvent = new AscensionDamageEvent.Post(finalDamageSource,event.getContainer(),container,event.getEntity());
         NeoForge.EVENT_BUS.post(postEvent);
         event.setNewDamage((float) postEvent.getDamage());
@@ -113,7 +113,7 @@ public class AscensionDamageHandler {
                 event.setNewDamage((float) (event.getNewDamage()*entityData.getPathBonusHandler().getPathBonus(path)));
             }
         }
-        System.out.println("final damage "+event.getNewDamage());
+//        System.out.println("final damage "+event.getNewDamage());
 
 
     }

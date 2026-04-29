@@ -402,12 +402,52 @@ public class lang extends LanguageProvider {
         add("item.ascension.soulstead_return_talisman.cooldown", "Soulstead Return Talisman §7(%dm %ds§7)");
         add("item.ascension.void_marking_talisman.cooldown", "Void Marking Talisman §7(%dm %ds§7)");
         add("item.ascension.world_axis_talisman.cooldown", "World Axis Talisman §7(%dm %ds§7)");
+
+
+        // Soul Anchor Test
+        add("item.ascension.soul_anchor_talisman", "Soul Anchor Talisman");
+        add("ascension.tooltip.sat", "Single-use │ Pulls death drops to anchor");
+
+// In-world messages (action bar)
+        add("ascension.soulanchor.anchor_set",          "§5Anchor bound to this location.");
+        add("ascension.soulanchor.no_anchor",           "§7No anchor set. Shift-right-click to bind one.");
+        add("ascension.soulanchor.anchor_info",         "§5Anchor: §7%d, %d, %d");
+        add("ascension.soulanchor.already_used",        "§cThis talisman has already spent its soul.");
+        add("ascension.soulanchor.dimension_invalid",   "§cAnchor dimension no longer exists — talisman failed.");
+        add("ascension.soulanchor.activated",
+                "§5Soul Anchor pulled §d%d §5item(s) to §7%d, %d, %d§5.");
+
+// Tooltip lines
+        add("ascension.soulanchor.tooltip.anchored",    "§aAnchor Set");
+        add("ascension.soulanchor.tooltip.coords",      "§7Location: %d, %d, %d");
+        add("ascension.soulanchor.tooltip.dimension",   "§7Dimension: %s");
+        add("ascension.soulanchor.tooltip.unset",       "§7No anchor set.");
+        add("ascension.soulanchor.tooltip.hint",        "§8Shift-right-click to set anchor.");
+        add("ascension.soulanchor.tooltip.consumed",    "§4§oSpent — this talisman is inert.");
+
+
+
+
+
+
+
+        //Consumable Talismans
         add("ascension.tooltip.srtt1", "2.5k x 2.5k Range │ 60 min cooldown");
         add("ascension.tooltip.srtt2", "5k x 5k Range │ 40 min cooldown");
         add("ascension.tooltip.srtt3", "7.5k x 7.5k Range │ 20 min cooldown");
         add("ascension.tooltip.srt", "5 min cooldown");
         add("ascension.tooltip.wat", "5 min cooldown");
         add("ascension.tooltip.vmt", "30 sec cooldown");
+
+        //Permanent Talismans
+        add("ascension.tooltip.srtt1.permanent", "2.5k x 2.5k Range │ Permanent (Recharges)");
+        add("ascension.tooltip.srtt2.permanent", "5k x 5k Range │ Permanent (Recharges)");
+        add("ascension.tooltip.srtt3.permanent", "7.5k x 7.5k Range │ Permanent (Recharges)");
+        add("ascension.tooltip.srt.permanent",   "Teleport to Spawn │ Permanent (Recharges)");
+        add("ascension.tooltip.wat.permanent",   "Teleport to World Spawn │ Permanent (Recharges)");
+        add("ascension.tooltip.vmt.permanent",   "Teleport to Saved Location │ Permanent (Recharges)");
+
+
         add("item.ascension.spatial_rupture_talisman_t1.cooldown", "Spatial Rupture Talisman §7(%dm %ds§7)");
         add("item.ascension.spatial_rupture_talisman_t2.cooldown", "Spatial Rupture Talisman §7(%dm %ds§7)");
         add("item.ascension.spatial_rupture_talisman_t3.cooldown", "Spatial Rupture Talisman §7(%dm %ds§7)");

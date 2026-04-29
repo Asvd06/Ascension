@@ -42,7 +42,7 @@ public class AscensionAttributeHolder {
     }
 
     public void log(){
-        System.out.println("Ascension Attributes: ");
+//        System.out.println("Ascension Attributes: ");
         for(AttributeValueContainer instance : attributes.values()){
             instance.log();
         }
