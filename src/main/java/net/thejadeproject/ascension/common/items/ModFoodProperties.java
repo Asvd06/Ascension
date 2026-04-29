@@ -37,6 +37,10 @@ public class ModFoodProperties {
     public static final FoodProperties ANTIDOTE_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
 
 
+    public static final FoodProperties MEDICINAL_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
+    public static final FoodProperties POISON_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
+
+
     public static final FoodProperties MARROW_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
 
 

@@ -4,6 +4,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 
 public class QiEnhancedRegeneration extends MobEffect {
     public QiEnhancedRegeneration(MobEffectCategory category, int color) {
@@ -16,7 +18,10 @@ public class QiEnhancedRegeneration extends MobEffect {
         if (livingEntity.getHealth() < livingEntity.getMaxHealth()) {
             float healAmount = 5.f * (amplifier + 1);
             if (livingEntity instanceof ServerPlayer player) {
-                //TODO
+                IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+                if (entityData != null && entityData.getQiContainer().tryConsumeQi(healAmount)) {
+                    player.heal(healAmount);
+                }
             } else livingEntity.heal(healAmount);
         }
 

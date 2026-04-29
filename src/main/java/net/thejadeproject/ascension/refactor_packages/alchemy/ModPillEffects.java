@@ -47,6 +47,12 @@ public class ModPillEffects {
                     ,Component.translatable("ascension.pill_effects.parasite_pill_effect.description"))
                     .addEffect(new MobEffectInstance(ModEffects.PARASITE,400,1))
     );
+    public static final DeferredHolder<IPillEffect, ? extends MobEffectPillEffect> QI_ENHANCED_REGEN_EFFECT = PILL_EFFECTS.register("qi_enhanced_regen_effect",()->
+            new MobEffectPillEffect(
+                    Component.translatable("ascension.pill_effects.qi_enhanced_regen_effect.name")
+                    ,Component.translatable("ascension.pill_effects.qi_enhanced_regen_effect.description"))
+                    .addEffect(new MobEffectInstance(ModEffects.QI_ENHANCED_REGEN,400,1))
+    );
 
     public static final DeferredHolder<IPillEffect, ? extends MarrowCleansePillEffect> MARROW_CLEANSE_PILL_EFFECT =
             PILL_EFFECTS.register("marrow_cleanse_pill_effect", () ->

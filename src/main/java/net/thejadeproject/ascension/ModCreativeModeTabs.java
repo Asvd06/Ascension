@@ -51,6 +51,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.ascension.artifacts"))
                     .displayItems((itemDisplayParameters, output) -> {
 
+                        output.accept(ModItems.SPATIAL_RING);
                         output.accept(ModItems.REPAIR_SLIP);
                         output.accept(ModItems.ENDER_POUCH);
                         output.accept(ModItems.TABLET_OF_DESTRUCTION_HUMAN);
@@ -68,6 +69,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.WORLD_AXIS_TALISMAN);
                         output.accept(ModItems.VOID_MARKING_TALISMAN);
                         output.accept(ModItems.DEATH_RECALL_TALISMAN);
+                        output.accept(ModItems.SOUL_ANCHOR_TALISMAN);
                     }).build());
 
     public static final Supplier<CreativeModeTab> ASCENSION_TOOLS_TAB = CREATIVE_MODE_TAB.register("ascension_tools_tab",
@@ -394,6 +396,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.CLEANSING_PILL_T3);
                         output.accept(ModItems.CLEANSING_PILL_T4);
                         output.accept(ModItems.ANTIDOTE_PILL_QDP);
+                        output.accept(ModItems.QI_ENHANCED_REGEN_PILL);
 
                         //Poison
                         output.accept(ModItems.QI_DEVOURING_PARASITE_PILL);

@@ -23,6 +23,9 @@ public class ModEffects {
     public static final Holder<MobEffect> PARASITE = MOB_EFFECT.register("qi_devouring_parasite",
             () -> new QiDevouringParasiteEffect(MobEffectCategory.HARMFUL, 0x4a5c0a)); // Sickly green color
 
+    public static final Holder<MobEffect> QI_ENHANCED_REGEN = MOB_EFFECT.register("qi_enhanced_regeneration",
+            () -> new QiEnhancedRegeneration(MobEffectCategory.HARMFUL, 0x00FFE1)); // Sickly green color
+
 
 
 

@@ -259,6 +259,11 @@ public class lang extends LanguageProvider {
         add("ascension.pill_effects.parasite_pill_effect.name","Parasite");
         add("ascension.pill_effects.parasite_pill_effect.description","Infects targets with a qi devouring parasite");
 
+        add("ascension.pill_effects.qi_enhanced_regen_effect.name","Qi Enhanced Regeneration");
+        add("ascension.pill_effects.qi_enhanced_regen_effect.description","Regeneration enhanced with Qi");
+
+
+
 
         //Commands
         add("command.ascension.cultivation.info.header", "=== Cultivation Info for %s ===");
