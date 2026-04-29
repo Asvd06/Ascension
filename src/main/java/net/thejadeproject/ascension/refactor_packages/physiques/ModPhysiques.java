@@ -29,8 +29,11 @@ public class ModPhysiques {
      */
 
 
+
     public static final DeferredHolder<IPhysique,? extends GenericPhysique> MORTAL = PHYSIQUES.register("mortal",()->
-            new GenericPhysique(Component.translatable("ascension.physiques.mortal"))
+            new EvolvingPhysique(Component.translatable("ascension.physiques.mortal"))
+                    .addEvolution(ModPhysiques.BLESSED.getId())
+                    .addEvolution(ModPhysiques.BLOOD_FIEND.getId())
                     .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"body"))
                     .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"essence"))
                     .addPathBonus(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"body"),0.5)
@@ -40,7 +43,17 @@ public class ModPhysiques {
     public static final DeferredHolder<IPhysique,? extends GenericPhysique> CRIPPLE = PHYSIQUES.register("cripple",()->
             new EvolvingPhysique(Component.translatable("ascension.physiques.cripple"))
                     .addEvolution(MORTAL.getId())
-            );
+    );
+
+    public static final DeferredHolder<IPhysique,? extends GenericPhysique> BLESSED = PHYSIQUES.register("blessed",()->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.blessed"))
+                    .addEvolution(ModPhysiques.VIRTUOSO_BUDDHA.getId())
+                    .addPath(ModPaths.VIRTUOUS.getId())
+                    .addPath(ModPaths.BODY.getId())
+                    .addPathBonus(ModPaths.VIRTUOUS.getId(), 1.5)
+                    .addPathBonus(ModPaths.BODY.getId(), 1.0)
+    );
+
 
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SEVERED_MERIDIANS = PHYSIQUES.register("severed_meridians",()->
             new GenericPhysique(Component.translatable("ascension.physiques.severed_meridians"))
@@ -255,6 +268,9 @@ public class ModPhysiques {
                     }
                             .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 5.0)
             );
+
+
+
 
 
 

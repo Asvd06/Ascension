@@ -205,6 +205,8 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.earth_attuned", "Earth Attuned");
         add("ascension.physiques.water_attuned", "Water Attuned");
         add("ascension.physiques.fire_attuned", "Fire Attuned");
+        add("ascension.physiques.blessed", "Blessed One");
+
 
         add("ascension.physiques.world_dominator", "World Dominator");
         add("ascension.message.physique.world_dominator.acquired", "%s has become the %s. Bear witness to their Ascension!");
@@ -413,21 +415,22 @@ public class lang extends LanguageProvider {
         add("item.ascension.soul_anchor_talisman", "Soul Anchor Talisman");
         add("ascension.tooltip.sat", "Single-use │ Pulls death drops to anchor");
 
-// In-world messages (action bar)
-        add("ascension.soulanchor.anchor_set", "§5Anchor bound to this location.");
-        add("ascension.soulanchor.no_anchor", "§7No anchor set. Shift-right-click to bind one.");
-        add("ascension.soulanchor.anchor_info", "§5Anchor: §7%d, %d, %d");
-        add("ascension.soulanchor.already_used", "§cThis talisman has already spent its soul.");
-        add("ascension.soulanchor.dimension_invalid", "§cAnchor dimension no longer exists — talisman failed.");
-        add("ascension.soulanchor.activated", "§5Soul Anchor pulled §d%d §5item(s) to §7%d, %d, %d§5.");
+        // In-world messages (action bar)
+        add("ascension.soulanchor.anchor_set",          "§5Anchor bound to this location.");
+        add("ascension.soulanchor.no_anchor",           "§7No anchor set. Shift-right-click to bind one.");
+        add("ascension.soulanchor.anchor_info",         "§5Anchor: §7%d, %d, %d");
+        add("ascension.soulanchor.already_used",        "§cThis talisman has already spent its soul.");
+        add("ascension.soulanchor.dimension_invalid",   "§cAnchor dimension no longer exists — talisman failed.");
+        add("ascension.soulanchor.activated",
+                "§5Soul Anchor pulled §d%d §5item(s) to §7%d, %d, %d§5.");
 
-// Tooltip lines
-        add("ascension.soulanchor.tooltip.anchored", "§aAnchor Set");
-        add("ascension.soulanchor.tooltip.coords", "§7Location: %d, %d, %d");
-        add("ascension.soulanchor.tooltip.dimension", "§7Dimension: %s");
-        add("ascension.soulanchor.tooltip.unset", "§7No anchor set.");
-        add("ascension.soulanchor.tooltip.hint", "§8Shift-right-click to set anchor.");
-        add("ascension.soulanchor.tooltip.consumed", "§4§oSpent — this talisman is inert.");
+        // Tooltip lines
+        add("ascension.soulanchor.tooltip.anchored",    "§aAnchor Set");
+        add("ascension.soulanchor.tooltip.coords",      "§7Location: %d, %d, %d");
+        add("ascension.soulanchor.tooltip.dimension",   "§7Dimension: %s");
+        add("ascension.soulanchor.tooltip.unset",       "§7No anchor set.");
+        add("ascension.soulanchor.tooltip.hint",        "§8Shift-right-click to set anchor.");
+        add("ascension.soulanchor.tooltip.consumed",    "§4§oSpent — this talisman is inert.");
 
 
 
@@ -846,8 +849,6 @@ public class lang extends LanguageProvider {
 
         //effects
         add("effect.ascension.qi_enhanced_regeneration", "Qi Enhanced Regen");
-
-
         add("effect.ascension.cleansing", "Cleansing");
         add("effect.ascension.neutrality", "Neutrality");
         add("effect.ascension.qi_devouring_parasite", "Devouring Parasite");

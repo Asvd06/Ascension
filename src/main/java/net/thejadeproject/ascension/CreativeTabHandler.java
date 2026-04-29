@@ -70,10 +70,10 @@ public class CreativeTabHandler {
         AscensionRegistries.Physiques.PHSIQUES_REGISTRY.keySet().forEach(resourceLocation -> {
             String id = resourceLocation.toString();
 
-            ItemStack stack = new ItemStack(ModItems.PHYSIQUE_ESSENCE.get());
-            stack.set(ModDataComponents.PHYSIQUE_ID.get(), id);
-            stack.set(ModDataComponents.PURITY.get(), 1); // Start with 1% purity
-            output.accept(stack);
+//            ItemStack stack = new ItemStack(ModItems.PHYSIQUE_ESSENCE.get());
+//            stack.set(ModDataComponents.PHYSIQUE_ID.get(), id);
+//            stack.set(ModDataComponents.PURITY.get(), 1); // Start with 1% purity
+//            output.accept(stack);
 
             // Also add a 100% purity version for testing
             ItemStack fullStack = new ItemStack(ModItems.PHYSIQUE_ESSENCE.get());

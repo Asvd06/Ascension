@@ -38,6 +38,9 @@ import java.util.concurrent.CompletableFuture;
 
 public class ResetAscensionCommand {
 
+    // DOES NOT WORK
+    // TODO: IMPLEMENT REMOVE METHODS IN GENERIC ENTITY DATA
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("ascensionreset")
                 .requires(source -> source.hasPermission(2))
