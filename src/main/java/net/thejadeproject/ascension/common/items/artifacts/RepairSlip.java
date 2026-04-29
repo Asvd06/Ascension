@@ -6,6 +6,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.thejadeproject.ascension.Config;
+import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.entity_data.EntityDataManager;
+import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.util.ModTags;
 
 public class RepairSlip extends Item {
@@ -51,17 +54,29 @@ public class RepairSlip extends Item {
     }
 
     private void repairItems(Player player) {
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        if (entityData == null) return;
+        if (!entityData.getQiContainer().tryConsumeQi(5)) return;
+
         int repairAmount = Config.COMMON.REPAIR_AMOUNT != null ?
                 Config.COMMON.REPAIR_AMOUNT.get() : DEFAULT_REPAIR_AMOUNT;
 
-        player.getInventory().items.forEach(stack -> repairItem(stack, repairAmount));
-        player.getInventory().armor.forEach(stack -> repairItem(stack, repairAmount));
-        player.getInventory().offhand.forEach(stack -> repairItem(stack, repairAmount));
+        for (ItemStack stack : player.getInventory().items) {
+            if (repairItem(stack, repairAmount)) return;
+        }
+        for (ItemStack stack : player.getInventory().armor) {
+            if (repairItem(stack, repairAmount)) return;
+        }
+        for (ItemStack stack : player.getInventory().offhand) {
+            if (repairItem(stack, repairAmount)) return;
+        }
     }
 
-    private void repairItem(ItemStack stack, int repairAmount) {
+    private boolean repairItem(ItemStack stack, int repairAmount) {
         if (!stack.isEmpty() && stack.isDamaged() && !stack.is(ModTags.Items.REPAIR_BLACKLIST)) {
             stack.setDamageValue(Math.max(stack.getDamageValue() - repairAmount, 0));
+            return true;
         }
+        return false;
     }
 }

@@ -22,6 +22,8 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 
+import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -110,9 +112,10 @@ public abstract class BaseTeleportTalisman extends Item {
             Integer progress = stack.get(ModDataComponents.RECHARGE_PROGRESS.get());
             if (progress != null && progress > 0) {
                 int maxRecharge = getRechargeMaxValue();
+                int chargedPercent = (int)(100.0 * (maxRecharge - progress) / maxRecharge);
                 tooltipComponents.add(Component.translatable(
                         PERM_RECHARGE_TOOLTIP_KEY,
-                        progress, maxRecharge
+                        chargedPercent, 100
                 ).withStyle(ChatFormatting.BLUE));
             }
         }
@@ -121,8 +124,9 @@ public abstract class BaseTeleportTalisman extends Item {
     // Custom durability bar for recharge progress
     @Override
     public boolean isBarVisible(ItemStack stack) {
-        // Only show bar for permanent talismans
-        return isPermanent(stack);
+        if (!isPermanent(stack)) return false;
+        Integer progress = stack.get(ModDataComponents.RECHARGE_PROGRESS.get());
+        return progress != null && progress > 0;
     }
 
     @Override
@@ -132,18 +136,13 @@ public abstract class BaseTeleportTalisman extends Item {
         }
 
         Integer progress = stack.get(ModDataComponents.RECHARGE_PROGRESS.get());
-        // If not recharging (ready to use) or progress is null, show full bar
         if (progress == null || progress == 0) {
-            return 13; // Full bar (13 pixels)
+            return 13;
         }
 
         int maxRecharge = getRechargeMaxValue();
-        if (progress >= maxRecharge) {
-            return 13; // Full bar when complete
-        }
-
-        // Calculate bar width based on recharge progress (0 to 13 pixels)
-        return (int)(13.0 * progress / maxRecharge);
+        int charged = maxRecharge - progress;
+        return (int)(13.0 * charged / maxRecharge);
     }
 
     @Override
@@ -215,8 +214,7 @@ public abstract class BaseTeleportTalisman extends Item {
             handleCountdown(player, getActualCountdownTag(stack));
 
             if (isPermanent(stack)) {
-                // Drain Qi every second
-                if (player.tickCount % TICKS_PER_SECOND == 0) {
+                if (player.tickCount % 40 == 0) {
                     handleRechargeTick(player, stack);
                 }
             } else {
@@ -241,7 +239,7 @@ public abstract class BaseTeleportTalisman extends Item {
     // FIXED: ABSOLUTE SLOT CONSUMPTION - NO FALLBACK
     protected void consumeItem(ServerPlayer player, ItemStack usedStack, int usedSlot) {
         if (isPermanent(usedStack)) {
-            usedStack.set(ModDataComponents.RECHARGE_PROGRESS.get(), 1);
+            usedStack.set(ModDataComponents.RECHARGE_PROGRESS.get(), getRechargeMaxValue());
             return;
         }
 
@@ -270,7 +268,14 @@ public abstract class BaseTeleportTalisman extends Item {
     }
 
     protected void handleRechargeTick(ServerPlayer player, ItemStack stack) {
-        //TODO
+        Integer progress = stack.get(ModDataComponents.RECHARGE_PROGRESS.get());
+        if (progress == null || progress <= 0) return;
+
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        if (entityData == null) return;
+        if (!entityData.getQiContainer().tryConsumeQi(3)) return;
+
+        stack.set(ModDataComponents.RECHARGE_PROGRESS.get(), progress - 1);
     }
 
     protected void updateCooldownDisplay(ItemStack stack, ServerPlayer player) {

@@ -7,6 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.entity_data.EntityDataManager;
+import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 
 public class SpiritualStoneTools {
 
@@ -17,7 +19,11 @@ public class SpiritualStoneTools {
 
         //Repair every 20 ticks 1 Qi = 2 Durability Repaired
         if (player.tickCount % 20 == 0) {
-            //TODO implement regen
+            IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+            if (entityData == null) return;
+            if (entityData.getQiContainer().tryConsumeQi(2)) {
+                stack.setDamageValue(Math.max(stack.getDamageValue() - 2, 0));
+            }
         }
     }
 

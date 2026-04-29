@@ -267,9 +267,17 @@ public class ModItems {
     // ── Poison Pills ──────────────────────────────────────────────
     public static final DeferredItem<PillItem> QI_DEVOURING_PARASITE_PILL = ITEMS.register("qi_devouring_parasite_pill",
             () -> new PillItem(new Item.Properties()
-                    .food(ModFoodProperties.QI_DEVOURING_PARASITE_PILL)
+                    .food(ModFoodProperties.POISON_PILL)
                     .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.PARASITE_PILL_EFFECT.getId().toString()))
                     , 0, true));
+
+
+    // ── Positive Pills ──────────────────────────────────────────────
+    public static final DeferredItem<PillItem> QI_ENHANCED_REGEN_PILL = ITEMS.register("regeneration_pill",
+            () -> new PillItem(new Item.Properties()
+                    .food(ModFoodProperties.MEDICINAL_PILL)
+                    .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.QI_ENHANCED_REGEN_EFFECT.getId().toString()))
+                    , 0, false));
 
     // ── Antidote Pills ────────────────────────────────────────────
     public static final DeferredItem<PillItem> ANTIDOTE_PILL_QDP = ITEMS.register("antidote_qdp_pill",
