@@ -15,7 +15,8 @@ import net.thejadeproject.ascension.clients.toast.ClientToastPayloadHandler;
 public record ShowAscensionToast(
         String title,
         String message,
-        ItemStack icon
+        ItemStack icon,
+        ResourceLocation background
 ) implements CustomPacketPayload {
 
     public static final Type<ShowAscensionToast> TYPE =
@@ -31,6 +32,9 @@ public record ShowAscensionToast(
 
                     ItemStack.OPTIONAL_STREAM_CODEC,
                     ShowAscensionToast::icon,
+
+                    ResourceLocation.STREAM_CODEC,
+                    ShowAscensionToast::background,
 
                     ShowAscensionToast::new
             );

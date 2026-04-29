@@ -11,7 +11,8 @@ public final class ClientToastPayloadHandler {
         AscensionToastHelper.show(
                 Component.literal(payload.title()),
                 Component.literal(payload.message()),
-                payload.icon()
+                payload.icon(),
+                payload.background()
         );
     }
 }
