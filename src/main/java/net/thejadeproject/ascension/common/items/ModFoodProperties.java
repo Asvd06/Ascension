@@ -37,6 +37,9 @@ public class ModFoodProperties {
     public static final FoodProperties ANTIDOTE_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
 
 
+    public static final FoodProperties MARROW_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
+
+
 
     public static final FoodProperties HUNDRED_YEAR_SNOW_GINSENG = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().alwaysEdible().build();
     public static final FoodProperties HUNDRED_YEAR_FIRE_GINSENG = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().alwaysEdible().build();

@@ -9,6 +9,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.effects.ModEffects;
 import net.thejadeproject.ascension.refactor_packages.alchemy.effects.AntidotePillEffect;
 import net.thejadeproject.ascension.refactor_packages.alchemy.effects.CultivationPillEffect;
+import net.thejadeproject.ascension.refactor_packages.alchemy.effects.MarrowCleansePillEffect;
 import net.thejadeproject.ascension.refactor_packages.alchemy.effects.MobEffectPillEffect;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -46,6 +47,14 @@ public class ModPillEffects {
                     ,Component.translatable("ascension.pill_effects.parasite_pill_effect.description"))
                     .addEffect(new MobEffectInstance(ModEffects.PARASITE,400,1))
     );
+
+    public static final DeferredHolder<IPillEffect, ? extends MarrowCleansePillEffect> MARROW_CLEANSE_PILL_EFFECT =
+            PILL_EFFECTS.register("marrow_cleanse_pill_effect", () ->
+                    new MarrowCleansePillEffect(0.01D, 0.20D,
+                            Component.literal("Marrow Cleanse"),
+                            Component.literal("Has a small chance to cleanse the marrow of a crippled physique.")
+                    )
+            );
 
     public static void register(IEventBus modEventBus){
         PILL_EFFECTS.register(modEventBus);

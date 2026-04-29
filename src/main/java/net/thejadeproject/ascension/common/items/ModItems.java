@@ -273,6 +273,14 @@ public class ModItems {
                     , 0, false));
 
 
+    // ── Physique Changing Pills ────────────────────────────────────────────
+    public static final DeferredItem<PillItem> MARROW_CLEANSE_PILL = ITEMS.register("marrow_cleanse_pill",
+            () -> new PillItem(new Item.Properties()
+                    .food(ModFoodProperties.MARROW_PILL)
+                    .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.MARROW_CLEANSE_PILL_EFFECT.getId().toString()))
+                    , 0, false));
+
+
     //Phys Stuff
     //Todo
     //Change it into a Blood Essence texture and also make it so blood essence drop then you can combine blood essences to make the purity 100% and when its 100% only then can you use it.

@@ -401,8 +401,7 @@ public class ModCreativeModeTabs {
 
                         //Misc
                         output.accept(ModItems.NEUTRALITY_PILL);
-
-                        //Cultivation
+                        output.accept(ModItems.MARROW_CLEANSE_PILL);
 
 
                         //Important Pills
