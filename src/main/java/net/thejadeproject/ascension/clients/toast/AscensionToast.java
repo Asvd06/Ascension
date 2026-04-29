@@ -13,7 +13,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 
 public class AscensionToast implements Toast {
 
-    private static final ResourceLocation BACKGROUND =
+    public static final ResourceLocation DEFAULT_BACKGROUND =
             ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "toast/ascension_toast");
 
     private static final long DISPLAY_TIME = 5000L;
@@ -29,11 +29,17 @@ public class AscensionToast implements Toast {
     private final Component title;
     private final Component message;
     private final ItemStack icon;
+    private final ResourceLocation background;
 
     public AscensionToast(Component title, Component message, ItemStack icon) {
+        this(title, message, icon, DEFAULT_BACKGROUND);
+    }
+
+    public AscensionToast(Component title, Component message, ItemStack icon, ResourceLocation background) {
         this.title = title;
         this.message = message;
         this.icon = icon;
+        this.background = background;
     }
 
     @Override
@@ -41,7 +47,7 @@ public class AscensionToast implements Toast {
         Minecraft minecraft = toastComponent.getMinecraft();
         Font font = minecraft.font;
 
-        guiGraphics.blitSprite(BACKGROUND, 0, 0, width(), height());
+        guiGraphics.blitSprite(background, 0, 0, width(), height());
 
         guiGraphics.renderFakeItem(icon, 8, 8);
 
