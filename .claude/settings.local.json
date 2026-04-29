@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git clone *)",
+      "Bash(cp *)",
+      "Bash(xargs grep *)",
+      "Bash(rm \"C:\\\\Users\\\\assaa\\\\Desktop\\\\Branch_Flip\\\\src\\\\main\\\\java\\\\net\\\\thejadeproject\\\\ascension\\\\refactor_packages\\\\techniques\\\\custom\\\\CombinedElementalEssenceTechnique.java\")",
+      "Bash(rm \"C:\\\\Users\\\\assaa\\\\Desktop\\\\Branch_Flip\\\\src\\\\main\\\\java\\\\net\\\\thejadeproject\\\\ascension\\\\refactor_packages\\\\techniques\\\\custom\\\\technique_data\\\\EssenceTechniqueData.java\")"
+    ]
+  }
+}
