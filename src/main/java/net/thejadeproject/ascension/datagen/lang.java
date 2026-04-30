@@ -37,6 +37,11 @@ public class lang extends LanguageProvider {
         add("ascension.path.fist", "Fist");
 
 
+
+
+
+
+
         // Essence realms
         add("ascension.path.essence.mortal", "Mortal");
         add("ascension.path.essence.qi_condensation", "Qi Condensation");
@@ -316,6 +321,21 @@ public class lang extends LanguageProvider {
         add("item.ascension.spiritual_stone_hoe", "Spiritual Stone Hoe");
 
         add("item.ascension.fan", "Fan");
+
+
+        // Needles
+        add("item.ascension.silver_needle", "Silver Needle");
+
+        // Jade Needles — tooltip
+        add("tooltip.ascension.needle_plain", "A sleek hidden weapon. Can be tipped with a coating.");
+        add("tooltip.ascension.needle_tipped", "Coated: %s");
+        //Needle Poison Coat
+        add("needle_effect.ascension.needle_poison", "Poison");
+        add("needle_effect.ascension.needle_blindness", "Blindness");
+        add("needle_effect.ascension.needle_slowness", "Slowness");
+        add("needle_effect.ascension.needle_weakness", "Weakness");
+        add("needle_effect.ascension.needle_qi_devouring", "Qi Devouring");
+
 
 
 
@@ -876,6 +896,12 @@ public class lang extends LanguageProvider {
         add("ascension.configuration.Artifacts","Artifacts");
         add("ascension.configuration.repairInterval","Repair Interval");
         add("ascension.configuration.repairAmount","Repair Amount");
+
+
+
+
+
+
 
 
 

@@ -9,6 +9,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
 
 import net.thejadeproject.ascension.common.items.artifacts.talismans.*;
+import net.thejadeproject.ascension.common.items.tools.hidden_weapons.NeedleItem;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.common.items.artifacts.*;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
@@ -36,6 +37,11 @@ public class ModItems {
     public static final DeferredItem<Item> FAN = ITEMS.register("fan",
             () -> new FanItem(new Item.Properties()));
 
+
+
+    // ── Silver Needles ──────────────────────────────────────────────────────────
+    public static final DeferredItem<NeedleItem> SILVER_NEEDLE = ITEMS.register("silver_needle",
+            () -> new NeedleItem(new Item.Properties().stacksTo(64)));
 
 
 

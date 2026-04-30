@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.toast.ShowAscensionToast;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
@@ -64,7 +65,8 @@ public class EvolvingPhysique extends GenericPhysique {
                         new ShowAscensionToast(
                                 physiqueName.getString(),
                                 "Physique Evolved",
-                                getEvolutionToastIcon(evolvesInto)
+                                getEvolutionToastIcon(evolvesInto),
+                                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "textures/gui/sprites/toast/ascension_toast.png")
                         )
                 );
             }

@@ -13,6 +13,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.ModItems;
@@ -74,7 +75,8 @@ public class PhysiqueTransferItem extends Item {
                         new ShowAscensionToast(
                                 physiqueName.getString(),
                                 "Physique Transferred",
-                                toastIcon
+                                toastIcon,
+                                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "textures/gui/sprites/toast/ascension_toast.png")
                         )
                 );
             }

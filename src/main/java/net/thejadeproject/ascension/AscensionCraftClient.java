@@ -29,6 +29,7 @@ import net.thejadeproject.ascension.common.items.data_components.ModDataComponen
 
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.artifacts.FlameGourd;
+import net.thejadeproject.ascension.entity.custom.NeedleProjectile;
 import net.thejadeproject.ascension.menus.ModMenuTypes;
 import net.thejadeproject.ascension.menus.custom.pill_cauldron.PillCauldronLowHumanScreen;
 import net.thejadeproject.ascension.menus.custom.spirit_ring.SpatialRingInventoryScreen;
@@ -119,6 +120,7 @@ public class AscensionCraftClient {
                 EntityRenderers.register(ModEntities.RAT.get(), RatRenderer::new);
                 EntityRenderers.register(ModEntities.POISON_PILL.get(), ThrownItemRenderer::new);
                 EntityRenderers.register(ModEntities.CUSHION_ENTITY.get(), CushionRenderer::new);
+                EntityRenderers.register(ModEntities.NEEDLE_PROJECTILE.get(), ThrownItemRenderer::new);
                 EntityRenderers.register(ModEntities.FAKE_PLAYER.get(), PlayerBodyEntityRenderer::new);
                 // Register item properties
                 ItemProperties.register(ModItems.SPIRITUAL_STONE.get(),

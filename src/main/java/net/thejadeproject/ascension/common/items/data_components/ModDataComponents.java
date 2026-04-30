@@ -21,6 +21,32 @@ public class ModDataComponents {
 
 
 
+
+
+
+
+
+
+
+
+    public static final Supplier<DataComponentType<String>> NEEDLE_EFFECT = DATA_COMPONENTS.register(
+            "needle_effect",
+            () -> DataComponentType.<String>builder()
+                    .persistent(Codec.STRING)
+                    .networkSynchronized(ByteBufCodecs.STRING_UTF8)
+                    .build()
+    );
+
+
+
+
+
+
+
+
+
+
+
     public static final Supplier<DataComponentType<String>> PHYSIQUE_ID = DATA_COMPONENTS.register(
             "physique_id",
             () -> DataComponentType.<String>builder()
