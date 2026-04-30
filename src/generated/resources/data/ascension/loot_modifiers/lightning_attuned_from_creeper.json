@@ -3,14 +3,14 @@
   "conditions": [
     {
       "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:entities/ender_dragon"
+      "loot_table_id": "minecraft:entities/creeper"
     },
     {
-      "chance": 0.17,
+      "chance": 0.16,
       "condition": "minecraft:random_chance"
     }
   ],
-  "maxPurity": 25,
-  "minPurity": 15,
-  "physiqueId": "ascension:dragon_vein_physique"
+  "maxPurity": 15,
+  "minPurity": 5,
+  "physiqueId": "ascension:lightning_attuned"
 }
