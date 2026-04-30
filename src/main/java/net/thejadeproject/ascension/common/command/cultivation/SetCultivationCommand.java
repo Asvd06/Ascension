@@ -165,8 +165,8 @@ public class SetCultivationCommand {
 
         EntityQiContainer qi = entityData.getQiContainer();
         sb.append(String.format("  Qi: %.1f / %.1f (regen: %.2f/s)\n",
-                qi.getCurrentQi(ModPaths.ESSENCE.getId()),
-                qi.getMaxQi(ModPaths.ESSENCE.getId()),
+                qi.getCurrentQi(),
+                qi.getMaxQi(),
                 entityData.getAscensionAttributeHolder().getAttribute(net.thejadeproject.ascension.util.ModAttributes.QI_REGEN_RATE).getValue()
         ));
 

@@ -13,7 +13,6 @@ import net.minecraft.world.entity.Entity;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -31,7 +30,7 @@ public class QiRelease implements ICastableSkill {
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
         if (caster.level().isClientSide()) return new CastResult(CastResult.Type.SUCCESS);
         IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
-        double current = data.getQiContainer().getCurrentQi(ModPaths.ESSENCE.getId());
+        double current = data.getQiContainer().getCurrentQi();
         if (current <= 0) {
             return new CastResult(CastResult.Type.FAILURE);
         }
@@ -42,14 +41,14 @@ public class QiRelease implements ICastableSkill {
     public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) {
         if (!caster.level().isClientSide() && ticksElapsed % 20 == 0 && ticksElapsed > 0) {
             IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
-            boolean consumed = data.getQiContainer().tryConsumeQi(ModPaths.ESSENCE.getId(), QI_PER_SECOND);
+            boolean consumed = data.getQiContainer().tryConsumeQi(QI_PER_SECOND);
             if (!consumed) return false;
 
             if (caster instanceof ServerPlayer player) {
-                double remaining = data.getQiContainer().getCurrentQi(ModPaths.ESSENCE.getId());
+                double remaining = data.getQiContainer().getCurrentQi();
                 player.sendSystemMessage(Component.literal(
                         String.format("[Qi Release] Consumed %.1f Qi. Remaining: %.1f / %.1f", QI_PER_SECOND,
-                                remaining, data.getQiContainer().getMaxQi(ModPaths.ESSENCE.getId()))
+                                remaining, data.getQiContainer().getMaxQi())
                 ));
             }
         }

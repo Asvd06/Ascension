@@ -12,6 +12,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.body.WhiteLightningFist;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.fire.FireSpray;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.ScholarlySoulCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.SwordCultivationSkill;
@@ -27,6 +28,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elem
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.VerdantRecoverySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.flight.TrueFlightSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.*;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.qi.QiRelease;
 
 public class ModSkills {
     public static final DeferredRegister<ISkill> SKILLS =DeferredRegister.create(AscensionRegistries.Skills.SKILL_REGISTRY, AscensionCraft.MOD_ID);
@@ -96,6 +98,8 @@ public class ModSkills {
 
     // ──── BODY SKILLS ────────────────────────────────────────────
     // Cultivation
+    public static final DeferredHolder<ISkill, ? extends BodyCultivationSkill> BODY_CULTIVATION_SKILL =
+            SKILLS.register("body_cultivation_skill", BodyCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends WhiteLightningCultivationSkill> WHITE_LIGHTNING_CULTIVATION_SKILL =
             SKILLS.register("white_lightning_cultivation_skill", WhiteLightningCultivationSkill::new);
 

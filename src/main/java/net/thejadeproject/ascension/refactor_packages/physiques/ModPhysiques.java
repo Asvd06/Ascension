@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
+import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalBodyPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.EvolvingPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.GenericPhysique;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -283,19 +284,19 @@ public class ModPhysiques {
 
     // --- Elemental Body Physiques (tier 1; fuse in-place to upgrade) ---
     public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> FIRE_BODY = PHYSIQUES.register("fire_body", () ->
-            new ElementalBodyPhysique(ModPaths.FIRE.getId(), Component.literal("Fiery Heart Physique")));
+            new ElementalBodyPhysique(ModPaths.FIRE.getId(), Component.translatable("ascension.physiques.fire_body")));
 
     public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WATER_BODY = PHYSIQUES.register("water_body", () ->
-            new ElementalBodyPhysique(ModPaths.WATER.getId(), Component.literal("Soaked Kidney Physique")));
+            new ElementalBodyPhysique(ModPaths.WATER.getId(), Component.translatable("ascension.physiques.water_body")));
 
     public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WOOD_BODY = PHYSIQUES.register("wood_body", () ->
-            new ElementalBodyPhysique(ModPaths.WOOD.getId(), Component.literal("Supple Liver Physique")));
+            new ElementalBodyPhysique(ModPaths.WOOD.getId(), Component.translatable("ascension.physiques.wood_body")));
 
     public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> EARTH_BODY = PHYSIQUES.register("earth_body", () ->
-            new ElementalBodyPhysique(ModPaths.EARTH.getId(), Component.literal("Nourishing Spleen Physique")));
+            new ElementalBodyPhysique(ModPaths.EARTH.getId(), Component.translatable("ascension.physiques.earth_body")));
 
     public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> METAL_BODY = PHYSIQUES.register("metal_body", () ->
-            new ElementalBodyPhysique(ModPaths.METAL.getId(), Component.literal("Ferrous Lung Physique")));
+            new ElementalBodyPhysique(ModPaths.METAL.getId(), Component.translatable("ascension.physiques.metal_body")));
 
 
 

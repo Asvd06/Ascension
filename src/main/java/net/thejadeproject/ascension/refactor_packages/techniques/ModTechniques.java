@@ -54,10 +54,6 @@ public class ModTechniques {
 
 
 
-    // ──── ESSENCE TECHNIQUES ────────────────────────────────────────────
-    public static final DeferredHolder<ITechnique, ? extends GenericTechnique> BASIC_CULTIVATION_TECHNIQUE = TECHNIQUES.register("basic_cultivation_technique",()->
-            new GenericTechnique(ModPaths.ESSENCE.getId(),Component.translatable("ascension.technique.basic_cultivation_technique"),2.0, Set.of())
-
     // --- Single-element body technique handlers ---
     // Fire: Vitality + Strength focus, max health
     public static BasicStatChangeHandler fireBodyHandler = new BasicStatChangeHandler()
@@ -125,7 +121,7 @@ public class ModTechniques {
 
     // --- Essence / Sword techniques ---
     public static final DeferredHolder<ITechnique, ? extends GenericTechnique> BASIC_CULTIVATION_TECHNIQUE = TECHNIQUES.register("basic_cultivation_technique", () ->
-            new GenericTechnique(ModPaths.ESSENCE.getId(), Component.literal("Basic Cultivation Technique"), 2.0, Set.of())
+            new GenericTechnique(ModPaths.ESSENCE.getId(), Component.translatable("ascension.technique.basic_cultivation_technique"), 2.0, Set.of())
                     .setStatChangeHandler(testHandler));
     public static final DeferredHolder<ITechnique, ? extends GenericTechnique> ADVANCED_CULTIVATION_TECHNIQUE = TECHNIQUES.register("advanced_cultivation_technique",()->
             new GenericTechnique(ModPaths.ESSENCE.getId(),Component.translatable("ascension.technique.advanced_cultivation_technique"),10.0,Set.of())
@@ -139,23 +135,23 @@ public class ModTechniques {
     // --- Single-element body techniques (tier 1, rate 3.0) ---
     public static final DeferredHolder<ITechnique, ? extends BodyElementTechnique> HEART_FIRE_TECHNIQUE =
         TECHNIQUES.register("heart_fire_technique", () ->
-            new BodyElementTechnique(ModPaths.FIRE.getId(), Component.literal("Heart Flame Cultivation"), 3.0, fireBodyHandler));
+            new BodyElementTechnique(ModPaths.FIRE.getId(), Component.translatable("ascension.technique.heart_fire_technique"), 3.0, fireBodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends BodyElementTechnique> KIDNEY_WATER_TECHNIQUE =
         TECHNIQUES.register("kidney_water_technique", () ->
-            new BodyElementTechnique(ModPaths.WATER.getId(), Component.literal("Kidney Tide Cultivation"), 3.0, waterBodyHandler));
+            new BodyElementTechnique(ModPaths.WATER.getId(), Component.translatable("ascension.technique.kidney_water_technique"), 3.0, waterBodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends BodyElementTechnique> LIVER_WOOD_TECHNIQUE =
         TECHNIQUES.register("liver_wood_technique", () ->
-            new BodyElementTechnique(ModPaths.WOOD.getId(), Component.literal("Liver Grove Cultivation"), 3.0, woodBodyHandler));
+            new BodyElementTechnique(ModPaths.WOOD.getId(), Component.translatable("ascension.technique.liver_wood_technique"), 3.0, woodBodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends BodyElementTechnique> SPLEEN_EARTH_TECHNIQUE =
         TECHNIQUES.register("spleen_earth_technique", () ->
-            new BodyElementTechnique(ModPaths.EARTH.getId(), Component.literal("Spleen Mountain Cultivation"), 3.0, earthBodyHandler));
+            new BodyElementTechnique(ModPaths.EARTH.getId(), Component.translatable("ascension.technique.spleen_earth_technique"), 3.0, earthBodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends BodyElementTechnique> LUNG_METAL_TECHNIQUE =
         TECHNIQUES.register("lung_metal_technique", () ->
-            new BodyElementTechnique(ModPaths.METAL.getId(), Component.literal("Lung Forge Cultivation"), 3.0, metalBodyHandler));
+            new BodyElementTechnique(ModPaths.METAL.getId(), Component.translatable("ascension.technique.lung_metal_technique"), 3.0, metalBodyHandler));
 
     // --- 5-element body technique (tier 5, rate 15.0) ---
     public static final DeferredHolder<ITechnique, ? extends FiveElementBodyTechnique> FIVE_ELEMENT_BODY_TECHNIQUE =
@@ -165,65 +161,65 @@ public class ModTechniques {
     // --- 2-element combined body techniques (tier 2, rate 6.0) ---
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> WOOD_FIRE_BODY_TECHNIQUE =
         TECHNIQUES.register("wood_fire_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Rising Flame Method"), 6.0, Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId()), tier2BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.wood_fire_body_technique"), 6.0, Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId()), tier2BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> FIRE_EARTH_BODY_TECHNIQUE =
         TECHNIQUES.register("fire_earth_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Smoldering Earth Method"), 6.0, Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId()), tier2BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.fire_earth_body_technique"), 6.0, Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId()), tier2BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> EARTH_METAL_BODY_TECHNIQUE =
         TECHNIQUES.register("earth_metal_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Hidden Vein Method"), 6.0, Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId()), tier2BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.earth_metal_body_technique"), 6.0, Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId()), tier2BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> METAL_WATER_BODY_TECHNIQUE =
         TECHNIQUES.register("metal_water_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Jade Spring Method"), 6.0, Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId()), tier2BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.metal_water_body_technique"), 6.0, Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId()), tier2BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> WATER_WOOD_BODY_TECHNIQUE =
         TECHNIQUES.register("water_wood_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Evergreen Current Method"), 6.0, Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId()), tier2BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.water_wood_body_technique"), 6.0, Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId()), tier2BodyHandler));
 
     // --- 3-element combined body techniques (tier 3, rate 9.0) ---
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> WOOD_FIRE_EARTH_BODY_TECHNIQUE =
         TECHNIQUES.register("wood_fire_earth_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Ascending Pyre Method"), 9.0, Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId()), tier3BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.wood_fire_earth_body_technique"), 9.0, Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId()), tier3BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> FIRE_EARTH_METAL_BODY_TECHNIQUE =
         TECHNIQUES.register("fire_earth_metal_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Forge and Harvest Method"), 9.0, Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId()), tier3BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.fire_earth_metal_body_technique"), 9.0, Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId()), tier3BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> EARTH_METAL_WATER_BODY_TECHNIQUE =
         TECHNIQUES.register("earth_metal_water_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Deep Vein Spring Method"), 9.0, Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId()), tier3BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.earth_metal_water_body_technique"), 9.0, Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId()), tier3BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> METAL_WATER_WOOD_BODY_TECHNIQUE =
         TECHNIQUES.register("metal_water_wood_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Iron Root Current Method"), 9.0, Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId()), tier3BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.metal_water_wood_body_technique"), 9.0, Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId()), tier3BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> WATER_WOOD_FIRE_BODY_TECHNIQUE =
         TECHNIQUES.register("water_wood_fire_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Morning Mist Method"), 9.0, Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId()), tier3BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.water_wood_fire_body_technique"), 9.0, Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId()), tier3BodyHandler));
 
     // --- 4-element combined body techniques (tier 4, rate 12.0) ---
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> WOOD_FIRE_EARTH_METAL_BODY_TECHNIQUE =
         TECHNIQUES.register("wood_fire_earth_metal_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Earthbound Cycle Method"), 12.0, Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId()), tier4BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.wood_fire_earth_metal_body_technique"), 12.0, Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId()), tier4BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> FIRE_EARTH_METAL_WATER_BODY_TECHNIQUE =
         TECHNIQUES.register("fire_earth_metal_water_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Sunken Forge Method"), 12.0, Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId()), tier4BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.fire_earth_metal_water_body_technique"), 12.0, Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId()), tier4BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> EARTH_METAL_WATER_WOOD_BODY_TECHNIQUE =
         TECHNIQUES.register("earth_metal_water_wood_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Rooted Tide Method"), 12.0, Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId()), tier4BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.earth_metal_water_wood_body_technique"), 12.0, Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId()), tier4BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> METAL_WATER_WOOD_FIRE_BODY_TECHNIQUE =
         TECHNIQUES.register("metal_water_wood_fire_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Untempered Blaze Method"), 12.0, Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId()), tier4BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.metal_water_wood_fire_body_technique"), 12.0, Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId()), tier4BodyHandler));
 
     public static final DeferredHolder<ITechnique, ? extends CombinedBodyElementTechnique> WATER_WOOD_FIRE_EARTH_BODY_TECHNIQUE =
         TECHNIQUES.register("water_wood_fire_earth_body_technique", () ->
-            new CombinedBodyElementTechnique(Component.literal("Smoldering Grove Method"), 12.0, Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId()), tier4BodyHandler));
+            new CombinedBodyElementTechnique(Component.translatable("ascension.technique.water_wood_fire_earth_body_technique"), 12.0, Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId()), tier4BodyHandler));
 
 
     // ──── ESSENCE-ELEMENTAL HYBRID TECHNIQUES ────────────────────────────────────────────
@@ -249,11 +245,6 @@ public class ModTechniques {
             TECHNIQUES.register("wind_essence_technique",
                     () -> new WindEssenceTechnique(testHandler));
 
-    public static final DeferredHolder<ITechnique,? extends FiveElementCultivationTechnique> FIVE_ELEMENT_CIRCULATION_METHOD =
-            TECHNIQUES.register("five_element_cultivation_technique",
-                    (()->new FiveElementCultivationTechnique(testHandler)));
-
-
     // ──── BODY TECHNIQUES ────────────────────────────────────────────
     public static final DeferredHolder<ITechnique, ? extends WhiteLightningTenStageTechnique> WHITE_LIGHTNING_TEN_STAGE_TECHNIQUE =
             TECHNIQUES.register("white_lightning_ten_stage_technique",
@@ -266,42 +257,35 @@ public class ModTechniques {
                     () -> new ScholarlySoulTechnique(testHandler));
 
 
-    // ──── WEAPON TECHNIQUES ────────────────────────────────────────────
-    public static final DeferredHolder<ITechnique, ? extends GenericTechnique> SWORD_COMPREHENSION_TECHNIQUE = TECHNIQUES.register("sword_comprehension_technique",()->
-            new GenericTechnique(ModPaths.SWORD.getId(),Component.translatable("ascension.technique.sword_comprehension_technique"),10.0,Set.of()));
-
-
-    /*
-    ──── TECHNIQUE IDEAS | Fill in as you please ────────────────────────────────────────────
-
-        public static final DeferredHolder<ITechnique, ? extends IndestructibleVajraTechnique> INDESTRUCTIBLE_VAJRA_SCRIPTURE
-        public static final DeferredHolder<ITechnique, ? extends LotusHeartTechnique> LOTUS_HEART_SUTRA
-        public static final DeferredHolder<ITechnique, ? extends TripleSoulTechnique> TRIPLE_SOUL_LIFE_SUTRA
-
-        public static final DeferredHolder<ITechnique, ? extends AbyssDwellerTechnique> ABYSS_DWELLERS_MANUAL
-        public static final DeferredHolder<ITechnique, ? extends HellboundMarrowTechnique> HELLBOUND_MARROW_SCRIPTURE
-        public static final DeferredHolder<ITechnique, ? extends NetherQiTechnique> NETHER_QI_DEVOURING_SCRIPTURE
-
-        public static final DeferredHolder<ITechnique, ? extends MirageArrowTechnique> MIRAGE_ARROW_MANUAL
-        public static final DeferredHolder<ITechnique, ? extends GreatWallTechnique> BASTION_WALL_TECHNIQUE
-        public static final DeferredHolder<ITechnique, ? extends MortalNineSaberTechnique> NINE_BLADES_SABER
-        public static final DeferredHolder<ITechnique, ? extends EdgeTemperingTechnique> EDGE_TEMPERING_METHOD
-        public static final DeferredHolder<ITechnique, ? extends FallingLeafBladeTechnique> FALLING_LEAF_BLADE
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-
-        P.S. I don't rally mean to make this many individual classes to extend, maybe just a couple general ones?
-        Unless someone wants to :)
-        I'm just jotting down ideas - sortofsmart
-
-     ──── TECHNIQUE IDEAS | Fill in as you please ────────────────────────────────────────────
-    */
+    // ──── TECHNIQUE IDEAS | Fill in as you please ────────────────────────────────────────────
+    //
+    //    public static final DeferredHolder<ITechnique, ? extends IndestructibleVajraTechnique> INDESTRUCTIBLE_VAJRA_SCRIPTURE
+    //    public static final DeferredHolder<ITechnique, ? extends LotusHeartTechnique> LOTUS_HEART_SUTRA
+    //    public static final DeferredHolder<ITechnique, ? extends TripleSoulTechnique> TRIPLE_SOUL_LIFE_SUTRA
+    //
+    //    public static final DeferredHolder<ITechnique, ? extends AbyssDwellerTechnique> ABYSS_DWELLERS_MANUAL
+    //    public static final DeferredHolder<ITechnique, ? extends HellboundMarrowTechnique> HELLBOUND_MARROW_SCRIPTURE
+    //    public static final DeferredHolder<ITechnique, ? extends NetherQiTechnique> NETHER_QI_DEVOURING_SCRIPTURE
+    //
+    //    public static final DeferredHolder<ITechnique, ? extends MirageArrowTechnique> MIRAGE_ARROW_MANUAL
+    //    public static final DeferredHolder<ITechnique, ? extends GreatWallTechnique> BASTION_WALL_TECHNIQUE
+    //    public static final DeferredHolder<ITechnique, ? extends MortalNineSaberTechnique> NINE_BLADES_SABER
+    //    public static final DeferredHolder<ITechnique, ? extends EdgeTemperingTechnique> EDGE_TEMPERING_METHOD
+    //    public static final DeferredHolder<ITechnique, ? extends FallingLeafBladeTechnique> FALLING_LEAF_BLADE
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //    public static final DeferredHolder<ITechnique, ? extends >
+    //
+    //    P.S. I don't rally mean to make this many individual classes to extend, maybe just a couple general ones?
+    //    Unless someone wants to :)
+    //    I'm just jotting down ideas - sortofsmart
+    //
+    // ──── TECHNIQUE IDEAS | Fill in as you please ────────────────────────────────────────────
 
 
     public static void register(IEventBus modEventBus){
