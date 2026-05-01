@@ -84,6 +84,11 @@ public class GenericFormData implements IEntityFormData {
     }
 
     @Override
+    public void removePathData(ResourceLocation path) {
+        pathData.remove(path);
+    }
+
+    @Override
     public Collection<PathData> getAllPathData() {
         return pathData.values();
     }

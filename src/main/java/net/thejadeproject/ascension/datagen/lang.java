@@ -210,14 +210,30 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.water_attuned", "Water Attuned");
         add("ascension.physiques.fire_attuned", "Fire Attuned");
         add("ascension.physiques.blessed", "Blessed One");
+        add("ascension.physiques.metal_body", "Metal Body");
+        add("ascension.physiques.water_body", "Water Body");
+        add("ascension.physiques.fire_body", "Fire Body");
+        add("ascension.physiques.wood_body", "Wood Body");
+        add("ascension.physiques.earth_body", "Earth Body");
+        add("ascension.physiques.clear_spirit", "Clear Spirit");
+        add("ascension.physiques.dreaming_soul", "Dreaming Soul");
+        add("ascension.physiques.soul_gaze", "Soul Gazing Eyes");
+        add("ascension.physiques.ashen_soul_flame", "Ashen Soul Flame");
+        add("ascension.physiques.thundering_soul_core", "Thundering Soul Core");
+        add("ascension.physiques.soul_sword_heart", "Sword Heart Soul");
+        add("ascension.physiques.spear_soul_mark", "Spear Marked Soul");
 
         add("ascension.physiques.world_dominator", "World Dominator");
         add("ascension.message.physique.world_dominator.acquired", "%s has become the %s. Bear witness to their Ascension!");
+        add("ascension.physiques.soul_crowned_king", "Crowned Soul King");
+        add("ascension.message.physique.soul_crowned_king.acquired", "%s has become the %s. Tremble beneath their Throne!");
+
 
 
         // Physique Evolution Messages
         add("ascension.message.physique_evolution.pacifist_mortal_reset", "Your peaceful mortal streak has been broken.");
         add("ascension.message.physique_evolution.pacifist_blessed_broken", "The Blessed path has been stained by blood.");
+
 
 
         //Techniques
@@ -267,6 +283,7 @@ public class lang extends LanguageProvider {
 
         // 5-element body technique
         add("ascension.technique.five_element_body_technique", "Five Harmony Body Method");
+        add("ascension.technique.pale_moon_technique", "Pale Moon Sutra");
 
 
 

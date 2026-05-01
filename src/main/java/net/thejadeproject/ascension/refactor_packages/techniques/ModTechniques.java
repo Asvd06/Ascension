@@ -15,6 +15,7 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.Com
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.FiveElementBodyTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.FiveElementCultivationTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.PaleMoonTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.ScholarlySoulTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.WhiteLightningTenStageTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.*;
@@ -248,6 +249,8 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends ScholarlySoulTechnique> SCHOLARLY_SOUL_TECHNIQUE =
             TECHNIQUES.register("scholarly_soul_technique",
                     () -> new ScholarlySoulTechnique(testHandler));
+    public static final DeferredHolder<ITechnique, ? extends PaleMoonTechnique> PALE_MOON_SUTRA =
+            TECHNIQUES.register("pale_moon_sutra", () -> new PaleMoonTechnique(testHandler));
 
 
 
@@ -261,35 +264,42 @@ public class ModTechniques {
 
 
 
-    // ──── TECHNIQUE IDEAS | Fill in as you please ────────────────────────────────────────────
-    //
-    //    public static final DeferredHolder<ITechnique, ? extends IndestructibleVajraTechnique> INDESTRUCTIBLE_VAJRA_SCRIPTURE
-    //    public static final DeferredHolder<ITechnique, ? extends LotusHeartTechnique> LOTUS_HEART_SUTRA
-    //    public static final DeferredHolder<ITechnique, ? extends TripleSoulTechnique> TRIPLE_SOUL_LIFE_SUTRA
-    //
-    //    public static final DeferredHolder<ITechnique, ? extends AbyssDwellerTechnique> ABYSS_DWELLERS_MANUAL
-    //    public static final DeferredHolder<ITechnique, ? extends HellboundMarrowTechnique> HELLBOUND_MARROW_SCRIPTURE
-    //    public static final DeferredHolder<ITechnique, ? extends NetherQiTechnique> NETHER_QI_DEVOURING_SCRIPTURE
-    //
-    //    public static final DeferredHolder<ITechnique, ? extends MirageArrowTechnique> MIRAGE_ARROW_MANUAL
-    //    public static final DeferredHolder<ITechnique, ? extends GreatWallTechnique> BASTION_WALL_TECHNIQUE
-    //    public static final DeferredHolder<ITechnique, ? extends MortalNineSaberTechnique> NINE_BLADES_SABER
-    //    public static final DeferredHolder<ITechnique, ? extends EdgeTemperingTechnique> EDGE_TEMPERING_METHOD
-    //    public static final DeferredHolder<ITechnique, ? extends FallingLeafBladeTechnique> FALLING_LEAF_BLADE
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //    public static final DeferredHolder<ITechnique, ? extends >
-    //
-    //    P.S. I don't rally mean to make this many individual classes to extend, maybe just a couple general ones?
-    //    Unless someone wants to :)
-    //    I'm just jotting down ideas - sortofsmart
-    //
-    // ──── TECHNIQUE IDEAS | Fill in as you please ────────────────────────────────────────────
+    /* ──── TECHNIQUE IDEAS | Fill in as you please ──────────────────────────────────────────── //
+
+        public static final DeferredHolder<ITechnique, ? extends IndestructibleVajraTechnique> INDESTRUCTIBLE_VAJRA_SCRIPTURE
+        public static final DeferredHolder<ITechnique, ? extends LotusHeartTechnique> LOTUS_HEART_SUTRA
+        public static final DeferredHolder<ITechnique, ? extends TripleSoulTechnique> TRIPLE_SOUL_LIFE_SUTRA
+
+        public static final DeferredHolder<ITechnique, ? extends AbyssDwellerTechnique> ABYSS_DWELLERS_MANUAL
+        public static final DeferredHolder<ITechnique, ? extends HellboundMarrowTechnique> HELLBOUND_MARROW_SCRIPTURE
+        public static final DeferredHolder<ITechnique, ? extends NetherQiTechnique> NETHER_QI_DEVOURING_ART
+
+        public static final DeferredHolder<ITechnique, ? extends MirageArrowTechnique> MIRAGE_ARROW_MANUAL
+        public static final DeferredHolder<ITechnique, ? extends GreatWallTechnique> BASTION_WALL_TECHNIQUE
+        public static final DeferredHolder<ITechnique, ? extends MortalNineSaberTechnique> NINE_BLADES_SABER
+        public static final DeferredHolder<ITechnique, ? extends EdgeTemperingTechnique> EDGE_TEMPERING_METHOD
+        public static final DeferredHolder<ITechnique, ? extends FallingLeafBladeTechnique> FALLING_LEAF_BLADE
+        public static final DeferredHolder<ITechnique, ? extends >
+        public static final DeferredHolder<ITechnique, ? extends >
+        public static final DeferredHolder<ITechnique, ? extends >
+        public static final DeferredHolder<ITechnique, ? extends >
+
+        public static final DeferredHolder<ITechnique, ? extends SoulThreadTechnique> SOUL_THREAD_TECHNIQUE
+        public static final DeferredHolder<ITechnique, ? extends MirrorSoulTechnique> MIRROR_SOUL_TECHNIQUE
+
+        public static final DeferredHolder<ITechnique, ? extends NineEchoSoulTechnique> NINE_ECHOS_SOUL_ART
+        public static final DeferredHolder<ITechnique, ? extends JadeSpiritTechnique> JADE_SPIRIT_SCRIPTURE
+        public static final DeferredHolder<ITechnique, ? extends GhostLanternTechnique> GHOST_LANTERN_METHOD
+        public static final DeferredHolder<ITechnique, ? extends SoulSeveringTechnique> SOUL_SEVERING_TECHNIQUE
+        public static final DeferredHolder<ITechnique, ? extends >
+        public static final DeferredHolder<ITechnique, ? extends >
+        public static final DeferredHolder<ITechnique, ? extends >
+
+        P.S. I don't really mean we should make this many individual classes to extend, maybe just a couple general ones?
+        Unless someone wants to or the technique actually requires it :)
+        I'm just jotting down ideas - sortofsmart
+
+    // ──── TECHNIQUE IDEAS | Fill in as you please ──────────────────────────────────────────── */
 
 
     public static void register(IEventBus modEventBus){

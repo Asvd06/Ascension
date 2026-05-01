@@ -18,20 +18,20 @@ public class AscensionCommand {
                 All currently implemented commands
 
                     /ascension reset all <targets>
-                    /ascension reset attributes <targets>                                               -> works
+                    /ascension reset attributes <targets>
                     /ascension reset paths <targets>
                     /ascension reset path <targets> <path>
-                    /ascension reset skills <targets>                                                   -> works
+                    /ascension reset skills <targets>
                     /ascension reset techniques <targets>
                     /ascension reset technique <targets> <path>
                     /ascension reset physique <targets>
 
-                    /ascension cultivation set <targets> <path> <majorRealm> <minorRealm> [progress]    -> works
-                    /ascension cultivation get <target>                                                 -> works
-                    /ascension cultivation get <target> physique                                        -> works
+                    /ascension cultivation set <targets> <path> <majorRealm> <minorRealm> [progress]
+                    /ascension cultivation get <target>
+                    /ascension cultivation get <target> physique
 
-                    /ascension skill give <targets> <skill> [form]                                      -> works
-                    /ascension skill remove <targets> <skill> [form]                                    -> works
+                    /ascension skill give <targets> <skill> [form]
+                    /ascension skill remove <targets> <skill> [form]
 
                  */
 

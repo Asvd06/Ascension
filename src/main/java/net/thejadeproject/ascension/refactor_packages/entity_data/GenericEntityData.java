@@ -434,7 +434,41 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public IPhysiqueData removePhysique() {
-        return null; //TODO
+        if(physiqueForm == null) return null;
+        if(!heldFormData.containsKey(physiqueForm)) {
+            physiqueForm = null;
+            return null;
+        }
+
+        ResourceLocation oldForm = physiqueForm;
+        IEntityFormData formData = heldFormData.get(oldForm);
+
+        ResourceLocation oldPhysique = formData.getPhysiqueKey();
+        IPhysiqueData oldPhysiqueData = formData.getPhysiqueData();
+
+        if(oldPhysique == null) {
+            physiqueForm = null;
+            return null;
+        }
+
+        IPhysique physiqueInstance = formData.getPhysique();
+
+        if(physiqueInstance != null) {
+            physiqueInstance.onPhysiqueRemoved(this, oldPhysiqueData, null);
+
+            for(ResourceLocation path : new HashSet<>(physiqueInstance.paths())) {
+                removePath(path);
+            }
+        }
+
+        formData.setPhysique(null);
+        physiqueForm = null;
+
+        if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+            PacketDistributor.sendToPlayer(serverPlayer, new SyncEntityForm(formData));
+        }
+
+        return oldPhysiqueData;
     }
 
     @Override
@@ -494,7 +528,12 @@ public class GenericEntityData implements IEntityData {
     //============================ CULTIVATION DATA HANDLING ==================================
     @Override
     public boolean hasPath(ResourceLocation path) {
-        return false;//TODO
+        if(!pathDataLocation.containsKey(path)) return false;
+
+        ResourceLocation form = pathDataLocation.get(path);
+        if(!heldFormData.containsKey(form)) return false;
+
+        return heldFormData.get(form).hasPathData(path);
     }
 
     @Override
@@ -509,12 +548,24 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public ResourceLocation getTechnique(ResourceLocation path) {
-        return null;//TODO
+        PathData pathData = getPathData(path);
+        if(pathData == null) return null;
+
+        ResourceLocation technique = pathData.getLastUsedTechnique();
+        if(technique == null || technique.toString().equals("ascension:none")) return null;
+
+        return technique;
     }
 
     @Override
     public ITechniqueData getTechniqueData(ResourceLocation path) {
-        return null;//TODO
+        PathData pathData = getPathData(path);
+        if(pathData == null) return null;
+
+        ResourceLocation technique = pathData.getLastUsedTechnique();
+        if(technique == null || technique.toString().equals("ascension:none")) return null;
+
+        return pathData.getTechniqueData(technique);
     }
 
     @Override
@@ -543,7 +594,31 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public ITechniqueData removeTechnique(ResourceLocation path) {
-        return null;//TODO
+        if(!pathDataLocation.containsKey(path)) return null;
+
+        ResourceLocation form = pathDataLocation.get(path);
+        if(!heldFormData.containsKey(form)) return null;
+
+        PathData pathData = heldFormData.get(form).getPathData(path);
+        if(pathData == null) return null;
+
+        ResourceLocation oldTechnique = pathData.getLastUsedTechnique();
+        if(oldTechnique == null || oldTechnique.toString().equals("ascension:none")) return null;
+
+        ITechniqueData oldTechniqueData = pathData.getTechniqueData(oldTechnique);
+        ITechnique oldTechniqueInstance = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(oldTechnique);
+
+        if(oldTechniqueInstance != null) {
+            oldTechniqueInstance.onTechniqueRemoved(this, oldTechniqueData);
+        }
+
+        pathData.removeLastUsedTechnique();
+
+        if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+            PacketDistributor.sendToPlayer(serverPlayer, new SyncPathData(form, pathData));
+        }
+
+        return oldTechniqueData;
     }
 
     @Override
@@ -630,7 +705,32 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public void removePath(ResourceLocation path) {
-        //TODO
+        if(!pathDataLocation.containsKey(path)) return;
+
+        ResourceLocation form = pathDataLocation.get(path);
+
+        if(!heldFormData.containsKey(form)) {
+            pathDataLocation.remove(path);
+            return;
+        }
+
+        IEntityFormData formData = heldFormData.get(form);
+        PathData pathData = formData.getPathData(path);
+
+        if(pathData == null) {
+            pathDataLocation.remove(path);
+            return;
+        }
+
+        removeTechnique(path);
+
+        pathData.remove(this);
+        formData.removePathData(path);
+        pathDataLocation.remove(path);
+
+        if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+            PacketDistributor.sendToPlayer(serverPlayer, new SyncEntityForm(formData));
+        }
     }
 
     @Override

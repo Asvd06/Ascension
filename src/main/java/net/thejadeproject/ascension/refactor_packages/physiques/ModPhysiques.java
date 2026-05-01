@@ -1,11 +1,8 @@
 package net.thejadeproject.ascension.refactor_packages.physiques;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
@@ -24,9 +21,11 @@ public class ModPhysiques {
     /*
     .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"essence")) allows you to choose what path to give the Physique what it can cultivate.
     Without a path it can not cultivate anything. You can add as many paths as you want or as little as you want.
+        You can also use .addPath(ModPaths.---.getId())
 
     .addPathBonus(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"essence"),0.5) is what chooses how fast it can cultivate that specific path.
     It can be set to 0.1 - Max Integer and the higher the faster.
+        You can also use .addPathBonus(ModPaths.---.getId(), X.X)
 
      */
 
@@ -157,32 +156,25 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.FIST.getId(), 2.2)
     );
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> STONE_MONKEY = PHYSIQUES.register("stone_monkey", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.stone_monkey"))
+                    .addPath(ModPaths.BODY.getId())
+                    .addPath(ModPaths.EARTH.getId())
+                    .addPathBonus(ModPaths.BODY.getId(), 1.75)
+                    .addPathBonus(ModPaths.EARTH.getId(), 3.0)
+    );
+
+
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> WORLD_DOMINATOR =
             PHYSIQUES.register("world_dominator", () ->
                     new GenericPhysique(Component.translatable("ascension.physiques.world_dominator")) {
-
                         @Override
-                        public void onPhysiqueAdded(
-                                IEntityData heldEntity,
-                                ResourceLocation oldPhysique,
-                                IPhysiqueData oldPhysiqueData
-                        ) {
+                        public void onPhysiqueAdded(IEntityData heldEntity, ResourceLocation oldPhysique, IPhysiqueData oldPhysiqueData) {
                             super.onPhysiqueAdded(heldEntity, oldPhysique, oldPhysiqueData);
-
-                            if (heldEntity.getAttachedEntity() instanceof ServerPlayer player) {
-                                Component message = Component.translatable(
-                                        "ascension.message.physique.world_dominator.acquired",
-                                        player.getDisplayName().copy().withStyle(ChatFormatting.WHITE),
-                                        Component.translatable("ascension.physiques.world_dominator")
-                                                .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
-                                ).withStyle(ChatFormatting.GOLD);
-
-                                player.server.getPlayerList().broadcastSystemMessage(message, false);
+                            broadcastRareAcquired(heldEntity, "ascension.message.physique.world_dominator.acquired");
                             }
-                        }
-                    }
-                            .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 5.0)
-            );
+            }.addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 5.0));
+
 
     // Soul Physiques
 
@@ -192,7 +184,65 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.SOUL.getId(), 2.0)
     );
 
-    // TODO: a few more soul ones <3
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CLEAR_SPIRIT = PHYSIQUES.register("clear_spirit", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.clear_spirit"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.25)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> DREAMING_SOUL = PHYSIQUES.register("dreaming_soul", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.dreaming_soul"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.65)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SOUL_GAZE = PHYSIQUES.register("soul_gaze", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.soul_gaze"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.35)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ASHEN_SOUL_FLAME = PHYSIQUES.register("ashen_soul_flame", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.ashen_soul_flame"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.FIRE.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 2.5)
+                    .addPathBonus(ModPaths.FIRE.getId(), 1.75)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> THUNDERING_SOUL_CORE = PHYSIQUES.register("thundering_soul_core", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.thundering_soul_core"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.LIGHTNING.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 3.0)
+                    .addPathBonus(ModPaths.LIGHTNING.getId(), 2.25)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SOUL_SWORD_HEART = PHYSIQUES.register("soul_sword_heart", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.soul_sword_heart"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.SWORD.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 3.0)
+                    .addPathBonus(ModPaths.SWORD.getId(), 2.0)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SPEAR_SOUL_MARK = PHYSIQUES.register("spear_soul_mark", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.spear_soul_mark"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.SPEAR.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 2.75)
+                    .addPathBonus(ModPaths.SPEAR.getId(), 1.75)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SOUL_CROWNED_KING =
+            PHYSIQUES.register("soul_crowned_mind", () ->
+                    new GenericPhysique(Component.translatable("ascension.physiques.soul_crowned_king")) {
+                        @Override
+                        public void onPhysiqueAdded(IEntityData heldEntity, ResourceLocation oldPhysique, IPhysiqueData oldPhysiqueData) {
+                            super.onPhysiqueAdded(heldEntity, oldPhysique, oldPhysiqueData);
+                            broadcastRareAcquired(heldEntity, "ascension.message.physique.soul_crowned_king.acquired");
+                        }
+                    }.addPath(ModPaths.SOUL.getId()).addPathBonus(ModPaths.SOUL.getId(), 5.0));
 
 
     // Weapon Physiques
@@ -299,13 +349,7 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.DEMONIC.getId(),4.0)
     );
 
-    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> STONE_MONKEY = PHYSIQUES.register("stone_monkey", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.stone_monkey"))
-                    .addPath(ModPaths.BODY.getId())
-                    .addPath(ModPaths.EARTH.getId())
-                    .addPathBonus(ModPaths.BODY.getId(), 1.75)
-                    .addPathBonus(ModPaths.EARTH.getId(), 3.0)
-    );
+
 
 
 

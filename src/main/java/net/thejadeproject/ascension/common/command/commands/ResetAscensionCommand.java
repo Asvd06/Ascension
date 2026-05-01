@@ -110,7 +110,6 @@ public class ResetAscensionCommand {
             IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
             resetPlayerSkills(entityData);
-            resetPlayerTechniques(entityData);
             resetPlayerPaths(entityData);
             resetPlayerPhysique(entityData);
             resetPlayerAscensionAttributes(player, entityData);

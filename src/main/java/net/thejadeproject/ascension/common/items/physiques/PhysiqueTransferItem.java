@@ -46,19 +46,9 @@ public class PhysiqueTransferItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
 
-            if (purity < 100) {
-                player.sendSystemMessage(
-                        Component.literal("Cannot transfer physique: ")
-                                .append(Component.literal(purity + "%").withStyle(ChatFormatting.GOLD))
-                                .append(Component.literal(" purity. Need "))
-                                .append(Component.literal("100%").withStyle(ChatFormatting.GREEN))
-                                .append(Component.literal(" purity."))
-                );
-                return InteractionResultHolder.fail(stack);
-            }
         if (purity < 100) {
             player.sendSystemMessage(
-                    Component.literal("Cannot use: ")
+                    Component.literal("Cannot transfer physique: ")
                             .append(Component.literal(purity + "%").withStyle(ChatFormatting.GOLD))
                             .append(Component.literal(" purity. Need "))
                             .append(Component.literal("100%").withStyle(ChatFormatting.GREEN))
@@ -67,33 +57,28 @@ public class PhysiqueTransferItem extends Item {
             return InteractionResultHolder.fail(stack);
         }
 
-            Component physiqueName = getPhysiqueDisplayName(targetPhysiqueId);
 
-            ItemStack toastIcon = stack.copy();
-            toastIcon.setCount(1);
+        Component physiqueName = getPhysiqueDisplayName(targetPhysiqueId);
 
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
+        ItemStack toastIcon = stack.copy();
+        toastIcon.setCount(1);
+
         ResourceLocation targetId = ResourceLocation.bySeparator(targetPhysiqueId, ':');
         IPhysique targetPhysique = AscensionRegistries.Physiques.PHSIQUES_REGISTRY.get(targetId);
 
         if (player.isShiftKeyDown()) {
             // Shift+right-click: replace physique entirely
-            if (!player.getAbilities().instabuild) stack.shrink(1);
             player.getData(ModAttachments.ENTITY_DATA).setPhysique(targetId);
+
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
+
             player.sendSystemMessage(
                     Component.literal("Physique replaced with ")
                             .append(getPhysiqueDisplayName(targetPhysiqueId))
                             .append(Component.literal("!"))
             );
-            player.getData(ModAttachments.ENTITY_DATA).setPhysique(ResourceLocation.bySeparator(targetPhysiqueId, ':'));
-
-//            player.sendSystemMessage(
-//                    Component.literal("Successfully transferred to ")
-//                            .append(physiqueName)
-//                            .append(Component.literal("!"))
-//            );
 
             if (player instanceof ServerPlayer serverPlayer) {
                 PacketDistributor.sendToPlayer(
