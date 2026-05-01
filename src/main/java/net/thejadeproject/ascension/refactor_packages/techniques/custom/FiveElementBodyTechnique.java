@@ -18,7 +18,7 @@ import java.util.Set;
 public class FiveElementBodyTechnique extends GenericTechnique {
 
     public FiveElementBodyTechnique(BasicStatChangeHandler handler) {
-        super(ModPaths.BODY.getId(), Component.literal("Five Harmony Circulation"), 15.0, Set.of());
+        super(ModPaths.BODY.getId(), Component.translatable("ascension.technique.five_element_body_technique"), 15.0, Set.of());
         setStatChangeHandler(handler);
     }
 

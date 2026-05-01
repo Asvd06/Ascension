@@ -237,6 +237,37 @@ public class lang extends LanguageProvider {
         add("ascension.technique.lightning_essence_technique","Lightning Essence Technique");
         add("ascension.technique.wind_essence_technique","Wind Essence Technique");
 
+        // Single-element body techniques
+        add("ascension.technique.heart_fire_technique", "Heart Flame Cultivation");
+        add("ascension.technique.kidney_water_technique", "Kidney Tide Cultivation");
+        add("ascension.technique.liver_wood_technique", "Liver Grove Cultivation");
+        add("ascension.technique.spleen_earth_technique", "Spleen Mountain Cultivation");
+        add("ascension.technique.lung_metal_technique", "Lung Forge Cultivation");
+
+        // 2-element body techniques
+        add("ascension.technique.wood_fire_body_technique", "Rising Flame Method");
+        add("ascension.technique.fire_earth_body_technique", "Smoldering Earth Method");
+        add("ascension.technique.earth_metal_body_technique", "Hidden Vein Method");
+        add("ascension.technique.metal_water_body_technique", "Jade Spring Method");
+        add("ascension.technique.water_wood_body_technique", "Evergreen Current Method");
+
+        // 3-element body techniques
+        add("ascension.technique.wood_fire_earth_body_technique", "Ascending Pyre Method");
+        add("ascension.technique.fire_earth_metal_body_technique", "Forge and Harvest Method");
+        add("ascension.technique.earth_metal_water_body_technique", "Deep Vein Spring Method");
+        add("ascension.technique.metal_water_wood_body_technique", "Iron Root Current Method");
+        add("ascension.technique.water_wood_fire_body_technique", "Morning Mist Method");
+
+        // 4-element body techniques
+        add("ascension.technique.wood_fire_earth_metal_body_technique", "Earthbound Cycle Method");
+        add("ascension.technique.fire_earth_metal_water_body_technique", "Sunken Forge Method");
+        add("ascension.technique.earth_metal_water_wood_body_technique", "Rooted Tide Method");
+        add("ascension.technique.metal_water_wood_fire_body_technique", "Untempered Blaze Method");
+        add("ascension.technique.water_wood_fire_earth_body_technique", "Smoldering Grove Method");
+
+        // 5-element body technique
+        add("ascension.technique.five_element_body_technique", "Five Harmony Body Method");
+
 
 
         // Multi Part Technique Items
