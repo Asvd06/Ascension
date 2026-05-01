@@ -10,7 +10,6 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.Tags;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.GenericWeaponMasterySkill;
 
 
 public class BowMasterySkill extends GenericWeaponMasterySkill {

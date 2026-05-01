@@ -11,7 +11,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.ISkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.GenericWeaponMasterySkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.GenericWeaponMasterySkill;
 
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class WeaponMasterySkillEvents {

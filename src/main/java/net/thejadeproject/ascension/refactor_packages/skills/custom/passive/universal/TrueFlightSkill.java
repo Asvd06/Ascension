@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.flight;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;

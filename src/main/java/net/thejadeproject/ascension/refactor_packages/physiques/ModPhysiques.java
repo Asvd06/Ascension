@@ -49,19 +49,10 @@ public class ModPhysiques {
 
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SEVERED_MERIDIANS = PHYSIQUES.register("severed_meridians", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.severed_meridians"))
-                    .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body"))
-                    .addPathBonus(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body"), 0.5)
-    );
-
-    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_BONE = PHYSIQUES.register("sword_bone", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.sword_bone"))
                     .addPath(ModPaths.BODY.getId())
                     .addPathBonus(ModPaths.BODY.getId(), 0.5)
-                    .addPath(ModPaths.ESSENCE.getId())
-                    .addPathBonus(ModPaths.ESSENCE.getId(), 0.5)
-                    .addPath(ModPaths.SWORD.getId())
-                    .addPathBonus(ModPaths.SWORD.getId(), 2.0)
     );
+
 
 
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> FLAME_TOUCHED = PHYSIQUES.register("flame_touched", () ->
@@ -139,7 +130,82 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.ESSENCE.getId(), 10.0)
     );
 
+
+    // --- Elemental Body Physiques (tier 1; fuse in-place to upgrade) ---
+    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> FIRE_BODY = PHYSIQUES.register("fire_body", () ->
+            new ElementalBodyPhysique(ModPaths.FIRE.getId(), Component.translatable("ascension.physiques.fire_body")));
+
+    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WATER_BODY = PHYSIQUES.register("water_body", () ->
+            new ElementalBodyPhysique(ModPaths.WATER.getId(), Component.translatable("ascension.physiques.water_body")));
+
+    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WOOD_BODY = PHYSIQUES.register("wood_body", () ->
+            new ElementalBodyPhysique(ModPaths.WOOD.getId(), Component.translatable("ascension.physiques.wood_body")));
+
+    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> EARTH_BODY = PHYSIQUES.register("earth_body", () ->
+            new ElementalBodyPhysique(ModPaths.EARTH.getId(), Component.translatable("ascension.physiques.earth_body")));
+
+    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> METAL_BODY = PHYSIQUES.register("metal_body", () ->
+            new ElementalBodyPhysique(ModPaths.METAL.getId(), Component.translatable("ascension.physiques.metal_body")));
+
+    // Body Physiques
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> TYRANT_BODY = PHYSIQUES.register("tyrant_body", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.tyrant_body"))
+                    .addPath(ModPaths.BODY.getId())
+                    .addPathBonus(ModPaths.BODY.getId(), 1.2)
+                    .addPath(ModPaths.FIST.getId())
+                    .addPathBonus(ModPaths.FIST.getId(), 2.2)
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> WORLD_DOMINATOR =
+            PHYSIQUES.register("world_dominator", () ->
+                    new GenericPhysique(Component.translatable("ascension.physiques.world_dominator")) {
+
+                        @Override
+                        public void onPhysiqueAdded(
+                                IEntityData heldEntity,
+                                ResourceLocation oldPhysique,
+                                IPhysiqueData oldPhysiqueData
+                        ) {
+                            super.onPhysiqueAdded(heldEntity, oldPhysique, oldPhysiqueData);
+
+                            if (heldEntity.getAttachedEntity() instanceof ServerPlayer player) {
+                                Component message = Component.translatable(
+                                        "ascension.message.physique.world_dominator.acquired",
+                                        player.getDisplayName().copy().withStyle(ChatFormatting.WHITE),
+                                        Component.translatable("ascension.physiques.world_dominator")
+                                                .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
+                                ).withStyle(ChatFormatting.GOLD);
+
+                                player.server.getPlayerList().broadcastSystemMessage(message, false);
+                            }
+                        }
+                    }
+                            .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 5.0)
+            );
+
+    // Soul Physiques
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ACADEMIC_SPIRIT = PHYSIQUES.register("academic_spirit", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.academic_spirit"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 2.0)
+    );
+
+    // TODO: a few more soul ones <3
+
+
     // Weapon Physiques
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_BONE = PHYSIQUES.register("sword_bone", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.sword_bone"))
+                    .addPath(ModPaths.BODY.getId())
+                    .addPathBonus(ModPaths.BODY.getId(), 0.5)
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 0.5)
+                    .addPath(ModPaths.SWORD.getId())
+                    .addPathBonus(ModPaths.SWORD.getId(), 2.0)
+    );
+
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> FLOW_SEVERING_EYES = PHYSIQUES.register("flow_severing_eyes", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.flow_severing_eyes"))
                     .addPath(ModPaths.SWORD.getId())
@@ -240,65 +306,6 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.BODY.getId(), 1.75)
                     .addPathBonus(ModPaths.EARTH.getId(), 3.0)
     );
-
-    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> TYRANT_BODY = PHYSIQUES.register("tyrant_body", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.tyrant_body"))
-                    .addPath(ModPaths.BODY.getId())
-                    .addPathBonus(ModPaths.BODY.getId(), 1.2)
-                    .addPath(ModPaths.FIST.getId())
-                    .addPathBonus(ModPaths.FIST.getId(), 2.2)
-    );
-
-    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ACADEMIC_SPIRIT = PHYSIQUES.register("academic_spirit", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.academic_spirit"))
-                    .addPath(ModPaths.SOUL.getId())
-                    .addPathBonus(ModPaths.SOUL.getId(), 2.0)
-    );
-
-    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> WORLD_DOMINATOR =
-            PHYSIQUES.register("world_dominator", () ->
-                    new GenericPhysique(Component.translatable("ascension.physiques.world_dominator")) {
-
-                        @Override
-                        public void onPhysiqueAdded(
-                                IEntityData heldEntity,
-                                ResourceLocation oldPhysique,
-                                IPhysiqueData oldPhysiqueData
-                        ) {
-                            super.onPhysiqueAdded(heldEntity, oldPhysique, oldPhysiqueData);
-
-                            if (heldEntity.getAttachedEntity() instanceof ServerPlayer player) {
-                                Component message = Component.translatable(
-                                        "ascension.message.physique.world_dominator.acquired",
-                                        player.getDisplayName().copy().withStyle(ChatFormatting.WHITE),
-                                        Component.translatable("ascension.physiques.world_dominator")
-                                                .withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
-                                ).withStyle(ChatFormatting.GOLD);
-
-                                player.server.getPlayerList().broadcastSystemMessage(message, false);
-                            }
-                        }
-                    }
-                            .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 5.0)
-            );
-
-    // --- Elemental Body Physiques (tier 1; fuse in-place to upgrade) ---
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> FIRE_BODY = PHYSIQUES.register("fire_body", () ->
-            new ElementalBodyPhysique(ModPaths.FIRE.getId(), Component.translatable("ascension.physiques.fire_body")));
-
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WATER_BODY = PHYSIQUES.register("water_body", () ->
-            new ElementalBodyPhysique(ModPaths.WATER.getId(), Component.translatable("ascension.physiques.water_body")));
-
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WOOD_BODY = PHYSIQUES.register("wood_body", () ->
-            new ElementalBodyPhysique(ModPaths.WOOD.getId(), Component.translatable("ascension.physiques.wood_body")));
-
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> EARTH_BODY = PHYSIQUES.register("earth_body", () ->
-            new ElementalBodyPhysique(ModPaths.EARTH.getId(), Component.translatable("ascension.physiques.earth_body")));
-
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> METAL_BODY = PHYSIQUES.register("metal_body", () ->
-            new ElementalBodyPhysique(ModPaths.METAL.getId(), Component.translatable("ascension.physiques.metal_body")));
-
-
 
 
 

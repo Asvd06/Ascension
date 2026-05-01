@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.GenericWeaponMasterySkill;
 import net.thejadeproject.ascension.util.ModTags;
 
 public class SpearMasterySkill extends GenericWeaponMasterySkill {

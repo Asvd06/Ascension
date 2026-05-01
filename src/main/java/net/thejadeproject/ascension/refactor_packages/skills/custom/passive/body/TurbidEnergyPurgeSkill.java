@@ -1,9 +1,10 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.passive;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
 
 import java.util.ArrayList;
 import java.util.List;

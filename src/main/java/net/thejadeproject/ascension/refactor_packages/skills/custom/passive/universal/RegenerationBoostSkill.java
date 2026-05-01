@@ -1,9 +1,10 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.passive;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
 
 public class RegenerationBoostSkill extends SimplePassiveSkill implements ITickingSkill {
 

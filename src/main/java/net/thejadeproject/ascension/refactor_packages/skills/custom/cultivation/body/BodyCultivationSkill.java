@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -12,11 +12,13 @@ import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.skill_data.BodyCultivationCastData;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.BodyElementTechnique;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.CombinedBodyElementTechnique;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.FiveElementBodyTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.BodyElementTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.CombinedBodyElementTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.FiveElementBodyTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.BodyTechniqueData;
 
 import java.util.Set;

@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
 
 import net.lucent.easygui.gui.RenderableElement;
 import net.lucent.easygui.gui.UIFrame;
@@ -9,9 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -35,14 +33,30 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.WhiteLightningTenStageTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.ElementalEssenceTechnique;
 
 import java.util.List;
 
-public class WhiteLightningCultivationSkill implements ICastableSkill {
+public abstract class ElementalEssenceCultivationSkill implements ICastableSkill {
 
+    private static final ResourceLocation ESSENCE_PATH = ModPaths.ESSENCE.getId();
+    private static final double STANDARD_ESSENCE_RATE = 2.0D;
 
-    private static final double BASE_RATE = 2.0D;
+    protected abstract ResourceLocation getElementPath();
+
+    protected abstract double getEnvironmentMultiplier(Entity caster);
+
+    protected abstract Class<? extends ElementalEssenceTechnique> getTechniqueClass();
+
+    protected Component getElementTitle() {
+        var pathObj = AscensionRegistries.Paths.PATHS_REGISTRY.get(getElementPath());
+
+        return pathObj != null ? pathObj.getDisplayTitle() : Component.literal(getElementPath().toString());
+    }
+
+    protected String getTranslationName() {
+        return getElementPath().getPath() + "_essence_cultivation";
+    }
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
@@ -55,7 +69,7 @@ public class WhiteLightningCultivationSkill implements ICastableSkill {
 
         if (!caster.level().isClientSide()) {
             IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
-            PathData pathData = entityData.getPathData(ModPaths.BODY.getId());
+            PathData pathData = entityData.getPathData(ESSENCE_PATH);
 
             if (pathData == null) return false;
             if (pathData.isBreakingThrough()) return false;
@@ -65,30 +79,32 @@ public class WhiteLightningCultivationSkill implements ICastableSkill {
                     pathData.getLastUsedTechnique()
             );
 
-            if (!(rawTechnique instanceof WhiteLightningTenStageTechnique technique)) {
+            if (!getTechniqueClass().isInstance(rawTechnique)) {
                 return false;
             }
 
-            double bodyBonus = Math.max(
+            ElementalEssenceTechnique technique = getTechniqueClass().cast(rawTechnique);
+
+            double essenceBonus = Math.max(
                     1.0D,
-                    entityData.getPathBonusHandler().getPathBonus(ModPaths.BODY.getId())
+                    entityData.getPathBonusHandler().getPathBonus(ESSENCE_PATH)
             );
 
-            double fistBonus = Math.max(
+            double elementBonus = Math.max(
                     1.0D,
-                    entityData.getPathBonusHandler().getPathBonus(ModPaths.FIST.getId())
+                    entityData.getPathBonusHandler().getPathBonus(getElementPath())
             );
 
-            double base = BASE_RATE
-                    * bodyBonus
-                    * fistBonus
-                    * getCultivationMultiplier(caster);
+            double base = STANDARD_ESSENCE_RATE
+                    * getEnvironmentMultiplier(caster)
+                    * essenceBonus
+                    * elementBonus;
 
             CultivateEvent event = new CultivateEvent(
                     caster,
                     base,
-                    ModPaths.BODY.getId(),
-                    List.of(ModPaths.FIST.getId())
+                    ESSENCE_PATH,
+                    List.of(getElementPath())
             );
 
             NeoForge.EVENT_BUS.post(event);
@@ -139,39 +155,6 @@ public class WhiteLightningCultivationSkill implements ICastableSkill {
         return caster.getData(ModAttachments.INPUT_STATES).isHeld("skill_cast");
     }
 
-    private double getCultivationMultiplier(Entity caster) {
-        double multiplier = 1.0D;
-
-        if (isUnarmed(caster)) {
-            multiplier += 0.25D;
-        }
-
-        if (hasTurbidEnergy(caster)) {
-            multiplier += 0.35D;
-        }
-
-        return multiplier;
-    }
-
-    private boolean isUnarmed(Entity caster) {
-        if (!(caster instanceof LivingEntity living)) return false;
-
-        return living.getMainHandItem().isEmpty()
-                && living.getOffhandItem().isEmpty();
-    }
-
-    private boolean hasTurbidEnergy(Entity caster) {
-        if (!(caster instanceof LivingEntity living)) return false;
-
-        for (MobEffectInstance effect : living.getActiveEffects()) {
-            if (!effect.getEffect().value().isBeneficial()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     @Override
     public CastType getCastType() {
         return CastType.LONG;
@@ -194,7 +177,7 @@ public class WhiteLightningCultivationSkill implements ICastableSkill {
                         65,
                         7
                 ),
-                ModPaths.BODY.getId()
+                ESSENCE_PATH
         );
     }
 
@@ -203,7 +186,7 @@ public class WhiteLightningCultivationSkill implements ICastableSkill {
         return new TextureData(
                 ResourceLocation.fromNamespaceAndPath(
                         AscensionCraft.MOD_ID,
-                        "textures/spells/icon/placeholder_white.png"
+                        "textures/spells/icon/placeholder.png"
                 ),
                 16,
                 16
@@ -212,14 +195,35 @@ public class WhiteLightningCultivationSkill implements ICastableSkill {
 
     @Override
     public Component getTitle() {
-        return Component.translatable("ascension.skill.white_lightning_cultivation_skill");
+        return Component.translatable(
+                "ascension.skill.elemental_essence_cultivation",
+                getElementTitle()
+        );
     }
 
     @Override
     public Component getDescription() {
         return Component.translatable(
-                "ascension.skill.white_lightning_cultivation_skill.description"
+                "ascension.skill." + getTranslationName() + ".description"
         );
+    }
+
+    protected int countNearbyBlocks(Entity caster, int radius, java.util.function.Predicate<net.minecraft.world.level.block.state.BlockState> predicate) {
+        net.minecraft.world.level.Level level = caster.level();
+        net.minecraft.core.BlockPos center = caster.blockPosition();
+
+        int count = 0;
+
+        for (net.minecraft.core.BlockPos pos : net.minecraft.core.BlockPos.betweenClosed(
+                center.offset(-radius, -radius, -radius),
+                center.offset(radius, radius, radius)
+        )) {
+            if (predicate.test(level.getBlockState(pos))) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     @Override public void onEquip(IEntityData entityData) {}

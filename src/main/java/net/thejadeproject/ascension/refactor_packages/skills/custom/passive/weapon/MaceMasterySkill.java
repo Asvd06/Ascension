@@ -5,7 +5,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.GenericWeaponMasterySkill;
 
 public class MaceMasterySkill extends GenericWeaponMasterySkill {
 

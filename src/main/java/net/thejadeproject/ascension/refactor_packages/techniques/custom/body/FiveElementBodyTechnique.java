@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.techniques.custom;
+package net.thejadeproject.ascension.refactor_packages.techniques.custom.body;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -11,28 +11,23 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.skill_data.GenericCultivationSkillData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.BodyTechniqueData;
 
 import java.util.Set;
 
-public class CombinedBodyElementTechnique extends GenericTechnique {
+public class FiveElementBodyTechnique extends GenericTechnique {
 
-    private final Set<ResourceLocation> elements;
-
-    public CombinedBodyElementTechnique(Component title, double baseRate, Set<ResourceLocation> elements, BasicStatChangeHandler handler) {
-        super(ModPaths.BODY.getId(), title, baseRate, Set.of());
-        this.elements = Set.copyOf(elements);
+    public FiveElementBodyTechnique(BasicStatChangeHandler handler) {
+        super(ModPaths.BODY.getId(), Component.literal("Five Harmony Circulation"), 15.0, Set.of());
         setStatChangeHandler(handler);
     }
-
-    public Set<ResourceLocation> getElements() { return elements; }
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(
             ModSkills.BODY_CULTIVATION_SKILL.getId(),
-            new GenericCultivationSkillData(getBaseRate(), Set.of()),
+            new GenericCultivationSkillData(15.0, Set.of()),
             ModForms.MORTAL_VESSEL.getId()
         );
     }
@@ -48,15 +43,15 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
     @Override
     public boolean isCompatibleWith(ResourceLocation technique) {
         var tech = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
-        return !(tech instanceof CombinedBodyElementTechnique) && !(tech instanceof FiveElementBodyTechnique);
+        return !(tech instanceof BodyElementTechnique) && !(tech instanceof CombinedBodyElementTechnique);
     }
 
     @Override
-    public ITechniqueData freshTechniqueData(IEntityData heldEntity) { return new BodyTechniqueData(); }
+    public ITechniqueData freshTechniqueData(IEntityData heldEntity) { return null; }
 
     @Override
-    public ITechniqueData fromCompound(CompoundTag tag) { return BodyTechniqueData.read(tag); }
+    public ITechniqueData fromCompound(CompoundTag tag) { return null; }
 
     @Override
-    public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) { return BodyTechniqueData.decode(buf); }
+    public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) { return null; }
 }

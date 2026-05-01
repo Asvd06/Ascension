@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.techniques.custom;
+package net.thejadeproject.ascension.refactor_packages.techniques.custom.body;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -11,27 +11,23 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.skill_data.GenericCultivationSkillData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.BodyTechniqueData;
 
 import java.util.Set;
 
-public class BodyElementTechnique extends GenericTechnique {
-    private final ResourceLocation element;
+public class CombinedBodyElementTechnique extends GenericTechnique {
 
-    public BodyElementTechnique(ResourceLocation element, Component title, double baseRate, BasicStatChangeHandler handler) {
+    private final Set<ResourceLocation> elements;
+
+    public CombinedBodyElementTechnique(Component title, double baseRate, Set<ResourceLocation> elements, BasicStatChangeHandler handler) {
         super(ModPaths.BODY.getId(), title, baseRate, Set.of());
-        this.element = element;
+        this.elements = Set.copyOf(elements);
         setStatChangeHandler(handler);
     }
 
-    public ResourceLocation getElement() { return element; }
-
-    @Override
-    public boolean isCompatibleWith(ResourceLocation technique) {
-        var tech = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
-        return !(tech instanceof FiveElementBodyTechnique);
-    }
+    public Set<ResourceLocation> getElements() { return elements; }
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
@@ -51,17 +47,17 @@ public class BodyElementTechnique extends GenericTechnique {
     }
 
     @Override
-    public ITechniqueData freshTechniqueData(IEntityData heldEntity) {
-        return new BodyTechniqueData();
+    public boolean isCompatibleWith(ResourceLocation technique) {
+        var tech = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
+        return !(tech instanceof CombinedBodyElementTechnique) && !(tech instanceof FiveElementBodyTechnique);
     }
 
     @Override
-    public ITechniqueData fromCompound(CompoundTag tag) {
-        return BodyTechniqueData.read(tag);
-    }
+    public ITechniqueData freshTechniqueData(IEntityData heldEntity) { return new BodyTechniqueData(); }
 
     @Override
-    public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) {
-        return BodyTechniqueData.decode(buf);
-    }
+    public ITechniqueData fromCompound(CompoundTag tag) { return BodyTechniqueData.read(tag); }
+
+    @Override
+    public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) { return BodyTechniqueData.decode(buf); }
 }

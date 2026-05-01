@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul;
 
 import net.lucent.easygui.gui.RenderableElement;
 import net.lucent.easygui.gui.UIFrame;
@@ -38,7 +38,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableS
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.ScholarlySoulTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.ScholarlySoulTechnique;
 
 import java.util.List;
 
