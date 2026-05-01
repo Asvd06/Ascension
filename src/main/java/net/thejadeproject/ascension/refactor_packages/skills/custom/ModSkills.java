@@ -14,14 +14,18 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.GibbousMoonCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.PaleMoonCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.ScholarlySoulCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.SwordCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.WhiteLightningCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.five_element.FiveElementCirculation;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.*;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.BlindedSensesDebuff;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.CrackedMeridiansDebuff;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.form_change.EnterSpiritForm;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.ParalyzedBodyDebuff;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.VenomousMeridiansDebuff;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.QiSustainedBodySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.RegenerationBoostSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.TurbidEnergyPurgeSkill;
@@ -122,6 +126,8 @@ public class ModSkills {
             SKILLS.register("scholarly_soul_cultivation_skill", ScholarlySoulCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends PaleMoonCultivationSkill> PALE_MOON_CULTIVATION_SKILL =
             SKILLS.register("pale_moon_cultivation_skill", PaleMoonCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends GibbousMoonCultivationSkill> GIBBOUS_MOON_CULTIVATION_SKILL =
+            SKILLS.register("gibbous_moon_cultivation_skill", GibbousMoonCultivationSkill::new);
 
     // Passives
 

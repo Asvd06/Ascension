@@ -17,105 +17,73 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_cha
 
 import java.util.Set;
 
-public class PaleMoonTechnique extends GenericTechnique {
+public class ZenithSunTechnique extends GenericTechnique {
 
-    public static final double BASE_RATE = 1.0D;
+    public static final double BASE_RATE = 1.5D;
 
-    public PaleMoonTechnique(BasicStatChangeHandler statChangeHandler) {
+    public ZenithSunTechnique(BasicStatChangeHandler statChangeHandler) {
         super(
                 ModPaths.SOUL.getId(),
-                Component.translatable("ascension.technique.pale_moon_scripture"),
+                Component.translatable("ascension.technique.zenith_sun_scripture"),
                 BASE_RATE,
                 Set.of()
         );
-
         setStatChangeHandler(statChangeHandler);
     }
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("A soul cultivation method strengthened beneath moonlight.");
+        return Component.literal("A stronger solar soul scripture attuned to the sun at its zenith.");
     }
 
     @Override
     public Component getDescription() {
         return Component.literal(
-                "Cultivates the Soul path by drawing upon pale lunar essence. Must be practised under open sky. Cultivation rate increases when gazing directly at the moon. Harmful beneath direct sunlight."
+                "Cultivates the Soul by drawing upon the blazing power of the sun at its peak. Must be practised under open sky. Greatly empowered when gazing directly at the sun. Harmful beneath moonlit night skies."
         );
     }
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
-        heldEntity.giveSkill(
-                ModSkills.PALE_MOON_CULTIVATION_SKILL.getId(),
-                ModForms.MORTAL_VESSEL.getId()
-        );
-
+        heldEntity.giveSkill(ModSkills.ZENITH_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
         PathData pathData = heldEntity.getPathData(getPath());
-
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }
-
-        heldEntity.removeSkill(
-                ModSkills.PALE_MOON_CULTIVATION_SKILL.getId(),
-                ModForms.MORTAL_VESSEL.getId()
-        );
-
+        heldEntity.removeSkill(ModSkills.ZENITH_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }
 
     @Override
     public boolean isCompatibleWith(ResourceLocation technique) {
         var tech = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
-
-        return !(tech instanceof PaleMoonTechnique)
-                && !(tech instanceof ScholarlySoulTechnique)
-                && !(tech instanceof GibbousMoonTechnique);
+        return !(tech instanceof ZenithSunTechnique)
+                && !(tech instanceof DawningSunTechnique)
+                && !(tech instanceof PaleMoonTechnique)
+                && !(tech instanceof GibbousMoonTechnique)
+                && !(tech instanceof ScholarlySoulTechnique);
     }
 
     @Override
-    public ITechniqueData freshTechniqueData(IEntityData heldEntity) {
-        return null;
-    }
+    public ITechniqueData freshTechniqueData(IEntityData heldEntity) { return null; }
 
     @Override
-    public ITechniqueData fromCompound(CompoundTag tag) {
-        return null;
-    }
+    public ITechniqueData fromCompound(CompoundTag tag) { return null; }
 
     @Override
-    public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) {
-        return null;
-    }
+    public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) { return null; }
 
     @Override
-    public IBreakthroughInstance freshBreakthroughData(IEntityData heldEntity) {
-        return null;
-    }
+    public IBreakthroughInstance freshBreakthroughData(IEntityData heldEntity) { return null; }
 
     @Override
-    public IBreakthroughInstance breakthroughInstanceFromCompound(
-            CompoundTag tag,
-            int majorRealm,
-            int minorRealm,
-            ITechniqueData techniqueData
-    ) {
-        return null;
-    }
+    public IBreakthroughInstance breakthroughInstanceFromCompound(CompoundTag tag, int majorRealm, int minorRealm, ITechniqueData techniqueData) { return null; }
 
     @Override
-    public IBreakthroughInstance breakthroughInstanceFromNetwork(
-            RegistryFriendlyByteBuf buf,
-            int majorRealm,
-            int minorRealm,
-            ITechniqueData techniqueData
-    ) {
-        return null;
-    }
+    public IBreakthroughInstance breakthroughInstanceFromNetwork(RegistryFriendlyByteBuf buf, int majorRealm, int minorRealm, ITechniqueData techniqueData) { return null; }
 }

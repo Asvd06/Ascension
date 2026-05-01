@@ -23,7 +23,6 @@ import net.thejadeproject.ascension.clients.renderer.FlameStandRenderer;
 import net.thejadeproject.ascension.clients.renderer.PillCauldronLowHumanBlockEntityRenderer;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.entity.client.CushionRenderer;
-import net.thejadeproject.ascension.entity.client.NeedleRenderer;
 import net.thejadeproject.ascension.entity.client.form.PlayerBodyEntityRenderer;
 import net.thejadeproject.ascension.entity.client.rat.RatRenderer;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
@@ -120,7 +119,7 @@ public class AscensionCraftClient {
                 EntityRenderers.register(ModEntities.RIFT.get(), RiftRenderer::new);
                 EntityRenderers.register(ModEntities.RAT.get(), RatRenderer::new);
                 EntityRenderers.register(ModEntities.POISON_PILL.get(), ThrownItemRenderer::new);
-                EntityRenderers.register(ModEntities.CUSHION_ENTITY.get(), NeedleRenderer::new);
+                EntityRenderers.register(ModEntities.CUSHION_ENTITY.get(), CushionRenderer::new);
                 EntityRenderers.register(ModEntities.NEEDLE_PROJECTILE.get(), ThrownItemRenderer::new);
                 EntityRenderers.register(ModEntities.FAKE_PLAYER.get(), PlayerBodyEntityRenderer::new);
                 // Register item properties

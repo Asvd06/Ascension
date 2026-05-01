@@ -26,11 +26,6 @@ public class NeedleProjectile extends ThrowableItemProjectile {
         setItem(needleStack.copy());
     }
 
-    public NeedleProjectile(Level level, double x, double y, double z, ItemStack needleStack) {
-        super(ModEntities.NEEDLE_PROJECTILE.get(), x, y, z, level);
-        setItem(needleStack.copy());
-    }
-
     @Override
     protected Item getDefaultItem() {
         return ModItems.SILVER_NEEDLE.get();

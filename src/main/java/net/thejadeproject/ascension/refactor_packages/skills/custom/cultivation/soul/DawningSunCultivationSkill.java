@@ -11,28 +11,27 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.server.level.ServerPlayer;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.PaleMoonTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.DawningSunTechnique;
 
-public class PaleMoonCultivationSkill extends GenericCultivationSkill {
+public class DawningSunCultivationSkill extends GenericCultivationSkill {
 
-    private static final double MOON_MULTIPLIER = 1.5D;
+    private static final double SUN_MULTIPLIER = 1.5D;
 
-    public PaleMoonCultivationSkill() {
-        super(PaleMoonTechnique.BASE_RATE, ModPaths.SOUL.getId());
+    public DawningSunCultivationSkill() {
+        super(DawningSunTechnique.BASE_RATE, ModPaths.SOUL.getId());
     }
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
         if (!caster.level().canSeeSky(caster.blockPosition())) {
             return new CastResult(CastResult.Type.FAILURE,
-                    Component.translatable("ascension.skill.pale_moon_cultivation_skill.blocked_indoors"));
+                    Component.translatable("ascension.skill.dawning_sun_cultivation_skill.blocked_indoors"));
         }
         return new CastResult(CastResult.Type.SUCCESS);
     }
@@ -40,8 +39,8 @@ public class PaleMoonCultivationSkill extends GenericCultivationSkill {
     @Override
     protected double getEffectiveRate(Entity caster) {
         double rate = super.getEffectiveRate(caster);
-        if (isLookingAtMoon(caster)) {
-            rate *= MOON_MULTIPLIER;
+        if (isLookingAtSun(caster)) {
+            rate *= SUN_MULTIPLIER;
         }
         return rate;
     }
@@ -50,41 +49,36 @@ public class PaleMoonCultivationSkill extends GenericCultivationSkill {
     public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) {
         boolean continuing = super.continueCasting(ticksElapsed, caster, castData);
         if (continuing && !caster.level().isClientSide()) {
-            if (isSunExposed(caster)) {
+            if (isMoonExposed(caster)) {
                 if (caster instanceof LivingEntity living) {
-                    float damage = living.getMaxHealth() * 0.0025f;
+                    float damage = living.getMaxHealth() * 0.005f;
                     DamageSource source = new DamageSource(
                             caster.level().registryAccess()
                                     .registryOrThrow(Registries.DAMAGE_TYPE)
-                                    .getHolderOrThrow(DamageTypes.IN_FIRE)
+                                    .getHolderOrThrow(DamageTypes.FREEZE)
                     );
                     living.hurt(source, damage);
                 }
-            }
-            if (ticksElapsed % 20 == 0 && isLookingAtMoon(caster) && caster instanceof ServerPlayer player) {
-                player.sendSystemMessage(Component.literal("[Debug] Pale Moon bonus active (1.5x)"));
             }
         }
         return continuing;
     }
 
-    // --- Shared helpers (reused by GibbousMoonCultivationSkill) ---
+    // --- Shared helpers (reused by ZenithSunCultivationSkill) ---
 
-    public static boolean isLookingAtMoon(Entity entity) {
+    public static boolean isLookingAtSun(Entity entity) {
         Level level = entity.level();
-        if (!level.isNight()) return false;
+        if (level.isNight()) return false;
         if (!level.canSeeSky(entity.blockPosition())) return false;
 
         float sunAngle = level.getSunAngle(1.0f);
-        float moonAngle = sunAngle + (float) Math.PI;
-        Vec3 moonDir = new Vec3(0, Math.sin(moonAngle), -Math.cos(moonAngle)).normalize();
-        Vec3 lookDir = entity.getLookAngle();
-        return moonDir.dot(lookDir) > 0.98D;
+        Vec3 sunDir = new Vec3(-Math.sin(sunAngle), Math.cos(sunAngle), 0);
+        return sunDir.dot(entity.getLookAngle()) > 0.98D;
     }
 
-    public static boolean isSunExposed(Entity entity) {
+    public static boolean isMoonExposed(Entity entity) {
         Level level = entity.level();
-        return !level.isNight() && level.canSeeSky(entity.blockPosition());
+        return level.isNight() && level.canSeeSky(entity.blockPosition());
     }
 
     // --- Icon / display ---
@@ -102,11 +96,11 @@ public class PaleMoonCultivationSkill extends GenericCultivationSkill {
 
     @Override
     public Component getTitle() {
-        return Component.translatable("ascension.skill.pale_moon_cultivation_skill");
+        return Component.translatable("ascension.skill.dawning_sun_cultivation_skill");
     }
 
     @Override
     public Component getDescription() {
-        return Component.translatable("ascension.skill.pale_moon_cultivation_skill.description");
+        return Component.translatable("ascension.skill.dawning_sun_cultivation_skill.description");
     }
 }
