@@ -14,9 +14,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.GibbousMoonCultivationSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.PaleMoonCultivationSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.ScholarlySoulCultivationSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.SwordCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.WhiteLightningCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental.*;
@@ -128,7 +126,10 @@ public class ModSkills {
             SKILLS.register("pale_moon_cultivation_skill", PaleMoonCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends GibbousMoonCultivationSkill> GIBBOUS_MOON_CULTIVATION_SKILL =
             SKILLS.register("gibbous_moon_cultivation_skill", GibbousMoonCultivationSkill::new);
-
+    public static final DeferredHolder<ISkill, ? extends DawningSunCultivationSkill> DAWNING_SUN_CULTIVATION_SKILL =
+            SKILLS.register("dawning_sun_cultivation_skill",DawningSunCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ZenithSunCultivationSkill> ZENITH_SUN_CULTIVATION_SKILL =
+            SKILLS.register("zenith_sun_cultivation_skill",ZenithSunCultivationSkill::new);
     // Passives
 
     // Actives

@@ -572,8 +572,9 @@ public class GenericEntityData implements IEntityData {
         ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
         technique.onTechniqueRemoved(this,techniqueData);
         pathData.removeLastUsedTechnique();
+
         if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
-            PacketDistributor.sendToPlayer(serverPlayer, new SyncPathData(form, pathData));
+            PacketDistributor.sendToPlayer(serverPlayer, new SyncPathData(pathDataLocation.get(path), pathData));
         }
         return techniqueData;
 
@@ -789,6 +790,11 @@ public class GenericEntityData implements IEntityData {
             }
         }
         return skills;
+    }
+
+    @Override
+    public TemporarySkillHolder getTemporarySkills() {
+        return temporarySkills;
     }
 
     //============================= SKILL CASTING ====================================
