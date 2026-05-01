@@ -17,6 +17,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.network.serverBound.input.ChangePlayerInputState;
+import net.thejadeproject.ascension.refactor_packages.gui.elements.introspection.IntrospectionContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skill_casting.SkillHotBarContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skill_view.SkillMenuContainer;
 import org.lwjgl.glfw.GLFW;
@@ -34,6 +35,7 @@ public class InputHandler {
     public static final KeyMapping CAST_SKILL_KEY = new KeyMapping("key.ascension.cast_skill", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_V, "ascension skills");
     public static final KeyMapping OPEN_SKILL_MENU = new KeyMapping("key.ascension.open_skill_menu", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_L, "ascension skills");
     public static final KeyMapping SKILL_WHEEL_OVERLAY = new KeyMapping("key.ascension.skill_wheel", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_R, "ascension skills");
+    public static final KeyMapping INTROSPECTION = new KeyMapping("key.ascension.introspection", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_I, "ascension menu");
 
     private final static HashSet<KeyMapping> state = new HashSet<>();
     //maps a keyMapping->handler
@@ -52,6 +54,13 @@ public class InputHandler {
         }).setOnRelease(mod->{
             ((SkillHotBarContainer) EasyOverlayHandler.getFrame(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"skill_wheel")).getRoot()).close();
         }));
+        put(INTROSPECTION,new ActionHandler("open_introspection")
+                .setOnDown(mod->{
+                    UIFrame frame = new UIFrame();
+                    frame.setRoot(new IntrospectionContainer(frame));
+                    Minecraft.getInstance().setScreen( new EasyScreen(Component.literal("Introspection"),frame));
+                })
+        );
     }};
     public static class ActionHandler {
         public Consumer<Integer> actionDown = (val)->{};

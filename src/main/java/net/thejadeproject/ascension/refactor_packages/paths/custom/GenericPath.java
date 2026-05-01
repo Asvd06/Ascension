@@ -1,5 +1,7 @@
 package net.thejadeproject.ascension.refactor_packages.paths.custom;
 
+import net.lucent.easygui.gui.RenderableElement;
+import net.lucent.easygui.gui.UIFrame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -7,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.Panda;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
+import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.PathDataDisplayElement;
 import net.thejadeproject.ascension.refactor_packages.paths.IPath;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.paths.PathInteraction;
@@ -68,12 +71,20 @@ public class GenericPath implements IPath {
 
     @Override
     public Component getMajorRealmName(int majorRealm) {
-        return realmNames.size()>=majorRealm ? Component.literal(String.valueOf(majorRealm)) : realmNames.get(majorRealm);
+        return majorRealm >= realmNames.size() ? Component.literal(String.valueOf(majorRealm)) : realmNames.get(majorRealm);
     }
 
     @Override
     public Component getMinorRealmName(int majorRealm, int minorRealm) {
         return Component.literal(String.valueOf(minorRealm));
+    }
+
+    @Override
+    public RenderableElement getInformationContainer(UIFrame frame, PathData pathData) {
+        return new PathDataDisplayElement(frame,
+                getMajorRealmName(pathData.getMajorRealm()),
+                getMinorRealmName(pathData.getMajorRealm(),pathData.getMinorRealm()),
+                getDescription());
     }
 
 

@@ -72,10 +72,10 @@ public class GenericEntityData implements IEntityData {
     public GenericEntityData(Entity attachedEntity){
         this.attachedEntity = attachedEntity;
 
-        //TODO add mortal vessel
+
         heldFormData.put(ModForms.MORTAL_VESSEL.getId(),ModForms.MORTAL_VESSEL.get().freshEntityFormData(this));
 
-        //TODO add soul form
+
         heldFormData.put(ModForms.SOUL_FORM.getId(),ModForms.SOUL_FORM.get().freshEntityFormData(this));
 
         if(attachedEntity instanceof LivingEntity entity){
@@ -85,6 +85,9 @@ public class GenericEntityData implements IEntityData {
         }
         getQiContainer().fullFillQi();
         currentHealth = getAscensionAttributeHolder().getAttribute(Attributes.MAX_HEALTH).getValue();
+
+        setPhysique(ModPhysiques.MORTAL.getId());//give default physique
+        //setBloodline() //give default bloodline
     }
     //TODO add better error handling so an error does not delete all data
     public GenericEntityData(Entity attachedEntity, CompoundTag tag){
@@ -144,7 +147,7 @@ public class GenericEntityData implements IEntityData {
             //TODO add to mortal vessel, then run proper physique addition code
         }
 
-        //TODO add cultivation
+
         for(int i = 0;i<pathDataTags.size();i++){
             CompoundTag pathDataTag = pathDataTags.getCompound(i);
             ResourceLocation pathId = ResourceLocation.parse(pathDataTag.getString("path"));
@@ -417,18 +420,20 @@ public class GenericEntityData implements IEntityData {
         if (!heldFormData.containsKey(physiqueForm)) return null;
 
         return heldFormData.get(physiqueForm).getPhysiqueData();
-        //return null; //TODO
+
     }
 
     @Override
     public ResourceLocation getPhysiqueForm() {
         return physiqueForm;
-        //return null; //TODO
+
     }
 
     @Override
     public IPhysiqueData removePhysique() {
-        return null; //TODO
+        IPhysiqueData data = getPhysiqueData();
+        setPhysique(ModPhysiques.MORTAL.getId());
+        return data;
     }
 
     @Override
@@ -490,22 +495,30 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public boolean isCultivating() {
-        return false;//TODO
+        for(ResourceLocation path : pathDataLocation.keySet()){
+            if(getPathData(path).isCultivating()) return true;
+        }
+        return false;
     }
 
     @Override
     public boolean isCultivating(ResourceLocation path) {
-        return false;//TODO
+        if(!pathDataLocation.containsKey(path)) return false;
+
+        return getPathData(path).isCultivating();
     }
 
     @Override
     public ResourceLocation getTechnique(ResourceLocation path) {
-        return null;//TODO
+        if(!pathDataLocation.containsKey(path)) return null;
+        return getPathData(path).getLastUsedTechnique();
     }
 
     @Override
     public ITechniqueData getTechniqueData(ResourceLocation path) {
-        return null;//TODO
+        if(!pathDataLocation.containsKey(path)) return null;
+        if(getPathData(path).getLastUsedTechnique() == null) return null;
+        return getPathData(path).getTechniqueData(getPathData(path).getLastUsedTechnique());
     }
 
     @Override
@@ -534,7 +547,19 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public ITechniqueData removeTechnique(ResourceLocation path) {
-        return null;//TODO
+        if(!pathDataLocation.containsKey(path)) return null;
+        if(getPathData(path).getLastUsedTechnique() == null) return null;
+
+        ITechniqueData techniqueData = getPathData(path).getTechniqueData(getPathData(path).getLastUsedTechnique());
+
+        PathData pathData = getPathData(path);
+        pathData.handleRealmChange(pathData.getMajorRealm(),0,this);
+        ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+        technique.onTechniqueRemoved(this,techniqueData);
+        pathData.removeLastUsedTechnique();
+
+        return techniqueData;
+
     }
 
     @Override
@@ -619,6 +644,7 @@ public class GenericEntityData implements IEntityData {
         }
     }
 
+    //no scenario where this would happen yet so pretend it does not exist
     @Override
     public void removePath(ResourceLocation path) {
         //TODO

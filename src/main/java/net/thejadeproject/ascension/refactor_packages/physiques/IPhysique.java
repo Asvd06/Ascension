@@ -1,12 +1,17 @@
 package net.thejadeproject.ascension.refactor_packages.physiques;
 
+import net.lucent.easygui.gui.RenderableElement;
+import net.lucent.easygui.gui.UIFrame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
+import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.IInformationContainer;
 
 import java.util.Collection;
 import java.util.Map;
@@ -38,6 +43,9 @@ public interface IPhysique {
     Component getShortDescription();
     Component getDescription();
 
+    @OnlyIn(Dist.CLIENT)
+    //a bit hacky
+    RenderableElement getInformationContainer(UIFrame frame);
     //the paths that this physique "unlocks"
     //without unlocking a path, even with a technique they cannot use it
     //although some paths let you unlock them by learning a technique. (but not all!!)

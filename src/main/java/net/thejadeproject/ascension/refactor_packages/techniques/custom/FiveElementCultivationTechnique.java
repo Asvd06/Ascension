@@ -1,5 +1,7 @@
 package net.thejadeproject.ascension.refactor_packages.techniques.custom;
 
+import net.lucent.easygui.gui.RenderableElement;
+import net.lucent.easygui.gui.UIFrame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -13,6 +15,7 @@ import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroug
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
+import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.PathDataDisplayElement;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
@@ -162,6 +165,14 @@ public class FiveElementCultivationTechnique implements ITechnique {
     @Override
     public boolean isCompatibleWith(ResourceLocation technique) {
         return false;
+    }
+
+    @Override
+    public RenderableElement getInformationContainer(UIFrame frame, PathData pathData) {
+        return new PathDataDisplayElement(frame,
+                getMajorRealmName(pathData.getMajorRealm()),
+                getMinorRealmName(pathData.getMajorRealm(),pathData.getMinorRealm()),
+                getDescription());
     }
 
     @Override

@@ -178,6 +178,7 @@ public class lang extends LanguageProvider {
 
         // Physiques
         add("ascension.physiques.mortal", "Mortal Physique");
+        add("ascension.physiques.mortal.description","so fragile yet... full of potential");//i know cringe but needed smth
         add("ascension.physiques.cripple", "Cripple");
         add("ascension.physiques.severed_meridians", "Severed Meridians");
         add("ascension.physiques.sword_bone", "Sword Bone");

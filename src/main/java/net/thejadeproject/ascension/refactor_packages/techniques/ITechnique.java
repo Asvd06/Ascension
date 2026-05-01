@@ -1,5 +1,7 @@
 package net.thejadeproject.ascension.refactor_packages.techniques;
 
+import net.lucent.easygui.gui.RenderableElement;
+import net.lucent.easygui.gui.UIFrame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -71,6 +73,7 @@ public interface ITechnique {
     default ResourceLocation getDefaultForm(){
         return AscensionRegistries.Paths.PATHS_REGISTRY.get(getPath()).defaultForm();
     }
+    RenderableElement getInformationContainer(UIFrame frame,PathData pathData);
 
     IStabilityHandler getStabilityHandler();
 

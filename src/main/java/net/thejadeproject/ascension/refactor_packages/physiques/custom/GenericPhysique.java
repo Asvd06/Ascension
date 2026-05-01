@@ -1,10 +1,16 @@
 package net.thejadeproject.ascension.refactor_packages.physiques.custom;
 
+import net.lucent.easygui.gui.RenderableElement;
+import net.lucent.easygui.gui.UIFrame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
+import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.IInformationContainer;
 import net.thejadeproject.ascension.refactor_packages.paths.custom.GenericPath;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
@@ -80,6 +86,12 @@ public class GenericPhysique implements IPhysique {
     @Override
     public Component getDescription() {
         return description;
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    @Override
+    public RenderableElement getInformationContainer(UIFrame frame) {
+        return new DescriptionDisplayContainer(frame,getDisplayTitle(),getDescription());
     }
 
     @Override

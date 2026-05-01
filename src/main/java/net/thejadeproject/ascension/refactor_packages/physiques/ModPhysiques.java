@@ -31,6 +31,7 @@ public class ModPhysiques {
 
     public static final DeferredHolder<IPhysique,? extends GenericPhysique> MORTAL = PHYSIQUES.register("mortal",()->
             new GenericPhysique(Component.translatable("ascension.physiques.mortal"))
+                    .setDescription(Component.translatable("ascension.physiques.mortal.description"))
                     .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"body"))
                     .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"essence"))
                     .addPathBonus(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"body"),0.5)

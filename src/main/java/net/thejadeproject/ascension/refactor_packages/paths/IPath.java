@@ -1,5 +1,7 @@
 package net.thejadeproject.ascension.refactor_packages.paths;
 
+import net.lucent.easygui.gui.RenderableElement;
+import net.lucent.easygui.gui.UIFrame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -22,6 +24,7 @@ public interface IPath {
     Component getMajorRealmName(int majorRealm);
     Component getMinorRealmName(int majorRealm,int minorRealm);
 
+    RenderableElement getInformationContainer(UIFrame frame,PathData pathData);
 
     int getMaxMajorRealm();
     int getMaxMinorRealm(int majorRealm);
