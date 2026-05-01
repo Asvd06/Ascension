@@ -8,6 +8,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.effects.ModEffects;
+import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.skills.tempskills.TemporarySkillHelper;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 
@@ -124,6 +127,27 @@ public class ModNeedleEffects {
         });
     }
 
+    // directly add the passive skill with giveSkill() (remove it in another class/event with removeSkill() lol)
+    private static INeedleEffect permanentPassive(String path, ResourceLocation skillId) {
+        return register(new INeedleEffect() {
+            private final ResourceLocation id = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, path);
+
+            @Override
+            public ResourceLocation getId() {
+                return id;
+            }
+
+            @Override
+            public void onHit(LivingEntity target, LivingEntity shooter, Projectile projectile) {
+                if (!(target instanceof ServerPlayer serverTarget)) return;
+                if (!serverTarget.hasData(ModAttachments.ENTITY_DATA)) return;
+
+                IEntityData targetData = serverTarget.getData(ModAttachments.ENTITY_DATA);
+
+                targetData.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
+            }
+        });
+    }
 
     private static INeedleEffect register(INeedleEffect effect) {
         REGISTRY.put(effect.getId(), effect);
