@@ -249,8 +249,8 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends ScholarlySoulTechnique> SCHOLARLY_SOUL_TECHNIQUE =
             TECHNIQUES.register("scholarly_soul_technique",
                     () -> new ScholarlySoulTechnique(testHandler));
-    public static final DeferredHolder<ITechnique, ? extends PaleMoonTechnique> PALE_MOON_SUTRA =
-            TECHNIQUES.register("pale_moon_sutra", () -> new PaleMoonTechnique(testHandler));
+    public static final DeferredHolder<ITechnique, ? extends PaleMoonTechnique> PALE_MOON_SCRIPTURE =
+            TECHNIQUES.register("pale_moon_scripture", () -> new PaleMoonTechnique(testHandler));
 
 
 
