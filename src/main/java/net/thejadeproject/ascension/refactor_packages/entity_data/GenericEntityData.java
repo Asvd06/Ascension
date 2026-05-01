@@ -34,10 +34,8 @@ import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.SkillCastHandler;
-import net.thejadeproject.ascension.refactor_packages.skills.HeldSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.HeldSkills;
-import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
-import net.thejadeproject.ascension.refactor_packages.skills.ISkill;
+import net.thejadeproject.ascension.refactor_packages.skills.*;
+import net.thejadeproject.ascension.refactor_packages.skills.tempskills.TemporarySkillHolder;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 
@@ -59,6 +57,7 @@ public class GenericEntityData implements IEntityData {
     private AscensionAttributeHolder ascensionAttributeHolder;
     private final PathBonusHandler pathBonusHandler = new PathBonusHandler();
     private final EntityQiContainer entityQiContainer = new EntityQiContainer(this);
+    private final TemporarySkillHolder temporarySkills = new TemporarySkillHolder();
     boolean attachedEntityLoaded;
 
 
@@ -165,7 +164,13 @@ public class GenericEntityData implements IEntityData {
         getQiContainer().fullFillQi();
 
         currentHealth = tag.getDouble("current_health");
+
+        if (tag.contains("temporary_skills")) {
+            temporarySkills.deserializeNBT(tag.getCompound("temporary_skills"));
+        }
     }
+
+
     public void sync(Player player){
         for(ResourceLocation form:heldFormData.keySet()){
 
@@ -231,6 +236,7 @@ public class GenericEntityData implements IEntityData {
 
 
         tag.put("skill_cast_handler",getSkillCastHandler().write());
+        tag.put("temporary_skills", temporarySkills.serializeNBT());
         //path data, make sure to also hold the path
     }
 
@@ -721,6 +727,11 @@ public class GenericEntityData implements IEntityData {
             }
         }
         return skills;
+    }
+
+    @Override
+    public TemporarySkillHolder getTemporarySkills() {
+        return temporarySkills;
     }
 
     //============================= SKILL CASTING ====================================

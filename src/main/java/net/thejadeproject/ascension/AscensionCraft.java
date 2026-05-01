@@ -32,9 +32,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.blocks.custom.functions.FreezingEffectItems;
 import net.thejadeproject.ascension.common.blocks.entity.ModBlockEntities;
-import net.thejadeproject.ascension.common.command.cultivation.GiveSkillCommand;
-import net.thejadeproject.ascension.common.command.cultivation.ResetAscensionCommand;
-import net.thejadeproject.ascension.common.command.cultivation.SetCultivationCommand;
+import net.thejadeproject.ascension.common.command.AscensionCommand;
 
 import net.thejadeproject.ascension.common.items.artifacts.talismans.SoulAnchorTalisman;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
@@ -340,9 +338,7 @@ public class AscensionCraft {
 
 
     private void registerCommands(RegisterCommandsEvent event) {
-        SetCultivationCommand.register(event.getDispatcher());
-        GiveSkillCommand.register(event.getDispatcher());
-        ResetAscensionCommand.register(event.getDispatcher());
+        AscensionCommand.register(event.getDispatcher());
     }
 
 

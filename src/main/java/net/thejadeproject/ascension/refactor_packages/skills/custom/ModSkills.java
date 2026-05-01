@@ -19,7 +19,11 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.WhiteLightningCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.five_element.FiveElementCirculation;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.BlindedSensesDebuff;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.CrackedMeridiansDebuff;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.form_change.EnterSpiritForm;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.ParalyzedBodyDebuff;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.VenomousMeridiansDebuff;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.QiSustainedBodySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.RegenerationBoostSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.TurbidEnergyPurgeSkill;
@@ -77,7 +81,8 @@ public class ModSkills {
     // Passives
 
     // Actives
-
+    public static final DeferredHolder<ISkill,? extends QiRelease> QI_RELEASE =
+            SKILLS.register("qi_release", QiRelease::new);
 
     // ──── ELEMENTAL SKILLS ────────────────────────────────────────────
     // Cultivation
@@ -147,6 +152,21 @@ public class ModSkills {
 
 
 
+    // ──── DEBUFF SKILLS ────────────────────────────────────────────
+    // Passives
+    public static final DeferredHolder<ISkill, CrackedMeridiansDebuff> CRACKED_MERIDIANS =
+            SKILLS.register("cracked_meridians_debuff", CrackedMeridiansDebuff::new);
+    public static final DeferredHolder<ISkill, BlindedSensesDebuff> BLINDED_SENSES =
+            SKILLS.register("blinded_senses_debuff", BlindedSensesDebuff::new);
+    public static final DeferredHolder<ISkill, ParalyzedBodyDebuff> PARALYZED_BODY =
+            SKILLS.register("paralyzed_body_debuff", ParalyzedBodyDebuff::new);
+    public static final DeferredHolder<ISkill, VenomousMeridiansDebuff> VENOMOUS_MERIDIANS =
+            SKILLS.register("venomous_meridians_debuff", VenomousMeridiansDebuff::new);
+
+    // Actives
+
+
+
     // ──── Register Skills with onPlayerTick methods ────────────────────────────────────────────
     public static void registerTickingSkills() {
         registerTickingSkill(TURBID_ENERGY_PURGE);
@@ -155,6 +175,8 @@ public class ModSkills {
         registerTickingSkill(REGENERATION_BOOST);
         registerTickingSkill(QI_SUSTAINED_BODY);
         registerTickingSkill(TRUE_FLIGHT);
+        registerTickingSkill(PARALYZED_BODY);
+        registerTickingSkill(VENOMOUS_MERIDIANS);
     }
 
     private static void registerTickingSkill(DeferredHolder<ISkill, ? extends ISkill> skillHolder) {
@@ -167,8 +189,7 @@ public class ModSkills {
         }
     }
 
-    public static final DeferredHolder<ISkill,? extends QiRelease> QI_RELEASE = SKILLS.register("qi_release",
-            QiRelease::new);
+
 
     public static void register(IEventBus modEventBus){
         SKILLS.register(modEventBus);

@@ -308,6 +308,14 @@ public class lang extends LanguageProvider {
         add("ascension.skill.sword_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Sword.");
         add("ascension.skill.trident_mastery_skill", "Trident Mastery");
         add("ascension.skill.trident_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Trident.");
+        add("ascension.skill.blinded_senses_debuff", "Blinded Senses");
+        add("ascension.skill.blinded_senses_debuff.description", "A fog veils the world from your sight, restricting and limiting you.");
+        add("ascension.skill.cracked_meridians_debuff", "Cracked Meridians");
+        add("ascension.skill.cracked_meridians_debuff.description", "As opposing energy floods your Meridians, they crack and break, weakening your body.");
+        add("ascension.skill.paralyzed_body_debuff", "Paralyzed Body");
+        add("ascension.skill.paralyzed_body_debuff.description", "An opposing energy floods your Body, halting your movement.");
+        add("ascension.skill.venomous_meridians_debuff", "Venomous Meridians");
+        add("ascension.skill.venomous_meridians_debuff.description", "As opposing energy floods your Meridians, corroding your flesh and blood.");
 
 
 
@@ -420,6 +428,10 @@ public class lang extends LanguageProvider {
         add("needle_effect.ascension.needle_slowness", "Slowness");
         add("needle_effect.ascension.needle_weakness", "Weakness");
         add("needle_effect.ascension.needle_qi_devouring", "Qi Devouring");
+        add("needle_effect.ascension.needle_cracked_meridians", "Cracked Meridians");
+        add("needle_effect.ascension.needle_blinded_senses", "Blinded Senses");
+        add("needle_effect.ascension.needle_paralyzed_body", "Paralyzed Body");
+        add("needle_effect.ascension.needle_venomous_meridians", "Venomous Meridians");
 
 
 
