@@ -579,6 +579,46 @@ public class lang extends LanguageProvider {
 
 
 
+
+        //Technique Manual Stuff
+        add("item.ascension.technique_binder", "Technique Binder");
+        add("item.ascension.technique_page", "Technique Page");
+
+        add("ascension.item.technique_page", "%s");
+        add("ascension.item.technique_page.blank", "Blank Technique Page");
+
+        add("ascension.binder.technique", "Technique: %s");
+        add("ascension.binder.progress", "Progress: %s/%s");
+        add("ascension.binder.empty", "Empty binder. Add technique pages.");
+
+        add("ascension.toast.invalid_page", "Invalid Page");
+        add("ascension.toast.no_manual_data", "No manual data found");
+        add("ascension.toast.mismatch", "Mismatch");
+        add("ascension.toast.different_technique", "Page is for a different technique");
+        add("ascension.toast.duplicate_page", "Duplicate Page");
+        add("ascension.toast.already_collected", "This chapter is already in the binder");
+        add("ascension.toast.manual_complete", "Manual Complete!");
+        add("ascension.toast.page_added", "%s Added (%s/%s)");
+
+        add("ascension.chapter.bloodfeast_soul_refining_scripture.1", "Chapter 1: The Hunger");
+        add("ascension.chapter.bloodfeast_soul_refining_scripture.2", "Chapter 2: First Blood");
+        add("ascension.chapter.bloodfeast_soul_refining_scripture.3", "Chapter 3: The Feast");
+        add("ascension.chapter.bloodfeast_soul_refining_scripture.4", "Chapter 4: Soul Devouring");
+        add("ascension.chapter.bloodfeast_soul_refining_scripture.5", "Chapter 5: Crimson Ascension");
+        add("ascension.chapter.bloodfeast_soul_refining_scripture.6", "Chapter 6: The Eternal Banquet");
+
+        add("ascension.chapter.white_lightning_ten_stage_technique.1", "Stage 1: Awakening the Spark");
+        add("ascension.chapter.white_lightning_ten_stage_technique.2", "Stage 2: Meridian Ignition");
+        add("ascension.chapter.white_lightning_ten_stage_technique.3", "Stage 3: Tempering the Flesh");
+        add("ascension.chapter.white_lightning_ten_stage_technique.4", "Stage 4: Bone Forging");
+        add("ascension.chapter.white_lightning_ten_stage_technique.5", "Stage 5: The Conductor");
+        add("ascension.chapter.white_lightning_ten_stage_technique.6", "Stage 6: Lightning Heart");
+        add("ascension.chapter.white_lightning_ten_stage_technique.7", "Stage 7: White Flash");
+        add("ascension.chapter.white_lightning_ten_stage_technique.8", "Stage 8: Thunderclap Vessel");
+        add("ascension.chapter.white_lightning_ten_stage_technique.9", "Stage 9: Heaven's Wrath");
+        add("ascension.chapter.white_lightning_ten_stage_technique.10", "Stage 10: The Fist King's Rebirth");
+
+
         //Tooltips
         add("ascension.tooltip.waste", "Waste");
         add("ascension.tooltip.medicinal", "Medicinal");

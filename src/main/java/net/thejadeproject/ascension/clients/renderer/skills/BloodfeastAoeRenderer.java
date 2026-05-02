@@ -2,10 +2,8 @@ package net.thejadeproject.ascension.clients.renderer.skills;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -13,6 +11,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.data_attachments.attachments.PlayerInputStates;
+import net.thejadeproject.ascension.refactor_packages.handlers.player.InputHandler;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -25,8 +25,8 @@ public class BloodfeastAoeRenderer {
 
     // ── Geometry ──────────────────────────────────────────────────────────────
     private static final int   SEGMENTS    = 64;
-    private static final float RING_WIDTH  = 0.20f;
-    private static final float MIST_HEIGHT = 0.5f;
+    private static final float RING_WIDTH  = 0.55f;
+    private static final float MIST_HEIGHT = 2.0f;
 
     // ── Colour ────────────────────────────────────────────────────────────────
     private static final float R = 0.75f;
@@ -52,13 +52,14 @@ public class BloodfeastAoeRenderer {
         Player    player = mc.player;
         if (player == null) return;
 
-        // ── Gate 1: holding skill_cast ────────────────────────────────────────
-        if (!player.hasData(ModAttachments.INPUT_STATES)) return;
-        if (!player.getData(ModAttachments.INPUT_STATES).isHeld("skill_cast")) return;
 
-        // ── Gate 2: active technique is Bloodfeast ────────────────────────────
+        if (!InputHandler.state.contains(InputHandler.CAST_SKILL_KEY)) return;
+
         if (!player.hasData(ModAttachments.ENTITY_DATA)) return;
         var entityData = player.getData(ModAttachments.ENTITY_DATA);
+
+        if (!entityData.hasSkill(ModSkills.BLOODFEAST_BANQUET_SKILL.getId())) return;
+
         PathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
         if (pathData == null || pathData.getLastUsedTechnique() == null) return;
 
@@ -67,10 +68,7 @@ public class BloodfeastAoeRenderer {
         );
         if (!(technique instanceof BloodfeastSoulRefiningTechnique)) return;
 
-        // ── Gate 3: skill is in loadout ───────────────────────────────────────
-        if (!entityData.hasSkill(ModSkills.BLOODFEAST_BANQUET_SKILL.getId())) return;
-
-        // ── Radius ────────────────────────────────────────────────────────────
+        // ── Radius from realm ─────────────────────────────────────────────────
         float radius = BloodfeastSoulRefiningTechnique.getRangeForRealm(pathData.getMajorRealm());
 
         // ── Pulse ─────────────────────────────────────────────────────────────
@@ -80,48 +78,30 @@ public class BloodfeastAoeRenderer {
         pulsePhase = (pulsePhase + PULSE_SPEED * dt) % ((float) (Math.PI * 2.0));
         float pulse = (float) Math.sin(pulsePhase) * PULSE_AMPLITUDE;
 
-        // ── Camera-relative player feet position ──────────────────────────────
-        Camera camera = mc.gameRenderer.getMainCamera();
-        Vec3   cam    = camera.getPosition();
+        // ── Camera-relative player feet ───────────────────────────────────────
+        Vec3  cam = mc.gameRenderer.getMainCamera().getPosition();
+        float ox  = (float) (player.getX() - cam.x);
+        float oy  = (float) (player.getY() - cam.y);
+        float oz  = (float) (player.getZ() - cam.z);
 
-        float ox = (float) (player.getX() - cam.x);
-        float oy = (float) (player.getY() - cam.y);
-        float oz = (float) (player.getZ() - cam.z);
-
-        // ── Build the combined model-view matrix ──────────────────────────────
-        // event.getPoseStack() already holds the camera rotation transform.
-        // We push, translate to the player's world position relative to camera,
-        // then upload that as the model-view matrix RenderSystem will use.
+        // ── Matrix ────────────────────────────────────────────────────────────
         PoseStack ps = event.getPoseStack();
         ps.pushPose();
         ps.translate(ox, oy, oz);
-
-        // Upload matrices — this is what was missing before.
-        // RenderSystem.applyModelViewMatrix() tells the shader about our pose.
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.applyModelViewMatrix();
-
-        // Also set the projection matrix from the event so it matches the scene.
-        RenderSystem.setProjectionMatrix(
-                event.getProjectionMatrix(),
-                VertexSorting.ORTHOGRAPHIC_Z
-        );
+        Matrix4f mat = ps.last().pose();
 
         // ── GL state ──────────────────────────────────────────────────────────
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(
                 org.lwjgl.opengl.GL11.GL_SRC_ALPHA,
-                org.lwjgl.opengl.GL11.GL_ONE        // additive — makes it glow
+                org.lwjgl.opengl.GL11.GL_ONE
         );
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
         RenderSystem.disableCull();
 
-        // ── Get the matrix after our translate ────────────────────────────────
-        Matrix4f mat = ps.last().pose();
-
         Tesselator tes = Tesselator.getInstance();
-
         drawFloorRing(tes, mat, radius, pulse);
         drawMistColumn(tes, mat, radius, pulse);
 
@@ -133,9 +113,6 @@ public class BloodfeastAoeRenderer {
         RenderSystem.disableBlend();
 
         ps.popPose();
-
-        // Re-upload the restored matrix so subsequent renderers see the right state
-        RenderSystem.applyModelViewMatrix();
     }
 
     // ── Floor ring ────────────────────────────────────────────────────────────
@@ -154,11 +131,11 @@ public class BloodfeastAoeRenderer {
             float  c     = (float) Math.cos(angle);
             float  s     = (float) Math.sin(angle);
 
-            // inner vertex — transparent
+            // inner — transparent so only the edge glows
             buf.addVertex(mat, c * innerRadius, 0f, s * innerRadius)
                     .setColor(R, G, B, 0f);
 
-            // outer vertex — glowing
+            // outer — glowing edge
             buf.addVertex(mat, c * radius, 0f, s * radius)
                     .setColor(R, G, B, outerAlpha);
         }
@@ -185,7 +162,7 @@ public class BloodfeastAoeRenderer {
             buf.addVertex(mat, c * radius, 0f, s * radius)
                     .setColor(R, G, B, bottomAlpha);
 
-            // top — fully transparent, GPU lerps the gradient
+            // top — transparent, GPU lerps the smooth gradient
             buf.addVertex(mat, c * radius, MIST_HEIGHT, s * radius)
                     .setColor(R, G, B, 0f);
         }

@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
@@ -21,9 +22,11 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.Sch
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.WhiteLightningTenStageTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueManualRegistry;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ModifierOperation;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ValueContainerModifier;
 
+import java.util.List;
 import java.util.Set;
 
 public class ModTechniques {
@@ -328,5 +331,37 @@ public class ModTechniques {
 
     public static void register(IEventBus modEventBus){
         TECHNIQUES.register(modEventBus);
+
+        modEventBus.addListener(FMLCommonSetupEvent.class, event -> event.enqueueWork(() -> {
+            TechniqueManualRegistry.register(
+                    BLOODFEAST_SOUL_REFINING_SCRIPTURE.getId(),
+                    6,
+                    List.of(
+                            "ascension.chapter.bloodfeast_soul_refining_scripture.1",
+                            "ascension.chapter.bloodfeast_soul_refining_scripture.2",
+                            "ascension.chapter.bloodfeast_soul_refining_scripture.3",
+                            "ascension.chapter.bloodfeast_soul_refining_scripture.4",
+                            "ascension.chapter.bloodfeast_soul_refining_scripture.5",
+                            "ascension.chapter.bloodfeast_soul_refining_scripture.6"
+                    )
+            );
+            TechniqueManualRegistry.register(
+                    WHITE_LIGHTNING_TEN_STAGE_TECHNIQUE.getId(),
+                    10,
+                    List.of(
+                            "ascension.chapter.white_lightning_ten_stage_technique.1",
+                            "ascension.chapter.white_lightning_ten_stage_technique.2",
+                            "ascension.chapter.white_lightning_ten_stage_technique.3",
+                            "ascension.chapter.white_lightning_ten_stage_technique.4",
+                            "ascension.chapter.white_lightning_ten_stage_technique.5",
+                            "ascension.chapter.white_lightning_ten_stage_technique.6",
+                            "ascension.chapter.white_lightning_ten_stage_technique.7",
+                            "ascension.chapter.white_lightning_ten_stage_technique.8",
+                            "ascension.chapter.white_lightning_ten_stage_technique.9",
+                            "ascension.chapter.white_lightning_ten_stage_technique.10"
+                    )
+            );
+
+        }));
     }
 }

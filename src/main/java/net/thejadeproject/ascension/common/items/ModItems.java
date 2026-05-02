@@ -10,6 +10,8 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
 
 import net.thejadeproject.ascension.common.items.artifacts.talismans.*;
+import net.thejadeproject.ascension.common.items.techniques.TechniqueBinderItem;
+import net.thejadeproject.ascension.common.items.techniques.TechniquePageItem;
 import net.thejadeproject.ascension.common.items.tools.hidden_weapons.NeedleItem;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.common.items.artifacts.*;
@@ -310,6 +312,12 @@ public class ModItems {
 
     public static final DeferredItem<TechniqueTransferItem> TECHNIQUE_MANUAL = ITEMS.register("technique_manual",
             () -> new TechniqueTransferItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> TECHNIQUE_PAGE = ITEMS.register("technique_page",
+            () -> new TechniquePageItem(new Item.Properties().stacksTo(16)));
+
+    public static final DeferredItem<Item> TECHNIQUE_BINDER = ITEMS.register("technique_binder",
+            () -> new TechniqueBinderItem(new Item.Properties().stacksTo(1)));
 
 
 

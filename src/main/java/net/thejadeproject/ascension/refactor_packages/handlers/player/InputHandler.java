@@ -37,7 +37,7 @@ public class InputHandler {
     public static final KeyMapping SKILL_WHEEL_OVERLAY = new KeyMapping("key.ascension.skill_wheel", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_R, "ascension skills");
     public static final KeyMapping INTROSPECTION = new KeyMapping("key.ascension.introspection", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_I, "ascension menu");
 
-    private final static HashSet<KeyMapping> state = new HashSet<>();
+    public final static HashSet<KeyMapping> state = new HashSet<>();
     //maps a keyMapping->handler
     private final static HashMap<KeyMapping, ActionHandler> actionHandlerMapping = new HashMap<>(){{
         put(CAST_SKILL_KEY,new ActionHandler("skill_cast").setOnDown((mod)-> {

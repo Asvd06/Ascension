@@ -61,6 +61,27 @@ public class ModDataComponents {
                     .networkSynchronized(ByteBufCodecs.STRING_UTF8)
                     .build()
     );
+    public static final Supplier<DataComponentType<Integer>> COLLECTED_PAGES = DATA_COMPONENTS.register(
+            "collected_pages",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .build()
+    );
+    public static final Supplier<DataComponentType<Integer>> PAGE_INDEX = DATA_COMPONENTS.register(
+            "page_index",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .build()
+    );
+    public static final Supplier<DataComponentType<List<Integer>>> COLLECTED_PAGE_INDICES = DATA_COMPONENTS.register(
+            "collected_page_indices",
+            () -> DataComponentType.<List<Integer>>builder()
+                    .persistent(Codec.INT.listOf())
+                    .networkSynchronized(ByteBufCodecs.fromCodec(Codec.INT.listOf()))
+                    .build()
+    );
 
     public static final Supplier<DataComponentType<Integer>> PURITY = DATA_COMPONENTS.register(
             "purity",
