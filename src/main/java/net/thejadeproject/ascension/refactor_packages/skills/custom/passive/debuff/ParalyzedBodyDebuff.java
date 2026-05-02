@@ -4,12 +4,18 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimpleDebuffSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.skill_data.DebuffSkillHelper;
 
-public class ParalyzedBodyDebuff extends SimplePassiveSkill implements ITickingSkill {
+public class ParalyzedBodyDebuff extends SimpleDebuffSkill implements ITickingSkill {
 
     @Override
     public void onPlayerTick(ServerPlayer player, IEntityData entityData) {
+        if (DebuffSkillHelper.removeIfExpired(player, entityData, ModSkills.PARALYZED_BODY.getId())) {
+            return;
+        }
+
         player.setSprinting(false);
 
         Vec3 movement = player.getDeltaMovement();

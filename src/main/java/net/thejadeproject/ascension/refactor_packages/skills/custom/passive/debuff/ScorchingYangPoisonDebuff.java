@@ -5,20 +5,24 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimpleDebuffSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.skill_data.DebuffSkillHelper;
 
-public class ScorchingYangPoisonDebuff extends SimplePassiveSkill implements ITickingSkill {
+public class ScorchingYangPoisonDebuff extends SimpleDebuffSkill implements ITickingSkill {
 
     private static final int TICK_INTERVAL = 20;
     private static final float DAMAGE_PER_TICK = 1.0F;
 
-    private int tickCounter = 0;
 
     @Override
     public void onPlayerTick(ServerPlayer player, IEntityData entityData) {
-        tickCounter++;
+        if (DebuffSkillHelper.removeIfExpired(player, entityData, ModSkills.SCORCHING_YANG_POISON.getId())) {
+            return;
+        }
 
-        if (tickCounter % TICK_INTERVAL != 0) {
+
+        if (player.tickCount % TICK_INTERVAL != 0) {
             return;
         }
 

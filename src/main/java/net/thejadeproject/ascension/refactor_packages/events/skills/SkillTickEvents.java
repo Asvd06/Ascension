@@ -7,7 +7,6 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.skills.tempskills.TemporarySkillHelper;
 
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID)
 public class SkillTickEvents {
@@ -19,8 +18,6 @@ public class SkillTickEvents {
         if (!player.hasData(ModAttachments.ENTITY_DATA)) return;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
-
-        TemporarySkillHelper.tickTemporarySkills(player, entityData);
 
         SkillTickManager.tickPlayer(player, entityData);
     }

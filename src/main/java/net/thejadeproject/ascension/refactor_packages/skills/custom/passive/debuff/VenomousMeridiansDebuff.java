@@ -3,9 +3,11 @@ package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.deb
 import net.minecraft.server.level.ServerPlayer;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimpleDebuffSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.skill_data.DebuffSkillHelper;
 
-public class VenomousMeridiansDebuff extends SimplePassiveSkill implements ITickingSkill {
+public class VenomousMeridiansDebuff extends SimpleDebuffSkill implements ITickingSkill {
 
     @Override
     protected String getTitleKey() {
@@ -19,6 +21,10 @@ public class VenomousMeridiansDebuff extends SimplePassiveSkill implements ITick
 
     @Override
     public void onPlayerTick(ServerPlayer player, IEntityData entityData) {
+        if (DebuffSkillHelper.removeIfExpired(player, entityData, ModSkills.VENOMOUS_MERIDIANS.getId())) {
+            return;
+        }
+
         if (player.tickCount % 40 != 0) return;
 
         if (player.getHealth() <= 1.0F) return;
