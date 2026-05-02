@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -19,6 +20,7 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.BloodfeastSoulRefiningTechnique;
 import org.joml.Matrix4f;
+
 
 @OnlyIn(Dist.CLIENT)
 public class BloodfeastAoeRenderer {
@@ -57,6 +59,12 @@ public class BloodfeastAoeRenderer {
 
         if (!player.hasData(ModAttachments.ENTITY_DATA)) return;
         var entityData = player.getData(ModAttachments.ENTITY_DATA);
+
+//        ResourceLocation skillIdentifier = AscensionRegistries.Skills.SKILL_REGISTRY.getKey(entityData.getSkillCastHandler().getCastingInstance().getCastableSkill());
+//        if(!ModSkills.BLOODFEAST_BANQUET_SKILL.getKey().equals(skillIdentifier)){
+//            return;
+//        }
+
 
         if (!entityData.hasSkill(ModSkills.BLOODFEAST_BANQUET_SKILL.getId())) return;
 

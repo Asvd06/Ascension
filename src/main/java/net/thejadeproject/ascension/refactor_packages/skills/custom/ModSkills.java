@@ -12,6 +12,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.body.WhiteLightningFist;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.fire.FireSpray;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.VoidstepSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.BloodfeastBanquetSkill;
@@ -49,6 +50,10 @@ public class ModSkills {
     // Actives
     public static final DeferredHolder<ISkill, ? extends QiFlightSkill> AIR_STEP =
             SKILLS.register("air_step", QiFlightSkill::new);
+
+    public static final DeferredHolder<ISkill, ? extends VoidstepSkill> VOIDSTEP =
+            SKILLS.register("voidstep", VoidstepSkill::new);
+
     public static final DeferredHolder<ISkill,? extends EnterSpiritForm> ENTER_SPIRIT_FORM =
             SKILLS.register("enter_spirit_form", EnterSpiritForm::new);
 
