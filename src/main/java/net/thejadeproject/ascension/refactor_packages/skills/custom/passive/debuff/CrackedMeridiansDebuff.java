@@ -1,8 +1,8 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff;
 
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimpleDebuffSkill;
 
-public class CrackedMeridiansDebuff extends SimplePassiveSkill {
+public class CrackedMeridiansDebuff extends SimpleDebuffSkill {
 
     @Override
     protected String getTitleKey() {

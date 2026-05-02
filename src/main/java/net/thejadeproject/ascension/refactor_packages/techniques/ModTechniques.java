@@ -289,7 +289,6 @@ public class ModTechniques {
 
         public static final DeferredHolder<ITechnique, ? extends SoulThreadTechnique> SOUL_THREAD_TECHNIQUE
         public static final DeferredHolder<ITechnique, ? extends MirrorSoulTechnique> MIRROR_SOUL_TECHNIQUE
-
         public static final DeferredHolder<ITechnique, ? extends NineEchoSoulTechnique> NINE_ECHOS_SOUL_ART
         public static final DeferredHolder<ITechnique, ? extends JadeSpiritTechnique> JADE_SPIRIT_SCRIPTURE
         public static final DeferredHolder<ITechnique, ? extends GhostLanternTechnique> GHOST_LANTERN_METHOD

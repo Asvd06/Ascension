@@ -35,7 +35,6 @@ import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.SkillCastHandler;
 import net.thejadeproject.ascension.refactor_packages.skills.*;
-import net.thejadeproject.ascension.refactor_packages.skills.tempskills.TemporarySkillHolder;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 
@@ -57,7 +56,6 @@ public class GenericEntityData implements IEntityData {
     private AscensionAttributeHolder ascensionAttributeHolder;
     private final PathBonusHandler pathBonusHandler = new PathBonusHandler();
     private final EntityQiContainer entityQiContainer = new EntityQiContainer(this);
-    private final TemporarySkillHolder temporarySkills = new TemporarySkillHolder();
     boolean attachedEntityLoaded;
 
 
@@ -168,9 +166,6 @@ public class GenericEntityData implements IEntityData {
 
         currentHealth = tag.getDouble("current_health");
 
-        if (tag.contains("temporary_skills")) {
-            temporarySkills.deserializeNBT(tag.getCompound("temporary_skills"));
-        }
     }
 
 
@@ -239,7 +234,6 @@ public class GenericEntityData implements IEntityData {
 
 
         tag.put("skill_cast_handler",getSkillCastHandler().write());
-        tag.put("temporary_skills", temporarySkills.serializeNBT());
         //path data, make sure to also hold the path
     }
 
@@ -792,10 +786,6 @@ public class GenericEntityData implements IEntityData {
         return skills;
     }
 
-    @Override
-    public TemporarySkillHolder getTemporarySkills() {
-        return temporarySkills;
-    }
 
     //============================= SKILL CASTING ====================================
     @Override

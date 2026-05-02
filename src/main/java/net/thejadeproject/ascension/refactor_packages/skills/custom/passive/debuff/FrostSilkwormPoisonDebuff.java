@@ -10,15 +10,15 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimpleDebuffSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.skill_data.DebuffSkillData;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.skill_data.DebuffSkillHelper;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ModifierOperation;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ValueContainerModifier;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
-public class FrostSilkwormPoisonDebuff extends SimplePassiveSkill implements ITickingSkill {
+public class FrostSilkwormPoisonDebuff extends SimpleDebuffSkill implements ITickingSkill {
 
     // Stage boundaries in ticks (20 ticks = 1 second)
     private static final int STAGE_2_TICKS = 6_000;   //  5 minutes
@@ -38,11 +38,6 @@ public class FrostSilkwormPoisonDebuff extends SimplePassiveSkill implements ITi
     private static final ResourceLocation DRAIN_ID =
             ResourceLocation.fromNamespaceAndPath("ascension", "frost_silkworm_hp_drain");
 
-    private final Map<UUID, Integer> ticksPerPlayer = new HashMap<>();
-
-    private int getTicks(ServerPlayer player) {
-        return ticksPerPlayer.getOrDefault(player.getUUID(), 0);
-    }
 
     private int getStage(int ticks) {
         if (ticks >= STAGE_4_TICKS) return 4;
@@ -53,8 +48,14 @@ public class FrostSilkwormPoisonDebuff extends SimplePassiveSkill implements ITi
 
     @Override
     public void onPlayerTick(ServerPlayer player, IEntityData entityData) {
-        int ticks = getTicks(player) + 1;
-        ticksPerPlayer.put(player.getUUID(), ticks);
+        if (DebuffSkillHelper.removeIfExpired(player, entityData, ModSkills.FROST_SILKWORM_POISON.getId())) {
+            return;
+        }
+
+        DebuffSkillData data = DebuffSkillHelper.getDebuffData(entityData, ModSkills.FROST_SILKWORM_POISON.getId());
+        if (data == null) return;
+
+        int ticks = (int) data.getElapsedTicks(player.serverLevel().getGameTime());
 
         int stage = getStage(ticks);
 
@@ -64,6 +65,7 @@ public class FrostSilkwormPoisonDebuff extends SimplePassiveSkill implements ITi
             case 3 -> FREEZE_STAGE_3;
             default -> FREEZE_STAGE_4;
         };
+
         player.setTicksFrozen(Math.max(player.getTicksFrozen(), targetFreeze));
 
         if (stage == 4 && ticks % DAMAGE_INTERVAL == 0) {
@@ -102,7 +104,6 @@ public class FrostSilkwormPoisonDebuff extends SimplePassiveSkill implements ITi
     @Override
     public void onRemoved(IEntityData attachedEntityData, IPersistentSkillData persistentData) {
         if (!(attachedEntityData.getAttachedEntity() instanceof ServerPlayer player)) return;
-        ticksPerPlayer.remove(player.getUUID());
         restoreMaxHealth(player);
     }
 

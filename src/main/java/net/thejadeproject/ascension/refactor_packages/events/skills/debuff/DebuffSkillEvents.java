@@ -8,6 +8,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.skill_data.DebuffSkillHelper;
 
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID)
 public class DebuffSkillEvents {
@@ -22,6 +23,9 @@ public class DebuffSkillEvents {
         if (targetData.hasSkill(ModSkills.CRACKED_MERIDIANS.getId())) {
             event.setAmount(event.getAmount() * 1.50F);
         }
+
+        DebuffSkillHelper.removeIfExpired(target, targetData, ModSkills.CRACKED_MERIDIANS.getId());
+        DebuffSkillHelper.removeIfExpired(target, targetData, ModSkills.BLINDED_SENSES.getId());
 
 
     }

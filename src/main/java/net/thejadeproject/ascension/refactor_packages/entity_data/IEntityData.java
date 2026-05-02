@@ -23,7 +23,6 @@ import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.SkillCastHandler;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
-import net.thejadeproject.ascension.refactor_packages.skills.tempskills.TemporarySkillHolder;
 import net.thejadeproject.ascension.refactor_packages.stats.custom.ModStats;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.util.ModAttributes;
@@ -120,7 +119,6 @@ public interface IEntityData {
 
     Set<ResourceLocation> getAllSkills();
 
-    TemporarySkillHolder getTemporarySkills();
     //============================= SKILL CASTING ====================================
     SkillCastHandler getSkillCastHandler();
     EntityQiContainer getQiContainer();

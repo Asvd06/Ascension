@@ -20,11 +20,9 @@ import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.SkillCastHandler;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
-import net.thejadeproject.ascension.refactor_packages.skills.tempskills.TemporarySkillHolder;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 //TODO implement properly
@@ -328,11 +326,6 @@ public class RemoteEntityData implements IEntityData{
     @Override
     public Set<ResourceLocation> getAllSkills() {
         return EntityDataManager.getEntityData(getWatchedEntityData()).getAllSkills();
-    }
-
-    @Override
-    public TemporarySkillHolder getTemporarySkills() {
-        return null;
     }
 
     @Override
