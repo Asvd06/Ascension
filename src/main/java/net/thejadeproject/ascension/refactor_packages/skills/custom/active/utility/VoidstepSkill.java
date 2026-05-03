@@ -39,6 +39,10 @@ public class VoidstepSkill implements ICastableSkill {
     private static final float  SOUND_VOLUME    = 0.35f;
     private static final float  SOUND_PITCH     = 1.6f;
 
+    private static final double BASE_QI_COST    = 30.0D;
+    private static final double QI_COST_PER_REALM = 10.0D;
+    private static final int    COOLDOWN_TICKS  = 20;
+
     // ── ISkill ────────────────────────────────────────────────────────────────
 
     @Override public void onAdded(IEntityData attachedEntityData) {}
@@ -87,6 +91,18 @@ public class VoidstepSkill implements ICastableSkill {
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
+        if (caster.level().isClientSide()) return new CastResult(CastResult.Type.SUCCESS);
+        if (!caster.hasData(ModAttachments.ENTITY_DATA)) return new CastResult(CastResult.Type.FAILURE);
+
+        IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
+        PathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
+        int majorRealm = (pathData != null) ? pathData.getMajorRealm() : 0;
+        double qiCost = BASE_QI_COST + (majorRealm * QI_COST_PER_REALM);
+
+        if (!entityData.getQiContainer().hasQi(qiCost)) {
+            return new CastResult(CastResult.Type.FAILURE);
+        }
+
         return new CastResult(CastResult.Type.SUCCESS);
     }
 
@@ -99,6 +115,10 @@ public class VoidstepSkill implements ICastableSkill {
 
         PathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
         int majorRealm = (pathData != null) ? pathData.getMajorRealm() : 0;
+        double qiCost = BASE_QI_COST + (majorRealm * QI_COST_PER_REALM);
+
+        if (!entityData.getQiContainer().tryConsumeQi(qiCost)) return;
+
         double range = BASE_RANGE + (majorRealm * RANGE_PER_REALM);
 
         Vec3 direction = player.getLookAngle();
@@ -130,7 +150,7 @@ public class VoidstepSkill implements ICastableSkill {
 
     @Override
     public int getCooldown(CastEndData castEndData) {
-        return 20;
+        return COOLDOWN_TICKS;
     }
 
     private Vec3 resolveDestination(Player player, Vec3 direction, double range) {

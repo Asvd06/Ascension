@@ -46,6 +46,7 @@ public class DawningSunTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(ModSkills.DAWNING_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
+        heldEntity.giveSkill(ModSkills.QI_RELEASE.getId(), ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }
 
@@ -56,6 +57,7 @@ public class DawningSunTechnique extends GenericTechnique {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }
         heldEntity.removeSkill(ModSkills.DAWNING_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
+        heldEntity.removeSkill(ModSkills.QI_RELEASE.getId(), ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }
 

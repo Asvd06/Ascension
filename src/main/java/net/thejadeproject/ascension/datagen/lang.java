@@ -399,8 +399,53 @@ public class lang extends LanguageProvider {
         add("ascension.skill.bloodfeast_banquet", "§4Bloodfeast Banquet");
         add("ascension.skill.bloodfeast_banquet.description", "§4Draw upon the life-force of nearby creatures, feasting on their blood to fuel your cultivation. The greater your realm, the wider your table.");
 
-        add("ascension.skill.body_cultivation", "§6Body Refinement Technique");
-        add("ascension.skill.body_cultivation.description", "§6Adversity reveals the true body. When dealt a blow of sufficient weight, your Qi channels the impact directly into your core, forging your flesh ever denser. Damage beyond tenfold becomes fuel — more pain, more progress.");
+        // Body cultivation — T1
+        add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");
+        add("ascension.skill.body_cultivation_fire.description", "§6The heart burns with every strike, its heat sinking into the flesh and tempering it from within.");
+        add("ascension.skill.body_cultivation_water", "§6Water Body Cleansing");
+        add("ascension.skill.body_cultivation_water.description", "§6The kidneys draw away what should not remain, each wound leaving the body clearer than before.");
+        add("ascension.skill.body_cultivation_wood", "§6Wood Body Conditioning");
+        add("ascension.skill.body_cultivation_wood.description", "§6The liver endures strain without breaking, the body growing stronger each time it is forced to bend.");
+        add("ascension.skill.body_cultivation_earth", "§6Earth Body Hardening");
+        add("ascension.skill.body_cultivation_earth.description", "§6The spleen settles deep and unmoving, each blow sinking into the body without shaking its foundation.");
+        add("ascension.skill.body_cultivation_metal", "§6Metal Body Refinement");
+        add("ascension.skill.body_cultivation_metal.description", "§6The lungs refine with every breath, each strike shaving away weakness and leaving something sharper behind.");
+        // Body cultivation — T2
+        add("ascension.skill.body_cultivation_wood_fire", "§6Scorched Root Tempering");
+        add("ascension.skill.body_cultivation_wood_fire.description", "§6Liver feeds heart, and heart answers with flame. Growth and fire take hold together, the body enduring without withering.");
+        add("ascension.skill.body_cultivation_fire_earth", "§6Forge Foundation Tempering");
+        add("ascension.skill.body_cultivation_fire_earth.description", "§6The heart burns while the spleen holds firm beneath it. Heat settles into flesh that does not give, thickening under each strike.");
+        add("ascension.skill.body_cultivation_earth_metal", "§6Mountain Iron Refinement");
+        add("ascension.skill.body_cultivation_earth_metal.description", "§6Spleen anchors as lungs compress. Each blow is taken in and condensed, the body growing dense and unyielding.");
+        add("ascension.skill.body_cultivation_metal_water", "§6Tempered Current Refinement");
+        add("ascension.skill.body_cultivation_metal_water.description", "§6The lungs refine as the kidneys carry away. What remains is cleaner and sharper, the body honed through loss and renewal.");
+        add("ascension.skill.body_cultivation_water_wood", "§6Rising Root Cleansing");
+        add("ascension.skill.body_cultivation_water_wood.description", "§6Kidneys nourish what the liver shapes. What sinks into the body returns as quiet strength, growing beneath the surface.");
+        // Body cultivation — T3
+        add("ascension.skill.body_cultivation_wood_fire_earth", "§6Blazing Cycle Tempering");
+        add("ascension.skill.body_cultivation_wood_fire_earth.description", "§6Liver kindles the heart, and the flame settles into the spleen. Growth feeds fire, and fire is given form, layering strength with every trial.");
+        add("ascension.skill.body_cultivation_fire_earth_metal", "§6Smelted Earth Refinement");
+        add("ascension.skill.body_cultivation_fire_earth_metal.description", "§6The heart burns inward, held fast by the spleen, until the lungs refine what remains. The body becomes like ore — only what endures is left behind.");
+        add("ascension.skill.body_cultivation_earth_metal_water", "§6Sunken Steel Hardening");
+        add("ascension.skill.body_cultivation_earth_metal_water.description", "§6The spleen bears the weight as the lungs compress it, the kidneys drawing everything deeper. What is suffered no longer leaves — it settles within.");
+        add("ascension.skill.body_cultivation_metal_water_wood", "§6Iron Growth Refinement");
+        add("ascension.skill.body_cultivation_metal_water_wood.description", "§6The lungs sharpen, the kidneys carry, and the liver reshapes what flows through them. The body yields where needed and hardens where it must.");
+        add("ascension.skill.body_cultivation_water_wood_fire", "§6Cycle of Renewal");
+        add("ascension.skill.body_cultivation_water_wood_fire.description", "§6From kidney to liver to heart, the cycle turns without pause. What is damaged passes through it and returns transformed.");
+        // Body cultivation — T4
+        add("ascension.skill.body_cultivation_wood_fire_earth_metal", "§6Four Cycle Refinement");
+        add("ascension.skill.body_cultivation_wood_fire_earth_metal.description", "§6It begins in the liver and passes forward — heart, spleen, then lung — each taking its turn. The body is carried through the sequence, each cycle leaving it harder to break.");
+        add("ascension.skill.body_cultivation_fire_earth_metal_water", "§6Endless Forging");
+        add("ascension.skill.body_cultivation_fire_earth_metal_water.description", "§6The heart ignites it, the spleen holds it, the lungs refine it, and the kidneys carry it onward. The body is forged again and again without rest.");
+        add("ascension.skill.body_cultivation_earth_metal_water_wood", "§6Ancient Circuit Hardening");
+        add("ascension.skill.body_cultivation_earth_metal_water_wood.description", "§6What the spleen endures, the lungs condense, the kidneys sink, and the liver reshapes. The body follows a rhythm it no longer resists.");
+        add("ascension.skill.body_cultivation_metal_water_wood_fire", "§6Four Pillar Tempering");
+        add("ascension.skill.body_cultivation_metal_water_wood_fire.description", "§6The lungs carve the edge, the kidneys bear the flow, the liver gives it form, and the heart drives it forward. Each force supports the others, holding the body together.");
+        add("ascension.skill.body_cultivation_water_wood_fire_earth", "§6Flowing Foundation Tempering");
+        add("ascension.skill.body_cultivation_water_wood_fire_earth.description", "§6The kidneys set it in motion, the liver raises it, the heart ignites it, and the spleen brings it to rest. Change flows cleanly, each phase reinforcing the next.");
+        // Body cultivation — T5
+        add("ascension.skill.body_cultivation", "§6Five Element Body Refinement");
+        add("ascension.skill.body_cultivation.description", "§6The cycle closes — liver, heart, spleen, lung, kidney — each giving way to the next without interruption. Nothing is lost between them; every trial is carried forward and returned as strength.");
 
 
 

@@ -8,8 +8,6 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.skill_data.GenericCultivationSkillData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
@@ -19,10 +17,12 @@ import java.util.Set;
 
 public class BodyElementTechnique extends GenericTechnique {
     private final ResourceLocation element;
+    private final ResourceLocation skillId;
 
-    public BodyElementTechnique(ResourceLocation element, Component title, double baseRate, BasicStatChangeHandler handler) {
+    public BodyElementTechnique(ResourceLocation element, Component title, double baseRate, BasicStatChangeHandler handler, ResourceLocation skillId) {
         super(ModPaths.BODY.getId(), title, baseRate, Set.of());
         this.element = element;
+        this.skillId = skillId;
         setStatChangeHandler(handler);
     }
 
@@ -36,11 +36,7 @@ public class BodyElementTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
-        heldEntity.giveSkill(
-            ModSkills.BODY_CULTIVATION.getId(),
-            new GenericCultivationSkillData(getBaseRate(), Set.of()),
-            ModForms.MORTAL_VESSEL.getId()
-        );
+        heldEntity.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
     }
 
     @Override
@@ -48,7 +44,7 @@ public class BodyElementTechnique extends GenericTechnique {
         heldEntity.getPathData(getPath()).handleRealmChange(
             heldEntity.getPathData(getPath()).getMajorRealm(), 0, heldEntity
         );
-        heldEntity.removeSkill(ModSkills.BODY_CULTIVATION.getId(), ModForms.MORTAL_VESSEL.getId());
+        heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
     }
 
     @Override

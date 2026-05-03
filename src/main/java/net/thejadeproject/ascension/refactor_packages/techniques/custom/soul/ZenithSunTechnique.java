@@ -46,6 +46,7 @@ public class ZenithSunTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(ModSkills.ZENITH_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
+        heldEntity.giveSkill(ModSkills.QI_RELEASE.getId(), ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }
 
@@ -56,6 +57,7 @@ public class ZenithSunTechnique extends GenericTechnique {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }
         heldEntity.removeSkill(ModSkills.ZENITH_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
+        heldEntity.removeSkill(ModSkills.QI_RELEASE.getId(), ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }
 

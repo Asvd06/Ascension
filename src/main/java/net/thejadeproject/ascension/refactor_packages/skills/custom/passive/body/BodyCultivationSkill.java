@@ -1,5 +1,6 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -13,60 +14,49 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.Simp
 
 public class BodyCultivationSkill extends SimplePassiveSkill {
 
-    public BodyCultivationSkill() {
+    private static final float   MIN_DAMAGE       = 10.0f;
+    private static final double  BASE_MULTIPLIER  = 3.3;
+
+    private final String titleKey;
+    private final String descriptionKey;
+    private final ResourceLocation skillId;
+
+    public BodyCultivationSkill(String titleKey, String descriptionKey, ResourceLocation skillId) {
+        this.titleKey = titleKey;
+        this.descriptionKey = descriptionKey;
+        this.skillId = skillId;
         NeoForge.EVENT_BUS.register(this);
     }
 
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent.Post event) {
-        if (event.getEntity().level().isClientSide()) {
-            return;
-        }
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
+        if (event.getEntity().level().isClientSide()) return;
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         float damage = event.getNewDamage();
-        if (damage < 10.0f) {
-            return;
-        }
+        if (damage < MIN_DAMAGE) return;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        if (!entityData.hasSkill(skillId)) return;
+
         PathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
-        if (bodyPath == null || bodyPath.isBreakingThrough()) {
-            return;
-        }
+        if (bodyPath == null || bodyPath.isBreakingThrough()) return;
 
         EntityQiContainer qiContainer = entityData.getQiContainer();
-        if (qiContainer == null) {
-            return;
-        }
+        if (qiContainer == null) return;
+        if (!qiContainer.hasQi(damage)) return;
+        if (!qiContainer.tryConsumeQi(damage)) return;
 
-        if (!qiContainer.hasQi(damage)) {
-            return;
-        }
-
-        if (!qiContainer.tryConsumeQi(damage)) {
-            return;
-        }
-
-        double progressGain = damage * 3.3;
-        bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + progressGain);
+        bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + (damage * BASE_MULTIPLIER));
         bodyPath.sync(player);
     }
 
     @Override
-    protected String getTitleKey() {
-        return "ascension.skill.body_cultivation";
-    }
+    protected String getTitleKey() { return titleKey; }
 
     @Override
-    protected String getDescriptionKey() {
-        return "ascension.skill.body_cultivation.description";
-    }
+    protected String getDescriptionKey() { return descriptionKey; }
 
     @Override
-    protected String getIconPath() {
-        return "textures/spells/icon/placeholder.png";
-    }
+    protected String getIconPath() { return "textures/spells/icon/placeholder.png"; }
 }

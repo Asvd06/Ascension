@@ -50,6 +50,9 @@ public class BloodfeastBanquetSkill implements ICastableSkill {
 
     private static final ResourceLocation ESSENCE_PATH = ModPaths.ESSENCE.getId();
 
+    private static final double BASE_QI_COST_PER_SECOND   = 40.0D;
+    private static final double QI_COST_PER_REALM          = 20.0D;
+
     /** Base HP drained from each target per tick. */
     private static final float BASE_DRAIN = 0.5f;
 
@@ -68,6 +71,18 @@ public class BloodfeastBanquetSkill implements ICastableSkill {
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
+        if (caster.level().isClientSide()) return new CastResult(CastResult.Type.SUCCESS);
+        if (!caster.hasData(ModAttachments.ENTITY_DATA)) return new CastResult(CastResult.Type.FAILURE);
+
+        IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
+        PathData pathData = entityData.getPathData(ESSENCE_PATH);
+        int majorRealm = (pathData != null) ? pathData.getMajorRealm() : 0;
+        double qiCost = BASE_QI_COST_PER_SECOND + (majorRealm * QI_COST_PER_REALM);
+
+        if (!entityData.getQiContainer().hasQi(qiCost)) {
+            return new CastResult(CastResult.Type.FAILURE);
+        }
+
         return new CastResult(CastResult.Type.SUCCESS);
     }
 
@@ -80,6 +95,11 @@ public class BloodfeastBanquetSkill implements ICastableSkill {
             PathData pathData      = entityData.getPathData(ESSENCE_PATH);
 
             if (pathData == null)                        return false;
+
+            if (ticksElapsed > 0 && ticksElapsed % 20 == 0) {
+                double qiCost = BASE_QI_COST_PER_SECOND + (pathData.getMajorRealm() * QI_COST_PER_REALM);
+                if (!entityData.getQiContainer().tryConsumeQi(qiCost)) return false;
+            }
             if (pathData.isBreakingThrough())            return false;
             if (pathData.getLastUsedTechnique() == null) return false;
 

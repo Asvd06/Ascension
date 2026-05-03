@@ -1,5 +1,6 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom;
 
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -105,9 +106,100 @@ public class ModSkills {
 
 
     // ──── BODY SKILLS ────────────────────────────────────────────
-    // Cultivation
-    public static final DeferredHolder<ISkill, ? extends BodyCultivationSkill> BODY_CULTIVATION =
-            SKILLS.register("body_cultivation", BodyCultivationSkill::new);
+    // Cultivation — T1
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_FIRE =
+            SKILLS.register("body_cultivation_fire", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_fire", "ascension.skill.body_cultivation_fire.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_fire")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WATER =
+            SKILLS.register("body_cultivation_water", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_water", "ascension.skill.body_cultivation_water.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_water")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WOOD =
+            SKILLS.register("body_cultivation_wood", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_wood", "ascension.skill.body_cultivation_wood.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_wood")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_EARTH =
+            SKILLS.register("body_cultivation_earth", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_earth", "ascension.skill.body_cultivation_earth.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_earth")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_METAL =
+            SKILLS.register("body_cultivation_metal", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_metal", "ascension.skill.body_cultivation_metal.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_metal")));
+
+    // Cultivation — T2
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WOOD_FIRE =
+            SKILLS.register("body_cultivation_wood_fire", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_wood_fire", "ascension.skill.body_cultivation_wood_fire.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_wood_fire")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_FIRE_EARTH =
+            SKILLS.register("body_cultivation_fire_earth", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_fire_earth", "ascension.skill.body_cultivation_fire_earth.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_fire_earth")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_EARTH_METAL =
+            SKILLS.register("body_cultivation_earth_metal", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_earth_metal", "ascension.skill.body_cultivation_earth_metal.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_earth_metal")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_METAL_WATER =
+            SKILLS.register("body_cultivation_metal_water", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_metal_water", "ascension.skill.body_cultivation_metal_water.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_metal_water")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WATER_WOOD =
+            SKILLS.register("body_cultivation_water_wood", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_water_wood", "ascension.skill.body_cultivation_water_wood.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_water_wood")));
+
+    // Cultivation — T3
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WOOD_FIRE_EARTH =
+            SKILLS.register("body_cultivation_wood_fire_earth", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_wood_fire_earth", "ascension.skill.body_cultivation_wood_fire_earth.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_wood_fire_earth")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_FIRE_EARTH_METAL =
+            SKILLS.register("body_cultivation_fire_earth_metal", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_fire_earth_metal", "ascension.skill.body_cultivation_fire_earth_metal.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_fire_earth_metal")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_EARTH_METAL_WATER =
+            SKILLS.register("body_cultivation_earth_metal_water", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_earth_metal_water", "ascension.skill.body_cultivation_earth_metal_water.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_earth_metal_water")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_METAL_WATER_WOOD =
+            SKILLS.register("body_cultivation_metal_water_wood", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_metal_water_wood", "ascension.skill.body_cultivation_metal_water_wood.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_metal_water_wood")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WATER_WOOD_FIRE =
+            SKILLS.register("body_cultivation_water_wood_fire", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_water_wood_fire", "ascension.skill.body_cultivation_water_wood_fire.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_water_wood_fire")));
+
+    // Cultivation — T4
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WOOD_FIRE_EARTH_METAL =
+            SKILLS.register("body_cultivation_wood_fire_earth_metal", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_wood_fire_earth_metal", "ascension.skill.body_cultivation_wood_fire_earth_metal.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_wood_fire_earth_metal")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_FIRE_EARTH_METAL_WATER =
+            SKILLS.register("body_cultivation_fire_earth_metal_water", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_fire_earth_metal_water", "ascension.skill.body_cultivation_fire_earth_metal_water.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_fire_earth_metal_water")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_EARTH_METAL_WATER_WOOD =
+            SKILLS.register("body_cultivation_earth_metal_water_wood", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_earth_metal_water_wood", "ascension.skill.body_cultivation_earth_metal_water_wood.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_earth_metal_water_wood")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_METAL_WATER_WOOD_FIRE =
+            SKILLS.register("body_cultivation_metal_water_wood_fire", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_metal_water_wood_fire", "ascension.skill.body_cultivation_metal_water_wood_fire.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_metal_water_wood_fire")));
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION_WATER_WOOD_FIRE_EARTH =
+            SKILLS.register("body_cultivation_water_wood_fire_earth", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation_water_wood_fire_earth", "ascension.skill.body_cultivation_water_wood_fire_earth.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation_water_wood_fire_earth")));
+
+    // Cultivation — T5
+    public static final DeferredHolder<ISkill, BodyCultivationSkill> BODY_CULTIVATION =
+            SKILLS.register("body_cultivation", () -> new BodyCultivationSkill(
+                    "ascension.skill.body_cultivation", "ascension.skill.body_cultivation.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "body_cultivation")));
+
     public static final DeferredHolder<ISkill, ? extends WhiteLightningCultivationSkill> WHITE_LIGHTNING_CULTIVATION_SKILL =
             SKILLS.register("white_lightning_cultivation_skill", WhiteLightningCultivationSkill::new);
 

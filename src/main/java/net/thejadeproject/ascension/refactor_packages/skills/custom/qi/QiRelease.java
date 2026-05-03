@@ -8,14 +8,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
-import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.PathDataDisplayElement;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -27,44 +27,50 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastDa
 
 public class QiRelease implements ICastableSkill {
 
-    private static final double QI_PER_SECOND = 5.0;
+    private static final double QI_COST       = 20.0;
+    private static final double PUSH_RANGE    = 6.0;
+    private static final double PUSH_STRENGTH = 1.2;
+    private static final int    COOLDOWN_TICKS = 200;
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
         if (caster.level().isClientSide()) return new CastResult(CastResult.Type.SUCCESS);
+        if (!caster.hasData(ModAttachments.ENTITY_DATA)) return new CastResult(CastResult.Type.FAILURE);
+
         IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
-        double current = data.getQiContainer().getCurrentQi();
-        if (current <= 0) {
+        if (!data.getQiContainer().hasQi(QI_COST)) {
             return new CastResult(CastResult.Type.FAILURE);
         }
+
         return new CastResult(CastResult.Type.SUCCESS);
     }
 
     @Override
-    public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) {
-        if (!caster.level().isClientSide() && ticksElapsed % 20 == 0 && ticksElapsed > 0) {
-            IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
-            boolean consumed = data.getQiContainer().tryConsumeQi(QI_PER_SECOND);
-            if (!consumed) return false;
+    public void initialCast(Entity caster, IPreCastData preCastData) {
+        if (caster.level().isClientSide()) return;
+        if (!caster.hasData(ModAttachments.ENTITY_DATA)) return;
 
-            if (caster instanceof ServerPlayer player) {
-                double remaining = data.getQiContainer().getCurrentQi();
-                player.sendSystemMessage(Component.literal(
-                        String.format("[Qi Release] Consumed %.1f Qi. Remaining: %.1f / %.1f", QI_PER_SECOND,
-                                remaining, data.getQiContainer().getMaxQi())
-                ));
-            }
-        }
+        IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
+        if (!data.getQiContainer().tryConsumeQi(QI_COST)) return;
 
-        if (caster.level().isClientSide()) return true;
-        return caster.getData(ModAttachments.INPUT_STATES).isHeld("skill_cast");
+        pushNearbyEntities(caster);
     }
 
+    private void pushNearbyEntities(Entity caster) {
+        AABB area = AABB.ofSize(caster.position(), PUSH_RANGE * 2, PUSH_RANGE * 2, PUSH_RANGE * 2);
+        caster.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != caster && e.isAlive())
+                .forEach(entity -> {
+                    Vec3 dir = entity.position().subtract(caster.position()).normalize();
+                    entity.push(dir.x * PUSH_STRENGTH, 0.3, dir.z * PUSH_STRENGTH);
+                    entity.hurtMarked = true;
+                });
+    }
+
+    @Override public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) { return false; }
     @Override public void finalCast(CastEndData reason, Entity caster, ICastData castData) {}
-    @Override public void initialCast(Entity caster, IPreCastData preCastData) {}
     @Override public void onEquip(IEntityData entityData) {}
     @Override public void onUnEquip(IEntityData entityData, IPreCastData preCastData) {}
-    @Override public int getCooldown(CastEndData castEndData) { return 0; }
+    @Override public int getCooldown(CastEndData castEndData) { return COOLDOWN_TICKS; }
     @Override public void selected(IEntityData entityData) {}
     @Override public void unselected(IEntityData entityData) {}
     @Override public void onAdded(IEntityData attachedEntityData) {}
@@ -87,7 +93,7 @@ public class QiRelease implements ICastableSkill {
     @Override public IPersistentSkillData fromNetwork(RegistryFriendlyByteBuf buf) { return null; }
 
     @Override
-    public CastType getCastType() { return CastType.LONG; }
+    public CastType getCastType() { return CastType.INSTANT; }
 
     @Override
     public RenderableElement getCastElement(UIFrame frame) { return null; }
@@ -101,14 +107,13 @@ public class QiRelease implements ICastableSkill {
     }
 
     @Override
-    public Component getTitle() { return Component.literal("Qi Release"); }
+    public Component getTitle() { return Component.literal("Soul Pressure"); }
 
     @Override
-    public Component getDescription() { return Component.literal("Releases 1 Qi per second while held."); }
+    public Component getDescription() { return Component.literal("Releases a burst of Qi, pushing away nearby entities."); }
+
     @Override
     public RenderableElement getInformationContainer(UIFrame frame) {
-        return new DescriptionDisplayContainer(frame,
-                getTitle(),
-                getDescription());
+        return new DescriptionDisplayContainer(frame, getTitle(), getDescription());
     }
 }

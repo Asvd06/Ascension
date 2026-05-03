@@ -13,7 +13,14 @@
       "Bash(Select-String -i \"needle|projectile\")",
       "mcp__ide__getDiagnostics",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\assaa\" -Recurse -Directory -Filter \"*wykres*\" -ErrorAction SilentlyContinue)",
-      "Bash(Select-Object FullName)"
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\assaa\\\\Desktop\\\\Ascension\" -Recurse -Force)",
+      "Bash(Select-Object -First 50)",
+      "Bash(grep \"\\\\.java$\")",
+      "Bash(awk '{print $NF}')",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\assaa\\\\Desktop\\\\Ascension\" -Directory)",
+      "Bash(Select-Object -First 20)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\assaa\\\\Desktop\\\\Ascension\" -Recurse -Filter \"*.cs\")"
     ]
   }
 }
