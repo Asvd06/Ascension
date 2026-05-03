@@ -11,7 +11,9 @@
       "Bash(del *)",
       "Bash(Select-String -Pattern \"\\(Renderer|render\\)\")",
       "Bash(Select-String -i \"needle|projectile\")",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\assaa\" -Recurse -Directory -Filter \"*wykres*\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object FullName)"
     ]
   }
 }

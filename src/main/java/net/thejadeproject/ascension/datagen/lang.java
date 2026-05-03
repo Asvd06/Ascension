@@ -224,6 +224,30 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.soul_sword_heart", "Sword Heart Soul");
         add("ascension.physiques.spear_soul_mark", "Spear Marked Soul");
 
+        // Elemental body merged physiques (2-element)
+        add("ascension.physiques.liver_heart_awakening", "Liver-Heart Awakening Physique");
+        add("ascension.physiques.heart_spleen_awakening", "Heart-Spleen Awakening Physique");
+        add("ascension.physiques.spleen_lung_awakening", "Spleen-Lung Awakening Physique");
+        add("ascension.physiques.lung_kidney_awakening", "Lung-Kidney Awakening Physique");
+        add("ascension.physiques.kidney_liver_awakening", "Kidney-Liver Awakening Physique");
+
+        // Elemental body merged physiques (3-element)
+        add("ascension.physiques.vital_blood", "Vital Blood Physique");
+        add("ascension.physiques.refined_qi", "Refined Qi Physique");
+        add("ascension.physiques.flowing_tide", "Flowing Tide Physique");
+        add("ascension.physiques.deep_root", "Deep Root Physique");
+        add("ascension.physiques.rising_yang", "Rising Yang Physique");
+
+        // Elemental body merged physiques (4-element)
+        add("ascension.physiques.unquenched_palace", "Unquenched Palace Physique");
+        add("ascension.physiques.unrooted_palace", "Unrooted Palace Physique");
+        add("ascension.physiques.unlit_palace", "Unlit Palace Physique");
+        add("ascension.physiques.ungrounded_palace", "Ungrounded Palace Physique");
+        add("ascension.physiques.unrefined_palace", "Unrefined Palace Physique");
+
+        // Elemental body merged physiques (5-element)
+        add("ascension.physiques.five_palace_immortal", "Five Palace Immortal Physique");
+
         add("ascension.physiques.world_dominator", "World Dominator");
         add("ascension.message.physique.world_dominator.acquired", "%s has become the %s. Bear witness to their Ascension!");
         add("ascension.physiques.soul_crowned_king", "Crowned Soul King");

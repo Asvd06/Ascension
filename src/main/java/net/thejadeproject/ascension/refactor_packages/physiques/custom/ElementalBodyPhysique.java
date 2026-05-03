@@ -62,39 +62,39 @@ public class ElementalBodyPhysique implements IPhysique {
         return switch (active.size()) {
             case 2 -> {
                 if (active.containsAll(Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId())))
-                    yield Component.literal("Liver-Heart Awakening Physique");
+                    yield Component.translatable("ascension.physiques.liver_heart_awakening");
                 if (active.containsAll(Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId())))
-                    yield Component.literal("Heart-Spleen Awakening Physique");
+                    yield Component.translatable("ascension.physiques.heart_spleen_awakening");
                 if (active.containsAll(Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId())))
-                    yield Component.literal("Spleen-Lung Awakening Physique");
+                    yield Component.translatable("ascension.physiques.spleen_lung_awakening");
                 if (active.containsAll(Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId())))
-                    yield Component.literal("Lung-Kidney Awakening Physique");
+                    yield Component.translatable("ascension.physiques.lung_kidney_awakening");
                 if (active.containsAll(Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId())))
-                    yield Component.literal("Kidney-Liver Awakening Physique");
+                    yield Component.translatable("ascension.physiques.kidney_liver_awakening");
                 yield title;
             }
             case 3 -> {
                 if (active.containsAll(Set.of(ModPaths.WOOD.getId(), ModPaths.FIRE.getId(), ModPaths.EARTH.getId())))
-                    yield Component.literal("Vital Blood Physique");
+                    yield Component.translatable("ascension.physiques.vital_blood");
                 if (active.containsAll(Set.of(ModPaths.FIRE.getId(), ModPaths.EARTH.getId(), ModPaths.METAL.getId())))
-                    yield Component.literal("Refined Qi Physique");
+                    yield Component.translatable("ascension.physiques.refined_qi");
                 if (active.containsAll(Set.of(ModPaths.EARTH.getId(), ModPaths.METAL.getId(), ModPaths.WATER.getId())))
-                    yield Component.literal("Flowing Tide Physique");
+                    yield Component.translatable("ascension.physiques.flowing_tide");
                 if (active.containsAll(Set.of(ModPaths.METAL.getId(), ModPaths.WATER.getId(), ModPaths.WOOD.getId())))
-                    yield Component.literal("Deep Root Physique");
+                    yield Component.translatable("ascension.physiques.deep_root");
                 if (active.containsAll(Set.of(ModPaths.WATER.getId(), ModPaths.WOOD.getId(), ModPaths.FIRE.getId())))
-                    yield Component.literal("Rising Yang Physique");
+                    yield Component.translatable("ascension.physiques.rising_yang");
                 yield title;
             }
             case 4 -> {
-                if (!active.contains(ModPaths.WATER.getId())) yield Component.literal("Unquenched Palace Physique");
-                if (!active.contains(ModPaths.WOOD.getId()))  yield Component.literal("Unrooted Palace Physique");
-                if (!active.contains(ModPaths.FIRE.getId()))  yield Component.literal("Unlit Palace Physique");
-                if (!active.contains(ModPaths.EARTH.getId())) yield Component.literal("Ungrounded Palace Physique");
-                if (!active.contains(ModPaths.METAL.getId())) yield Component.literal("Unrefined Palace Physique");
+                if (!active.contains(ModPaths.WATER.getId())) yield Component.translatable("ascension.physiques.unquenched_palace");
+                if (!active.contains(ModPaths.WOOD.getId()))  yield Component.translatable("ascension.physiques.unrooted_palace");
+                if (!active.contains(ModPaths.FIRE.getId()))  yield Component.translatable("ascension.physiques.unlit_palace");
+                if (!active.contains(ModPaths.EARTH.getId())) yield Component.translatable("ascension.physiques.ungrounded_palace");
+                if (!active.contains(ModPaths.METAL.getId())) yield Component.translatable("ascension.physiques.unrefined_palace");
                 yield title;
             }
-            case 5  -> Component.literal("Five Palace Immortal Physique");
+            case 5  -> Component.translatable("ascension.physiques.five_palace_immortal");
             default -> title;
         };
     }
