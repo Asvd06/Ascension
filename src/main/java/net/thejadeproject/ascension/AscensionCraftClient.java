@@ -15,6 +15,7 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
+import net.thejadeproject.ascension.clients.renderer.TechniqueStandRenderer;
 import net.thejadeproject.ascension.common.blocks.entity.ModBlockEntities;
 import net.thejadeproject.ascension.clients.FlameGourdClientTooltip;
 import net.thejadeproject.ascension.clients.hud.FlameBarOverlay;
@@ -81,6 +82,11 @@ public class AscensionCraftClient {
             event.registerBlockEntityRenderer(
                     ModBlockEntities.CAULDRON_PEDESTAL.get(),
                     CauldronPedestalRenderer::new
+            );
+
+            event.registerBlockEntityRenderer(
+                    ModBlockEntities.TECHNIQUE_STAND_BE.get(),
+                    TechniqueStandRenderer::new
             );
 
             // Ghost-block hints for missing multiblock pieces on the cauldron itself

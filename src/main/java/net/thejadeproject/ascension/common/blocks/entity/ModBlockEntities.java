@@ -27,6 +27,14 @@ public class ModBlockEntities {
 
 
 
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TechniqueStandBlockEntity>> TECHNIQUE_STAND_BE =
+            BLOCK_ENTITIES.register("technique_stand",
+                    () -> BlockEntityType.Builder
+                            .of(TechniqueStandBlockEntity::new, ModBlocks.TECHNIQUE_STAND.get())
+                            .build(null));
+
+
+
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FlameStandBlockEntity>> FLAME_STAND =
             BLOCK_ENTITIES.register("flame_stand",

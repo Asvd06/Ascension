@@ -100,7 +100,31 @@ public class GenericPath implements IPath {
 
     @Override
     public double getMaxQiForRealm(int majorRealm, int minorRealm) {
-        return 100;
+        double baseValue = 6485.0;
+        double minorMultiplier = 1.3;
+        double majorMultiplier = 3.5;
+        double minorMultiplierGrowth = 0.4;
+        double majorMultiplierGrowth = 0.6;
+
+        double value = baseValue;
+        double currentMajorMultiplier = majorMultiplier;
+        double currentMinorMultiplier = minorMultiplier;
+
+        for (int maj = 0; maj < majorRealm; maj++) {
+
+            for (int min = 0; min < getMaxMinorRealm(maj); min++) {
+                value *= currentMinorMultiplier;
+            }
+            value *= currentMajorMultiplier;
+            currentMinorMultiplier += minorMultiplierGrowth;
+            currentMajorMultiplier += majorMultiplierGrowth;
+        }
+
+        for (int min = 0; min < minorRealm; min++) {
+            value *= currentMinorMultiplier;
+        }
+
+        return value;
     }
 
     @Override

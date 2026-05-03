@@ -1,6 +1,7 @@
 package net.thejadeproject.ascension.worldgen;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -24,7 +25,10 @@ import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.LiquidSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.thejadeproject.ascension.AscensionCraft;
+import net.neoforged.fml.ModList;
+import net.minecraft.tags.TagKey;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -58,6 +62,13 @@ public class ModStructureGen {
             ResourceLocation.withDefaultNamespace("empty")
     );
 
+    // Mod compatibility flags - checked once during bootstrap
+    private static final boolean BOP_LOADED = ModList.get().isLoaded("biomesoplenty");
+    private static final boolean BWG_LOADED = ModList.get().isLoaded("biomeswevegone");
+    private static final boolean ATMOSPHERIC_LOADED = ModList.get().isLoaded("atmospheric");
+    private static final boolean ENVIRONMENTAL_LOADED = ModList.get().isLoaded("environmental");
+    private static final boolean MORE_ORN_PLANTS = ModList.get().isLoaded("more_orn_plants");
+
     private static ResourceKey<Structure> createStructureKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, name));
     }
@@ -70,19 +81,78 @@ public class ModStructureGen {
         return ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, name));
     }
 
+    /**
+     * Helper to build a HolderSet from a list of biome holders, with optional modded biomes.
+     * If a modded biome isn't present, it is silently skipped.
+     */
+    private static HolderSet<Biome> buildBiomeSet(HolderGetter<Biome> biomes,
+                                                  List<ResourceKey<Biome>> vanillaBiomes,
+                                                  List<ModdedBiomeEntry> moddedBiomes) {
+        List<Holder<Biome>> holders = new ArrayList<>();
+
+        // Add vanilla biomes (always present)
+        for (ResourceKey<Biome> key : vanillaBiomes) {
+            biomes.get(key).ifPresent(holders::add);
+        }
+
+        // Add modded biomes only if their mod is loaded
+        for (ModdedBiomeEntry entry : moddedBiomes) {
+            if (entry.modLoaded()) {
+                biomes.get(entry.biomeKey()).ifPresent(holders::add);
+            }
+        }
+
+        return HolderSet.direct(holders.toArray(new Holder[0]));
+    }
+
+    /**
+     * Simple record for modded biome entries with modid check
+     */
+    private record ModdedBiomeEntry(ResourceKey<Biome> biomeKey, String modid) {
+        boolean modLoaded() {
+            return ModList.get().isLoaded(modid);
+        }
+    }
+
     public static void bootstrapStructures(BootstrapContext<Structure> context) {
         HolderGetter<StructureTemplatePool> pools = context.lookup(Registries.TEMPLATE_POOL);
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
 
+        // ============================================
+        // SWORD TOMB 1 - Savanna & Badlands
+        // ============================================
+        List<ResourceKey<Biome>> swordTomb1Vanilla = List.of(
+                Biomes.SAVANNA,
+                Biomes.SAVANNA_PLATEAU,
+                Biomes.WINDSWEPT_SAVANNA,
+                Biomes.BADLANDS,
+                Biomes.ERODED_BADLANDS,
+                Biomes.WOODED_BADLANDS
+        );
+        List<ModdedBiomeEntry> swordTomb1Modded = List.of(
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "mediterranean_forest")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "scrubland")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "lush_desert")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "rocky_badlands")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "wooded_badlands")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "wasteland")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "atacama_outback")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "baobab_savanna")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "firecracker_chaparral")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "mojave_desert")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "red_rock_valley")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "rugged_badlands")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "sierra_badlands")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "windswept_desert")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "dunes")), "atmospheric"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "flourishing_dunes")), "atmospheric"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "rocky_dunes")), "atmospheric"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "petrified_dunes")), "atmospheric")
+        );
+
         context.register(SWORD_TOMB1, new JigsawStructure(
                 new Structure.StructureSettings(
-                        HolderSet.direct(
-                                biomes.getOrThrow(Biomes.SAVANNA),
-                                biomes.getOrThrow(Biomes.SAVANNA_PLATEAU),
-                                biomes.getOrThrow(Biomes.WINDSWEPT_SAVANNA),
-                                biomes.getOrThrow(Biomes.BADLANDS),
-                                biomes.getOrThrow(Biomes.ERODED_BADLANDS),
-                                biomes.getOrThrow(Biomes.WOODED_BADLANDS)),
+                        buildBiomeSet(biomes, swordTomb1Vanilla, swordTomb1Modded),
                         Map.of(),
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
                         TerrainAdjustment.BEARD_THIN
@@ -93,16 +163,60 @@ public class ModStructureGen {
                 false,
                 Heightmap.Types.WORLD_SURFACE_WG
         ));
+
+        // ============================================
+        // SWORD TOMB 2 - Plains & Forests
+        // ============================================
+        List<ResourceKey<Biome>> swordTomb2Vanilla = List.of(
+                Biomes.PLAINS,
+                Biomes.SNOWY_PLAINS,
+                Biomes.SUNFLOWER_PLAINS,
+                Biomes.CHERRY_GROVE,
+                Biomes.GROVE,
+                Biomes.FLOWER_FOREST,
+                Biomes.OLD_GROWTH_PINE_TAIGA
+        );
+        List<ModdedBiomeEntry> swordTomb2Modded = List.of(
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "boreal_forest")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "cherry_blossom_grove")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "coniferous_forest")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "field")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "grassland")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "grove")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "highland")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "meadow")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "orchard")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "prairie")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "seasonal_forest")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "woodland")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "aspen_boreal")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "autumnal_valley")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "borealis_grove")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "cherry_blossom_forest")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "cika_woods")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "coniferous_forest")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "dacite_ridges")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "ebony_woods")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "enchanted_tangle")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "forgotten_forest")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "maple_taiga")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "orchard")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "red_oak_forest")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "rose_fields")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "zelkova_forest")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "rainforest")), "atmospheric"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "sparse_rainforest")), "atmospheric"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "blossom_valleys")), "environmental"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "marsh")), "environmental"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "fragrant_snow_sea")), "more_orn_plants"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "sweetgum_woods")), "more_orn_plants"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "ginkgo_forest")), "more_orn_plants"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "flowers_grove")), "more_orn_plants")
+        );
+
         context.register(SWORD_TOMB2, new JigsawStructure(
                 new Structure.StructureSettings(
-                        HolderSet.direct(
-                                biomes.getOrThrow(Biomes.PLAINS),
-                                biomes.getOrThrow(Biomes.SNOWY_PLAINS),
-                                biomes.getOrThrow(Biomes.SUNFLOWER_PLAINS),
-                                biomes.getOrThrow(Biomes.CHERRY_GROVE),
-                                biomes.getOrThrow(Biomes.GROVE),
-                                biomes.getOrThrow(Biomes.FLOWER_FOREST),
-                                biomes.getOrThrow(Biomes.OLD_GROWTH_PINE_TAIGA)),
+                        buildBiomeSet(biomes, swordTomb2Vanilla, swordTomb2Modded),
                         Map.of(),
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
                         TerrainAdjustment.BEARD_THIN
@@ -113,13 +227,26 @@ public class ModStructureGen {
                 false,
                 Heightmap.Types.WORLD_SURFACE_WG
         ));
+
+        // ============================================
+        // SWORD TOMB 3 - Windswept
+        // ============================================
+        List<ResourceKey<Biome>> swordTomb3Vanilla = List.of(
+                Biomes.WINDSWEPT_FOREST,
+                Biomes.WINDSWEPT_HILLS,
+                Biomes.WINDSWEPT_GRAVELLY_HILLS
+        );
+        List<ModdedBiomeEntry> swordTomb3Modded = List.of(
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "crag")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomesoplenty", "highland")), "biomesoplenty"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "canadian_shield")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "howling_peaks")), "biomeswevegone"),
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("biomeswevegone", "shattered_glacier")), "biomeswevegone")
+        );
+
         context.register(SWORD_TOMB3, new JigsawStructure(
                 new Structure.StructureSettings(
-                        HolderSet.direct(
-                                biomes.getOrThrow(Biomes.WINDSWEPT_FOREST),
-                                biomes.getOrThrow(Biomes.WINDSWEPT_HILLS),
-                                biomes.getOrThrow(Biomes.WINDSWEPT_GRAVELLY_HILLS)
-                                ),
+                        buildBiomeSet(biomes, swordTomb3Vanilla, swordTomb3Modded),
                         Map.of(),
                         GenerationStep.Decoration.SURFACE_STRUCTURES,
                         TerrainAdjustment.BEARD_THIN
@@ -131,10 +258,12 @@ public class ModStructureGen {
                 Heightmap.Types.WORLD_SURFACE_WG
         ));
 
-
-
-
-        // Crimson Lotus - Surface structure with heightmap projection
+        // ============================================
+        // CRIMSON LOTUS - Mountains
+        // ============================================
+        // For tag-based biomes (like IS_MOUNTAIN), we can't easily add modded biomes to the tag in code.
+        // Instead, we use the vanilla tag and rely on datapack biome tags for modded biomes.
+        // If you want full modded mountain support in code, you'd need to build a custom HolderSet.
         context.register(CRIMSON_LOTUS_STRUCTURE, new JigsawStructure(
                 new Structure.StructureSettings(
                         biomes.getOrThrow(BiomeTags.IS_MOUNTAIN),
@@ -143,12 +272,15 @@ public class ModStructureGen {
                         TerrainAdjustment.BEARD_THIN
                 ),
                 pools.getOrThrow(CRIMSON_LOTUS_POOL),
-                1,  // maxDepth
-                ConstantHeight.of(VerticalAnchor.absolute(1)),  // startHeight
-                false,  // useExpansionHack
-                Heightmap.Types.WORLD_SURFACE_WG  // <-- This constructor accepts the heightmap type directly!
+                1,
+                ConstantHeight.of(VerticalAnchor.absolute(1)),
+                false,
+                Heightmap.Types.WORLD_SURFACE_WG
         ));
 
+        // ============================================
+        // SPIRITUAL CAVERN - Mineshaft biomes
+        // ============================================
         context.register(SPIRITUAL_CAVERN, new JigsawStructure(
                 new Structure.StructureSettings(
                         biomes.getOrThrow(BiomeTags.HAS_MINESHAFT),
@@ -167,26 +299,22 @@ public class ModStructureGen {
         HolderGetter<Structure> structures = context.lookup(Registries.STRUCTURE);
         context.register(SWORD_TOMB1_SET, new StructureSet(
                 structures.getOrThrow(SWORD_TOMB1),
-                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244326) // salt +1
+                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244326)
         ));
         context.register(SWORD_TOMB2_SET, new StructureSet(
                 structures.getOrThrow(SWORD_TOMB2),
-                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244327) // salt +2
+                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244327)
         ));
         context.register(SWORD_TOMB3_SET, new StructureSet(
                 structures.getOrThrow(SWORD_TOMB3),
-                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244328) // salt +3
+                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244328)
         ));
 
-
-
-        // Crimson Lotus Set: spacing 12, separation 6, salt 12244325
         context.register(CRIMSON_LOTUS_STRUCTURE_SET, new StructureSet(
                 structures.getOrThrow(CRIMSON_LOTUS_STRUCTURE),
                 new RandomSpreadStructurePlacement(12, 6, RandomSpreadType.LINEAR, 12244325)
         ));
 
-        // Spiritual Cavern Set: spacing 20, separation 12, salt 1234567890
         context.register(SPIRITUAL_CAVERN_SET, new StructureSet(
                 structures.getOrThrow(SPIRITUAL_CAVERN),
                 new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 1234567890)
@@ -198,7 +326,6 @@ public class ModStructureGen {
         HolderGetter<StructureProcessorList> processors = context.lookup(Registries.PROCESSOR_LIST);
         var emptyPool = pools.getOrThrow(ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.withDefaultNamespace("empty")));
         var emptyProcessorList = processors.getOrThrow(EMPTY_PROCESSORS);
-
 
         context.register(SWORD_TOMB1_POOL, new StructureTemplatePool(
                 emptyPool,
@@ -231,20 +358,17 @@ public class ModStructureGen {
                 StructureTemplatePool.Projection.RIGID
         ));
 
-
-// Crimson Lotus Pool
         context.register(CRIMSON_LOTUS_POOL, new StructureTemplatePool(
                 emptyPool,
                 List.of(
                         Pair.of(
                                 StructurePoolElement.single("ascension:crimson_lotus_structure", emptyProcessorList),
-                                1  // weight
+                                1
                         )
                 ),
                 StructureTemplatePool.Projection.RIGID
         ));
 
-// Spiritual Cavern Pool
         context.register(SPIRITUAL_CAVERN_POOL, new StructureTemplatePool(
                 emptyPool,
                 List.of(

@@ -38,7 +38,16 @@ public class ModBlocks {
 
 
 
-
+    public static final DeferredBlock<TechniqueStandBlock> TECHNIQUE_STAND =
+            registerBlock("technique_stand",
+                    () -> new TechniqueStandBlock(
+                            BlockBehaviour.Properties.of()
+                                    .mapColor(MapColor.STONE)
+                                    .sound(SoundType.STONE)
+                                    .strength(2.0f, 4.0f)
+                                    .requiresCorrectToolForDrops()
+                                    .noOcclusion()
+                    ));
 
     public static final DeferredBlock<FlameStandBlock> FLAME_STAND_BLOCK =
             registerBlock("flame_stand",
