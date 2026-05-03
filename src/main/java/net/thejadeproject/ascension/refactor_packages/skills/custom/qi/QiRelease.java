@@ -111,7 +111,7 @@ public class QiRelease implements ICastableSkill {
     }
 
     @Override
-    public Component getTitle() { return Component.literal("Soul Pressure"); }
+    public Component getTitle() { return Component.literal("Qi Release"); }
 
     @Override
     public Component getDescription() { return Component.literal("Releases a burst of Qi, pushing away nearby entities."); }

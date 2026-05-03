@@ -99,8 +99,10 @@ public class SetCultivationCommand {
         if (physique != null) {
             ResourceLocation physiqueId = AscensionRegistries.Physiques.PHSIQUES_REGISTRY.getKey(physique);
             if (physiqueId != null && !physiqueId.toString().equals("minecraft:none")) {
-                Component physiqueName = Component.translatable(
-                        "ascension.physiques." + physiqueId.getPath());
+                var physiqueData = entityData.getActiveFormData().getPhysiqueData();
+                Component physiqueName = (physique instanceof ElementalBodyPhysique ebp && physiqueData instanceof ElementalPhysiqueData ep)
+                        ? ebp.getDisplayTitle(ep)
+                        : Component.translatable("ascension.physiques." + physiqueId.getPath());
                 context.getSource().sendSuccess(() ->
                         Component.translatable("command.ascension.cultivation.info.physique",
                                 physiqueName), false);

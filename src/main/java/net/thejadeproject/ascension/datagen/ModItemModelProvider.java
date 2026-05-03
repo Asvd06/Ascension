@@ -147,7 +147,18 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 
 
-        basicItem(ModItems.TECHNIQUE_MANUAL.get());
+        withExistingParent(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.TECHNIQUE_MANUAL.get())).getPath(), "item/generated")
+                .texture("layer0", "ascension:item/technique_manual")
+                .override().predicate(ResourceLocation.fromNamespaceAndPath("ascension", "technique_variant"), 1.0F)
+                    .model(new ModelFile.UncheckedModelFile("ascension:item/fire_body_technique")).end()
+                .override().predicate(ResourceLocation.fromNamespaceAndPath("ascension", "technique_variant"), 2.0F)
+                    .model(new ModelFile.UncheckedModelFile("ascension:item/water_body_technique")).end()
+                .override().predicate(ResourceLocation.fromNamespaceAndPath("ascension", "technique_variant"), 3.0F)
+                    .model(new ModelFile.UncheckedModelFile("ascension:item/wood_body_technique")).end()
+                .override().predicate(ResourceLocation.fromNamespaceAndPath("ascension", "technique_variant"), 4.0F)
+                    .model(new ModelFile.UncheckedModelFile("ascension:item/earth_body_technique")).end()
+                .override().predicate(ResourceLocation.fromNamespaceAndPath("ascension", "technique_variant"), 5.0F)
+                    .model(new ModelFile.UncheckedModelFile("ascension:item/metal_body_technique")).end();
         basicItem(ModItems.TECHNIQUE_PAGE.get());
         basicItem(ModItems.TECHNIQUE_BINDER.get());
 
