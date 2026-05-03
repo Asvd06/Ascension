@@ -56,6 +56,7 @@ public class VoidstepSkill implements ICastableSkill {
     @Override public IPersistentSkillData fromCompound(CompoundTag tag, IEntityData heldEntity) { return null; }
     @Override public IPersistentSkillData fromNetwork(RegistryFriendlyByteBuf buf) { return null; }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

@@ -92,7 +92,7 @@ public class GenericCultivationSkill implements ICastableSkill {
     public IPersistentSkillData fromNetwork(RegistryFriendlyByteBuf buf) {
         return new GenericCultivationSkillData(buf);
     }
-
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

@@ -109,6 +109,7 @@ public class QiFlightSkill implements ICastableSkill {
         return CastType.LONG;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

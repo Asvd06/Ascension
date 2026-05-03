@@ -181,7 +181,7 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
                 ESSENCE_PATH
         );
     }
-
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

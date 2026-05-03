@@ -5,6 +5,8 @@ import net.lucent.easygui.gui.textures.TextureData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.Tags;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
@@ -42,7 +44,7 @@ public class MetalEssenceCultivationSkill extends ElementalEssenceCultivationSki
         return MetalEssenceTechnique.class;
     }
 
-
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

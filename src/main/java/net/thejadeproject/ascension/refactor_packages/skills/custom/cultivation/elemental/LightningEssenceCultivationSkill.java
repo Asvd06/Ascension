@@ -5,6 +5,8 @@ import net.lucent.easygui.gui.textures.TextureData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.events.skills.ElementalEssenceSkillEvents;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
@@ -39,7 +41,7 @@ public class LightningEssenceCultivationSkill extends ElementalEssenceCultivatio
         return LightningEssenceTechnique.class;
     }
 
-
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

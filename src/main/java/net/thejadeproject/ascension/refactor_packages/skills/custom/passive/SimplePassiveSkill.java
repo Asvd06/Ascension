@@ -68,6 +68,7 @@ public abstract class SimplePassiveSkill implements ISkill {
         return new EmptySkillData();
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

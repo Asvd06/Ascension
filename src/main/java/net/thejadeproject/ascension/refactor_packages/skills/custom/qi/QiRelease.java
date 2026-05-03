@@ -101,6 +101,7 @@ public class QiRelease implements ICastableSkill {
     @Override
     public RenderableElement getCastElement(UIFrame frame) { return null; }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(

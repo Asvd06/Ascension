@@ -234,6 +234,7 @@ public class WhiteLightningFist implements ICastableSkill {
     public CastType getCastType() {
         return CastType.INSTANT;
     }
+    @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon() {
         return new TextureData(
