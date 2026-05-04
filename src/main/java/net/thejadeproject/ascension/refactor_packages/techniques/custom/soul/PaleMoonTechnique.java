@@ -34,13 +34,13 @@ public class PaleMoonTechnique extends GenericTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("A soul cultivation method strengthened beneath moonlight.");
+        return Component.translatable("ascension.technique.pale_moon_scripture.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "Cultivates the Soul path by drawing upon pale lunar essence. Must be practised under open sky. Cultivation rate increases when gazing directly at the moon. Harmful beneath direct sunlight."
+        return Component.translatable(
+                "ascension.technique.pale_moon_scripture.description"
         );
     }
 

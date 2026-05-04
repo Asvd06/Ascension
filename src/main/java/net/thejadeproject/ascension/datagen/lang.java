@@ -269,15 +269,33 @@ public class lang extends LanguageProvider {
         add("ascension.technique.sword_comprehension_technique","Sword Comprehension Technique");
         add("ascension.technique.five_element","Five Element Circulation Method");
         add("ascension.technique.scholarly_soul_technique","Scholar's Soul Transcendence");
+        add("ascension.technique.scholarly_soul_technique.description.short","A soul cultivation scripture whose later chapters are scattered across the world.");
+        add("ascension.technique.scholarly_soul_technique.description","Cultivates the Soul path through study, observation, and refined understanding, surrounded by knowledge. Higher realms require missing chapters of the scripture.");
         add("ascension.technique.white_lightning_ten_stage_technique","White Lightning Ten Stages");
+        add("ascension.technique.white_lightning_ten_stage_technique.description.short","A Body/Fist technique that refines the nerves and flesh through pure white martial energy.");
+        add("ascension.technique.white_lightning_ten_stage_technique.description","The White Lightning Ten-Stage Technique uses brain energy and white martial lightning to refine the body, burn away turbid energy, and sharpen unarmed combat without causing bodily transformations.");
 
         add("ascension.technique.fire_essence_technique","Fire Essence Technique");
+        add("ascension.technique.fire_essence_technique.description.short","Cultivates Essence through flame, burning, and lava immersion.");
+        add("ascension.technique.fire_essence_technique.description","A Fire-aligned Essence technique. It cultivates slowly at rest, faster while burning, and fastest while submerged in lava.");
         add("ascension.technique.water_essence_technique","Water Essence Technique");
+        add("ascension.technique.water_essence_technique.description.short","Cultivates Essence through stillness, flow, and water immersion.");
+        add("ascension.technique.water_essence_technique.description","A Water-aligned Essence technique. It cultivates steadily at rest and faster while submerged in water.");
         add("ascension.technique.earth_essence_technique","Earth Essence Technique");
+        add("ascension.technique.earth_essence_technique.description.short","Cultivates Essence through earth, stone, and underground exploration.");
+        add("ascension.technique.earth_essence_technique.description","An Earth-aligned Essence technique. It cultivates steadily at rest, faster on natural ground, and fastest while deep underground.");
         add("ascension.technique.metal_essence_technique","Metal Essence Technique");
+        add("ascension.technique.metal_essence_technique.description.short","Cultivates Essence through metal, ores, and natural veins.");
+        add("ascension.technique.metal_essence_technique.description","A Metal-aligned Essence technique. It cultivates slowly at rest, faster near ores, and fastest within rich mineral deposits.");
         add("ascension.technique.wood_essence_technique","Wood Essence Technique");
+        add("ascension.technique.wood_essence_technique.description.short","Cultivates Essence through wood, nature, and life-force.");
+        add("ascension.technique.wood_essence_technique.description","A Wood-aligned Essence technique. It cultivates slowly at rest, faster near plant life, and fastest within dense natural growth.");
         add("ascension.technique.lightning_essence_technique","Lightning Essence Technique");
+        add("ascension.technique.lightning_essence_technique.description.short","Cultivates Essence through Lightning and Storms.");
+        add("ascension.technique.lightning_essence_technique.description","A lightning-aligned Essence technique. When under thundering skies, or when struck by lightning, experience a boost in cultivation speed.");
         add("ascension.technique.wind_essence_technique","Wind Essence Technique");
+        add("ascension.technique.wind_essence_technique.description.short","Cultivates Essence through wind, air, and whirlwinds.");
+        add("ascension.technique.wind_essence_technique.description","A wind-aligned Essence technique. It cultivates slowly at sea level, faster higher up, and fastest beyond cloud layer.");
 
         // Single-element body techniques
         add("ascension.technique.heart_fire_technique", "Heart Flame Cultivation");
@@ -309,8 +327,19 @@ public class lang extends LanguageProvider {
 
         // 5-element body technique
         add("ascension.technique.five_element_body_technique", "Five Harmony Body Method");
+
+
         add("ascension.technique.pale_moon_scripture", "Pale Moon Scripture");
+        add("ascension.technique.pale_moon_scripture.description.short", "A soul cultivation method strengthened beneath moonlight.");
+        add("ascension.technique.pale_moon_scripture.description", "Cultivates the Soul path by drawing upon pale lunar essence. Must be practised under open sky. Cultivation rate increases when gazing directly at the moon. Harmful beneath direct sunlight.");
         add("ascension.technique.gibbous_moon_scripture", "Gibbous Moon Scripture");
+        add("ascension.technique.gibbous_moon_scripture.description.short", "A stronger lunar soul scripture attuned to the gibbous moon.");
+        add("ascension.technique.dawning_sun_scripture", "Dawning Sun Scripture");
+        add("ascension.technique.dawning_sun_scripture.description.short", "A soul cultivation method strengthened beneath the rising sun.");
+        add("ascension.technique.dawning_sun_scripture.description", "Cultivates the Soul by drawing upon the warmth of the dawning sun. Must be practised under open sky. Cultivation rate increases when gazing directly at the sun. Harmful beneath moonlit night skies.");
+        add("ascension.technique.zenith_sun_scripture", "Zenith Sun Scripture");
+        add("ascension.technique.zenith_sun_scripture.description.short", "A stronger solar soul scripture attuned to the sun at its zenith.");
+        add("ascension.technique.zenith_sun_scripture.description", "Cultivates the Soul by drawing upon the blazing power of the sun at its peak. Must be practised under open sky. Greatly empowered when gazing directly at the sun. Harmful beneath moonlit night skies.");
 
 
 

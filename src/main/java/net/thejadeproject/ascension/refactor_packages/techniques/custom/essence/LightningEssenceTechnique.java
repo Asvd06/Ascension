@@ -18,13 +18,13 @@ public class LightningEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through Lightning, ores, and natural veins.");
+        return Component.translatable("ascension.technique.lightning_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "A lightning-aligned Essence technique. It cultivates slowly at rest, faster near ores, and fastest within rich mineral deposits."
+        return Component.translatable(
+                "ascension.technique.lightning_essence_technique.description"
         );
     }
 

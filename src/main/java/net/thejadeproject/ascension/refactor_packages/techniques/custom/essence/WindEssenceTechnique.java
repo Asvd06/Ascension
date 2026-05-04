@@ -18,13 +18,13 @@ public class WindEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through wind, air, and whirlwinds.");
+        return Component.translatable("ascension.technique.wind_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "A wind-aligned Essence technique. It cultivates slowly at rest, faster near ores, and fastest within rich mineral deposits."
+        return Component.translatable(
+                "ascension.technique.wind_essence_technique.description.short"
         );
     }
 

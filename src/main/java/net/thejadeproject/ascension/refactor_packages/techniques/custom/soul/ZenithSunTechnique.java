@@ -33,13 +33,13 @@ public class ZenithSunTechnique extends GenericTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("A stronger solar soul scripture attuned to the sun at its zenith.");
+        return Component.literal("ascension.technique.zenith_sun_scripture.description.short");
     }
 
     @Override
     public Component getDescription() {
         return Component.literal(
-                "Cultivates the Soul by drawing upon the blazing power of the sun at its peak. Must be practised under open sky. Greatly empowered when gazing directly at the sun. Harmful beneath moonlit night skies."
+                "ascension.technique.zenith_sun_scripture.description"
         );
     }
 

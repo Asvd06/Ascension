@@ -18,13 +18,13 @@ public class WaterEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through stillness, flow, and water immersion.");
+        return Component.translatable("ascension.technique.water_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "A Water-aligned Essence technique. It cultivates steadily at rest and faster while submerged in water."
+        return Component.translatable(
+                "ascension.technique.water_essence_technique.description"
         );
     }
 }

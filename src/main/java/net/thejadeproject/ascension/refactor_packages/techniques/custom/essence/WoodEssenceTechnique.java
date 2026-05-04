@@ -18,13 +18,13 @@ public class WoodEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through wood, nature, and life-force.");
+        return Component.translatable("ascension.technique.wood_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "A Wood-aligned Essence technique. It cultivates slowly at rest, faster near plant life, and fastest within dense natural growth."
+        return Component.translatable(
+                "ascension.technique.wood_essence_technique.description"
         );
     }
 

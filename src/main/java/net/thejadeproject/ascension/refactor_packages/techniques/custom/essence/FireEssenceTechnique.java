@@ -18,13 +18,13 @@ public class FireEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through flame, burning, and lava immersion.");
+        return Component.translatable("ascension.technique.fire_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "A Fire-aligned Essence technique. It cultivates slowly at rest, faster while burning, and fastest while submerged in lava."
+        return Component.translatable(
+                "ascension.technique.fire_essence_technique.description"
         );
     }
 }

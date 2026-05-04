@@ -33,13 +33,13 @@ public class GibbousMoonTechnique extends GenericTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("A stronger lunar soul scripture attuned to the gibbous moon.");
+        return Component.translatable("ascension.technique.gibbous_moon_scripture.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "Cultivates the Soul by drawing upon the swelling power of the gibbous moon. Must be practised under open sky. Greatly empowered when gazing directly at the moon. Harmful beneath direct sunlight."
+        return Component.translatable(
+                "ascension.technique.gibbous_moon_scripture.description"
         );
     }
 
