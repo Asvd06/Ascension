@@ -36,8 +36,9 @@ public class lang extends LanguageProvider {
         add("ascension.path.trident", "Trident");
         add("ascension.path.fist", "Fist");
 
-
-
+        add("ascension.path.virtuous", "Virtuous");
+        add("ascension.path.demonic", "Demonic");
+        add("ascension.path.buddhist", "Buddhist");
 
 
 

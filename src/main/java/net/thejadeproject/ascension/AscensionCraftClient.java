@@ -148,6 +148,21 @@ public class AscensionCraftClient {
                             }
                             return 0.0F;
                         });
+
+                ItemProperties.register(ModItems.TECHNIQUE_MANUAL.get(),
+                        ResourceLocation.fromNamespaceAndPath("ascension", "technique_variant"),
+                        (itemStack, clientLevel, livingEntity, seed) -> {
+                            String techniqueId = itemStack.get(ModDataComponents.TECHNIQUE_ID.get());
+                            if (techniqueId == null) return 0.0F;
+                            return switch (techniqueId) {
+                                case "ascension:heart_fire_technique"  -> 1.0F;
+                                case "ascension:kidney_water_technique" -> 2.0F;
+                                case "ascension:liver_wood_technique"  -> 3.0F;
+                                case "ascension:spleen_earth_technique" -> 4.0F;
+                                case "ascension:lung_metal_technique"  -> 5.0F;
+                                default -> 0.0F;
+                            };
+                        });
             });
         }
 

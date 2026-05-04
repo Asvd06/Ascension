@@ -53,7 +53,7 @@ public class DawningSunCultivationSkill extends GenericCultivationSkill {
         if (continuing && !caster.level().isClientSide()) {
             if (isMoonExposed(caster)) {
                 if (caster instanceof LivingEntity living) {
-                    float damage = living.getMaxHealth() * 0.005f;
+                    float damage = living.getMaxHealth() * 0.01f;
                     DamageSource source = new DamageSource(
                             caster.level().registryAccess()
                                     .registryOrThrow(Registries.DAMAGE_TYPE)

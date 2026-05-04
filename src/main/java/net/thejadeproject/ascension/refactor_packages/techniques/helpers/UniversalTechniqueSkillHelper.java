@@ -7,6 +7,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 
 public final class UniversalTechniqueSkillHelper {
 
+    private static final int QI_RELEASE_UNLOCK_REALM = 1;
     private static final int REGENERATION_UNLOCK_REALM = 2;
     private static final int QI_FLIGHT_UNLOCK_REALM = 2;
     private static final int QI_SUSTAINED_UNLOCK_REALM = 3;
@@ -16,6 +17,12 @@ public final class UniversalTechniqueSkillHelper {
     }
 
     public static void refresh(IEntityData entityData, int majorRealm) {
+        refreshSkill(
+                entityData,
+                ModSkills.QI_RELEASE.getId(),
+                majorRealm >= QI_RELEASE_UNLOCK_REALM
+        );
+
         refreshSkill(
                 entityData,
                 ModSkills.REGENERATION_BOOST.getId(),
