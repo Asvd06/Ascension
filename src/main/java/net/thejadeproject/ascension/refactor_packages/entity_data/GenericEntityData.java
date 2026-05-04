@@ -2,20 +2,25 @@ package net.thejadeproject.ascension.refactor_packages.entity_data;
 
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.Hash;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.attributes.AscensionAttributeHolder;
+import net.thejadeproject.ascension.refactor_packages.attributes.AttributeValueContainer;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodline;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodlineData;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.IEntityDataSource;
@@ -25,6 +30,7 @@ import net.thejadeproject.ascension.refactor_packages.forms.IEntityForm;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.SyncEntityForm;
+import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncCurrentHealth;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.path_data.SyncPathData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.physique.SyncPhysique;
@@ -248,6 +254,24 @@ public class GenericEntityData implements IEntityData {
 
         currentHealth = tag.getDouble("current_health");
 
+        try {
+            ListTag suppressors = tag.getList("suppressed_values",Tag.TAG_COMPOUND);
+            for(int i = 0;i<suppressors.size();i++){
+                CompoundTag attributeTag = suppressors.getCompound(i);
+
+                Holder<Attribute> attributeHolder = BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(
+                        ResourceKey.create(BuiltInRegistries.ATTRIBUTE.key(), ResourceLocation.parse(attributeTag.getString("attribute")))
+                );
+
+                getAscensionAttributeHolder().getAttribute(attributeHolder).setSuppressedValue(attributeTag.getDouble("value"));
+                if (getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+                    PacketDistributor.sendToPlayer(serverPlayer,new SyncAttributeHolder(getAscensionAttributeHolder()));
+                }
+            }
+        }catch (Exception e){
+            AscensionCraft.LOGGER.error("error loading suppressed values",e);
+        }
+
     }
 
 
@@ -325,6 +349,16 @@ public class GenericEntityData implements IEntityData {
         tag.put("entity_data_sources",dataSources);
 
         tag.put("skill_cast_handler",getSkillCastHandler().write());
+        ListTag suppressorTag = new ListTag();
+        for(AttributeValueContainer valueContainer : getAscensionAttributeHolder().getContainers()){
+            if(valueContainer.isSuppressed()){
+                CompoundTag attributeTag = new CompoundTag();
+                attributeTag.putString("attribute",valueContainer.getAttributeHolder().getKey().location().toString());
+                attributeTag.putDouble("value",valueContainer.getSuppressedValue());
+                suppressorTag.add(attributeTag);
+            }
+        }
+        tag.put("suppressed_values",suppressorTag);
         //path data, make sure to also hold the path
     }
 

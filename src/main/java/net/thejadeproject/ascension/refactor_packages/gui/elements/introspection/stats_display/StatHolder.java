@@ -8,8 +8,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.stats.Stat;
 import net.thejadeproject.ascension.refactor_packages.stats.StatSheet;
+import net.thejadeproject.ascension.refactor_packages.stats.custom.ModStats;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public class StatHolder extends RenderableElement {
     public StatHolder(UIFrame frame) {
@@ -23,8 +26,8 @@ public class StatHolder extends RenderableElement {
     }
 
     public void addStats(){
-        StatSheet sheet =  Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getActiveFormData().getStatSheet();
-        Collection<Stat> stats = sheet.getStats();
+
+        Collection<Stat> stats = List.of(ModStats.VITALITY.get(),ModStats.AGILITY.get(),ModStats.STRENGTH.get(),ModStats.INTELLIGENCE.get());
         int y = 0;
         for(Stat stat : stats){
             StatsDisplay display = new StatsDisplay(getUiFrame(),stat);
