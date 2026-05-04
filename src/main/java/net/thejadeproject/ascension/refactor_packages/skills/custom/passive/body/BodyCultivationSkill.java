@@ -15,6 +15,7 @@ import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
 
 public class BodyCultivationSkill extends SimplePassiveSkill {
@@ -52,7 +53,28 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.hasQi(damage)) return;
         if (!qiContainer.tryConsumeQi(damage)) return;
 
-        bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + (damage * BASE_MULTIPLIER));
+        double gain = damage * BASE_MULTIPLIER;
+        ITechnique technique = bodyPath.getLastUsedTechnique() == null ? null :
+                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(bodyPath.getLastUsedTechnique());
+
+        if (technique != null && bodyPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm())) {
+            bodyPath.setCurrentRealmProgress(technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm()));
+
+            if (bodyPath.getMinorRealm() < technique.getMaxMinorRealm(bodyPath.getMajorRealm()) && technique.canBreakthroughMinorRealm(
+                    entityData,
+                    bodyPath.getMajorRealm(),
+                    bodyPath.getMinorRealm(),
+                    bodyPath.getCurrentRealmProgress()
+            )) {
+                bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
+            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm() && technique.getStabilityHandler() != null
+                    && bodyPath.getCurrentRealmStability() < technique.getStabilityHandler().getMaxCultivationTicks()) {
+                bodyPath.setCurrentRealmStability(bodyPath.getCurrentRealmStability() + 1);
+            }
+        } else {
+            bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);
+        }
+
         bodyPath.sync(player);
     }
 

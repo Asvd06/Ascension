@@ -86,25 +86,33 @@ public class MobRankOverlay {
 
         poseStack.pushPose();
 
-        double yOffset = entity.getBbHeight() + 0.5D;
+
+        boolean hasVanillaName = entity.hasCustomName();
+
+        double yOffset = entity.getBbHeight() + (hasVanillaName ? 0.95D : 0.5D);
+
         poseStack.translate(0.0D, yOffset, 0.0D);
         poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
         poseStack.scale(0.025F, -0.025F, 0.025F);
 
         Matrix4f matrix = poseStack.last().pose();
         var visualText = text.getVisualOrderText();
+
         float x = -font.width(visualText) / 2.0F;
 
         int backgroundAlpha = (int) (mc.options.getBackgroundOpacity(0.25F) * 255.0F) << 24;
 
         font.drawInBatch(
                 visualText,
-                x, 0, 0x20FFFFFF, false, matrix, buffer, Font.DisplayMode.NORMAL, backgroundAlpha, packedLight
-        );
-
-        font.drawInBatch(
-                visualText,
-                x, 0, 0xFFFFFFFF, false, matrix, buffer, Font.DisplayMode.NORMAL, 0, packedLight
+                x,
+                0,
+                0xFFFFFFFF,
+                false,
+                matrix,
+                buffer,
+                Font.DisplayMode.POLYGON_OFFSET,
+                backgroundAlpha,
+                packedLight
         );
 
         poseStack.popPose();
