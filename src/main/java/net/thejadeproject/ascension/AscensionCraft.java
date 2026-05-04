@@ -73,6 +73,7 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.GenericEntityD
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.ModDataSources;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
+import net.thejadeproject.ascension.refactor_packages.handlers.player.InputHandler;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
@@ -207,11 +208,10 @@ public class AscensionCraft {
     private void registerKeyBindings(RegisterKeyMappingsEvent event) {
         event.register(KeyBindHandler.OPEN_SPATIAL_RING_KEY);
         event.register(KeyBindHandler.TOGGLE_ARTIFACT_MODE_KEY);
-        event.register(KeyBindHandler.INTROSPECTION_KEY);
-        event.register(KeyBindHandler.SKILL_MENU_KEY);
-        event.register(KeyBindHandler.SKILL_WHEEL_KEY);
-        event.register(KeyBindHandler.CULTIVATE_KEY);
-        event.register(KeyBindHandler.CAST_SKILL_KEY);
+
+        event.register(InputHandler.INTROSPECTION);
+        event.register(InputHandler.SKILL_WHEEL_OVERLAY);
+        event.register(InputHandler.CAST_SKILL_KEY);
 
     }
 
