@@ -18,13 +18,13 @@ public class MetalEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through metal, ores, and natural veins.");
+        return Component.translatable("ascension.technique.metal_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "A Metal-aligned Essence technique. It cultivates slowly at rest, faster near ores, and fastest within rich mineral deposits."
+        return Component.translatable(
+                "ascension.technique.metal_essence_technique.description"
         );
     }
 

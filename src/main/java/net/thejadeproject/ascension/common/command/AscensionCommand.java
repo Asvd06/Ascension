@@ -29,9 +29,6 @@ public class AscensionCommand {
                     /ascension cultivation get <target>
                     /ascension cultivation get <target> physique
 
-                    /ascension skill give <targets> <skill> [form]
-                    /ascension skill remove <targets> <skill> [form]
-
                  */
 
                 .then(ResetAscensionCommand.build())

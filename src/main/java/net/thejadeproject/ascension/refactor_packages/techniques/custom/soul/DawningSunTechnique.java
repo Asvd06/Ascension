@@ -33,13 +33,13 @@ public class DawningSunTechnique extends GenericTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("A soul cultivation method strengthened beneath the rising sun.");
+        return Component.translatable("ascension.technique.dawning_sun_scripture.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "Cultivates the Soul by drawing upon the warmth of the dawning sun. Must be practised under open sky. Cultivation rate increases when gazing directly at the sun. Harmful beneath moonlit night skies."
+        return Component.translatable(
+                "ascension.technique.dawning_sun_scripture.description"
         );
     }
 

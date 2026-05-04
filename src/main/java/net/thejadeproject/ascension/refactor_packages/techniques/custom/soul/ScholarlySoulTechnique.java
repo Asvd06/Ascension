@@ -35,13 +35,13 @@ public class ScholarlySoulTechnique extends GenericTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("A soul cultivation scripture completed through recovered chapters.");
+        return Component.translatable("ascension.technique.scholarly_soul_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "Cultivates the Soul path through study, observation, and refined understanding. Higher realms require missing chapters of the scripture."
+        return Component.translatable(
+                "ascension.technique.scholarly_soul_technique.description"
         );
     }
 

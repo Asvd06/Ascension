@@ -330,9 +330,16 @@ public class ResetAscensionCommand {
         List<ResourceLocation> pathsToRemove = new ArrayList<>();
 
         for (PathData pathData : entityData.getAllPathData()) {
-            if (pathData != null) {
-                pathsToRemove.add(pathData.getPath());
+            if (pathData == null) continue;
+
+            ResourceLocation pathId = pathData.getPath();
+            if (pathId == null) continue;
+
+            if (!isValidPath(pathId)) {
+                continue;
             }
+
+            pathsToRemove.add(pathId);
         }
 
         for (ResourceLocation pathId : pathsToRemove) {

@@ -18,13 +18,13 @@ public class EarthEssenceTechnique extends ElementalEssenceTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal("Cultivates Essence through earth, stone, and underground exploration.");
+        return Component.translatable("ascension.technique.earth_essence_technique.description.short");
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "An Earth-aligned Essence technique. It cultivates steadily at rest, faster on natural ground, and fastest while deep underground."
+        return Component.translatable(
+                "ascension.technique.earth_essence_technique.description"
         );
     }
 

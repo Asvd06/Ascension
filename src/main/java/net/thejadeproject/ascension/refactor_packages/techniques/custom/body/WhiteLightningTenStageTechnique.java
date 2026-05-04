@@ -33,15 +33,15 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
 
     @Override
     public Component getShortDescription() {
-        return Component.literal(
-                "A Body/Fist technique that refines the nerves and flesh through pure white martial energy."
+        return Component.translatable(
+                "ascension.technique.white_lightning_ten_stage_technique.description.short"
         );
     }
 
     @Override
     public Component getDescription() {
-        return Component.literal(
-                "The White Lightning Ten-Stage Technique uses brain energy and white martial lightning to refine the body, burn away turbid energy, and sharpen unarmed combat without causing bodily transformations."
+        return Component.translatable(
+                "ascension.technique.white_lightning_ten_stage_technique.description"
         );
     }
 
