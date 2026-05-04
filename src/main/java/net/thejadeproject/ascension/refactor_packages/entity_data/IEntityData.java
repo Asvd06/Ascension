@@ -147,7 +147,7 @@ public interface IEntityData {
         holder.getAttribute(Attributes.ATTACK_DAMAGE).addStatScaling(ModStats.STRENGTH.get(),1); //100% of strength
 
         holder.addAttribute(Attributes.JUMP_STRENGTH,Component.literal("Jump Strength"));
-        holder.getAttribute(Attributes.JUMP_STRENGTH).addStatScaling(ModStats.STRENGTH.get(),0.1); //10% of strength
+        holder.getAttribute(Attributes.JUMP_STRENGTH).addStatScaling(ModStats.STRENGTH.get(),0.01); //1% of strength
 
         //due to how speed scales in mc these need to be low
         //this will also be further suppressed while in combat
@@ -183,7 +183,7 @@ public interface IEntityData {
         holder.getAttribute(Attributes.MINING_EFFICIENCY).addStatScaling(ModStats.STRENGTH.get(),0.001);
 
         holder.addAttribute(Attributes.SAFE_FALL_DISTANCE,Component.literal("Safe Fall Distance"));
-        holder.getAttribute(Attributes.SAFE_FALL_DISTANCE).addStatScaling(ModStats.STRENGTH.get(),1);
+        holder.getAttribute(Attributes.SAFE_FALL_DISTANCE).addStatScaling(ModStats.STRENGTH.get(),0.1);
         //if(entity.getAttribute(Attributes.MOVEMENT_SPEED) != null) entity.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.0);
     }
     default AttributeValueContainer getAttribute(Holder<Attribute> attributeHolder){

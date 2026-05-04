@@ -32,6 +32,7 @@ public class StatsDisplayContainer extends RenderableElement {
         BackButton button = new BackButton(frame);
         button.getPositioning().setX(5);
         button.getPositioning().setY(5);
+        addChild(new StatHolder(getUiFrame()));
         addChild(button);
         addLeftAttributes();
         addRightAttributes();

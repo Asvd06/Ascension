@@ -198,7 +198,10 @@ public class GenericEntityData implements IEntityData {
                     IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
                     if(pathDataLocation.containsKey(pathId) && heldFormData.containsKey(path.defaultForm()) ){
                         heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(pathDataTag.getCompound("data"),this);
-                    }else{
+                    }else if(heldFormData.containsKey(path.defaultForm())){
+                        path.fromCompound(pathDataTag,this);
+                    }
+                    else{
                         if(!cachedFormPathDataTag.containsKey(path.defaultForm())) cachedFormPathDataTag.put(path.defaultForm(),new ArrayList<>());
                         cachedFormPathDataTag.get(path.defaultForm()).add(new Pair<>(pathId,pathDataTag));
                     }

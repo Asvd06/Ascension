@@ -109,12 +109,12 @@ public class BasicStatChangeHandler{
                 for (int i = 1; i < majorRealmsChanged; i++) {
                     int majorRealm = oldMajorRealm+i;
                     int minorRealmsForRealm = technique.getMaxMinorRealm(majorRealm);
-                    for(int j = 0;j<=minorRealmsForRealm;j++){
+                    for(int j = 1;j<=minorRealmsForRealm;j++){
                         applyAllMinorRealmChanges(entityData,majorRealm,j);
                     }
                 }
 
-                for(int i =0;i<=newMinorRealm;i++){
+                for(int i =1;i<=newMinorRealm;i++){
                     applyAllMinorRealmChanges(entityData,newMajorRealm,i);
                 }
             }else{
@@ -128,12 +128,12 @@ public class BasicStatChangeHandler{
                 removeMajorRealmChanges(entityData, i);
             }
             if(newMajorRealm != oldMajorRealm){
-                for(int i = oldMinorRealm; i >= 0; i--){
+                for(int i = oldMinorRealm; i > 0; i--){
                     removeMinorRealmChanges(entityData, oldMajorRealm, i);
                 }
                 for(int i = oldMajorRealm - 1; i > newMajorRealm; i--){
                     int minorRealmsForRealm = technique.getMaxMinorRealm(i);
-                    for(int j = minorRealmsForRealm; j >= 0; j--){
+                    for(int j = minorRealmsForRealm; j > 0; j--){
                         removeMinorRealmChanges(entityData, i, j);
                     }
                 }
