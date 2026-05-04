@@ -5,12 +5,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
+import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface.DEFAULT_BACKGROUND;
+
 public final class AscensionToastHelper {
 
     private AscensionToastHelper() {}
 
     public static void show(Component title, Component message, ItemStack icon) {
-        show(title, message, icon, AscensionToast.DEFAULT_BACKGROUND);
+        show(title, message, icon, DEFAULT_BACKGROUND);
     }
 
     public static void show(Component title, Component message, ItemStack icon, ResourceLocation background) {

@@ -9,12 +9,14 @@ import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
+
+import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface.DEFAULT_BACKGROUND;
 
 public class AscensionToast implements Toast {
 
-    public static final ResourceLocation DEFAULT_BACKGROUND =
-            ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "toast/ascension_toast");
 
 
     private static final long DISPLAY_TIME = 5000L;
@@ -43,6 +45,7 @@ public class AscensionToast implements Toast {
         this.background = background;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public Visibility render(GuiGraphics guiGraphics, ToastComponent toastComponent, long timeSinceVisible) {
         Minecraft minecraft = toastComponent.getMinecraft();
