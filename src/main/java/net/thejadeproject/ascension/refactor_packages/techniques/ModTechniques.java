@@ -16,9 +16,11 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.Com
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.FiveElementBodyTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.FiveElementCultivationTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.DawningSunTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.GibbousMoonTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.PaleMoonTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.ScholarlySoulTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.ZenithSunTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.WhiteLightningTenStageTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
@@ -45,6 +47,35 @@ public class ModTechniques {
     public static final ResourceLocation TIER4_BODY_KEY  = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "tier4_body_tech");
     public static final ResourceLocation TIER5_BODY_KEY  = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "tier5_body_tech");
     public static final ResourceLocation BLOODFEAST_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "bloodfeast_soul_refining");
+    public static final ResourceLocation BASE_BODY_KEY    = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_body");
+    public static final ResourceLocation BASE_ESSENCE_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_essence");
+    public static final ResourceLocation BASE_SOUL_KEY    = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_soul");
+
+    // --- Base path handlers ---
+    // Body: main VIT + STR, secondary AGI, tertiary INT
+    public static BasicStatChangeHandler baseBodyHandler = new BasicStatChangeHandler()
+            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(3,    ModifierOperation.ADD_BASE,       BASE_BODY_KEY))
+            .addMinorRealmStatModifier(ModStats.STRENGTH.getId(),     new ValueContainerModifier(3,    ModifierOperation.ADD_BASE,       BASE_BODY_KEY))
+            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),      new ValueContainerModifier(2,    ModifierOperation.ADD_BASE,       BASE_BODY_KEY))
+            .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(1,    ModifierOperation.ADD_BASE,       BASE_BODY_KEY))
+            .addMajorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, BASE_BODY_KEY))
+            .addMajorRealmStatModifier(ModStats.STRENGTH.getId(),     new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, BASE_BODY_KEY));
+
+    // Essence: main INT, secondary VIT + STR, tertiary AGI
+    public static BasicStatChangeHandler baseEssenceHandler = new BasicStatChangeHandler()
+            .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(3,    ModifierOperation.ADD_BASE,       BASE_ESSENCE_KEY))
+            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(2,    ModifierOperation.ADD_BASE,       BASE_ESSENCE_KEY))
+            .addMinorRealmStatModifier(ModStats.STRENGTH.getId(),     new ValueContainerModifier(2,    ModifierOperation.ADD_BASE,       BASE_ESSENCE_KEY))
+            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),      new ValueContainerModifier(1,    ModifierOperation.ADD_BASE,       BASE_ESSENCE_KEY))
+            .addMajorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, BASE_ESSENCE_KEY));
+
+    // Soul: main INT, secondary AGI, tertiary VIT + STR
+    public static BasicStatChangeHandler baseSoulHandler = new BasicStatChangeHandler()
+            .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(3,    ModifierOperation.ADD_BASE,       BASE_SOUL_KEY))
+            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),      new ValueContainerModifier(2,    ModifierOperation.ADD_BASE,       BASE_SOUL_KEY))
+            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(1,    ModifierOperation.ADD_BASE,       BASE_SOUL_KEY))
+            .addMinorRealmStatModifier(ModStats.STRENGTH.getId(),     new ValueContainerModifier(1,    ModifierOperation.ADD_BASE,       BASE_SOUL_KEY))
+            .addMajorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, BASE_SOUL_KEY));
 
     // --- Placeholder handler ---
     public static BasicStatChangeHandler testHandler = new BasicStatChangeHandler()
@@ -54,17 +85,15 @@ public class ModTechniques {
 
 
     // --- Single-element body technique handlers ---
-    // Fire: Vitality + Strength focus, max health
+    // Fire: Vitality + Strength focus
     public static BasicStatChangeHandler fireBodyHandler = new BasicStatChangeHandler()
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(3, ModifierOperation.ADD_BASE, FIRE_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(2, ModifierOperation.ADD_BASE, FIRE_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(4, ModifierOperation.ADD_BASE, FIRE_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, FIRE_BODY_KEY));
 
-    // Water: Vitality focus, max health, no strength
+    // Water: Vitality focus
     public static BasicStatChangeHandler waterBodyHandler = new BasicStatChangeHandler()
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(5, ModifierOperation.ADD_BASE, WATER_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(4, ModifierOperation.ADD_BASE, WATER_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.2, ModifierOperation.MULTIPLY_FINAL, WATER_BODY_KEY));
 
     // Wood: Agility focus, some vitality
@@ -73,11 +102,10 @@ public class ModTechniques {
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(2, ModifierOperation.ADD_BASE, WOOD_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.AGILITY.getId(), new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, WOOD_BODY_KEY));
 
-    // Earth: Vitality + Strength, highest max health
+    // Earth: Vitality + Strength
     public static BasicStatChangeHandler earthBodyHandler = new BasicStatChangeHandler()
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(4, ModifierOperation.ADD_BASE, EARTH_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(3, ModifierOperation.ADD_BASE, EARTH_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(4, ModifierOperation.ADD_BASE, EARTH_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.2, ModifierOperation.MULTIPLY_FINAL, EARTH_BODY_KEY));
 
     // Metal: Strength focus, some vitality
@@ -91,14 +119,12 @@ public class ModTechniques {
     public static BasicStatChangeHandler tier2BodyHandler = new BasicStatChangeHandler()
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(6, ModifierOperation.ADD_BASE, TIER2_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(4, ModifierOperation.ADD_BASE, TIER2_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(6, ModifierOperation.ADD_BASE, TIER2_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.2, ModifierOperation.MULTIPLY_FINAL, TIER2_BODY_KEY));
 
     // Tier 3 (3-element)
     public static BasicStatChangeHandler tier3BodyHandler = new BasicStatChangeHandler()
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(10, ModifierOperation.ADD_BASE, TIER3_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(6, ModifierOperation.ADD_BASE, TIER3_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(8, ModifierOperation.ADD_BASE, TIER3_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.25, ModifierOperation.MULTIPLY_FINAL, TIER3_BODY_KEY));
 
     // Tier 4 (4-element)
@@ -106,7 +132,6 @@ public class ModTechniques {
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(14, ModifierOperation.ADD_BASE, TIER4_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(8, ModifierOperation.ADD_BASE, TIER4_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.AGILITY.getId(), new ValueContainerModifier(5, ModifierOperation.ADD_BASE, TIER4_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(10, ModifierOperation.ADD_BASE, TIER4_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.3, ModifierOperation.MULTIPLY_FINAL, TIER4_BODY_KEY));
 
     // Tier 5 (5-element / Five Harmony)
@@ -114,7 +139,6 @@ public class ModTechniques {
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(20, ModifierOperation.ADD_BASE, TIER5_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(12, ModifierOperation.ADD_BASE, TIER5_BODY_KEY))
             .addMinorRealmStatModifier(ModStats.AGILITY.getId(), new ValueContainerModifier(8, ModifierOperation.ADD_BASE, TIER5_BODY_KEY))
-            .addMinorRealmAttributeModifier(Attributes.MAX_HEALTH, new ValueContainerModifier(14, ModifierOperation.ADD_BASE, TIER5_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.4, ModifierOperation.MULTIPLY_FINAL, TIER5_BODY_KEY))
             .addMajorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(0.25, ModifierOperation.MULTIPLY_FINAL, TIER5_BODY_KEY));
 
@@ -280,6 +304,10 @@ public class ModTechniques {
             TECHNIQUES.register("pale_moon_scripture", () -> new PaleMoonTechnique(testHandler));
     public static final DeferredHolder<ITechnique, ? extends GibbousMoonTechnique> GIBBOUS_MOON_SCRIPTURE =
             TECHNIQUES.register("gibbous_moon_scripture", () -> new GibbousMoonTechnique(testHandler));
+    public static final DeferredHolder<ITechnique, ? extends DawningSunTechnique> DAWNING_SUN_SCRIPTURE =
+            TECHNIQUES.register("dawning_sun_scripture", () -> new DawningSunTechnique(baseSoulHandler));
+    public static final DeferredHolder<ITechnique, ? extends ZenithSunTechnique> ZENITH_SUN_SCRIPTURE =
+            TECHNIQUES.register("zenith_sun_scripture", () -> new ZenithSunTechnique(baseSoulHandler));
 
 
 
