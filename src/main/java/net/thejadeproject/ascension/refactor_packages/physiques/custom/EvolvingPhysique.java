@@ -5,7 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.thejadeproject.ascension.clients.toast.AscensionToast;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.toast.ShowAscensionToast;
@@ -15,6 +14,8 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface.DEFAULT_BACKGROUND;
 
 public class EvolvingPhysique extends GenericPhysique {
 
@@ -67,7 +68,7 @@ public class EvolvingPhysique extends GenericPhysique {
                                 physiqueName.getString(),
                                 "Physique Evolved",
                                 getEvolutionToastIcon(evolvesInto),
-                                AscensionToast.DEFAULT_BACKGROUND
+                                DEFAULT_BACKGROUND
                         )
                 );
             }

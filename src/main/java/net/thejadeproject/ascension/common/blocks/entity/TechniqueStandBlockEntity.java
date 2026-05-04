@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.thejadeproject.ascension.clients.toast.AscensionToast;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.techniques.TechniqueBinderItem;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.toast.ShowAscensionToast;
@@ -24,6 +23,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface.DEFAULT_BACKGROUND;
 
 public class TechniqueStandBlockEntity extends BlockEntity {
 
@@ -137,12 +138,13 @@ public class TechniqueStandBlockEntity extends BlockEntity {
         return result;
     }
 
+
     private void sendToast(Player player, Component title, Component subtitle, ItemStack icon) {
         if (player instanceof ServerPlayer serverPlayer) {
             ItemStack toastIcon = icon.copy();
             toastIcon.setCount(1);
             PacketDistributor.sendToPlayer(serverPlayer,
-                    new ShowAscensionToast(title.getString(), subtitle.getString(), toastIcon, AscensionToast.DEFAULT_BACKGROUND));
+                    new ShowAscensionToast(title.getString(), subtitle.getString(), toastIcon, DEFAULT_BACKGROUND));
         }
     }
 

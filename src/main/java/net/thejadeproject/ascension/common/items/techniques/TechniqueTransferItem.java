@@ -10,13 +10,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.thejadeproject.ascension.clients.toast.AscensionToast;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.toast.ShowAscensionToast;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
+
+import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface.DEFAULT_BACKGROUND;
 
 
 public class TechniqueTransferItem extends Item {
@@ -64,7 +65,7 @@ public class TechniqueTransferItem extends Item {
                                     techniqueName.getString(),
                                     "Technique Learned",
                                     toastIcon,
-                                    AscensionToast.DEFAULT_BACKGROUND
+                                    DEFAULT_BACKGROUND
                             )
                     );
                 }
