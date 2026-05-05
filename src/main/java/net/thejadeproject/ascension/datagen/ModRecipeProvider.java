@@ -71,6 +71,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         }
 
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TECHNIQUE_BINDER.get())
+                .pattern("PPP")
+                .pattern("PSP")
+                .pattern("PPP")
+                .define('S', ModItems.TECHNIQUE_PAGE.get())
+                .define('P', Items.BOOK)
+                .unlockedBy("has_technique_page", has(ModItems.TECHNIQUE_PAGE)).save(recipeOutput, "ascension:shaped/technique_binder");
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SPIRITUAL_STONE_PICKAXE.get())
                 .pattern("SSS")
                 .pattern(" T ")
