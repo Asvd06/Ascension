@@ -76,6 +76,7 @@ public class FiveElementCirculation implements ICastableSkill {
             //System.out.println("Player is trying to cultivate");
             PathData pathData = caster.getData(ModAttachments.ENTITY_DATA).getPathData(ModPaths.ESSENCE.getId());
 
+            if(pathData == null) return false;
             if(pathData.isBreakingThrough()) return false;
 
             //TODO add a cultivate event

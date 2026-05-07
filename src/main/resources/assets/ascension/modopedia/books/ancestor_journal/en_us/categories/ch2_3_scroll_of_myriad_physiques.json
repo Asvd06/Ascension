@@ -1,0 +1,15 @@
+{
+  "title": "Scroll of Myriad Physiques",
+  "icon": { "id": "ascension:physique_essence" },
+  "children": [
+    "physiques_body_path",
+    "physiques_essence_path",
+    "physiques_elemental_path",
+    "physiques_soul_path",
+    "physiques_weapon_path",
+    "physiques_deviant_path"
+  ],
+  "entries": ["ch2/ch2_3_scroll_intro"],
+  "sort_num": 3,
+  "display_on_front_page": false
+}

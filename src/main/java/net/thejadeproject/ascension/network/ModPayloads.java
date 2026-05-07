@@ -8,6 +8,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.entit
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.qi.SyncQi;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.mob_ranks.SyncMobRank;
 import net.thejadeproject.ascension.network.serverBound.*;
+import net.thejadeproject.ascension.network.serverBound.UnlockChapterPayload;
 import net.thejadeproject.ascension.network.serverBound.input.ChangePlayerInputState;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.SyncEntityForm;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
@@ -155,6 +156,11 @@ public class ModPayloads {
                 MergeResponsePayload.TYPE,
                 MergeResponsePayload.STREAM_CODEC,
                 MergeResponsePayload::handlePayload
+        );
+        registrar.playToServer(
+                UnlockChapterPayload.TYPE,
+                UnlockChapterPayload.STREAM_CODEC,
+                UnlockChapterPayload::handlePayload
         );
     }
 }

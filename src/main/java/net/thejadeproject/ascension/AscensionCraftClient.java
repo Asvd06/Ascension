@@ -42,12 +42,15 @@ import net.thejadeproject.ascension.shaders.client.ModShaders;
 import net.thejadeproject.ascension.shaders.client.RiftRenderer;
 
 import net.thejadeproject.ascension.util.KeyBindHandler;
+import net.favouriteless.modopedia.api.registries.client.PageComponentRegistry;
+import net.thejadeproject.ascension.common.modopedia.ContinueButtonComponent;
 
 @Mod(value = AscensionCraft.MOD_ID,dist = Dist.CLIENT)
 public class AscensionCraftClient {
     public AscensionCraftClient(IEventBus modEventBus, ModContainer modContainer)
     {
         KeyBindHandler.register();
+        PageComponentRegistry.get().register(ContinueButtonComponent.ID, ContinueButtonComponent::new);
 
 
         modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);

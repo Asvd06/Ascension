@@ -17,8 +17,7 @@
       "mode": "BETWEEN",
       "other_realm": "formation_establishment",
       "other_stage": 9,
-      "realm": "formation_establishment",
-      "stage": 5
+      "realm": "qi_gathering"
     }
   ],
   "techniqueId": "ascension:heart_fire_technique"

@@ -1,0 +1,28 @@
+{
+  "title": "Scroll of Myriad Physiques",
+  "icon": { "id": "ascension:physique_essence" },
+  "pages": [
+    {
+      "components": [
+        {
+          "type": "modopedia:text",
+          "x": 0,
+          "y": 0,
+          "width": 110,
+          "text": "What follows are the physiques recorded within these pages — gathered from the ancient study, cross-referenced against texts collected over many years of travel.\n\nThey are organized by rarity. From those common enough that many cultivators carry them unknowingly, to those confirmed only a handful of times in recorded history."
+        }
+      ]
+    },
+    {
+      "components": [
+        {
+          "type": "modopedia:text",
+          "x": 0,
+          "y": 0,
+          "width": 110,
+          "text": "Study them carefully.\n\nYour physique is already decided. You were born with it, and no effort will change what you were given.\n\nBut knowing what you carry changes everything that follows."
+        }
+      ]
+    }
+  ]
+}

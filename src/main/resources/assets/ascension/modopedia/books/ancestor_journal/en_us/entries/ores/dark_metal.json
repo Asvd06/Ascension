@@ -1,0 +1,19 @@
+{
+  "title": "The Dark Metal",
+  "icon": { "id": "ascension:black_iron_ingot" },
+  "pages": [
+    {
+      "components": [
+        { "type": "modopedia:item_gallery", "x": 49, "y": 2, "display": { "type": "modopedia:cycling", "items": [{ "id": "ascension:raw_black_iron" }, { "id": "ascension:black_iron_ingot" }, { "id": "ascension:black_iron_nugget" }] } },
+        { "type": "modopedia:header", "x": 0, "y": 22, "text": "Black Iron", "centered": true },
+        { "type": "modopedia:separator", "x": 0, "y": 34 },
+        { "type": "modopedia:text", "x": 0, "y": 42, "text": "Found in deep ore deposits in areas of high spiritual density — the same locations that attract other things worth being cautious around. The raw ore is heavier than it looks." }
+      ]
+    },
+    {
+      "components": [
+        { "type": "modopedia:text", "x": 0, "y": 0, "text": "Smelted, it produces metal harder than iron that does not rust. I have had a Black Iron blade for eight months; the edge is unchanged through significant use. It also conducts Qi better than standard iron." }
+      ]
+    }
+  ]
+}

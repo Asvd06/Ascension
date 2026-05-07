@@ -1,0 +1,19 @@
+{
+  "title": "Winter Silver",
+  "icon": { "id": "ascension:frost_silver_ingot" },
+  "pages": [
+    {
+      "components": [
+        { "type": "modopedia:item_gallery", "x": 49, "y": 2, "display": { "type": "modopedia:cycling", "items": [{ "id": "ascension:raw_frost_silver" }, { "id": "ascension:frost_silver_ingot" }, { "id": "ascension:frost_silver_nugget" }] } },
+        { "type": "modopedia:header", "x": 0, "y": 22, "text": "Frost Silver", "centered": true },
+        { "type": "modopedia:separator", "x": 0, "y": 34 },
+        { "type": "modopedia:text", "x": 0, "y": 42, "text": "Veins run through stone at high altitude, in rock frozen for centuries. Reaching them requires stubbornness or the ability to fly.\nThe smelted ingot retains a faint chill even near open flame — not temperature, but something the metal holds from its origin." }
+      ]
+    },
+    {
+      "components": [
+        { "type": "modopedia:text", "x": 0, "y": 0, "text": "Suited for cold and water-aligned tools; conducts Qi with unusual smoothness." }
+      ]
+    }
+  ]
+}

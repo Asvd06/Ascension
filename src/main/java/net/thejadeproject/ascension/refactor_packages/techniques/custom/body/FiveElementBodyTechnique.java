@@ -5,6 +5,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -31,9 +32,10 @@ public class FiveElementBodyTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
-        heldEntity.getPathData(getPath()).handleRealmChange(
-            heldEntity.getPathData(getPath()).getMajorRealm(), 0, heldEntity
-        );
+        PathData pathData = heldEntity.getPathData(getPath());
+        if (pathData != null) {
+            pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
+        }
         heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
     }
 

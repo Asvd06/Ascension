@@ -44,6 +44,7 @@ import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.blocks.custom.functions.FreezingEffectItems;
 import net.thejadeproject.ascension.common.blocks.entity.ModBlockEntities;
 import net.thejadeproject.ascension.common.command.AscensionCommand;
+import net.thejadeproject.ascension.common.command.commands.ReadChapterCommand;
 
 import net.thejadeproject.ascension.common.items.artifacts.talismans.SoulAnchorTalisman;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
@@ -336,7 +337,6 @@ public class AscensionCraft {
         EntityAttributeManager.changeAttributeRange(0.0, Double.MAX_VALUE, (RangedAttribute) Attributes.ARMOR.value());
         EntityAttributeManager.changeAttributeRange(0.0, Double.MAX_VALUE, (RangedAttribute) Attributes.ARMOR_TOUGHNESS.value());
         EntityAttributeManager.changeAttributeRange(0.0, Double.MAX_VALUE, (RangedAttribute) Attributes.SAFE_FALL_DISTANCE.value());
-        EntityAttributeManager.changeAttributeRange(0.0, Double.MAX_VALUE, (RangedAttribute) Attributes.WATER_MOVEMENT_EFFICIENCY.value());
 
         EntityAttributeManager.changeAttributeRange(0.0, 100.0, (RangedAttribute) Attributes.MOVEMENT_SPEED.value());
         EntityAttributeManager.changeAttributeRange(0.0, 100.0, (RangedAttribute) Attributes.JUMP_STRENGTH.value());
@@ -379,6 +379,7 @@ public class AscensionCraft {
 
     private void registerCommands(RegisterCommandsEvent event) {
         AscensionCommand.register(event.getDispatcher());
+        ReadChapterCommand.register(event.getDispatcher());
     }
 
 

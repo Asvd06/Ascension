@@ -34,7 +34,7 @@ public class ElementalBodyPhysique implements IPhysique {
     @Override
     public void onPhysiqueAdded(IEntityData heldEntity, ResourceLocation oldPhysique, IPhysiqueData oldPhysiqueData) {
         // Tier 1 bonuses on first equip
-        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 1.0);
+        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 2.0);
         heldEntity.getPathBonusHandler().addPathBonus(element, 1.0);
     }
 

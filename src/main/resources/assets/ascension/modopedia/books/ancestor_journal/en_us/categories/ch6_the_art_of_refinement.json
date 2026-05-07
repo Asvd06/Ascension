@@ -1,0 +1,8 @@
+﻿{
+  "title": "The Art of Refinement",
+  "icon": { "id": "ascension:flame" },
+  "children": ["ch6_1_fire_and_intention", "ch6_2_tools_of_the_trade", "ch6_3_scroll_of_myriad_refinements"],
+  "entries": [],
+  "sort_num": 6
+}
+

@@ -153,7 +153,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wither_skeleton")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 5, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 9).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "heart_fire_technique")
         ));
@@ -163,7 +163,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/drowned")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 4, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 9).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "kidney_water_technique")
         ));
@@ -205,7 +205,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/iron_golem")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 7, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 9).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "lung_metal_technique")
         ));

@@ -1,0 +1,8 @@
+{
+  "title": "$(f:minecraft:alt)Lineage$()",
+  "icon": { "id": "ascension:soul_flame" },
+  "children": [],
+  "entries": [],
+  "sort_num": 4,
+  "advancement": "ascension:journal/lineage_unlock"
+}

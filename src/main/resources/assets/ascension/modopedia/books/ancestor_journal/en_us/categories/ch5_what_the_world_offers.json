@@ -1,0 +1,8 @@
+﻿{
+  "title": "What the World Offers",
+  "icon": { "id": "ascension:jade" },
+  "children": ["ch5_1_what_takes_root", "ch5_2_what_the_earth_hides", "ch5_3_scattered_treasures"],
+  "entries": [],
+  "sort_num": 5
+}
+

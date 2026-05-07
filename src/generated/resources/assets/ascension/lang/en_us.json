@@ -997,6 +997,7 @@
   "tooltip.ascension.heat_level": "Heat: %s°C / %s°C",
   "tooltip.ascension.inputs": "Inputs:",
   "tooltip.ascension.needle_plain": "A sleek hidden weapon. Can be tipped with a coating.",
+  "item.ascension.ancestor_journal": "Ancestor Journal",
   "tooltip.ascension.needle_tipped": "Coated: %s",
   "tooltip.ascension.output": "Output: %s",
   "tooltip.ascension.progress": "Progress: %s%%",

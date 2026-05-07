@@ -37,6 +37,9 @@ import java.util.List;
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(AscensionCraft.MOD_ID);
 
+    public static final DeferredItem<Item> ANCESTOR_JOURNAL = ITEMS.register("ancestor_journal",
+            () -> new AncestorJournalItem(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "ancestor_journal")));
+
     public static final DeferredItem<Item> FAN = ITEMS.register("fan",
             () -> new FanItem(new Item.Properties()));
 
