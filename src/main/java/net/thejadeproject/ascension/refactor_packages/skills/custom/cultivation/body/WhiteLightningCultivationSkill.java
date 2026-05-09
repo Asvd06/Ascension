@@ -8,12 +8,15 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
+import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
 public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
 
@@ -47,8 +50,33 @@ public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.tryConsumeQi(damage)) return;
 
         double multiplier = BASE_MULTIPLIER * getCultivationMultiplier(player);
+        double gain = damage * multiplier;
 
-        bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + (damage * multiplier));
+        ITechnique technique = bodyPath.getLastUsedTechnique() == null ? null :
+                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(bodyPath.getLastUsedTechnique());
+
+        if (technique != null && bodyPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm())) {
+            bodyPath.setCurrentRealmProgress(technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm()));
+
+            if (bodyPath.getMinorRealm() < technique.getMaxMinorRealm(bodyPath.getMajorRealm()) && technique.canBreakthroughMinorRealm(
+                    entityData,
+                    bodyPath.getMajorRealm(),
+                    bodyPath.getMinorRealm(),
+                    bodyPath.getCurrentRealmProgress()
+            )) {
+                bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
+            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
+                    && technique.canBreakthrough(entityData, bodyPath.getMajorRealm(), bodyPath.getMinorRealm(), bodyPath.getCurrentRealmProgress())) {
+                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
+                if (instance != null) {
+                    bodyPath.setBreakthroughInstance(instance);
+                    bodyPath.setBreakingThrough(true);
+                }
+            }
+        } else {
+            bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);
+        }
+
         bodyPath.sync(player);
     }
 

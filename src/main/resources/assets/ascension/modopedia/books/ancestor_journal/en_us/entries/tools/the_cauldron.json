@@ -14,12 +14,30 @@
       "components": [
         { "type": "modopedia:header", "x": 0, "y": 0, "text": "How It Works", "centered": true },
         { "type": "modopedia:separator", "x": 0, "y": 12 },
-        { "type": "modopedia:text", "x": 0, "y": 20, "text": "Place the cauldron. Provide fire — the right kind matters more than the amount. Add the herbs in the right combinations. Wait.\nDo not open it before it finishes. I learned this early and the injury was not small." }
+        { "type": "modopedia:text", "x": 0, "y": 20, "text": "Place the cauldron. Provide fire — the right kind matters more than the amount. Add the herbs in the right combinations. Wait.\nThe process is not forgiving of impatience. Rushing the refinement ruins the batch. I have wasted more herbs than I care to count learning that." }
       ]
     },
     {
       "components": [
-        { "type": "modopedia:text", "x": 0, "y": 0, "text": "What emerges depends on what you put in. Most batches will teach you something. Not all of them will be pleasant lessons." }
+        { "type": "modopedia:header", "x": 0, "y": 0, "text": "On Results", "centered": true },
+        { "type": "modopedia:separator", "x": 0, "y": 12 },
+        { "type": "modopedia:text", "x": 0, "y": 20, "text": "What emerges depends on what you put in. The quality of the flame, the purity of the herbs, the order they enter — all of it shapes the outcome.\nA poor batch is not wasted. It is a record of what went wrong." }
+      ]
+    },
+    {
+      "components": [
+        { "type": "modopedia:header", "x": 0, "y": 0, "text": "The Setup", "centered": true },
+        { "type": "modopedia:separator", "x": 0, "y": 12 },
+        { "type": "modopedia:large_frame", "x": -2, "y": 22 },
+        {
+          "type": "modopedia:multiblock",
+          "x": 4, "y": 28,
+          "width": 88,
+          "height": 88,
+          "scale": 1.6,
+          "previewable": false,
+          "multiblock_id": "ascension:cauldron_setup"
+        }
       ]
     }
   ]

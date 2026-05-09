@@ -18,6 +18,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
+import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -27,12 +28,24 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 public class QiRelease implements ICastableSkill {
 
-    private static final double QI_COST       = 20.0;
-    private static final double PUSH_RANGE    = 6.0;
-    private static final double PUSH_STRENGTH = 1.2;
-    private static final int    COOLDOWN_TICKS = 200;
+    private static final double BASE_RANGE        = 6.0;
+    private static final double RANGE_PER_REALM   = 2.0;
+    private static final double BASE_QI_COST      = 20.0;
+    private static final double QI_COST_PER_REALM = 4.0;
+    private static final double BASE_PUSH_H       = 1.2;
+    private static final double PUSH_H_PER_REALM  = 0.6;
+    private static final double BASE_PUSH_V       = 0.3;
+    private static final double PUSH_V_PER_REALM  = 0.1;
+    private static final double CRASH_MULTIPLIER  = 5.0;
+    private static final int    TRACK_TICKS       = 8;
+    private static final int    COOLDOWN_TICKS    = 200;
+
+    public static final ConcurrentHashMap<LivingEntity, Float> PUSH_CRASH_DAMAGE = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<LivingEntity, Long>  PUSH_EXPIRY       = new ConcurrentHashMap<>();
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
@@ -40,7 +53,8 @@ public class QiRelease implements ICastableSkill {
         if (!caster.hasData(ModAttachments.ENTITY_DATA)) return new CastResult(CastResult.Type.FAILURE);
 
         IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
-        if (!data.getQiContainer().hasQi(QI_COST)) {
+        int majorRealm = getMajorRealm(caster);
+        if (!data.getQiContainer().hasQi(BASE_QI_COST + majorRealm * QI_COST_PER_REALM)) {
             return new CastResult(CastResult.Type.FAILURE);
         }
 
@@ -53,19 +67,39 @@ public class QiRelease implements ICastableSkill {
         if (!caster.hasData(ModAttachments.ENTITY_DATA)) return;
 
         IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
-        if (!data.getQiContainer().tryConsumeQi(QI_COST)) return;
+        int majorRealm = getMajorRealm(caster);
+        if (!data.getQiContainer().tryConsumeQi(BASE_QI_COST + majorRealm * QI_COST_PER_REALM)) return;
 
-        pushNearbyEntities(caster);
+        double range    = BASE_RANGE   + majorRealm * RANGE_PER_REALM;
+        double pushH    = BASE_PUSH_H  + majorRealm * PUSH_H_PER_REALM;
+        double pushV    = BASE_PUSH_V  + majorRealm * PUSH_V_PER_REALM;
+        float  crashDmg = (float) (pushH * CRASH_MULTIPLIER);
+        long   expiry   = caster.level().getGameTime() + TRACK_TICKS;
+
+        pushNearbyEntities(caster, range, pushH, pushV, crashDmg, expiry);
     }
 
-    private void pushNearbyEntities(Entity caster) {
-        AABB area = AABB.ofSize(caster.position(), PUSH_RANGE * 2, PUSH_RANGE * 2, PUSH_RANGE * 2);
+    private void pushNearbyEntities(Entity caster, double range, double pushH, double pushV, float crashDmg, long expiry) {
+        AABB area = AABB.ofSize(caster.position(), range * 2, range * 2, range * 2);
         caster.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != caster && e.isAlive())
                 .forEach(entity -> {
                     Vec3 dir = entity.position().subtract(caster.position()).normalize();
-                    entity.push(dir.x * PUSH_STRENGTH, 0.3, dir.z * PUSH_STRENGTH);
+                    entity.push(dir.x * pushH, pushV, dir.z * pushH);
                     entity.hurtMarked = true;
+                    PUSH_CRASH_DAMAGE.put(entity, crashDmg);
+                    PUSH_EXPIRY.put(entity, expiry);
                 });
+    }
+
+    private int getMajorRealm(Entity caster) {
+        if (!caster.hasData(ModAttachments.ENTITY_DATA)) return 0;
+        IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
+        int highest = 0;
+        for (PathData pathData : data.getAllPathData()) {
+            if (pathData == null) continue;
+            highest = Math.max(highest, pathData.getMajorRealm());
+        }
+        return highest;
     }
 
     @Override public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) { return false; }

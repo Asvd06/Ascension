@@ -142,9 +142,11 @@ public class InputHandler {
             }
         }
         if(Minecraft.getInstance().screen != null){
-            for(KeyMapping mapping : state){
+            java.util.Iterator<KeyMapping> iter = state.iterator();
+            while(iter.hasNext()){
+                KeyMapping mapping = iter.next();
                 if(!mapping.isConflictContextAndModifierActive()){
-                    state.remove(mapping);
+                    iter.remove();
                     actionHandlerMapping.get(mapping).actionReleased.accept(modifiers);
                     sendSatePacket(actionHandlerMapping.get(mapping).actionName,modifiers,false);
                 }

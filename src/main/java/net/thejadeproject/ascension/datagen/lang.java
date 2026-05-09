@@ -774,6 +774,9 @@ public class lang extends LanguageProvider {
 
 
 
+        // Books
+        add("item.ascension.ancestor_journal", "Journal");
+
         //Technique Manual Stuff
         add("item.ascension.technique_binder", "Technique Binder");
         add("item.ascension.technique_page", "Technique Page");

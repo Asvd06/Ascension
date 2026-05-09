@@ -12,8 +12,8 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
@@ -67,9 +67,13 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
                     bodyPath.getCurrentRealmProgress()
             )) {
                 bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
-            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm() && technique.getStabilityHandler() != null
-                    && bodyPath.getCurrentRealmStability() < technique.getStabilityHandler().getMaxCultivationTicks()) {
-                bodyPath.setCurrentRealmStability(bodyPath.getCurrentRealmStability() + 1);
+            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
+                    && technique.canBreakthrough(entityData, bodyPath.getMajorRealm(), bodyPath.getMinorRealm(), bodyPath.getCurrentRealmProgress())) {
+                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
+                if (instance != null) {
+                    bodyPath.setBreakthroughInstance(instance);
+                    bodyPath.setBreakingThrough(true);
+                }
             }
         } else {
             bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);

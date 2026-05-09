@@ -38,6 +38,7 @@ public class BodyElementTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
+        refreshUniversalTechniqueSkills(heldEntity);
     }
 
     @Override
@@ -47,6 +48,7 @@ public class BodyElementTechnique extends GenericTechnique {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }
         heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
+        refreshUniversalTechniqueSkills(heldEntity);
     }
 
     @Override
