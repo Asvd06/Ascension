@@ -46,6 +46,19 @@ public class ModPlacedFeatures {
 
 
 
+    // ── Wild Herbs ────────────────────────────────────────────────────────────
+    /** Rarity: once every ~48 chunks. Adjust the RarityFilter value to tune spawn rate. */
+    public static final ResourceKey<PlacedFeature> WILD_GINSENG_PLACED_KEY =
+            registerKey("wild_hundred_year_ginseng_placed");
+    public static final ResourceKey<PlacedFeature> WILD_SNOW_GINSENG_PLACED_KEY =
+            registerKey("wild_hundred_year_snow_ginseng_placed");
+    public static final ResourceKey<PlacedFeature> WILD_FIRE_GINSENG_PLACED_KEY =
+            registerKey("wild_hundred_year_fire_ginseng_placed");
+    public static final ResourceKey<PlacedFeature> WILD_WHITE_JADE_ORCHID_PLACED_KEY =
+            registerKey("wild_white_jade_orchid_placed");
+
+
+
 
 
 
@@ -96,6 +109,53 @@ public class ModPlacedFeatures {
                         RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(1)),
                         BiomeFilter.biome()
                 ));
+
+
+
+        // ── Wild Herbs ────────────────────────────────────────────────────────
+        // Each herb uses the same placement modifiers pattern:
+        // CountPlacement(1) + RarityFilter(N) + InSquare + HeightRange(surface) + BiomeFilter
+        // Increase RarityFilter value to make rarer; decrease to make more common.
+
+        // Ginseng: surface y=60-120, once per ~48 chunks in biome
+        register(context, WILD_GINSENG_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_GINSENG_KEY),
+                List.of(
+                        CountPlacement.of(1),
+                        RarityFilter.onAverageOnceEvery(48),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(120)),
+                        BiomeFilter.biome()));
+
+        // Snow Ginseng: surface y=60-200 (snowy biomes tend to be higher)
+        register(context, WILD_SNOW_GINSENG_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_SNOW_GINSENG_KEY),
+                List.of(
+                        CountPlacement.of(1),
+                        RarityFilter.onAverageOnceEvery(64),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(200)),
+                        BiomeFilter.biome()));
+
+        // Fire Ginseng: surface y=30-80 (warmer/lower terrain)
+        register(context, WILD_FIRE_GINSENG_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_FIRE_GINSENG_KEY),
+                List.of(
+                        CountPlacement.of(1),
+                        RarityFilter.onAverageOnceEvery(64),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(30), VerticalAnchor.absolute(120)),
+                        BiomeFilter.biome()));
+
+        // White Jade Orchid: surface y=60-120 (lush/jungle)
+        register(context, WILD_WHITE_JADE_ORCHID_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_WHITE_JADE_ORCHID_KEY),
+                List.of(
+                        CountPlacement.of(1),
+                        RarityFilter.onAverageOnceEvery(56),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(120)),
+                        BiomeFilter.biome()));
 
     }
 
