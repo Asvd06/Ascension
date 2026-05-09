@@ -84,9 +84,9 @@ public class AscensionRegistries {
     public static class EntityDataSources{
         public static final ResourceKey<Registry<IEntityDataSource>> ENTITY_DATA_SOURCES_KEY = ResourceKey.createRegistryKey(ResourceLocation
                 .fromNamespaceAndPath(AscensionCraft.MOD_ID,"entity_data_sources"));
-        public static final Registry<IEntityDataSource> ENTITY_DATA_SOURCES_REGISTRY = new RegistryBuilder<>(ENTITY_DATA_SOURCES_KEY)
-                .defaultKey(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"none"))
-                .create();
+            public static final Registry<IEntityDataSource> ENTITY_DATA_SOURCES_REGISTRY = new RegistryBuilder<>(ENTITY_DATA_SOURCES_KEY)
+                    .defaultKey(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"none"))
+                    .create();
 
     }
     public static <T> T getRegistryObject(ResourceLocation location,Registry<T> registry){

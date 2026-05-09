@@ -22,9 +22,7 @@ import net.thejadeproject.ascension.refactor_packages.gui.elements.skill_casting
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skill_view.SkillMenuContainer;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 import static net.thejadeproject.ascension.util.KeyBindHandler.CULTIVATION_CATEGORY;
@@ -142,13 +140,16 @@ public class InputHandler {
             }
         }
         if(Minecraft.getInstance().screen != null){
-            for(KeyMapping mapping : state){
+            Iterator<KeyMapping> mappings = state.iterator();
+            while(mappings.hasNext()){
+                KeyMapping mapping = mappings.next();
                 if(!mapping.isConflictContextAndModifierActive()){
-                    state.remove(mapping);
+                    mappings.remove();
                     actionHandlerMapping.get(mapping).actionReleased.accept(modifiers);
                     sendSatePacket(actionHandlerMapping.get(mapping).actionName,modifiers,false);
                 }
             }
+
         }
     }
 }
