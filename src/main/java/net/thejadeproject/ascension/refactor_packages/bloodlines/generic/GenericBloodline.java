@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.bloodlines.custom;
+package net.thejadeproject.ascension.refactor_packages.bloodlines.generic;
 
 import net.lucent.easygui.gui.RenderableElement;
 import net.lucent.easygui.gui.UIFrame;
@@ -13,6 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.refactor_packages.attributes.AttributeValueContainer;
+import net.thejadeproject.ascension.refactor_packages.bloodlines.BloodlineSuppression;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodline;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodlineData;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -33,6 +34,7 @@ public class GenericBloodline implements IBloodline {
 
     private final LinkedHashMap<Holder<Attribute>, ValueContainerModifier> attributeModifiers = new LinkedHashMap<>();
     private final List<ResourceLocation> inherentSkills = new ArrayList<>();
+    private final BloodlineSuppression suppression = new BloodlineSuppression();
 
     public GenericBloodline(Component title) {
         this.title = title;
@@ -69,6 +71,35 @@ public class GenericBloodline implements IBloodline {
     public GenericBloodline addInherentSkill(ResourceLocation skillId) {
         inherentSkills.add(skillId);
         return this;
+    }
+
+    /**
+     * Sets the suppression tier for this bloodline.
+     * A bloodline with tier 9 automatically suppresses all bloodlines with a tier strictly below 9.
+     * Use values 1-9 (or however many tiers you define).
+     * Bloodlines with no tier set (default 0) are not part of the tier hierarchy.
+     *
+     * Example: tier 3 suppresses tier 2 and tier 1 bloodlines.
+     */
+    public GenericBloodline addSuppressionTier(int tier) {
+        suppression.setTier(tier);
+        return this;
+    }
+
+    /**
+     * Adds a specific bloodline that this bloodline always suppresses,
+     * regardless of tier. Useful for rivalries between bloodlines that don't share a tier hierarchy.
+     *
+     * Example: .addSuppressionBloodline(rl("phoenix_bloodline"))
+     */
+    public GenericBloodline addSuppressionBloodline(ResourceLocation bloodlineId) {
+        suppression.addSpecificTarget(bloodlineId);
+        return this;
+    }
+
+    /** Convenience overload — accepts a string in "namespace:path" format. */
+    public GenericBloodline addSuppressionBloodline(String bloodlineId) {
+        return addSuppressionBloodline(ResourceLocation.parse(bloodlineId));
     }
 
     // ─────────────────────────────── IBloodline ───────────────────────────────
@@ -114,6 +145,19 @@ public class GenericBloodline implements IBloodline {
         buf.readUtf();
         return new GenericBloodlineData();
     }
+
+    // ─────────────────────────────── suppression ──────────────────────────────
+
+    /** Returns the suppression profile for this bloodline. Used by BloodlineSuppressionHandler. */
+    public BloodlineSuppression getSuppression() {
+        return suppression;
+    }
+
+    public boolean hasSuppression() {
+        return suppression.hasSuppression();
+    }
+
+
     // ─────────────────────────────── helpers ──────────────────────────────────
 
     private void applyAttributes(IEntityData heldEntity) {

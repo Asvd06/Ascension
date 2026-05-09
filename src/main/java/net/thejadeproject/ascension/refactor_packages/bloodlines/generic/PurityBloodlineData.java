@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.bloodlines.custom;
+package net.thejadeproject.ascension.refactor_packages.bloodlines.generic;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
