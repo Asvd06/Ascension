@@ -38,6 +38,7 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_WILD_SNOW_GINSENG = registerKey("add_wild_snow_ginseng");
     public static final ResourceKey<BiomeModifier> ADD_WILD_FIRE_GINSENG = registerKey("add_wild_fire_ginseng");
     public static final ResourceKey<BiomeModifier> ADD_WILD_WHITE_JADE_ORCHID = registerKey("add_wild_white_jade_orchid");
+    public static final ResourceKey<BiomeModifier> ADD_WILD_JADE_DEW_GRASS = registerKey("add_wild_jade_dew_grass");
 
 
     public static final ResourceKey<BiomeModifier> SPAWN_RAT = registerKey("spawn_rat");
@@ -129,6 +130,16 @@ public class ModBiomeModifiers {
                         biomes.getOrThrow(Biomes.BAMBOO_JUNGLE),
                         biomes.getOrThrow(Biomes.LUSH_CAVES)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_WHITE_JADE_ORCHID_PLACED_KEY)),
+                GenerationStep.Decoration.VEGETAL_DECORATION));
+        context.register(ADD_WILD_JADE_DEW_GRASS, new BiomeModifiers.AddFeaturesBiomeModifier(
+                HolderSet.direct(
+                        biomes.getOrThrow(Biomes.PLAINS),
+                        biomes.getOrThrow(Biomes.MEADOW),
+                        biomes.getOrThrow(Biomes.SUNFLOWER_PLAINS),
+                        biomes.getOrThrow(Biomes.FOREST),
+                        biomes.getOrThrow(Biomes.BIRCH_FOREST),
+                        biomes.getOrThrow(Biomes.FLOWER_FOREST)),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_JADE_DEW_GRASS_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
 
 

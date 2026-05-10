@@ -964,6 +964,11 @@ public class lang extends LanguageProvider {
         add("block.ascension.ironwood_sprout_crop", "Ironwood Sprout");
         add("block.ascension.white_jade_orchid_crop", "White Jade Orchid");
 
+        add("item.ascension.jade_dew_grass",       "Jade Dew Grass");
+        add("item.ascension.jade_dew_grass_seeds", "Jade Dew Grass Seeds");
+        add("block.ascension.jade_dew_grass_crop", "Jade Dew Grass");
+
+
 
 
         //Decorational Blocks

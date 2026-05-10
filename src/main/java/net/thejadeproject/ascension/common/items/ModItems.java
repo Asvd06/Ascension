@@ -331,6 +331,11 @@ public class ModItems {
     public static final DeferredItem<Item> JADE_BAMBOO_OF_SERENITY = ITEMS.register("jade_bamboo_of_serenity",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.JADE_BAMBOO_OF_SERENITY)));
 
+    public static final DeferredItem<Item> JADE_DEW_GRASS = ITEMS.register("jade_dew_grass",
+            () -> new HerbItem(new Item.Properties().food(ModFoodProperties.JADE_DEW_GRASS)));
+    public static final DeferredItem<Item> JADE_DEW_GRASS_SEEDS = ITEMS.register("jade_dew_grass_seeds",
+            () -> new ItemNameBlockItem(ModBlocks.JADE_DEW_GRASS_CROP.get(), new Item.Properties()));
+
     public static final DeferredItem<Item> IRONWOOD_SPROUT = ITEMS.register("ironwood_sprout",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.IRONWOOD_SPROUT)));
 

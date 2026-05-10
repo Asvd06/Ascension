@@ -16,6 +16,7 @@ import net.thejadeproject.ascension.common.blocks.custom.*;
 
 import net.thejadeproject.ascension.common.blocks.custom.crops.GenericSlowCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.crops.StemSlowCropBlock;
+import net.thejadeproject.ascension.common.blocks.custom.crops.jadedew.JadeDewGrassCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.fires.CrimsonLotusFire;
 import net.thejadeproject.ascension.common.blocks.entity.ModBlockEntities;
 import net.thejadeproject.ascension.common.items.ModItems;
@@ -560,6 +561,12 @@ public class ModBlocks {
             () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_SNOW_GINSENG));
     public static final DeferredBlock<Block> HUNDRED_YEAR_FIRE_GINSENG_CROP = registerBlockNoItem("hundred_year_fire_ginseng_crop",
             () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_FIRE_GINSENG));
+    public static final DeferredBlock<Block> JADE_DEW_GRASS_CROP = registerBlockNoItem("jade_dew_grass_crop",
+            () -> new JadeDewGrassCropBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT),
+                    ModItems.JADE_DEW_GRASS_SEEDS,
+                    0.002f   // slightly faster than ginseng — it's a common tier herb
+            ));
 
     //Fires / Flames
 

@@ -9,6 +9,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.thejadeproject.ascension.common.blocks.custom.crops.CropAgeCache;
 import net.thejadeproject.ascension.common.blocks.custom.crops.GenericSlowCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.crops.StemSlowCropBlock;
+import net.thejadeproject.ascension.common.blocks.custom.crops.jadedew.JadeDewGrassCropBlock;
 import net.thejadeproject.ascension.common.items.herbs.HerbQuality;
 
 public class WildHerbFeature extends Feature<WildHerbFeatureConfig> {
@@ -48,6 +49,8 @@ public class WildHerbFeature extends Feature<WildHerbFeatureConfig> {
             cropState = generic.getStateForAge(GenericSlowCropBlock.MAX_AGE);
         } else if (config.cropBlock() instanceof StemSlowCropBlock stem) {
             cropState = stem.getStateForAge(StemSlowCropBlock.MAX_AGE);
+        } else if (config.cropBlock() instanceof JadeDewGrassCropBlock jadeDew) {
+            cropState = jadeDew.getStateForAge(JadeDewGrassCropBlock.MAX_AGE);
         } else {
             cropState = config.cropBlock().defaultBlockState();
         }

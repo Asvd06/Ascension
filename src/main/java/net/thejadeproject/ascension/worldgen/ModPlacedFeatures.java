@@ -56,6 +56,8 @@ public class ModPlacedFeatures {
             registerKey("wild_hundred_year_fire_ginseng_placed");
     public static final ResourceKey<PlacedFeature> WILD_WHITE_JADE_ORCHID_PLACED_KEY =
             registerKey("wild_white_jade_orchid_placed");
+    public static final ResourceKey<PlacedFeature> WILD_JADE_DEW_GRASS_PLACED_KEY =
+            registerKey("wild_jade_dew_grass_placed");
 
 
 
@@ -150,6 +152,14 @@ public class ModPlacedFeatures {
                 List.of(
                         CountPlacement.of(1),
                         RarityFilter.onAverageOnceEvery(24),
+                        InSquarePlacement.spread(),
+                        HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(120)),
+                        BiomeFilter.biome()));
+        register(context, WILD_JADE_DEW_GRASS_PLACED_KEY,
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_JADE_DEW_GRASS_KEY),
+                List.of(
+                        CountPlacement.of(2),
+                        RarityFilter.onAverageOnceEvery(12),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(120)),
                         BiomeFilter.biome()));

@@ -365,6 +365,11 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SOUL_FLAME);
                         output.accept(ModItems.CRIMSON_LOTUS_FLAME);
 
+                        output.accept(ModItems.JADE_DEW_GRASS);
+                        output.accept(ModItems.JADE_DEW_GRASS_SEEDS);
+
+
+
                         output.accept(ModItems.PEACH);
                         output.accept(ModItems.GOLDEN_SUN_LEAF);
                         output.accept(ModItems.JADE_BAMBOO_OF_SERENITY);
