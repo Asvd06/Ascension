@@ -1,32 +1,63 @@
 package net.thejadeproject.ascension.common.items.herbs;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
+import javax.annotation.Nullable;
 import java.util.List;
-
 /**
  * Base class for herb items that are also block items (plantable via ItemNameBlockItem).
  *
- * Use instead of plain {@code ItemNameBlockItem} for any herb that participates in the
- * cauldron quality system.
+ * Custom eat effects are passed as a lambda — no subclass needed per herb.
  *
- * Registration example:
- *   public static final DeferredItem<Item> WHITE_JADE_ORCHID = ITEMS.register("white_jade_orchid",
- *       () -> new HerbBlockItem(ModBlocks.WHITE_JADE_ORCHID_CROP.get(),
- *               new Item.Properties().food(ModFoodProperties.WHITE_JADE_ORCHID)));
+ * Usage — no special effect:
+ *   new HerbBlockItem(ModBlocks.HUNDRED_YEAR_GINSENG_CROP.get(), new Item.Properties()...)
  *
- * For herbs that need custom finishUsingItem logic (HundredYearFireGinseng etc.),
- * extend HerbBlockItem directly and call super.appendHoverText() — the tooltip
- * is inherited automatically.
+ * Usage — with eat effect:
+ *   new HerbBlockItem(ModBlocks.HUNDRED_YEAR_SNOW_GINSENG_CROP.get(), new Item.Properties()...,
+ *       (stack, level, entity) -> {
+ *           Player p = (Player) entity;
+ *           p.setTicksFrozen(300);
+ *           p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
+ *       })
  */
 public class HerbBlockItem extends ItemNameBlockItem {
 
+    /**
+     * Called server-side after the herb is eaten.
+     * entity is always a Player (checked before calling).
+     */
+    @FunctionalInterface
+    public interface EatEffect {
+        void apply(ItemStack stack, Level level, LivingEntity entity);
+    }
+
+    @Nullable
+    private final EatEffect eatEffect;
+
+    /** No special eat effect. */
     public HerbBlockItem(Block block, Properties properties) {
+        this(block, properties, null);
+    }
+
+    /** With a custom eat effect. */
+    public HerbBlockItem(Block block, Properties properties, @Nullable EatEffect eatEffect) {
         super(block, properties);
+        this.eatEffect = eatEffect;
+    }
+
+    @Override
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+        if (eatEffect != null && !level.isClientSide && entity instanceof Player) {
+            eatEffect.apply(stack, level, entity);
+        }
+        return super.finishUsingItem(stack, level, entity);
     }
 
     @Override
