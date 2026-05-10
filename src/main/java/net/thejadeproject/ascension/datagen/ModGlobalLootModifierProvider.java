@@ -811,7 +811,72 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 30
         ));
 
+        add("dreaming_soul_from_phantom", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:entities/phantom")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.14f).build(),
+                        MobRankLootCondition.atLeast("formation_establishment", 5).build()
 
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dreaming_soul"),
+                8,
+                18
+        ));
+
+        add("soul_gaze_from_ancient_city", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/ancient_city")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.10f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_gaze"),
+                12,
+                24
+        ));
+
+        add("ashen_soul_flame_from_nether_fortress", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/nether_bridge")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.08f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "ashen_soul_flame"),
+                14,
+                30
+        ));
+
+        add("thundering_soul_core_from_end_city", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/end_city_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.07f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "thundering_soul_core"),
+                16,
+                34
+        ));
+
+        add("soul_sword_heart_from_vindicator", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:entities/vindicator")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.09f).build(),
+                        MobRankLootCondition.atLeast("formation_establishment", 8).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_sword_heart"),
+                12,
+                28
+        ));
+
+        add("spear_soul_mark_from_pillager", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:entities/pillager")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.11f).build(),
+                        MobRankLootCondition.atLeast("formation_establishment", 6).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spear_soul_mark"),
+                8,
+                20
+        ));
 
 
         //Herbs
