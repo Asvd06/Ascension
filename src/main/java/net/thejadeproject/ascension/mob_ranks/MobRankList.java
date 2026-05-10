@@ -27,8 +27,22 @@ public final class MobRankList {
     private static final int STAGES_PER_REALM = 3;
 
 
+
     private static MobRankDefinition rank(String realmId, int stage, MobRankStatProfile stats) {
         return new MobRankDefinition(realmId, stage, stats);
+    }
+
+    // Helpers for command
+    public static List<String> getRealmIds() {
+        return List.of(REALMS);
+    }
+
+    public static boolean isValidRealm(String realmId) {
+        return getRealmIndex(realmId) >= 0;
+    }
+
+    public static int getStagesPerRealm() {
+        return STAGES_PER_REALM;
     }
 
     // Like the cultivators i hope? adds all previous minor and major realms stats with the current realms gains.
