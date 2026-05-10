@@ -13,7 +13,6 @@ public final class MobCultivationResolver {
     /*
     Fix Armor Stands having Cultivation.
     Mobs with above mortal cultivation hit you back if you hit them (override ai?).
-    Add a mob cultivation command
     */
 
     private static final double DEFAULT_PLAYER_SEARCH_RANGE = 32.0;
