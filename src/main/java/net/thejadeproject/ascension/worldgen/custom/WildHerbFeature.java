@@ -19,49 +19,60 @@ public class WildHerbFeature extends Feature<WildHerbFeatureConfig> {
 
     @Override
     public boolean place(FeaturePlaceContext<WildHerbFeatureConfig> ctx) {
-        WildHerbFeatureConfig config = ctx.config();
-        var level  = ctx.level();
+        var config = ctx.config();
+        var level  = ctx.level();   // WorldGenLevel
         var origin = ctx.origin();
         var random = ctx.random();
 
-        // Walk up from origin to find the surface (up to 16 blocks)
-        BlockPos surface = origin;
-        for (int i = 0; i < 16; i++) {
-            if (!level.isEmptyBlock(surface)) break;
-            surface = surface.below();
-        }
+        // ── Find the surface ──────────────────────────────────────────────────
+        // Try scanning upward first (origin may be inside terrain), then downward.
+        BlockPos groundPos = findGround(level, origin, true);
+        if (groundPos == null) groundPos = findGround(level, origin, false);
+        if (groundPos == null) return false;
 
-        BlockState groundState = level.getBlockState(surface);
-        BlockPos plantPos = surface.above();
+        BlockPos plantPos   = groundPos.above();
+        BlockState groundState = level.getBlockState(groundPos);
 
-        // Validate ground
-        if (config.validGround().stream().noneMatch(b -> groundState.is(b))) return false;
-        if (!level.isEmptyBlock(plantPos)) return false;
+        // ── Validate ground block ─────────────────────────────────────────────
+        boolean validGround = config.validGround().stream().anyMatch(b -> groundState.is(b));
+        if (!validGround) return false;
 
-        // Build the fully-grown block state — supports both crop types
+        // ── Validate plant position ───────────────────────────────────────────
+        // Must be air. Do NOT call cropState.canSurvive() — CropBlock hardcodes
+        // a farmland check that would always reject wild herb placement.
+        if (!level.getBlockState(plantPos).isAir()) return false;
+
+        // ── Build fully-grown crop state ──────────────────────────────────────
         BlockState cropState;
         if (config.cropBlock() instanceof GenericSlowCropBlock generic) {
             cropState = generic.getStateForAge(GenericSlowCropBlock.MAX_AGE);
         } else if (config.cropBlock() instanceof StemSlowCropBlock stem) {
             cropState = stem.getStateForAge(StemSlowCropBlock.MAX_AGE);
         } else {
-            // Fallback: try the default state (won't have age property set)
             cropState = config.cropBlock().defaultBlockState();
         }
 
-        if (!cropState.canSurvive(level, plantPos)) return false;
-
+        // ── Place and stamp ───────────────────────────────────────────────────
         level.setBlock(plantPos, cropState, 2);
 
-        // Stamp age: random point between Mature and Elder
-        long ageRange = HerbQuality.AGE_ELDER - HerbQuality.AGE_MATURE;
-        long wildAge  = HerbQuality.AGE_MATURE + (long)(random.nextDouble() * ageRange);
-        int  quality  = HerbQuality.rollQuality();
-
-        ServerLevel serverLevel = level.getLevel();
-        long grownSince = serverLevel.getGameTime() - wildAge;
-        CropAgeCache.store(serverLevel, plantPos, grownSince, quality);
+        long ageRange   = HerbQuality.AGE_ELDER - HerbQuality.AGE_MATURE;
+        long wildAge    = HerbQuality.AGE_MATURE + (long)(random.nextDouble() * ageRange);
+        int  quality    = HerbQuality.rollQuality();
+        ServerLevel sl  = level.getLevel();
+        CropAgeCache.store(sl, plantPos, sl.getGameTime() - wildAge, quality);
 
         return true;
+    }
+
+    private static BlockPos findGround(net.minecraft.world.level.WorldGenLevel level,
+                                       BlockPos origin, boolean upward) {
+        BlockPos scan = origin;
+        for (int i = 0; i < 32; i++) {
+            BlockState here  = level.getBlockState(scan);
+            BlockState above = level.getBlockState(scan.above());
+            if (!here.isAir() && above.isAir()) return scan;
+            scan = upward ? scan.above() : scan.below();
+        }
+        return null;
     }
 }

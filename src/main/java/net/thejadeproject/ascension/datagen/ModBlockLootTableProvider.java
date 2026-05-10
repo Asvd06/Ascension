@@ -156,8 +156,8 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
 
         //Herbs
-        add(ModBlocks.IRONWOOD_SPROUT_CROP.get(),
-                block -> createSingleItemTable(ModItems.IRONWOOD_SPROUT.get()));
+//        add(ModBlocks.IRONWOOD_SPROUT_CROP.get(),
+//                block -> createSingleItemTable(ModItems.IRONWOOD_SPROUT.get()));
         add(ModBlocks.WHITE_JADE_ORCHID_CROP.get(),
                 block -> createSingleItemTable(ModItems.WHITE_JADE_ORCHID.get()));
         add(ModBlocks.SPIRIT_VEIN.get(),

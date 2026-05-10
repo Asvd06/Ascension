@@ -121,39 +121,30 @@ public class ModConfiguredFeatures {
 
 
         // ── Wild Herbs ────────────────────────────────────────────────────────
-        // Hundred Year Ginseng: grass/dirt surface in forests
         register(context, WILD_GINSENG_KEY,
                 ModFeatureRegistration.WILD_HERB_FEATURE.get(),
                 new WildHerbFeatureConfig(
                         ModBlocks.HUNDRED_YEAR_GINSENG_CROP.get(),
                         List.of(Blocks.GRASS_BLOCK, Blocks.DIRT, Blocks.PODZOL,
                                 Blocks.COARSE_DIRT, Blocks.ROOTED_DIRT)));
-
-        // Hundred Year Snow Ginseng: snow/ice surface in snowy biomes
         register(context, WILD_SNOW_GINSENG_KEY,
                 ModFeatureRegistration.WILD_HERB_FEATURE.get(),
                 new WildHerbFeatureConfig(
                         ModBlocks.HUNDRED_YEAR_SNOW_GINSENG_CROP.get(),
                         List.of(Blocks.SNOW_BLOCK, Blocks.ICE, Blocks.PACKED_ICE,
                                 Blocks.BLUE_ICE, Blocks.POWDER_SNOW)));
-
-        // Hundred Year Fire Ginseng: netherrack/magma in warm biomes
         register(context, WILD_FIRE_GINSENG_KEY,
                 ModFeatureRegistration.WILD_HERB_FEATURE.get(),
                 new WildHerbFeatureConfig(
                         ModBlocks.HUNDRED_YEAR_FIRE_GINSENG_CROP.get(),
                         List.of(Blocks.NETHERRACK, Blocks.MAGMA_BLOCK,
                                 Blocks.BASALT, Blocks.BLACKSTONE)));
-
-        // White Jade Orchid: moss/grass in lush/jungle biomes
         register(context, WILD_WHITE_JADE_ORCHID_KEY,
                 ModFeatureRegistration.WILD_HERB_FEATURE.get(),
                 new WildHerbFeatureConfig(
                         ModBlocks.WHITE_JADE_ORCHID_CROP.get(),
                         List.of(Blocks.GRASS_BLOCK, Blocks.MOSS_BLOCK,
                                 Blocks.MOSS_CARPET, Blocks.DIRT)));
-
-
     }
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {

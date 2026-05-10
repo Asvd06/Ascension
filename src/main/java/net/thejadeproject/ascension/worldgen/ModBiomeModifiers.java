@@ -34,9 +34,9 @@ public class ModBiomeModifiers {
 
 
     // ── Wild Herbs ────────────────────────────────────────────────────────────
-    public static final ResourceKey<BiomeModifier> ADD_WILD_GINSENG           = registerKey("add_wild_ginseng");
-    public static final ResourceKey<BiomeModifier> ADD_WILD_SNOW_GINSENG      = registerKey("add_wild_snow_ginseng");
-    public static final ResourceKey<BiomeModifier> ADD_WILD_FIRE_GINSENG      = registerKey("add_wild_fire_ginseng");
+    public static final ResourceKey<BiomeModifier> ADD_WILD_GINSENG = registerKey("add_wild_ginseng");
+    public static final ResourceKey<BiomeModifier> ADD_WILD_SNOW_GINSENG = registerKey("add_wild_snow_ginseng");
+    public static final ResourceKey<BiomeModifier> ADD_WILD_FIRE_GINSENG = registerKey("add_wild_fire_ginseng");
     public static final ResourceKey<BiomeModifier> ADD_WILD_WHITE_JADE_ORCHID = registerKey("add_wild_white_jade_orchid");
 
 
@@ -89,7 +89,7 @@ public class ModBiomeModifiers {
 
 
         // ── Wild Herbs ────────────────────────────────────────────────────────
-        // Ginseng: forest, taiga, dark forest — temperate woodland biomes
+
         context.register(ADD_WILD_GINSENG, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(
                         biomes.getOrThrow(Biomes.FOREST),
@@ -101,8 +101,6 @@ public class ModBiomeModifiers {
                         biomes.getOrThrow(Biomes.OLD_GROWTH_PINE_TAIGA)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_GINSENG_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
-
-        // Snow Ginseng: all snowy/frozen biomes
         context.register(ADD_WILD_SNOW_GINSENG, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(
                         biomes.getOrThrow(Biomes.SNOWY_PLAINS),
@@ -114,8 +112,6 @@ public class ModBiomeModifiers {
                         biomes.getOrThrow(Biomes.JAGGED_PEAKS)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_SNOW_GINSENG_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
-
-        // Fire Ginseng: savanna, badlands, and warm dry biomes
         context.register(ADD_WILD_FIRE_GINSENG, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(
                         biomes.getOrThrow(Biomes.SAVANNA),
@@ -126,8 +122,6 @@ public class ModBiomeModifiers {
                         biomes.getOrThrow(Biomes.WOODED_BADLANDS)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_FIRE_GINSENG_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
-
-        // White Jade Orchid: jungle and lush caves biomes
         context.register(ADD_WILD_WHITE_JADE_ORCHID, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(
                         biomes.getOrThrow(Biomes.JUNGLE),
@@ -136,7 +130,6 @@ public class ModBiomeModifiers {
                         biomes.getOrThrow(Biomes.LUSH_CAVES)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.WILD_WHITE_JADE_ORCHID_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
-
 
 
 

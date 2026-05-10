@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-03T17:23:20.6723257	Loot Tables
+// 1.21.1	2026-05-10T09:52:08.489066	Loot Tables
 56f70cb70d9a56ccb169d653d4f86dec4e7ebcdd data/ascension/loot_table/barrels/sword_tomb1.json
 fd2797d7d4ba5086be94d9004bcbd57f92ce2a9d data/ascension/loot_table/barrels/sword_tomb2.json
 adc08ccbbf4449492c6433b778e61eeb30597409 data/ascension/loot_table/barrels/sword_tomb3.json
@@ -111,7 +111,6 @@ cb558d97f3daa32c286735813cb455bf1ad2872f data/ascension/loot_table/blocks/ironwo
 94342ef338df6a268d0323ab432434649ad1bb98 data/ascension/loot_table/blocks/ironwood_pressure_plate.json
 4be8acb8193e355f2a7e5090bea280701c05169d data/ascension/loot_table/blocks/ironwood_sapling.json
 99679dbde71a043c2e8c1deac1d68a9aa4738ca3 data/ascension/loot_table/blocks/ironwood_slabs.json
-356c496af0ff6d0f94993944e3e4f4b700249ae6 data/ascension/loot_table/blocks/ironwood_sprout_crop.json
 5eb669b31fcd3a9d973006ae0759864a4d7db4cc data/ascension/loot_table/blocks/ironwood_stairs.json
 5a167fb63876eb97c61b085b8623c0b3785f893c data/ascension/loot_table/blocks/ironwood_trapdoor.json
 b1cae3cad9ac142a721102c4ba8ac30ecb7f61a4 data/ascension/loot_table/blocks/ironwood_wood.json

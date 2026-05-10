@@ -42,7 +42,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
         makeStemCrop(((CropBlock) ModBlocks.WHITE_JADE_ORCHID_CROP.get()), "white_jade_orchid_stage", "white_jade_orchid_stage");
 
         //Herbs Blocks
-        herbsBlockCross(ModBlocks.IRONWOOD_SPROUT_CROP);
 
 
 

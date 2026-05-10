@@ -324,24 +324,23 @@ public class ModItems {
 
 
 
-    //Herbs Refactor all types of registration to sort it better
+    // ── Herbs ─────────────────────────────────────────────────────────────────
+    // Simple non-block herbs — use HerbItem so Quality/Age tooltips show automatically
     public static final DeferredItem<Item> GOLDEN_SUN_LEAF = ITEMS.register("golden_sun_leaf",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.GOLDEN_SUN_LEAF)));
     public static final DeferredItem<Item> JADE_BAMBOO_OF_SERENITY = ITEMS.register("jade_bamboo_of_serenity",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.JADE_BAMBOO_OF_SERENITY)));
 
     public static final DeferredItem<Item> IRONWOOD_SPROUT = ITEMS.register("ironwood_sprout",
-            () -> new PlantableHerb(ModBlocks.IRONWOOD_SPROUT_CROP.get(),
-                    new Item.Properties().food(ModFoodProperties.IRONWOOD_SPROUT)));
-
+            () -> new HerbItem(new Item.Properties().food(ModFoodProperties.IRONWOOD_SPROUT)));
 
     public static final DeferredItem<Item> WHITE_JADE_ORCHID = ITEMS.register("white_jade_orchid",
             () -> new HerbBlockItem(ModBlocks.WHITE_JADE_ORCHID_CROP.get(),
                     new Item.Properties().food(ModFoodProperties.WHITE_JADE_ORCHID)));
+
     public static final DeferredItem<Item> HUNDRED_YEAR_GINSENG = ITEMS.register("hundred_year_ginseng",
             () -> new HerbBlockItem(ModBlocks.HUNDRED_YEAR_GINSENG_CROP.get(),
                     new Item.Properties().food(ModFoodProperties.HUNDRED_YEAR_GINSENG)));
-
 
     public static final DeferredItem<Item> HUNDRED_YEAR_SNOW_GINSENG = ITEMS.register("hundred_year_snow_ginseng",
             () -> new HerbBlockItem(ModBlocks.HUNDRED_YEAR_SNOW_GINSENG_CROP.get(),
@@ -353,6 +352,7 @@ public class ModItems {
                             player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 2));
                         }
                     }));
+
 
     public static final DeferredItem<Item> HUNDRED_YEAR_FIRE_GINSENG = ITEMS.register("hundred_year_fire_ginseng",
             () -> new HerbBlockItem(ModBlocks.HUNDRED_YEAR_FIRE_GINSENG_CROP.get(),

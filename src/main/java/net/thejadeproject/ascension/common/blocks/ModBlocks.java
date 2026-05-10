@@ -551,20 +551,14 @@ public class ModBlocks {
 
 
 
-    //Herbs
-
-    public static final DeferredBlock<Block> IRONWOOD_SPROUT_CROP = registerBlock("ironwood_sprout_crop",
-            () -> new CustomHerbs(() -> Set.of(Blocks.STONE, Blocks.DEEPSLATE, Blocks.GRANITE, Blocks.DIORITE, Blocks.ANDESITE, Blocks.TUFF, Blocks.CALCITE)));
-
-
-    public static final DeferredBlock<Block> WHITE_JADE_ORCHID_CROP = registerBlock("white_jade_orchid_crop",
+    // ── Herbs ──────────────────────────────────────────────────────────────────
+    public static final DeferredBlock<Block> WHITE_JADE_ORCHID_CROP = registerBlockNoItem("white_jade_orchid_crop",
             () -> new StemSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.WHITE_JADE_ORCHID));
-
-    public static final DeferredBlock<Block> HUNDRED_YEAR_GINSENG_CROP = BLOCK.register("hundred_year_ginseng_crop",
+    public static final DeferredBlock<Block> HUNDRED_YEAR_GINSENG_CROP = registerBlockNoItem("hundred_year_ginseng_crop",
             () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_GINSENG));
-    public static final DeferredBlock<Block> HUNDRED_YEAR_SNOW_GINSENG_CROP = registerBlock("hundred_year_snow_ginseng_crop",
+    public static final DeferredBlock<Block> HUNDRED_YEAR_SNOW_GINSENG_CROP = registerBlockNoItem("hundred_year_snow_ginseng_crop",
             () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_SNOW_GINSENG));
-    public static final DeferredBlock<Block> HUNDRED_YEAR_FIRE_GINSENG_CROP = registerBlock("hundred_year_fire_ginseng_crop",
+    public static final DeferredBlock<Block> HUNDRED_YEAR_FIRE_GINSENG_CROP = registerBlockNoItem("hundred_year_fire_ginseng_crop",
             () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_FIRE_GINSENG));
 
     //Fires / Flames
