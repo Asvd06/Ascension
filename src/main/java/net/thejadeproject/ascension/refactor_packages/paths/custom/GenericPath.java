@@ -170,6 +170,7 @@ public class GenericPath implements IPath {
         //todo handle cultivation data simulations
         PathData pathData = freshPathData(heldEntity);
         heldEntity.addPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this),pathData);
+        pathData = heldEntity.getPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this)); //makes sure we are modifying the saved instance
         pathData.read(tag,heldEntity);
         return pathData;
     }

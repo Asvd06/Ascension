@@ -215,11 +215,11 @@ public class GenericEntityData implements IEntityData {
                     if(pathDataLocation.containsKey(pathId) && heldFormData.containsKey(path.defaultForm()) ){
                         heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(pathDataTag.getCompound("data"),this);
                     }else if(heldFormData.containsKey(path.defaultForm())){
-                        path.fromCompound(pathDataTag,this);
+                        path.fromCompound(pathDataTag.getCompound("data"),this);
                     }
                     else{
                         if(!cachedFormPathDataTag.containsKey(path.defaultForm())) cachedFormPathDataTag.put(path.defaultForm(),new ArrayList<>());
-                        cachedFormPathDataTag.get(path.defaultForm()).add(new Pair<>(pathId,pathDataTag));
+                        cachedFormPathDataTag.get(path.defaultForm()).add(new Pair<>(pathId,pathDataTag.getCompound("data")));
                     }
                 }catch (Exception e){
                     AscensionCraft.LOGGER.error("error logging path",e);
