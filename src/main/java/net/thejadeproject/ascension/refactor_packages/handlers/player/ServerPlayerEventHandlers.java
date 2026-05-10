@@ -1,11 +1,14 @@
 package net.thejadeproject.ascension.refactor_packages.handlers.player;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -60,6 +63,21 @@ public class ServerPlayerEventHandlers {
             }
         }
     }
+
+    @SubscribeEvent
+    public static void onLivingDeathEvent(LivingDeathEvent event){
+        if(!(event.getEntity() instanceof Player player)) return;
+
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        for(PathData pathData : entityData.getAllPathData()){
+            pathData.setCurrentRealmProgress(0);
+            //pathData.setCurrentRealmStability(0);
+        }
+        for(IEntityFormData formData:player.getData(ModAttachments.ENTITY_DATA).getFormData()){
+            formData.getStatSheet().sync((ServerPlayer) player,formData.getEntityFormId());
+        }
+    }
+
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
         Player player = event.getEntity();
