@@ -1,0 +1,13 @@
+{
+  "title": "Weapon Path",
+  "icon": { "id": "ascension:technique_manual" },
+  "entries": [
+    "techniques/sword_comprehension_technique",
+    "techniques/the_edge",
+    "techniques/the_reach",
+    "techniques/wind_breath",
+    "techniques/the_invisible_fang"
+  ],
+  "sort_num": 4,
+  "display_on_front_page": false
+}

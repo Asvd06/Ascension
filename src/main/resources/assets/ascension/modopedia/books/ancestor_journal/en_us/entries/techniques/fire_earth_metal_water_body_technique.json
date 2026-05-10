@@ -1,0 +1,19 @@
+{
+  "title": "Fire Earth Metal Water Body Technique",
+  "icon": { "id": "ascension:technique_manual" },
+  "pages": [
+    {
+      "components": [
+        { "type": "modopedia:item_gallery", "x": 47, "y": 2, "display": { "type": "modopedia:simple", "item": { "id": "ascension:technique_manual" } } },
+        { "type": "modopedia:header", "x": 0, "y": 22, "text": "Fire Earth Metal Water Body Technique", "centered": true },
+        { "type": "modopedia:separator", "x": 0, "y": 34 },
+        { "type": "modopedia:text", "x": 0, "y": 42, "text": "Four elements in cycle. Where it came from, I could not confirm." }
+      ]
+    },
+    {
+      "components": [
+        { "type": "modopedia:text", "x": 0, "y": 0, "text": "Heat compressed into mass, sharpened and made to flow — four elements building a body that is simultaneously hard to stop and difficult to damage. Endurance is dominant. Force follows close. The mind sharpens least." }
+      ]
+    }
+  ]
+}

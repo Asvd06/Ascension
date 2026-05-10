@@ -1,0 +1,19 @@
+{
+  "title": "Earth Metal Water Wood Body Technique",
+  "icon": { "id": "ascension:technique_manual" },
+  "pages": [
+    {
+      "components": [
+        { "type": "modopedia:item_gallery", "x": 47, "y": 2, "display": { "type": "modopedia:simple", "item": { "id": "ascension:technique_manual" } } },
+        { "type": "modopedia:header", "x": 0, "y": 22, "text": "Earth Metal Water Wood Body Technique", "centered": true },
+        { "type": "modopedia:separator", "x": 0, "y": 34 },
+        { "type": "modopedia:text", "x": 0, "y": 42, "text": "A dense and patient four-element combination. I have no confirmed source." }
+      ]
+    },
+    {
+      "components": [
+        { "type": "modopedia:text", "x": 0, "y": 0, "text": "Density, precision, flow, and growth — a slower combination that builds toward endurance above all else. Force grows steady alongside it. What it lacks in aggression it compensates with durability. The mind sharpens least." }
+      ]
+    }
+  ]
+}
