@@ -171,7 +171,7 @@ public class GenericPath implements IPath {
         PathData pathData = freshPathData(heldEntity);
         heldEntity.addPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this),pathData);
         pathData = heldEntity.getPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this)); //makes sure we are modifying the saved instance
-        pathData.read(tag,heldEntity);
+        pathData.read(tag.getCompound("data"),heldEntity);
         return pathData;
     }
 

@@ -28,6 +28,7 @@ public class FiveElementBodyTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
+        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 3.0D);
     }
 
     @Override
@@ -36,6 +37,7 @@ public class FiveElementBodyTechnique extends GenericTechnique {
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }
+        heldEntity.getPathBonusHandler().removePathBonus(ModPaths.BODY.getId(), 3.0D);
         heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
     }
 

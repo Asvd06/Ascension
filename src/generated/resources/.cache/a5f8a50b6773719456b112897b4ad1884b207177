@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-10T09:52:08.4798646	Block States: ascension
+// 1.21.1	2026-05-10T12:38:47.3937628	Block States: ascension
 6cfba71b0143561a942dcb47bee32d4a758a1e0d assets/ascension/blockstates/black_iron_block.json
 b36d54bccb1a1d76cba5d869c9ab4ed0cad16c2b assets/ascension/blockstates/black_iron_ore.json
 c3d44c985fc6d2f52a667da2fb73360ea070b8f7 assets/ascension/blockstates/blue_marble.json
@@ -94,6 +94,7 @@ cc5129834175941d598098f138552a4710e1fe81 assets/ascension/blockstates/ironwood_p
 a01a01ecf505023c29a84dacf518130ec9ba8842 assets/ascension/blockstates/ironwood_trapdoor.json
 a7510d14a228ac90d3d1694795a9b9a8742c9f43 assets/ascension/blockstates/ironwood_wood.json
 edd98a3b59f53a47a23db11b31f7ce43caaf4358 assets/ascension/blockstates/jade_block.json
+1978dcfc6538ae2b77b79e5a7999b10c2df46691 assets/ascension/blockstates/jade_dew_grass_crop.json
 7378a8bf69eeb313133dcdd8ec57a7ffc34e2289 assets/ascension/blockstates/jade_ore.json
 cf8ca8dafa1c1bbbeb2b0e9d5dc6200adc0ef554 assets/ascension/blockstates/light_blue_marble.json
 a48a09a065145bdb0fa760913071afb5d2c3de92 assets/ascension/blockstates/light_blue_marble_bricks.json
@@ -421,6 +422,14 @@ ec20f33666476fed21d25a20e84358c582a884fc assets/ascension/models/block/ironwood_
 ef320d432cc96ca58dd194a6f0bec6f9a6a7d426 assets/ascension/models/block/ironwood_wood.json
 bb66f9f1f3b269813f199b3a594eb5c24784137d assets/ascension/models/block/ironwood_wood_horizontal.json
 51998acf770b2c2865d7b6210bc2a32015eb64b3 assets/ascension/models/block/jade_block.json
+c26dabbc81fb13b0e9df2d3e8ec9f656a6f8137a assets/ascension/models/block/jade_dew_grass_stage0.json
+8bae72e497637ec9ac239842bda90333611adad1 assets/ascension/models/block/jade_dew_grass_stage1.json
+ead588f5f052a3d127f5c9ed3ef866a7efe0acb6 assets/ascension/models/block/jade_dew_grass_stage2.json
+279c49468c63bf2d21255d3c6653964bcf953f07 assets/ascension/models/block/jade_dew_grass_stage3.json
+9e678f60c722add5f19b82cd6ce41b967cb214e8 assets/ascension/models/block/jade_dew_grass_stage4.json
+5b897316fb4c47521f7e71fcbcb2a97dd553ac84 assets/ascension/models/block/jade_dew_grass_stage5.json
+4d20e217be8d3a8a804c5e2c289372239e161cb4 assets/ascension/models/block/jade_dew_grass_stage6.json
+5abea29e0841af5a8191ee24af26e2d3534a19aa assets/ascension/models/block/jade_dew_grass_stage7.json
 3ecb96db39f274307844c3f99e2d8c14cf8cfa54 assets/ascension/models/block/jade_ore.json
 03a65ac49c42589dd59d1b96bb2a4f68cbc894b3 assets/ascension/models/block/light_blue_marble.json
 ad3f11f864a3cb48d50734894bfc2ef45e97030b assets/ascension/models/block/light_blue_marble_bricks.json

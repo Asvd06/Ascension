@@ -33,6 +33,7 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
+        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 0.5 * (elements.size() + 1));
         refreshUniversalTechniqueSkills(heldEntity);
     }
 
@@ -42,6 +43,7 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }
+        heldEntity.getPathBonusHandler().removePathBonus(ModPaths.BODY.getId(), 0.5 * (elements.size() + 1));
         heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
     }

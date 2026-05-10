@@ -410,6 +410,41 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "sword_comprehension_technique")
         ));
 
+        add("dawning_sun_scripture_from_nether_fortress", new AddTechniqueManualModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.07f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dawning_sun_scripture")
+        ));
+
+        add("dawning_sun_scripture_from_blaze", new AddTechniqueManualModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/blaze")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.03f).build(),
+                        MobRankLootCondition.between("formation_establishment", 6, "formation_establishment", 9).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dawning_sun_scripture")
+        ));
+
+        add("zenith_sun_scripture_from_bastion", new AddTechniqueManualModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/bastion_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.03f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "zenith_sun_scripture")
+        ));
+
+        add("zenith_sun_scripture_from_wither", new AddTechniqueManualModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wither")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.05f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "zenith_sun_scripture")
+        ));
+
 
 
         //Physiques

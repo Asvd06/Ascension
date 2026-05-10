@@ -1,4 +1,4 @@
-// 1.21.1	2026-05-10T09:52:08.489066	Loot Tables
+// 1.21.1	2026-05-10T12:38:47.4205765	Loot Tables
 56f70cb70d9a56ccb169d653d4f86dec4e7ebcdd data/ascension/loot_table/barrels/sword_tomb1.json
 fd2797d7d4ba5086be94d9004bcbd57f92ce2a9d data/ascension/loot_table/barrels/sword_tomb2.json
 adc08ccbbf4449492c6433b778e61eeb30597409 data/ascension/loot_table/barrels/sword_tomb3.json
@@ -115,6 +115,7 @@ cb558d97f3daa32c286735813cb455bf1ad2872f data/ascension/loot_table/blocks/ironwo
 5a167fb63876eb97c61b085b8623c0b3785f893c data/ascension/loot_table/blocks/ironwood_trapdoor.json
 b1cae3cad9ac142a721102c4ba8ac30ecb7f61a4 data/ascension/loot_table/blocks/ironwood_wood.json
 57bb7a7f3ca90dd11fbf957b2e2bc353df616830 data/ascension/loot_table/blocks/jade_block.json
+5f27854cb21679f1e8d102f638dd63a2ab25ee19 data/ascension/loot_table/blocks/jade_dew_grass_crop.json
 d1f205c780a21c7ebfd2ac0b76476c86f9201861 data/ascension/loot_table/blocks/jade_ore.json
 2aa82e7be37aeebd5235938b444160a2590b2749 data/ascension/loot_table/blocks/light_blue_marble.json
 f82ae11687f7fe4ad80580db444f23e26daa3cce data/ascension/loot_table/blocks/light_blue_marble_bricks.json

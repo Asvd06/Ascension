@@ -17,7 +17,6 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
-
 public class BodyCultivationSkill extends SimplePassiveSkill {
 
     private static final float   MIN_DAMAGE       = 10.0f;
@@ -53,7 +52,8 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.hasQi(damage)) return;
         if (!qiContainer.tryConsumeQi(damage)) return;
 
-        double gain = damage * BASE_MULTIPLIER;
+        double bodyBonus = Math.max(1.0D, entityData.getPathBonusHandler().getPathBonus(ModPaths.BODY.getId()));
+        double gain = damage * BASE_MULTIPLIER * bodyBonus;
         ITechnique technique = bodyPath.getLastUsedTechnique() == null ? null :
                 AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(bodyPath.getLastUsedTechnique());
 
