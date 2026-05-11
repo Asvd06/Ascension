@@ -301,6 +301,7 @@ public class PathData {
 
     public void read(CompoundTag tag,IEntityData entityData){
         try {
+            System.out.println(tag);
             ListTag previousStability = tag.getList("previous_stability", Tag.TAG_INT);
             ListTag techniqueData = tag.getList("technique_data",Tag.TAG_COMPOUND);
             ListTag techniqueHistory = tag.getList("technique_history",Tag.TAG_STRING);
@@ -335,7 +336,7 @@ public class PathData {
                     for(int realm = realmStability.size()-1;realm>=majorRealm;realm--){
                         realmStability.removeLast();
                     }
-                    AscensionCraft.LOGGER.error("error loading technique: {} removing clearing data from realm {} onwards", techniqueId,majorRealm);
+                    AscensionCraft.LOGGER.error("error loading technique: {} removing clearing data from realm {} onwards", techniqueHistory.getString(i),i);
                     return;
                 };
                 if(!entityData.setTechnique(techniqueId,cachedTechniqueData.get(techniqueId))){
@@ -351,9 +352,13 @@ public class PathData {
             int stability = tag.getInt("stability");
             String rawTechnique = tag.getString("technique");
             if(!rawTechnique.equals("none")){
-                ResourceLocation technique = ResourceLocation.bySeparator(tag.getString("technique"),':');
-
-                entityData.setTechnique(technique,cachedTechniqueData.get(technique));
+                ResourceLocation techniqueId = ResourceLocation.bySeparator(tag.getString("technique"),':');
+                ITechnique technique = AscensionRegistries.getRegistryObject(techniqueId,AscensionRegistries.Techniques.TECHNIQUES_REGISTRY);
+                if(technique == null){
+                    AscensionCraft.LOGGER.error("error loading technique: {} removing clearing data from realm {} onwards", techniqueId,majorRealm);
+                    return;
+                }
+                entityData.setTechnique(techniqueId,cachedTechniqueData.get(techniqueId));
 
                 handleRealmChange(majorRealm,minorRealm,entityData);
 

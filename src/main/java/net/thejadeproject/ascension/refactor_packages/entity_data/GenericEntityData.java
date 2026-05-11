@@ -211,11 +211,14 @@ public class GenericEntityData implements IEntityData {
                 try {
                     CompoundTag pathDataTag = pathDataTags.getCompound(i);
                     ResourceLocation pathId = ResourceLocation.parse(pathDataTag.getString("path"));
+                    CompoundTag dataTag = pathDataTag.getCompound("data");
+
                     IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
                     if(pathDataLocation.containsKey(pathId) && heldFormData.containsKey(path.defaultForm()) ){
-                        heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(pathDataTag.getCompound("data"),this);
+
+                        heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(dataTag,this);
                     }else if(heldFormData.containsKey(path.defaultForm())){
-                        path.fromCompound(pathDataTag.getCompound("data"),this);
+                        path.fromCompound(dataTag,this);
                     }
                     else{
                         if(!cachedFormPathDataTag.containsKey(path.defaultForm())) cachedFormPathDataTag.put(path.defaultForm(),new ArrayList<>());
