@@ -299,6 +299,34 @@ public class ModPhysiques {
                             .setDescription(Component.translatable("ascension.physiques.soul_crowned_king.desc"))
             );
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> YIN_YANG_EYES = PHYSIQUES.register("yin_yang_eyes", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.yin_yang_eyes"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 3.0)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 1.25)
+                    .setDescription(Component.translatable("ascension.physiques.yin_yang_eyes.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.yin_yang_eyes.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> YIN_EYES = PHYSIQUES.register("yin_eyes", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.yin_eyes"))
+                    .addEvolution(ModPhysiques.YIN_YANG_EYES.getId())
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.0)
+                    .setDescription(Component.translatable("ascension.physiques.yin_eyes.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.yin_eyes.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> YANG_EYES = PHYSIQUES.register("yang_eyes", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.yang_eyes"))
+                    .addEvolution(ModPhysiques.YIN_YANG_EYES.getId())
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.0)
+                    .setDescription(Component.translatable("ascension.physiques.yang_eyes.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.yang_eyes.desc.short"))
+    );
+
 
     // Weapon Physiques
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_BONE = PHYSIQUES.register("sword_bone", () ->
