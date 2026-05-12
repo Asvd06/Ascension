@@ -6,7 +6,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.worldgen.custom.SpiritVeinFeature;
 import net.thejadeproject.ascension.worldgen.custom.WildHerbFeature;
 import net.thejadeproject.ascension.worldgen.custom.WildHerbFeatureConfig;
 

@@ -392,7 +392,7 @@ public class ModStructureGen {
 
         context.register(FLOATING_IRONWOOD_ISLAND_SET, new StructureSet(
                 structures.getOrThrow(FLOATING_IRONWOOD_ISLAND),
-                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 12244329)
+                new RandomSpreadStructurePlacement(40, 16, RandomSpreadType.LINEAR, 12244329)
         ));
     }
 

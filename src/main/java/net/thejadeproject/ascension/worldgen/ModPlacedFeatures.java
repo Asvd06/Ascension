@@ -33,7 +33,6 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> FROST_SILVER_ORE_PLACED_KEY = registerKey("frost_silver_ore_placed");
 
     public static final ResourceKey<PlacedFeature> GOLDEN_PALM_PLACED_KEY = registerKey("golden_palm_placed");
-//    public static final ResourceKey<PlacedFeature> IRONWOOD_PLACED_KEY = registerKey("ironwood_placed");
 
     public static final ResourceKey<PlacedFeature> ORE_MARBLE_UPPER = registerKey("ore_marble_upper");
     public static final ResourceKey<PlacedFeature> ORE_MARBLE_LOWER = registerKey("ore_marble_lower");
