@@ -101,6 +101,10 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 
         //Tools & Armors & Weapons
+
+        basicItem(ModItems.SPIRITUAL_MEAL.get());
+        basicItem(ModItems.MORTAR_PESTLE.get());
+
         handheldItem(ModItems.WOODEN_BLADE.get());
         handheldItem(ModItems.STONE_BLADE.get());
         handheldItem(ModItems.IRON_BLADE.get());
@@ -197,6 +201,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         pills(ModItems.ESSENCE_GATHERING_PILL.get());
         pills(ModItems.SOUL_FOCUS_PILL.get());
         pills(ModItems.INNER_REINFORCEMENT_PILL.get());
+
+
+        pills(ModItems.QI_REPLENISHING_PILL.get());
 
 
         pills(ModItems.ANTIDOTE_PILL_QDP.get());

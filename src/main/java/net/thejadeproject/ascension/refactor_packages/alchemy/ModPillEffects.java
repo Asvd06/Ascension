@@ -7,10 +7,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.effects.ModEffects;
-import net.thejadeproject.ascension.refactor_packages.alchemy.effects.AntidotePillEffect;
-import net.thejadeproject.ascension.refactor_packages.alchemy.effects.CultivationPillEffect;
-import net.thejadeproject.ascension.refactor_packages.alchemy.effects.MarrowCleansePillEffect;
-import net.thejadeproject.ascension.refactor_packages.alchemy.effects.MobEffectPillEffect;
+import net.thejadeproject.ascension.refactor_packages.alchemy.effects.*;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 
@@ -32,6 +29,12 @@ public class ModPillEffects {
             new CultivationPillEffect(100,ModPaths.SOUL.getId(),
                     Component.translatable("ascension.pill_effects.soul_cultivation_pill_effect.name")
                     ,Component.translatable("ascension.pill_effects.soul_cultivation_pill_effect.description"))
+    );
+
+    public static final DeferredHolder<IPillEffect, ? extends QiRestorePillEffect> QI_REPLENISHING_EFFECT = PILL_EFFECTS.register("qi_replenishing_effect", ()->
+            new QiRestorePillEffect(35,
+                    Component.translatable("ascension.pill_effects.qi_replenishing_effect.name"),
+                    Component.translatable("ascension.pill_effects.qi_replenishing_effect.description"))
     );
 
     public static final DeferredHolder<IPillEffect, ? extends AntidotePillEffect> ANTIDOTE_PILL_EFFECT = PILL_EFFECTS.register("antidote_pill_effect",()->

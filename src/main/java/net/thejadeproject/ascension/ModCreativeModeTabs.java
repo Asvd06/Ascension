@@ -360,19 +360,18 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.FLAME_STAND_BLOCK);
                         output.accept(ModBlocks.SPIRIT_CONDENSER_BLOCK);
                         output.accept(ModItems.FAN);
+                        output.accept(ModItems.MORTAR_PESTLE);
+                        output.accept(ModItems.SPIRITUAL_MEAL);
 
                         output.accept(ModItems.FLAME);
                         output.accept(ModItems.SOUL_FLAME);
                         output.accept(ModItems.CRIMSON_LOTUS_FLAME);
 
-                        output.accept(ModItems.JADE_DEW_GRASS);
-                        output.accept(ModItems.JADE_DEW_GRASS_SEEDS);
-
-
-
                         output.accept(ModItems.PEACH);
                         output.accept(ModItems.GOLDEN_SUN_LEAF);
                         output.accept(ModItems.JADE_BAMBOO_OF_SERENITY);
+                        output.accept(ModItems.JADE_DEW_GRASS_SEEDS);
+                        output.accept(ModItems.JADE_DEW_GRASS);
                         output.accept(ModItems.HUNDRED_YEAR_GINSENG);
                         output.accept(ModItems.HUNDRED_YEAR_SNOW_GINSENG);
                         output.accept(ModItems.HUNDRED_YEAR_FIRE_GINSENG);
@@ -398,6 +397,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.INNER_REINFORCEMENT_PILL);
                         output.accept(ModItems.SOUL_FOCUS_PILL);
                         output.accept(ModItems.ESSENCE_GATHERING_PILL);
+
+                        //Qi
+                        output.accept(ModItems.QI_REPLENISHING_PILL);
 
                         //Medicinal
                         output.accept(ModItems.FASTING_PILL_T1);

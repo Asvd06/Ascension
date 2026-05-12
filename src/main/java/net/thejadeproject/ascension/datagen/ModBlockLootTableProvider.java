@@ -404,17 +404,21 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         this.add(ModBlocks.JADE_DEW_GRASS_CROP.get(),
                 LootTable.lootTable()
-                        // Pool 1: always drop 1 herb at max age, otherwise nothing
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(ModItems.JADE_DEW_GRASS.get())
                                         .when(jadeDewGrassMature))
                                 .apply(ApplyExplosionDecay.explosionDecay()))
-                        // Pool 2: always drop 1–3 seeds regardless of age
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1))
                                 .add(LootItem.lootTableItem(ModItems.JADE_DEW_GRASS_SEEDS.get())
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1))))
+                                .apply(ApplyExplosionDecay.explosionDecay()))
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModItems.JADE_DEW_GRASS_SEEDS.get())
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 2.0f)))
+                                        .when(jadeDewGrassMature))
                                 .apply(ApplyExplosionDecay.explosionDecay())));
 
 

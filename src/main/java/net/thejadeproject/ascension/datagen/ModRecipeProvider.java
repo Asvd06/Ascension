@@ -71,9 +71,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         }
 
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SPIRITUAL_MEAL.get(), 1)
+                .requires(ModItems.MORTAR_PESTLE)
+                .requires(ModItems.SPIRITUAL_STONE, 2)
+                .requires(Items.BONE_MEAL)
+                .unlockedBy("has_mortar_and_pestle", has(ModItems.MORTAR_PESTLE)).save(recipeOutput, "ascension:shapeless/spiritual_meal");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.MORTAR_PESTLE.get())
+                .pattern("   ")
+                .pattern("AFA")
+                .pattern(" A ")
+                .define('F', ModItems.FROST_SILVER_INGOT.get())
+                .define('A', ItemTags.STONE_CRAFTING_MATERIALS)
+                .unlockedBy("has_frost_silver", has(ModItems.FROST_SILVER_INGOT)).save(recipeOutput, "ascension:shaped/mortar_and_pestle");
+
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TECHNIQUE_BINDER.get())
                 .pattern("PPP")
-
                 .pattern("PSP")
                 .pattern("PPP")
                 .define('S', ModItems.TECHNIQUE_PAGE.get())
@@ -814,6 +828,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .bonusChance(0.06D)
                 .unlockedBy("has_jade_bamboo_of_serenity", has(ModItems.JADE_BAMBOO_OF_SERENITY.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/soul_focus_pill"));
+
+
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.QI_REPLENISHING_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(ModItems.JADE_DEW_GRASS.get(), 3)
+                .ingredient(Items.GOLDEN_APPLE, 1)
+                .ingredient(ModItems.JADE_DEW_GRASS.get(), 3)
+                .chance(0.50D)
+                .temperature(325, 785, 546)
+                .timeSeconds(5)
+                .realm(1, "lower")
+                .purity(15, 100)
+                .bonusChance(0.06D)
+                .unlockedBy("has_jade_dew_grass", has(ModItems.JADE_DEW_GRASS.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/qi_replenishing_pill"));
 
 
         // ── Poison Pills ──────────────────────────────────────────────

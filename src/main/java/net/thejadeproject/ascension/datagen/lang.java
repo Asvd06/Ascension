@@ -625,6 +625,9 @@ public class lang extends LanguageProvider {
         add("ascension.pill_effects.qi_enhanced_regen_effect.name","Qi Enhanced Regeneration");
         add("ascension.pill_effects.qi_enhanced_regen_effect.description","Regeneration enhanced with Qi");
 
+        add("ascension.pill_effects.qi_replenishing_effect.name","Qi Replenishing");
+        add("ascension.pill_effects.qi_replenishing_effect.description","Replenishing Qi");
+
 
 
 
@@ -701,6 +704,9 @@ public class lang extends LanguageProvider {
 
         add("item.ascension.fan", "Fan");
 
+        add("item.ascension.mortar_pestle", "Mortar & Pestle");
+        add("item.ascension.spiritual_meal", "Spiritual Meal");
+
 
         // Needles
         add("item.ascension.silver_needle", "Silver Needle");
@@ -761,6 +767,7 @@ public class lang extends LanguageProvider {
 
         //Pills
         add("item.ascension.pill_residue", "Pill Residue");
+        add("item.ascension.qi_replenishing_pill", "Qi Replenishing Pill");
         add("item.ascension.regeneration_pill", "Regeneration Pill");
         add("item.ascension.neutrality_pill", "Neutrality Pill");
         add("item.ascension.rebirth_pill", "Rebirth Pill");
