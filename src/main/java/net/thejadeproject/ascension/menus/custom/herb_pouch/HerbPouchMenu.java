@@ -14,6 +14,8 @@ import net.thejadeproject.ascension.menus.ModMenuTypes;
 import java.util.List;
 
 public class HerbPouchMenu extends AbstractContainerMenu {
+    public static final int POUCH_CAPACITY = 27 * 64;
+
     private final ItemStack pouchStack;
     private HerbPouchComponent clientPouchData;
 
@@ -29,22 +31,26 @@ public class HerbPouchMenu extends AbstractContainerMenu {
         addPlayerHotbar(inventory);
 
         this.pouchStack = inventory.player.getItemInHand(InteractionHand.MAIN_HAND);
-
-        if (!pouchStack.has(ModDataComponents.HERB_POUCH_DATA.get())) {
-            pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), new HerbPouchComponent(27 * 64));
-        }
-        this.clientPouchData = pouchStack.get(ModDataComponents.HERB_POUCH_DATA.get());
+        this.clientPouchData = getPouchData();
     }
 
     private HerbPouchComponent getPouchData() {
-        if (!pouchStack.has(ModDataComponents.HERB_POUCH_DATA.get())) {
-            pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), new HerbPouchComponent(27 * 64));
+        HerbPouchComponent data = pouchStack.get(ModDataComponents.HERB_POUCH_DATA.get());
+
+        if (data == null || data.capacity() < POUCH_CAPACITY) {
+            data = new HerbPouchComponent(
+                    POUCH_CAPACITY,
+                    data == null ? List.of() : data.herbs()
+            );
+            pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), data);
         }
-        return pouchStack.get(ModDataComponents.HERB_POUCH_DATA.get());
+
+        return data;
     }
 
     private void setPouchData(HerbPouchComponent component) {
         pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), component);
+        setClientPouchData(component);
     }
 
     private void addPlayerInventory(Inventory playerInventory) {
@@ -61,10 +67,6 @@ public class HerbPouchMenu extends AbstractContainerMenu {
         }
     }
 
-    public HerbPouchComponent getClientPouchData() {
-        return clientPouchData;
-    }
-
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = this.slots.get(index);
@@ -79,7 +81,6 @@ public class HerbPouchMenu extends AbstractContainerMenu {
         if (fromInv || fromHotbar) {
             HerbPouchComponent.InsertResult result = getPouchData().insert(stack);
             setPouchData(result.component());
-            setClientPouchData(result.component());
 
             slot.set(result.remainder());
             slot.setChanged();
@@ -94,6 +95,19 @@ public class HerbPouchMenu extends AbstractContainerMenu {
         return ItemStack.EMPTY;
     }
 
+    public boolean insertCarriedStack() {
+        ItemStack carried = getCarried();
+        if (carried.isEmpty()) return false;
+
+        HerbPouchComponent.InsertResult result = getPouchData().insert(carried);
+        if (result.remainder().getCount() == carried.getCount()) return false;
+
+        setPouchData(result.component());
+        setCarried(result.remainder());
+        broadcastChanges();
+        return true;
+    }
+
     @Override
     public boolean stillValid(Player player) {
         return player.getItemInHand(InteractionHand.MAIN_HAND).equals(pouchStack);
@@ -105,10 +119,7 @@ public class HerbPouchMenu extends AbstractContainerMenu {
 
     public void setClientPouchData(HerbPouchComponent component) {
         this.clientPouchData = component;
-
-        if (pouchStack.has(ModDataComponents.HERB_POUCH_DATA.get())) {
-            pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), component);
-        }
+        pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), component);
     }
 
     public List<ItemStack> getSummaryStacks() {

@@ -18,6 +18,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.entit
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.physique.SyncPhysique;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.techniques.ShowMergePromptPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.ExtractHerbFromPouchPayload;
+import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.InsertCarriedHerbIntoPouchPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.supressors.UpdateSuppressionValue;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.techniques.MergeResponsePayload;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.skills.casting.SyncCastingInstance;
@@ -175,6 +176,12 @@ public class ModPayloads {
                 ExtractHerbFromPouchPayload.TYPE,
                 ExtractHerbFromPouchPayload.STREAM_CODEC,
                 ExtractHerbFromPouchPayload::handlePayload
+        );
+
+        registrar.playToServer(
+                InsertCarriedHerbIntoPouchPayload.TYPE,
+                InsertCarriedHerbIntoPouchPayload.STREAM_CODEC,
+                InsertCarriedHerbIntoPouchPayload::handlePayload
         );
     }
 }

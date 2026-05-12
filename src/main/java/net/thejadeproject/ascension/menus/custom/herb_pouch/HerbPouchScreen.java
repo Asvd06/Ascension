@@ -10,6 +10,7 @@ import net.minecraft.world.phys.Vec2;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.herb_pouch.HerbPouchElement;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.ExtractHerbFromPouchPayload;
+import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.InsertCarriedHerbIntoPouchPayload;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class HerbPouchScreen extends EasyContainerScreen<HerbPouchMenu> {
     private static final int HERB_START_X = 7;
     private static final int HERB_START_Y = 17;
     private static final int HERB_COLUMNS = 9;
+    private static final int HERB_VISIBLE_ROWS = 3;
 
     public HerbPouchScreen(HerbPouchMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -61,8 +63,9 @@ public class HerbPouchScreen extends EasyContainerScreen<HerbPouchMenu> {
         int baseY = (int) root.y + HERB_START_Y;
 
         List<ItemStack> summaries = menu.getSummaryStacks();
+        int visible = Math.min(summaries.size(), HERB_COLUMNS * HERB_VISIBLE_ROWS);
 
-        for (int i = 0; i < summaries.size(); i++) {
+        for (int i = 0; i < visible; i++) {
             ItemStack stack = summaries.get(i);
 
             int x = baseX + (i % HERB_COLUMNS) * 18;
@@ -72,7 +75,7 @@ public class HerbPouchScreen extends EasyContainerScreen<HerbPouchMenu> {
             guiGraphics.renderItemDecorations(this.font, stack, x, y);
         }
 
-        for (int i = 0; i < summaries.size(); i++) {
+        for (int i = 0; i < visible; i++) {
             ItemStack stack = summaries.get(i);
 
             int x = baseX + (i % HERB_COLUMNS) * 18;
@@ -87,23 +90,40 @@ public class HerbPouchScreen extends EasyContainerScreen<HerbPouchMenu> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (isInsideHerbArea(mouseX, mouseY) && !this.menu.getCarried().isEmpty()) {
+            PacketDistributor.sendToServer(new InsertCarriedHerbIntoPouchPayload());
+            return true;
+        }
+
         Vec2 root = getUIFrame().getRoot().getGlobalPoint();
         int baseX = (int) root.x + HERB_START_X;
         int baseY = (int) root.y + HERB_START_Y;
 
         List<ItemStack> summaries = menu.getSummaryStacks();
+        int visible = Math.min(summaries.size(), HERB_COLUMNS * HERB_VISIBLE_ROWS);
 
-        for (int i = 0; i < summaries.size(); i++) {
+        for (int i = 0; i < visible; i++) {
             int x = baseX + (i % HERB_COLUMNS) * 18;
             int y = baseY + (i / HERB_COLUMNS) * 18;
 
             if (mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16) {
-                PacketDistributor.sendToServer(new ExtractHerbFromPouchPayload(i));
+                PacketDistributor.sendToServer(new ExtractHerbFromPouchPayload(i, hasShiftDown()));
                 return true;
             }
         }
 
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    private boolean isInsideHerbArea(double mouseX, double mouseY) {
+        Vec2 root = getUIFrame().getRoot().getGlobalPoint();
+
+        int x = (int) root.x + HERB_START_X;
+        int y = (int) root.y + HERB_START_Y;
+        int width = HERB_COLUMNS * 18;
+        int height = HERB_VISIBLE_ROWS * 18;
+
+        return mouseX >= x && mouseX < x + width && mouseY >= y && mouseY < y + height;
     }
 
     public Rect2i getUsedArea() {
@@ -115,5 +135,4 @@ public class HerbPouchScreen extends EasyContainerScreen<HerbPouchMenu> {
                 getUIFrame().getRoot().getHeight()
         );
     }
-
 }

@@ -17,7 +17,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.herb_
 
 import java.util.List;
 
-public record ExtractHerbFromPouchPayload(int summaryIndex) implements CustomPacketPayload {
+public record ExtractHerbFromPouchPayload(int summaryIndex, boolean extractAll) implements CustomPacketPayload {
     public static final Type<ExtractHerbFromPouchPayload> TYPE =
             new Type<>(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "extract_herb_from_pouch"));
 
@@ -25,6 +25,8 @@ public record ExtractHerbFromPouchPayload(int summaryIndex) implements CustomPac
             StreamCodec.composite(
                     ByteBufCodecs.INT,
                     ExtractHerbFromPouchPayload::summaryIndex,
+                    ByteBufCodecs.BOOL,
+                    ExtractHerbFromPouchPayload::extractAll,
                     ExtractHerbFromPouchPayload::new
             );
 
@@ -49,16 +51,32 @@ public record ExtractHerbFromPouchPayload(int summaryIndex) implements CustomPac
 
             ItemStack clickedSummary = summaries.get(index);
 
+            if (payload.extractAll()) {
+                HerbPouchComponent.ExtractManyResult result = component.extractAllByItem(clickedSummary);
+                if (result.extracted().isEmpty()) return;
+
+                pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), result.component());
+                menu.setClientPouchData(result.component());
+                PacketDistributor.sendToPlayer(player, new SyncHerbPouchPayload(result.component()));
+
+                for (ItemStack extracted : result.extracted()) {
+                    boolean added = player.getInventory().add(extracted);
+                    if (!added) player.drop(extracted, false);
+                }
+
+                menu.broadcastChanges();
+                return;
+            }
+
             HerbPouchComponent.ExtractResult result = component.extractOneByItem(clickedSummary);
             if (result.extracted().isEmpty()) return;
 
             pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), result.component());
+            menu.setClientPouchData(result.component());
             PacketDistributor.sendToPlayer(player, new SyncHerbPouchPayload(result.component()));
 
             boolean added = player.getInventory().add(result.extracted());
-            if (!added) {
-                player.drop(result.extracted(), false);
-            }
+            if (!added) player.drop(result.extracted(), false);
 
             menu.broadcastChanges();
         });

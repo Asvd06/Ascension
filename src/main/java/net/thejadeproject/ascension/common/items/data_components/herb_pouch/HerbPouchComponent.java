@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
-
-
     public HerbPouchComponent(int capacity) {
         this(capacity, List.of());
     }
@@ -29,14 +27,8 @@ public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
 
     public int getTotalCount() {
         int total = 0;
-        for (ItemStack stack : herbs) {
-            total += stack.getCount();
-        }
+        for (ItemStack stack : herbs) total += stack.getCount();
         return total;
-    }
-
-    public boolean isFull() {
-        return getTotalCount() >= capacity;
     }
 
     public InsertResult insert(ItemStack input) {
@@ -55,7 +47,6 @@ public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
         ItemStack inserted = input.copy();
         inserted.setCount(toInsert);
 
-        boolean merged = false;
         for (ItemStack stored : newHerbs) {
             if (ItemStack.isSameItemSameComponents(stored, inserted)) {
                 int room = stored.getMaxStackSize() - stored.getCount();
@@ -66,16 +57,11 @@ public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
                     inserted.shrink(move);
                 }
 
-                if (inserted.isEmpty()) {
-                    merged = true;
-                    break;
-                }
+                if (inserted.isEmpty()) break;
             }
         }
 
-        if (!inserted.isEmpty()) {
-            newHerbs.add(inserted);
-        }
+        if (!inserted.isEmpty()) newHerbs.add(inserted);
 
         ItemStack remainder = input.copy();
         remainder.shrink(toInsert);
@@ -98,17 +84,35 @@ public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
             if (!taken && ItemStack.isSameItem(copy, clickedSummaryStack)) {
                 extracted = copy.copy();
                 extracted.setCount(1);
-
                 copy.shrink(1);
                 taken = true;
             }
 
-            if (!copy.isEmpty()) {
+            if (!copy.isEmpty()) newHerbs.add(copy);
+        }
+
+        return new ExtractResult(new HerbPouchComponent(capacity, newHerbs), extracted);
+    }
+
+    public ExtractManyResult extractAllByItem(ItemStack clickedSummaryStack) {
+        if (clickedSummaryStack.isEmpty()) {
+            return new ExtractManyResult(this, List.of());
+        }
+
+        List<ItemStack> newHerbs = new ArrayList<>();
+        List<ItemStack> extracted = new ArrayList<>();
+
+        for (ItemStack stored : herbs) {
+            ItemStack copy = stored.copy();
+
+            if (ItemStack.isSameItem(copy, clickedSummaryStack)) {
+                extracted.add(copy);
+            } else {
                 newHerbs.add(copy);
             }
         }
 
-        return new ExtractResult(new HerbPouchComponent(capacity, newHerbs), extracted);
+        return new ExtractManyResult(new HerbPouchComponent(capacity, newHerbs), extracted);
     }
 
     public List<ItemStack> getSummaryStacks() {
@@ -159,6 +163,5 @@ public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
 
     public record InsertResult(HerbPouchComponent component, ItemStack remainder) {}
     public record ExtractResult(HerbPouchComponent component, ItemStack extracted) {}
-
-
+    public record ExtractManyResult(HerbPouchComponent component, List<ItemStack> extracted) {}
 }
