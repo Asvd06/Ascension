@@ -293,6 +293,8 @@ public class ModItems {
                     .food(ModFoodProperties.POISON_PILL)
                     .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.PARASITE_PILL_EFFECT.getId().toString()))
                     , 0, true));
+    public static final DeferredItem<Item> QI_DEVOURING_POWDER = ITEMS.register("qi_devouring_powder",
+            () -> new Item(new Item.Properties()));
 
 
     // ── Positive Pills ──────────────────────────────────────────────

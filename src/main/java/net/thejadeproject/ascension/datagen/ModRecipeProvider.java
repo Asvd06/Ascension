@@ -14,6 +14,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
+import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.datagen.builders.ComponentShapedRecipeBuilder;
 import net.thejadeproject.ascension.datagen.builders.PillCauldronRecipeBuilder;
 import net.thejadeproject.ascension.common.items.ModItems;
 
@@ -69,6 +71,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                     .unlockedBy("has_" + data.color() + "_wool", has(data.wool()))
                     .save(recipeOutput, "ascension:shaped/" + data.color() + "_cushion");
         }
+
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.QI_DEVOURING_POWDER.get(), 2)
+                .requires(ModItems.MORTAR_PESTLE)
+                .requires(ModItems.QI_DEVOURING_PARASITE_PILL)
+                .unlockedBy("has_mortar_and_pestle", has(ModItems.MORTAR_PESTLE)).save(recipeOutput, "ascension:shapeless/qi_devouring_powder");
+
+        ItemStack result = new ItemStack(ModItems.SILVER_NEEDLE.get(), 8);
+        result.set(ModDataComponents.NEEDLE_EFFECT.get(), "ascension:needle_qi_devouring_poison");
+
+        ComponentShapedRecipeBuilder.shaped(RecipeCategory.MISC, result, "PPP", "PSP", "PPP")
+                .define('S', ModItems.SILVER_NEEDLE.get())
+                .define('P', ModItems.QI_DEVOURING_POWDER.get())
+                .unlockedBy("has_silver_needle", has(ModItems.SILVER_NEEDLE))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "shaped/qi_devouring_silver_needle"));
+
 
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SPIRITUAL_MEAL.get(), 1)

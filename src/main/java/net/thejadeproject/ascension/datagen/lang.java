@@ -765,6 +765,12 @@ public class lang extends LanguageProvider {
         add("entity.ascension.treasure_rat", "Treasure Rat");
 
 
+        //Powders
+        add("item.ascension.qi_devouring_powder", "Qi Devouring Powder");
+
+
+
+
         //Pills
         add("item.ascension.pill_residue", "Pill Residue");
         add("item.ascension.qi_replenishing_pill", "Qi Replenishing Pill");

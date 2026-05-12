@@ -414,6 +414,7 @@ public class ModCreativeModeTabs {
 
                         //Poison
                         output.accept(ModItems.QI_DEVOURING_PARASITE_PILL);
+                        output.accept(ModItems.QI_DEVOURING_POWDER);
 
 
                         //Misc
