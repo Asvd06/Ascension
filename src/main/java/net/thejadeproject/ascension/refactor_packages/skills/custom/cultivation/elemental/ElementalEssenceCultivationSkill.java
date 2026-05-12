@@ -9,13 +9,18 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.particle.aura.AuraColourHelper;
+import net.thejadeproject.ascension.particle.aura.AuraParticleColor;
+import net.thejadeproject.ascension.particle.aura.AuraParticlePresets;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -67,6 +72,10 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
     @Override
     public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) {
         if (!caster.hasData(ModAttachments.INPUT_STATES)) return false;
+
+//        if (caster.level() instanceof ServerLevel serverLevel && ticksElapsed % 2 == 0) {
+//            spawnTemporaryCultivationAura(serverLevel, caster, ticksElapsed);
+//        }
 
         if (!caster.level().isClientSide()) {
             IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
@@ -160,6 +169,115 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
     public CastType getCastType() {
         return CastType.LONG;
     }
+
+//    private void spawnTemporaryCultivationAura(ServerLevel level, Entity caster, int ticksElapsed) {
+//        AuraParticleColor baseColor = AuraParticleColor.forPath(getElementPath());
+//        AuraParticleColor pulsedBaseColor = AuraColourHelper.pulse(baseColor, ticksElapsed, 0.12f, 0.18f);
+//
+//        if (ticksElapsed % 4 == 0) {
+//            int smokeCount = 1 + level.random.nextInt(2);
+//
+//            for (int i = 0; i < smokeCount; i++) {
+//                double angle = (Math.random() * Math.PI * 2.0) + Math.sin(ticksElapsed * 0.04) * 0.6;
+//                double radius = 0.35 + Math.random() * 0.75;
+//                if (Math.random() < 0.35) {
+//                    radius *= 0.45;
+//                }
+//
+//                double x = caster.getX() + Math.cos(angle) * radius;
+//                double y = caster.getY() + 0.02 + Math.random() * 0.20;
+//                double z = caster.getZ() + Math.sin(angle) * radius;
+//
+//                AuraParticleColor smokeColor = AuraColourHelper.vary(
+//                        pulsedBaseColor,
+//                        0.025f,
+//                        0.14f,
+//                        0.22f
+//                );
+//
+//                float smokeScale = 1.8f + level.random.nextFloat() * 1.2f;
+//                int smokeLifetime = 55 + level.random.nextInt(25);
+//
+//                level.sendParticles(
+//                        AuraParticlePresets.customSmoke(smokeColor, smokeScale, smokeLifetime),
+//                        x, y, z,
+//                        1,
+//                        Math.cos(angle) * 0.004,
+//                        0.008 + Math.random() * 0.006,
+//                        Math.sin(angle) * 0.004,
+//                        0.006
+//                );
+//            }
+//        }
+//
+//        if (ticksElapsed % 4 == 0) {
+//            int flameCount = 2;
+//
+//            for (int i = 0; i < flameCount; i++) {
+//                double angle = Math.random() * Math.PI * 2.0;
+//                double radius = 0.45 + Math.random() * 0.55;
+//
+//                double x = caster.getX() + Math.cos(angle) * radius;
+//                double y = caster.getY() + 0.04 + Math.random() * 0.15;
+//                double z = caster.getZ() + Math.sin(angle) * radius;
+//
+//                AuraParticleColor flameColor = AuraColourHelper.vary(
+//                        pulsedBaseColor,
+//                        0.045f,
+//                        0.16f,
+//                        0.25f
+//                );
+//
+//                double targetX = caster.getX();
+//                double targetY = caster.getY() + 0.55;
+//                double targetZ = caster.getZ();
+//
+//                level.sendParticles(
+//                        AuraParticlePresets.customFlame(flameColor, 1.6f, 36),
+//                        x, y, z,
+//                        1,
+//                        (targetX - x) * 0.10,
+//                        0.035 + (targetY - y) * 0.06,
+//                        (targetZ - z) * 0.10,
+//                        0.0
+//                );
+//            }
+//        }
+//
+//        if (ticksElapsed % 6 == 0) {
+//            int sparkCount = 1;
+//
+//            for (int i = 0; i < sparkCount; i++) {
+//                double angle = Math.random() * Math.PI * 2.0;
+//                double radius = 0.55 + Math.random() * 0.45;
+//
+//                double x = caster.getX() + Math.cos(angle) * radius;
+//                double y = caster.getY() + 0.08 + Math.random() * 0.45;
+//                double z = caster.getZ() + Math.sin(angle) * radius;
+//
+//                double targetX = caster.getX();
+//                double targetY = caster.getY() + 0.55;
+//                double targetZ = caster.getZ();
+//
+//                AuraParticleColor sparkColor = AuraColourHelper.vary(
+//                        pulsedBaseColor,
+//                        0.065f,
+//                        0.18f,
+//                        0.30f
+//                );
+//
+//                level.sendParticles(
+//                        AuraParticlePresets.customSpark(sparkColor, 1.9f, 28),
+//                        x, y, z,
+//                        1,
+//                        (targetX - x) * 0.28,
+//                        (targetY - y) * 0.22,
+//                        (targetZ - z) * 0.28,
+//                        0.0
+//                );
+//            }
+//        }
+//    }
 
     @OnlyIn(Dist.CLIENT)
     @Override
