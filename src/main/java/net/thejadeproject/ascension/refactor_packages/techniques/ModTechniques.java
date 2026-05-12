@@ -126,9 +126,9 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends WindEssenceTechnique> WIND_ESSENCE_TECHNIQUE =
             TECHNIQUES.register("wind_essence_technique",
                     () -> new WindEssenceTechnique(baseEssenceHandler));
-    public static final DeferredHolder<ITechnique, ? extends FiveElementCultivationTechnique> FIVE_ELEMENT_CIRCULATION_METHOD =
-            TECHNIQUES.register("five_element_cultivation_technique",
-                    () -> new FiveElementCultivationTechnique(baseEssenceHandler));
+//    public static final DeferredHolder<ITechnique, ? extends FiveElementCultivationTechnique> FIVE_ELEMENT_CIRCULATION_METHOD =
+//            TECHNIQUES.register("five_element_cultivation_technique",
+//                    () -> new FiveElementCultivationTechnique(baseEssenceHandler));
 
 
 

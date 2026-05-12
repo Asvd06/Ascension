@@ -23,7 +23,7 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_FROST_SILVER_ORE = registerKey(("add_frost_silver_ore"));
 
     public static final ResourceKey<BiomeModifier> ADD_GOLDEN_PALM = registerKey("add_golden_palm");
-    public static final ResourceKey<BiomeModifier> ADD_IRONWOOD = registerKey("add_ironwood");
+//    public static final ResourceKey<BiomeModifier> ADD_IRONWOOD = registerKey("add_ironwood");
     public static final ResourceKey<BiomeModifier> ADD_RAW_MARBLE = registerKey("add_raw_marble");
 
 
@@ -71,10 +71,10 @@ public class ModBiomeModifiers {
                 HolderSet.direct(biomes.getOrThrow(Biomes.BEACH)),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.GOLDEN_PALM_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION));
-        context.register(ADD_IRONWOOD, new BiomeModifiers.AddFeaturesBiomeModifier(
-                HolderSet.direct(biomes.getOrThrow(Biomes.PLAINS)),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.IRONWOOD_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION));
+//        context.register(ADD_IRONWOOD, new BiomeModifiers.AddFeaturesBiomeModifier(
+//                HolderSet.direct(biomes.getOrThrow(Biomes.PLAINS)),
+//                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.IRONWOOD_PLACED_KEY)),
+//                GenerationStep.Decoration.VEGETAL_DECORATION));
 
         context.register(SPAWN_RAT, new BiomeModifiers.AddSpawnsBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.FOREST), biomes.getOrThrow(Biomes.BIRCH_FOREST)),
