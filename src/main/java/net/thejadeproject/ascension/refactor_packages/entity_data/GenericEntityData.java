@@ -26,6 +26,7 @@ import net.thejadeproject.ascension.refactor_packages.bloodlines.ModBloodlines;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.IEntityDataSource;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.IEntityDataSourceContainer;
 import net.thejadeproject.ascension.refactor_packages.events.PhysiqueChangeEvent;
+import net.thejadeproject.ascension.refactor_packages.events.path_data.TryRemovePathDataEvent;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityForm;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
@@ -76,8 +77,10 @@ public class GenericEntityData implements IEntityData {
     //important because during simulation something might exist before we actually made any data for it
     private HashMap<ResourceLocation,IEntityFormData> cachedFormData = new HashMap<>();
     private HashMap<ResourceLocation, IPersistentSkillData> cachedSkillData = new HashMap<>();
-    private HashMap<ResourceLocation,ArrayList<Pair<ResourceLocation,CompoundTag>>> cachedFormPathDataTag = new HashMap<>();
-
+    private HashMap<ResourceLocation,CompoundTag> cachedPathDataTags = new HashMap<>();
+    //for when a physique or something adds path to a form that is not yet initialized
+    //when a form is added if it has cached paths add the cached paths(which in turn draw from their cached data)
+    private HashMap<ResourceLocation,HashSet<ResourceLocation>> pathDataForFormCache = new HashMap<>();
     private double currentHealth = 0;
     private boolean loading = false;
 
@@ -105,15 +108,37 @@ public class GenericEntityData implements IEntityData {
         //setBloodline(ModBloodlines.MORTAL_BLOODLINE.getId());
 
     }
-    //TODO add better error handling so an error does not delete all data
+
+    /**
+     * reads and loads an initial data state, then "simulates" progression, whilst keeping a cache of any data that was not added
+     * during the initialization
+     * other than the built-in forms nothing else is added unless it has a source:
+     * a source can either be:
+     * a form
+     * a physique
+     * a bloodline
+     * a technique
+     * an entity_data_source <- a catch-all for sources not hardcoded into the system,
+     *
+     * load order:
+     * forms
+     * cached skill data
+     * cached path data tag (to read it we simulate it so we store it as a data tag until its path is added)
+     *
+     *
+     *
+     * @param attachedEntity
+     * @param tag
+     */
     public GenericEntityData(Entity attachedEntity, CompoundTag tag){
-        //System.out.println("creating player data");
+
+        AscensionCraft.LOGGER.info("loading data for entity("+attachedEntity.getType()+") :"+attachedEntity.getName());
         this.attachedEntity = attachedEntity;
 
         ListTag formDataTags = tag.getList("form_data", Tag.TAG_COMPOUND);
         ListTag skillDataTags = tag.getList("skill_data",Tag.TAG_COMPOUND);
         ListTag pathDataTags = tag.getList("path_progress",Tag.TAG_COMPOUND);
-
+        loading = true;
         try {
             for(int i=0;i<formDataTags.size();i++){
                 try{
@@ -204,40 +229,6 @@ public class GenericEntityData implements IEntityData {
 //            setBloodline(ModBloodlines.MORTAL_BLOODLINE.getId());
 //        }
         bloodlineForm = null;
-
-        loading = true;
-        try {
-            for(int i = 0;i<pathDataTags.size();i++){
-                try {
-                    CompoundTag pathDataTag = pathDataTags.getCompound(i);
-                    ResourceLocation pathId = ResourceLocation.parse(pathDataTag.getString("path"));
-                    CompoundTag dataTag = pathDataTag.getCompound("data");
-
-                    IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
-                    if(pathDataLocation.containsKey(pathId) && heldFormData.containsKey(path.defaultForm()) ){
-
-                        heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(dataTag,this);
-                    }else if(heldFormData.containsKey(path.defaultForm())){
-                        path.fromCompound(dataTag,this);
-                    }
-                    else{
-                        if(!cachedFormPathDataTag.containsKey(path.defaultForm())) cachedFormPathDataTag.put(path.defaultForm(),new ArrayList<>());
-                        cachedFormPathDataTag.get(path.defaultForm()).add(new Pair<>(pathId,pathDataTag.getCompound("data")));
-                    }
-                }catch (Exception e){
-                    AscensionCraft.LOGGER.error("error logging path",e);
-                }
-
-
-            }
-        }catch (Exception e){
-            AscensionCraft.LOGGER.error("error loading all paths",e);
-        }
-
-        loading = false;
-
-        loading = true;
-
         try{
             ListTag dataSources = tag.getList("entity_data_sources",Tag.TAG_COMPOUND);
             for(int i = 0;i<dataSources.size();i++){
@@ -256,14 +247,47 @@ public class GenericEntityData implements IEntityData {
             AscensionCraft.LOGGER.error("error loading entity data sources",e);
         }
 
-        loading = false;
+        try {
+            for(int i = 0;i<pathDataTags.size();i++){
+                try {
+                    CompoundTag pathTag = pathDataTags.getCompound(i);
+                    ResourceLocation pathId = ResourceLocation.parse(pathTag.getString("path"));
+
+                    CompoundTag pathDataTag = pathTag.getCompound("data");
+
+                    IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
+
+                    if (pathDataLocation.containsKey(pathId)){
+                        //valid path was added
+                        getEntityFormData(pathDataLocation.get(pathId)).getPathData(pathId).load(pathDataTag,this);
+                    }else{
+                        //either the path has not been added yet OR the form does nto exist
+                        if(!hasForm(path.defaultForm())) {
+                            pathDataForFormCache.computeIfAbsent(path.defaultForm(),(key)->new HashSet<>());
+                            pathDataForFormCache.get(path.defaultForm()).add(pathId);
+                        }
+                        cachedPathDataTags.put(pathId,pathDataTag);
+                    }
+
+                }catch (Exception e){
+                    AscensionCraft.LOGGER.error("error logging path",e);
+                }
+
+
+            }
+        }catch (Exception e){
+            AscensionCraft.LOGGER.error("error loading all paths",e);
+        }
+
+
         try {
             getSkillCastHandler().read(tag.getCompound("skill_cast_handler"));
         }catch (Exception e){
             AscensionCraft.LOGGER.error("error loading skill cast handler");
         }
         getAscensionAttributeHolder().updateAttributes(this);
-        getQiContainer().fullFillQi();
+        if(tag.contains("qi")) entityQiContainer.setCurrentQi(tag.getDouble("qi"));
+        else getQiContainer().fullFillQi();
 
         currentHealth = tag.getDouble("current_health");
 
@@ -285,8 +309,17 @@ public class GenericEntityData implements IEntityData {
             AscensionCraft.LOGGER.error("error loading suppressed values",e);
         }
 
+        loading = false;
+        clearCache();
     }
 
+
+    public void clearCache(){
+        cachedPathDataTags.clear();
+        cachedFormData.clear();
+        cachedSkillData.clear();
+        pathDataForFormCache.clear();
+    }
 
     public void sync(Player player){
         for(ResourceLocation form:heldFormData.keySet()){
@@ -376,6 +409,7 @@ public class GenericEntityData implements IEntityData {
             }
         }
         tag.put("suppressed_values",suppressorTag);
+        tag.putDouble("qi",entityQiContainer.getCurrentQi());
         //path data, make sure to also hold the path
     }
 
@@ -458,6 +492,11 @@ public class GenericEntityData implements IEntityData {
     }
 
     @Override
+    public boolean hasForm(ResourceLocation form) {
+        return heldFormData.containsKey(form);
+    }
+
+    @Override
     public void addEntityForm(ResourceLocation form) {
         IEntityForm formFactory = AscensionRegistries.EntityForms.ENTITY_FORMS_REGISTRY.get(form);
         IEntityFormData formData = formFactory.freshEntityFormData(this);
@@ -477,22 +516,20 @@ public class GenericEntityData implements IEntityData {
         //TODO handle addition of existing data on formData
         //TODO make sure to fully run re add stuff, essentially simulate it
 
+        if(pathDataForFormCache.containsKey(form)){
+            for(ResourceLocation pathId : pathDataForFormCache.get(form)){
+                IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
+                addPathData(pathId,path.freshPathData(this));
+                path.fromCompound(cachedPathDataTags.get(pathId),this);
+            }
+        }
 
         for(Map.Entry<ResourceLocation,IEntityFormData> heldForm : forms){
             IEntityForm heldFormFactory = AscensionRegistries.EntityForms.ENTITY_FORMS_REGISTRY.get(heldForm.getKey());
             heldFormFactory.onFormAdded(this,heldForm.getValue(),formData);
         }
 
-        if(cachedFormPathDataTag.containsKey(form)){
-            for(Pair<ResourceLocation,CompoundTag> pathDataTags : cachedFormPathDataTag.get(form)){
-                try {
-                    IPath path = AscensionRegistries.getRegistryObject(pathDataTags.getFirst(),AscensionRegistries.Paths.PATHS_REGISTRY);
-                    path.fromCompound(pathDataTags.getSecond(),this);
-                } catch (Exception e){
-                    AscensionCraft.LOGGER.error("error trying to load path for later added form: "+ form, e);
-                }
-            }
-        }
+        //TODO send event here so others can listen to it
     }
 
 
@@ -529,7 +566,7 @@ public class GenericEntityData implements IEntityData {
 
     }
 
-    public boolean setPhysique(ResourceLocation physique,IPhysiqueData physiqueData,ResourceLocation form,IEntityFormData olPhysiqueForm){
+    public boolean setPhysique(ResourceLocation physique,IPhysiqueData physiqueData,ResourceLocation form,IEntityFormData oldPhysiqueForm){
         if(!heldFormData.containsKey(form)) return false;
 
 
@@ -537,8 +574,8 @@ public class GenericEntityData implements IEntityData {
         IPhysiqueData oldPhysiqueData = null;
         if(physiqueForm != null){
             //no old physique just replace directly
-            oldPhysique = olPhysiqueForm.getPhysiqueKey();
-            oldPhysiqueData = olPhysiqueForm.getPhysiqueData();
+            oldPhysique = oldPhysiqueForm.getPhysiqueKey();
+            oldPhysiqueData = oldPhysiqueForm.getPhysiqueData();
 
         }
         //System.out.println("trying to replace :"+(oldPhysique == null ? "none" : oldPhysique.toString()));
@@ -547,9 +584,20 @@ public class GenericEntityData implements IEntityData {
         NeoForge.EVENT_BUS.post(preEvent);
         if(preEvent.isCanceled()) return false;
         physique = preEvent.getNewPhysique();
+        IPhysique newPhysiqueInstance = AscensionRegistries.getRegistryObject(physique,AscensionRegistries.Physiques.PHSIQUES_REGISTRY);
         if(oldPhysique != null){
-            olPhysiqueForm.getPhysique().onPhysiqueRemoved(this,oldPhysiqueData,physique);
-            olPhysiqueForm.setPhysique(null);
+            IPhysique physiqueInstance = oldPhysiqueForm.getPhysique();
+
+            physiqueInstance.onPhysiqueRemoved(this,oldPhysiqueData,physique);
+            oldPhysiqueForm.setPhysique(null);
+            //try removing paths it added
+            for(ResourceLocation path : physiqueInstance.paths()){
+                TryRemovePathDataEvent event = new TryRemovePathDataEvent(this,path);
+                NeoForge.EVENT_BUS.post(event);
+                if(!event.isCanceled() && !newPhysiqueInstance.paths().contains(path)){
+                    removePath(path);
+                }
+            }
         }
 
 
@@ -839,18 +887,8 @@ public class GenericEntityData implements IEntityData {
         return true;
     }
 
-    /*TODO need to consider a circumstance where the player said merged essence onto spirit then lost mortal vessel
-        in this situation when reloading they would lose said cultivation, so i should create a "cached" version of the form data?
-        and then when the player tries to move it later on we check if the form is in the cached form data?
-        should work.
-        basically when player calls getPathData(). check if we have any cached path data
-        and when we do move pathData to form we check if that path is cached, if so we use that
-
-     */
-
-
     @Override
-    public void addPathData(ResourceLocation path, PathData pathData) {
+    public void addPathData(ResourceLocation path, PathData pathData, ResourceLocation form) {
         if(pathDataLocation.containsKey(path)) return;
 
 
@@ -866,6 +904,21 @@ public class GenericEntityData implements IEntityData {
             //System.out.println("sending sync for path: "+path);
             PacketDistributor.sendToPlayer(serverPlayer,new SyncPathData(pathDataLocation.get(path),pathData));
         }
+    }
+
+    /*TODO need to consider a circumstance where the player said merged essence onto spirit then lost mortal vessel
+        in this situation when reloading they would lose said cultivation, so i should create a "cached" version of the form data?
+        and then when the player tries to move it later on we check if the form is in the cached form data?
+        should work.
+        basically when player calls getPathData(). check if we have any cached path data
+        and when we do move pathData to form we check if that path is cached, if so we use that
+
+     */
+
+
+    @Override
+    public void addPathData(ResourceLocation path, PathData pathData) {
+        addPathData(path,pathData,AscensionRegistries.getRegistryObject(path,AscensionRegistries.Paths.PATHS_REGISTRY).defaultForm());
     }
 
     //TODO no scenario where this would happen yet so pretend it does not exist
@@ -890,9 +943,12 @@ public class GenericEntityData implements IEntityData {
 
         pathData.handleRealmChange(0,0,this);
         ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
-        ITechniqueData techniqueData = pathData.getTechniqueData(pathData.getLastUsedTechnique());
-        pathData.removeLastUsedTechnique();
-        technique.onTechniqueRemoved(this,techniqueData);
+        if(technique != null) {
+            ITechniqueData techniqueData = pathData.getTechniqueData(pathData.getLastUsedTechnique());
+            pathData.removeLastUsedTechnique();
+            technique.onTechniqueRemoved(this,techniqueData);
+
+        }
         pathData.remove(this);
         formData.removePathData(path);
         pathDataLocation.remove(path);

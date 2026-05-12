@@ -18,7 +18,6 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class GenericPath implements IPath {
     private final Component title;
@@ -171,7 +170,7 @@ public class GenericPath implements IPath {
         PathData pathData = freshPathData(heldEntity);
         heldEntity.addPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this),pathData);
         pathData = heldEntity.getPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this)); //makes sure we are modifying the saved instance
-        pathData.read(tag,heldEntity);
+        pathData.load(tag,heldEntity);
         return pathData;
     }
 

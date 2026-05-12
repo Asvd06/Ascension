@@ -57,6 +57,7 @@ public interface IEntityData {
 
     Collection<IEntityFormData> getFormData();
 
+    boolean hasForm(ResourceLocation form);
 
     void addEntityForm(ResourceLocation form);
     void addEntityForm(ResourceLocation form, IEntityFormData formData);
@@ -103,7 +104,7 @@ public interface IEntityData {
     //give some sort of warning beforehand?
     boolean setTechnique(ResourceLocation technique);
     boolean setTechnique(ResourceLocation technique,ITechniqueData techniqueData);
-
+    void addPathData(ResourceLocation path,PathData pathData, ResourceLocation form);
     void addPathData(ResourceLocation path,PathData pathData);
     //a shortcut for removing cultivation, anything more complex must be done through the path data and path
     void removePath(ResourceLocation path);

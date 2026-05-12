@@ -299,7 +299,7 @@ public class PathData {
         return tag;
     }
 
-    public void read(CompoundTag tag,IEntityData entityData){
+    public void load(CompoundTag tag, IEntityData entityData){
         try {
             System.out.println(tag);
             ListTag previousStability = tag.getList("previous_stability", Tag.TAG_INT);

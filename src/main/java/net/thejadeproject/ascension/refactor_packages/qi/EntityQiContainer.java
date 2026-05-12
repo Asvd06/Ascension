@@ -72,7 +72,7 @@ public class EntityQiContainer {
 
 
     public void sync(){
-        if(attachedEntity.getAttachedEntity() instanceof ServerPlayer player){
+        if(attachedEntity.getAttachedEntity() instanceof ServerPlayer player && player.connection != null){
             PacketDistributor.sendToPlayer(player,new SyncQi(currentQi));
         }
     }
