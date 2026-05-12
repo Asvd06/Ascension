@@ -109,6 +109,7 @@ public class GenericEntityData implements IEntityData {
     public GenericEntityData(Entity attachedEntity, CompoundTag tag){
         //System.out.println("creating player data");
         this.attachedEntity = attachedEntity;
+        this.loading = true;
 
         ListTag formDataTags = tag.getList("form_data", Tag.TAG_COMPOUND);
         ListTag skillDataTags = tag.getList("skill_data",Tag.TAG_COMPOUND);
@@ -205,84 +206,82 @@ public class GenericEntityData implements IEntityData {
 //        }
         bloodlineForm = null;
 
-        loading = true;
         try {
-            for(int i = 0;i<pathDataTags.size();i++){
-                try {
-                    CompoundTag pathDataTag = pathDataTags.getCompound(i);
-                    ResourceLocation pathId = ResourceLocation.parse(pathDataTag.getString("path"));
-                    CompoundTag dataTag = pathDataTag.getCompound("data");
+            try {
+                for(int i = 0;i<pathDataTags.size();i++){
+                    try {
+                        CompoundTag pathDataTag = pathDataTags.getCompound(i);
+                        ResourceLocation pathId = ResourceLocation.parse(pathDataTag.getString("path"));
+                        CompoundTag dataTag = pathDataTag.getCompound("data");
 
-                    IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
-                    if(pathDataLocation.containsKey(pathId) && heldFormData.containsKey(path.defaultForm()) ){
+                        IPath path = AscensionRegistries.getRegistryObject(pathId,AscensionRegistries.Paths.PATHS_REGISTRY);
+                        if(pathDataLocation.containsKey(pathId) && heldFormData.containsKey(path.defaultForm()) ){
 
-                        heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(dataTag,this);
-                    }else if(heldFormData.containsKey(path.defaultForm())){
-                        path.fromCompound(dataTag,this);
+                            heldFormData.get(pathDataLocation.get(pathId)).getPathData(pathId).read(dataTag,this);
+                        }else if(heldFormData.containsKey(path.defaultForm())){
+                            path.fromCompound(dataTag,this);
+                        }
+                        else{
+                            if(!cachedFormPathDataTag.containsKey(path.defaultForm())) cachedFormPathDataTag.put(path.defaultForm(),new ArrayList<>());
+                            cachedFormPathDataTag.get(path.defaultForm()).add(new Pair<>(pathId,pathDataTag.getCompound("data")));
+                        }
+                    } catch (Exception e){
+                        AscensionCraft.LOGGER.error("error logging path",e);
                     }
-                    else{
-                        if(!cachedFormPathDataTag.containsKey(path.defaultForm())) cachedFormPathDataTag.put(path.defaultForm(),new ArrayList<>());
-                        cachedFormPathDataTag.get(path.defaultForm()).add(new Pair<>(pathId,pathDataTag.getCompound("data")));
+
+
+                }
+            } catch (Exception e){
+                AscensionCraft.LOGGER.error("error loading all paths",e);
+            }
+
+            try{
+                ListTag dataSources = tag.getList("entity_data_sources",Tag.TAG_COMPOUND);
+                for(int i = 0;i<dataSources.size();i++){
+                    try {
+                        CompoundTag dataSource = dataSources.getCompound(i);
+                        ResourceLocation key = ResourceLocation.parse(dataSource.getString("type"));
+                        IEntityDataSource source = AscensionRegistries.getRegistryObject(key,AscensionRegistries.EntityDataSources.ENTITY_DATA_SOURCES_REGISTRY);
+                        IEntityDataSourceContainer container = source.fromCompound(dataSource);
+                        sourceContainers.put(container.getInstanceIdentifier(),container);
+                        container.getDataSource().onAdded(this,container);
+                    }catch (Exception e){
+                        AscensionCraft.LOGGER.error("error loading entity data source container",e);
                     }
-                }catch (Exception e){
-                    AscensionCraft.LOGGER.error("error logging path",e);
                 }
-
-
+            } catch (Exception e){
+                AscensionCraft.LOGGER.error("error loading entity data sources",e);
             }
-        }catch (Exception e){
-            AscensionCraft.LOGGER.error("error loading all paths",e);
-        }
 
-        loading = false;
+            try {
+                getSkillCastHandler().read(tag.getCompound("skill_cast_handler"));
+            }catch (Exception e){
+                AscensionCraft.LOGGER.error("error loading skill cast handler");
+            }
+            getAscensionAttributeHolder().updateAttributes(this);
+            getQiContainer().fullFillQi();
 
-        loading = true;
+            currentHealth = tag.getDouble("current_health");
 
-        try{
-            ListTag dataSources = tag.getList("entity_data_sources",Tag.TAG_COMPOUND);
-            for(int i = 0;i<dataSources.size();i++){
-                try {
-                    CompoundTag dataSource = dataSources.getCompound(i);
-                    ResourceLocation key = ResourceLocation.parse(dataSource.getString("type"));
-                    IEntityDataSource source = AscensionRegistries.getRegistryObject(key,AscensionRegistries.EntityDataSources.ENTITY_DATA_SOURCES_REGISTRY);
-                    IEntityDataSourceContainer container = source.fromCompound(dataSource);
-                    sourceContainers.put(container.getInstanceIdentifier(),container);
-                    container.getDataSource().onAdded(this,container);
-                }catch (Exception e){
-                    AscensionCraft.LOGGER.error("error loading entity data source container",e);
+            try {
+                ListTag suppressors = tag.getList("suppressed_values",Tag.TAG_COMPOUND);
+                for(int i = 0;i<suppressors.size();i++){
+                    CompoundTag attributeTag = suppressors.getCompound(i);
+
+                    Holder<Attribute> attributeHolder = BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(
+                            ResourceKey.create(BuiltInRegistries.ATTRIBUTE.key(), ResourceLocation.parse(attributeTag.getString("attribute")))
+                    );
+
+                    getAscensionAttributeHolder().getAttribute(attributeHolder).setSuppressedValue(attributeTag.getDouble("value"));
+                    if (getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
+                        PacketDistributor.sendToPlayer(serverPlayer,new SyncAttributeHolder(getAscensionAttributeHolder()));
+                    }
                 }
-            }
-        }catch (Exception e){
-            AscensionCraft.LOGGER.error("error loading entity data sources",e);
+            }catch (Exception e){
+                AscensionCraft.LOGGER.error("error loading suppressed values",e);
         }
-
-        loading = false;
-        try {
-            getSkillCastHandler().read(tag.getCompound("skill_cast_handler"));
-        }catch (Exception e){
-            AscensionCraft.LOGGER.error("error loading skill cast handler");
-        }
-        getAscensionAttributeHolder().updateAttributes(this);
-        getQiContainer().fullFillQi();
-
-        currentHealth = tag.getDouble("current_health");
-
-        try {
-            ListTag suppressors = tag.getList("suppressed_values",Tag.TAG_COMPOUND);
-            for(int i = 0;i<suppressors.size();i++){
-                CompoundTag attributeTag = suppressors.getCompound(i);
-
-                Holder<Attribute> attributeHolder = BuiltInRegistries.ATTRIBUTE.getHolderOrThrow(
-                        ResourceKey.create(BuiltInRegistries.ATTRIBUTE.key(), ResourceLocation.parse(attributeTag.getString("attribute")))
-                );
-
-                getAscensionAttributeHolder().getAttribute(attributeHolder).setSuppressedValue(attributeTag.getDouble("value"));
-                if (getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
-                    PacketDistributor.sendToPlayer(serverPlayer,new SyncAttributeHolder(getAscensionAttributeHolder()));
-                }
-            }
-        }catch (Exception e){
-            AscensionCraft.LOGGER.error("error loading suppressed values",e);
+            } finally {
+                this.loading = false;
         }
 
     }

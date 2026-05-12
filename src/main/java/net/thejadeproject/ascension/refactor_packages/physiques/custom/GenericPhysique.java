@@ -122,6 +122,7 @@ public class GenericPhysique implements IPhysique {
     }
 
     protected void broadcastRareAcquired(IEntityData heldEntity, String translationKey) {
+        if (heldEntity.isLoading()) return;
         if (!(heldEntity.getAttachedEntity() instanceof ServerPlayer player)) return;
 
         Component message = Component.translatable(
