@@ -15,8 +15,11 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.thejadeproject.ascension.AscensionCraft;
+import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
+import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
 
 import java.util.function.BiConsumer;
 
@@ -149,5 +152,48 @@ public class ModChestLootTables implements LootTableSubProvider {
                                                 .setWeight(10))
                                         .add(EmptyLootItem.emptyItem()
                                                 .setWeight(10))));
+
+
+        output.accept(
+                ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "barrel/ironwood_island")),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool()
+                                .setRolls(UniformGenerator.between(1, 3))
+                                .add(LootItem.lootTableItem(ModItems.SPIRITUAL_MEAL)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 1)))
+                                        .setWeight(9))
+                                .add(LootItem.lootTableItem(ModItems.QI_REPLENISHING_PILL.get())
+                                        .apply(SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3))
+                                        .apply(SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 100))
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+                                        .setWeight(21))
+                                .add(LootItem.lootTableItem(ModItems.NETHERITE_BLADE)
+                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1)))
+                                        .setWeight(15))
+                                .add(LootItem.lootTableItem(ModItems.SILVER_NEEDLE)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(3, 7)))
+                                        .setWeight(17))
+                                .add(LootItem.lootTableItem(ModItems.JADE_DEW_GRASS.get())
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 6)))
+                                        .setWeight(10))
+                                .add(LootItem.lootTableItem(ModItems.CRIMSON_LOTUS_FLAME.get())
+                                        .setWeight(8))
+                                .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE)
+                                        .setWeight(13))
+                        )
+                        .withPool(LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModItems.TECHNIQUE_PAGE.get())
+                                        .apply(SetTechniquePageFunction.builder(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "bloodfeast_soul_refining_scripture"), 0, 4))
+                                        .setWeight(7))
+                                .add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 6)))
+                                        .setWeight(32))
+                                .add(LootItem.lootTableItem(Items.DIAMOND)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 6)))
+                                        .setWeight(21))
+                                .add(LootItem.lootTableItem(ModItems.FROST_SILVER_INGOT)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 6)))
+                                        .setWeight(32))));
     }
 }
