@@ -11,7 +11,6 @@ import net.thejadeproject.ascension.AscensionCraft;
 
 public final class MobCultivationApplier {
 
-    // TODO: Fix Skeleton arrow damage not being boosted
 
     // Base Stats
     private static final ResourceLocation HEALTH_ID =

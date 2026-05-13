@@ -821,6 +821,7 @@ public class lang extends LanguageProvider {
 
 
 
+
         // Books
         add("item.ascension.ancestor_journal", "Journal");
 

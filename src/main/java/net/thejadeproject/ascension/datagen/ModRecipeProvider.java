@@ -802,7 +802,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         // Pill Recipes
 
-        // TODO: give actual heat values
         // ── Cultivation Pills ─────────────────────────────────────────
 
         // Essence Gathering Pill

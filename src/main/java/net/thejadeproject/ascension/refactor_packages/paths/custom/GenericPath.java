@@ -104,8 +104,8 @@ public class GenericPath implements IPath {
         double baseValue = 6485.0;
         double minorMultiplier = 1.3;
         double majorMultiplier = 3.5;
-        double minorMultiplierGrowth = 0.4;
-        double majorMultiplierGrowth = 0.6;
+        double minorMultiplierGrowth = 0.03;
+        double majorMultiplierGrowth = 0.2;
 
         double value = baseValue;
         double currentMajorMultiplier = majorMultiplier;

@@ -18,6 +18,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 public class ModPillEffects {
     public static final DeferredRegister<IPillEffect> PILL_EFFECTS =DeferredRegister.create(AscensionRegistries.PillEffects.PILL_EFFECT_REGISTRY, AscensionCraft.MOD_ID);
 
+
     //TODO see if i can loop through path registry and create one for each?
     public static final DeferredHolder<IPillEffect, ? extends CultivationPillEffect> BODY_EFFECT = PILL_EFFECTS.register("body_cultivation_pill_effect",()->
             new CultivationPillEffect(100,ModPaths.BODY.getId(),

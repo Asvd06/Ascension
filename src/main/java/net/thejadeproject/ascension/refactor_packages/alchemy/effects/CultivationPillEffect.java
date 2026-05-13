@@ -31,8 +31,7 @@ public class CultivationPillEffect extends BasicPillEffect {
         if(!entityData.hasPath(path)) return false; //add some sort of effect?
 
         return CultivationUtil.tryCultivate(entity,path, List.of(),amt);
-        //player.getCooldowns().addCooldown(this, cooldown); //TODO handle in pill item
-        //if (!player.getAbilities().instabuild) itemStack.shrink(1); TODO handle in item
+
     }
 
 }
