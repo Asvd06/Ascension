@@ -26,7 +26,7 @@ public class ToolTipManager {
 
         ToolTipHandler.registerTooltip(ModItems.ANTIDOTE_PILL_QDP.get(), Component.translatable("ascension.tooltip.medicinal").withStyle(ChatFormatting.RED), Component.literal("★★★★★").withStyle(ChatFormatting.YELLOW));
 
-        ToolTipHandler.registerTooltip(ModItems.MARROW_CLEANSE_PILL.get(), Component.translatable("ascension.tooltip.medicinal").withStyle(ChatFormatting.RED), Component.literal("★★★☆☆").withStyle(ChatFormatting.YELLOW));
+        ToolTipHandler.registerTooltip(ModItems.MARROW_CLEANSE_PILL.get(), Component.translatable("ascension.tooltip.evolutionary").withStyle(ChatFormatting.RED), Component.literal("★★★☆☆").withStyle(ChatFormatting.YELLOW));
         ToolTipHandler.registerTooltip(ModItems.CRIMSON_LOTUS_BONE_PILL.get(), Component.translatable("ascension.tooltip.evolutionary").withStyle(ChatFormatting.RED), Component.literal("★★★★★").withStyle(ChatFormatting.YELLOW));
 
 
