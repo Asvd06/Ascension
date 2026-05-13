@@ -81,40 +81,53 @@ public class SkillCastHandler {
 
     //server side
     //TODO get it to send message to client on fail
-    public void tryCast(Entity entity){
-        //get selected skill
-        if(hotBar.getSkillKey(hotBar.getActiveSlot()) == null) return;
-        if(!(hotBar.getActiveSkill() instanceof ICastableSkill castableSkill))return;
-        IPreCastData preCastData = hotBar.getPreCastData(hotBar.getActiveSlot());
-        //call try cast
-        CastResult result = castableSkill.canCast(entity,preCastData);
+    public void tryCast(Entity entity) {
+        if (hotBar.getSkillKey(hotBar.getActiveSlot()) == null) return;
+        if (!(hotBar.getActiveSkill() instanceof ICastableSkill castableSkill)) return;
 
-        if(!result.isSuccess()){
-            //TODO send message to client
-            //System.out.println(result.message.getString());
+        ResourceLocation activeSkillKey = hotBar.getActiveSkillKey();
+
+        if (cooldownHandler.isOnCooldown(activeSkillKey)) {
             return;
         }
 
-        //cancel any existing cast
+        IPreCastData preCastData = hotBar.getPreCastData(hotBar.getActiveSlot());
 
-        if(castingInstance.isCasting()){
+        CastResult result = castableSkill.canCast(entity, preCastData);
+
+        if (!result.isSuccess()) {
+            return;
+        }
+
+        if (castingInstance.isCasting()) {
             CastEndData endData = castingInstance.endCast(entity, CastEndReason.CANCELLED);
-            if(endData != null){
-                int cooldownTime = ((ICastableSkill ) endData.getSkill()).getCooldown(endData);
-                getCooldownHandler().addCooldown(endData.skillId(),cooldownTime);
+            if (endData != null) {
+                int cooldownTime = ((ICastableSkill) endData.getSkill()).getCooldown(endData);
+                cooldownHandler.addCooldown(endData.skillId(), cooldownTime);
             }
         }
 
-        //call initial cast
-        castableSkill.initialCast(entity,preCastData);
-        //if long cast setup cast instance
-        if(castableSkill.getCastType() == CastType.LONG){
-            castingInstance.startCast(entity,hotBar.getActiveSkillKey());
+        castableSkill.initialCast(entity, preCastData);
+
+        if (castableSkill.getCastType() == CastType.INSTANT) {
+            CastEndData endData = new CastEndData(
+                    activeSkillKey,
+                    CastEndReason.ENDED,
+                    null,
+                    0
+            );
+
+            int cooldownTime = castableSkill.getCooldown(endData);
+            cooldownHandler.addCooldown(activeSkillKey, cooldownTime);
+            return;
         }
 
-        //trigger sync
-        //TODO trigger sync
+        if (castableSkill.getCastType() == CastType.LONG) {
+            castingInstance.startCast(entity, activeSkillKey);
+        }
     }
+
+
     public int getMaxSlots(){
         return hotBar.MAX_SLOTS;
     }

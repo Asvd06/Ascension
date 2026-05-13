@@ -533,7 +533,8 @@ public class lang extends LanguageProvider {
         add("ascension.skill.soul_needle.description", "Pierces a target's soul with focused spiritual force.");
         add("ascension.skill.soul_suppression", "Soul Suppression");
         add("ascension.skill.soul_suppression.description", "Releases spiritual pressure, damaging and weakening nearby enemies.");
-
+        add("ascension.skill.sword_draw", "Sword Draw");
+        add("ascension.skill.sword_draw.description", "Unsheathe in an instant, surging forward and carving through enemies along your path.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");

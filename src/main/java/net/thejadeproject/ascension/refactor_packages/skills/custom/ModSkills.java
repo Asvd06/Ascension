@@ -14,6 +14,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.FireSpray;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulNeedle;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulSuppression;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SwordDraw;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.VoidstepSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
@@ -260,7 +261,8 @@ public class ModSkills {
             SKILLS.register("blade_mastery_skill", BladeMasterySkill::new);
 
     // Actives
-
+    public static final DeferredHolder<ISkill, ? extends SwordDraw> SWORD_DRAW =
+            SKILLS.register("sword_draw", SwordDraw::new);
 
 
 
