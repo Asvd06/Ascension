@@ -14,6 +14,7 @@ import net.thejadeproject.ascension.refactor_packages.stats.custom.ModStats;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.*;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.poison.MyriadVenomRefinementTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
@@ -35,6 +36,7 @@ public class ModTechniques {
     public static final ResourceLocation BASE_ESSENCE_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_essence");
     public static final ResourceLocation BASE_SOUL_KEY    = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_soul");
     public static final ResourceLocation BASE_WEAPON_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_weapon");
+    public static final ResourceLocation MYRIAD_VENOM_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "myriad_venom_refinement");
 
     // --- Base path handlers ---
     // Body: main VIT + STR, secondary AGI, tertiary INT
@@ -79,6 +81,14 @@ public class ModTechniques {
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(),new ValueContainerModifier(0.2,ModifierOperation.MULTIPLY_FINAL,test))
             .addMinorRealmStatModifier(ModStats.AGILITY.getId(),new ValueContainerModifier(5,ModifierOperation.ADD_BASE,test));
 
+    // Temp Poison Handler until Flip makes something proper
+    public static BasicStatChangeHandler basePoisonHandler = new BasicStatChangeHandler()
+            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(3, ModifierOperation.ADD_BASE,       MYRIAD_VENOM_KEY))
+            .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(3, ModifierOperation.ADD_BASE,       MYRIAD_VENOM_KEY))
+            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),      new ValueContainerModifier(1, ModifierOperation.ADD_BASE,       MYRIAD_VENOM_KEY))
+            .addMajorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, MYRIAD_VENOM_KEY))
+            .addMajorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, MYRIAD_VENOM_KEY));
+
 
 
     // ──── ESSENCE TECHNIQUES ────────────────────────────────────────────
@@ -113,6 +123,13 @@ public class ModTechniques {
     );
 
 
+
+    // ──── POISON TECHNIQUES ────────────────────────────────────────────
+
+    public static final DeferredHolder<ITechnique, ? extends MyriadVenomRefinementTechnique> MYRIAD_VENOM_REFINEMENT_SCRIPTURE =
+            TECHNIQUES.register("myriad_venom_refinement_scripture",
+                    () -> new MyriadVenomRefinementTechnique(basePoisonHandler)
+            );
 
     // ──── ESSENCE-ELEMENTAL HYBRID TECHNIQUES ────────────────────────────────────────────
     public static final DeferredHolder<ITechnique, ? extends FireEssenceTechnique> FIRE_ESSENCE_TECHNIQUE =

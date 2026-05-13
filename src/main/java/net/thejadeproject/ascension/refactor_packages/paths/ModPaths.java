@@ -59,6 +59,15 @@ public class ModPaths {
     );
 
 
+    public static final DeferredHolder<IPath, ? extends GenericPath> POISON = PATHS.register("poison",()->
+            new ComprehensionPath(Component.translatable("ascension.path.poison"))
+                    .addMajorRealmName("ascension.path.poison.seeping_miasma")
+                    .addMajorRealmName("ascension.path.poison.festering_root")
+                    .addMajorRealmName("ascension.path.poison.plague_sovereign")
+                    .addMajorRealmName("ascension.path.poison.primordial_venom")
+    );
+
+
     // 5 Elements Paths
     public static final DeferredHolder<IPath, ? extends GenericPath> FIRE = PATHS.register("fire",()->
             new ComprehensionPath(Component.translatable("ascension.path.fire"))

@@ -40,6 +40,8 @@ public class lang extends LanguageProvider {
         add("ascension.path.demonic", "Demonic");
         add("ascension.path.buddhist", "Buddhist");
 
+        add("ascension.path.poison", "Poison");
+
 
 
 
@@ -178,6 +180,12 @@ public class lang extends LanguageProvider {
         add("ascension.path.virtuous.state", "State");
         add("ascension.path.virtuous.universal", "Universal");
 
+        // Poison Realms
+        add("ascension.path.poison.seeping_miasma", "Seeping Miasma");
+        add("ascension.path.poison.festering_root", "Festering Root");
+        add("ascension.path.poison.plague_sovereign", "Plague Sovereign");
+        add("ascension.path.poison.primordial_venom", "Primordial venom");
+
 
 
         // Physiques
@@ -281,6 +289,10 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.wood_body", "Wood Body");
         add("ascension.physiques.earth_body", "Earth Body");
 
+
+        add("ascension.physiques.myriad_poison_vessel", "Myriad Poison Vessel");
+        add("ascension.physiques.myriad_poison_vessel.desc", "A cursed and coveted constitution born once in ten thousand generations. This body does not resist poison - it hungers for it, drinking in every, toxin, plague and miasma to refine them into peerless venom. What kills others only makes this body stronger.");
+        add("ascension.physiques.myriad_poison_vessel.desc.short", "A body that absorbs all poisons and refines them into powder.");
 
         add("ascension.physiques.clear_spirit", "Clear Spirit");
         add("ascension.physiques.clear_spirit.desc", "Your soul is unusually clear, untouched by much of the noise that clouds lesser minds.");
@@ -465,6 +477,13 @@ public class lang extends LanguageProvider {
         add("ascension.technique.hellbound_marrow_scripture.description", "A brutal body scripture that burns qi through the bones, refining flesh and marrow through violence, pain, and survival.");
         add("ascension.technique.hellbound_marrow_scripture.description.short", "Refines the body through pain and violent qi combustion.");
 
+
+        // Poison
+        add("ascension.technique.myriad_venom_refinement_scripture", "Myriad Venom Refinement Scripture");
+        add("ascension.technique.myriad_venom_refinement_scripture.desc", "An ancient and reviled cultivation method that treats the body as a living crucible. Rather than avoiding poison, the practitioner consumes it — forcing Qi to refine every toxin into pure cultivation energy. The more poison the body has endured, the faster it advances. Those who walk this path do not resist the world's blight. They become it.");
+        add("ascension.technique.myriad_venom_refinement_scripture.desc_short", "Consume poisons to cultivate. Qi refines each toxin into realm progress. Higher realm and purity pills yield far greater gains.");
+
+
         //Skills
         add("ascension.skill.regeneration_boost", "Regenerative Body");
         add("ascension.skill.regeneration_boost.description", "Your refined body slowly restores lost health over time.");
@@ -624,6 +643,12 @@ public class lang extends LanguageProvider {
         add("ascension.skill.frost_silkworm_poison_debuff.description", "A silkworm's frost seeps into your meridians, freezing Qi and body alike. Cannot be cleansed. Leads only to death.");
         add("ascension.skill.frost_silkworm_poison_temp_debuff", "Frost Silkworm Venom");
         add("ascension.skill.frost_silkworm_poison_temp_debuff.description", "A concentrated burst of silkworm frost. The cold builds quickly — flee before it reaches your core.");
+
+
+        // Poison
+        add("ascension.skill.poison_refining_meditation", "Poison Refining Meditation");
+        add("ascension.skill.poison_refining_meditation.desc", "A passive technique of the Myriad Venom Scripture. When a poison source is consumed, Qi is spent to refine the toxin — converting it directly into realm progress on the Poison Path. Stronger poisons demand more Qi but yield far greater cultivation. Higher pill realm and purity dramatically scale the gain. Breakthrough requires the body to have refined sufficient poison in total.");
+
 
 
         //Pill effects

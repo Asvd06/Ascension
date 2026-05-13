@@ -471,6 +471,16 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.divine_essence_bone.desc.short"))
     );
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> MYRIAD_POISON_VESSEL = PHYSIQUES.register("myriad_poison_vessel", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.myriad_poison_vessel"))
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 2.5)
+                    .addPath(ModPaths.POISON.getId())
+                    .addPathBonus(ModPaths.POISON.getId(), 3.5)
+                    .setDescription(Component.translatable("ascension.physiques.myriad_poison_vessel.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.myriad_poison_vessel.desc.short"))
+    );
+
         // Body
 
         // Soul

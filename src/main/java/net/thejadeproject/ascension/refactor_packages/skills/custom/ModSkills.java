@@ -24,6 +24,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utili
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.MarrowFurnaceCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.BloodfeastBanquetSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.poison.PoisonRefiningMeditationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.SwordCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.WhiteLightningCultivationSkill;
@@ -274,6 +275,12 @@ public class ModSkills {
             SKILLS.register("bow_mastery_skill", BowMasterySkill::new);
     public static final DeferredHolder<ISkill, ? extends BladeMasterySkill> BLADE_MASTERY_SKILL =
             SKILLS.register("blade_mastery_skill", BladeMasterySkill::new);
+
+
+
+    // Poison
+    public static final DeferredHolder<ISkill, ? extends PoisonRefiningMeditationSkill> POISON_REFINING_MEDITATION_SKILL =
+            SKILLS.register("poison_refining_meditation_skill", PoisonRefiningMeditationSkill::new);
 
     // Actives
     public static final DeferredHolder<ISkill, ? extends SwordDraw> SWORD_DRAW =
