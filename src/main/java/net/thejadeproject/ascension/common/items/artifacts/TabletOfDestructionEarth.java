@@ -16,28 +16,25 @@ public class TabletOfDestructionEarth extends BaseTabletOfDestruction {
         super(properties);
     }
 
-    @Override
-    protected int getCooldownTicks() { return COOLDOWN; }
-    @Override
-    protected int getWidth() { return WIDTH; }
-    @Override
-    protected int getHeight() { return HEIGHT; }
-    @Override
-    protected int getDepth() { return DEPTH; }
-    @Override
-    protected boolean supportsDropBlocks() { return true; }
-    @Override
-    protected boolean supportsContainerLinking() { return false; }
+    @Override protected int getCooldownTicks() { return COOLDOWN; }
+    @Override protected int getWidth() { return WIDTH; }
+    @Override protected int getHeight() { return HEIGHT; }
+    @Override protected int getDepth() { return DEPTH; }
+    @Override protected boolean supportsDropBlocks() { return true; }
+    @Override protected boolean supportsContainerLinking() { return false; }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context,
+                                List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
 
-        boolean dropBlocks = isDropBlocksEnabled(stack);
-        Component status = Component.literal(String.valueOf(dropBlocks))
-                .withStyle(dropBlocks ? ChatFormatting.GREEN : ChatFormatting.RED);
-        tooltipComponents.add(Component.translatable("ascension.tablet.drop_blocks").append(status));
-        tooltipComponents.add(Component.translatable("ascension.tablet.toggle_mode_info"));
+        boolean drop = isDropBlocksEnabled(stack);
+        Component status = Component.literal(String.valueOf(drop))
+                .withStyle(drop ? ChatFormatting.GREEN : ChatFormatting.RED);
+        tooltipComponents.add(
+                Component.translatable("ascension.tablet.drop_blocks").append(status));
+        tooltipComponents.add(
+                Component.translatable("ascension.tablet.toggle_mode_info"));
     }
 
     @Override
