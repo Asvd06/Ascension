@@ -356,6 +356,13 @@ public class lang extends LanguageProvider {
         add("ascension.message.physique_evolution.pacifist_mortal_reset", "You have failed to maintain a peaceful streak.");
         add("ascension.message.physique_evolution.blessed_route_lost", "The Blessed path has been stained by blood, and You no longer have a future with Virtue.");
         add("ascension.message.physique_evolution.blessed_wrathful_path", "The Blessed path has been stained by undead blood, your rage and wrath fueling your Virtue.");
+        add("ascension.message.physique_evolution.blood_fiend_progress", "Blood stains your mortal frame... %s/%s sacrifices gathered.");
+        add("ascension.message.physique_evolution.blood_wraith_progress", "Your Blood Fiend physique hungers for a deeper crimson... %s/%s sacrifices gathered.");
+        add("ascension.message.physique_evolution.blood_wraith_soul_too_weak", "Your soul is too shallow to birth a Blood Wraith. Soul Path Major Realm %s required.");
+        add("ascension.message.physique_evolution.essence_bone_purifying", "Your Essence Bone is being purified beneath heaven... %s/%s minutes.");
+        add("ascension.message.physique_evolution.essence_bone_needs_pill_fuel", "The Divine Bone ritual starves. Consume refinement pills to fuel the crimson flame.");
+        add("ascension.message.physique_evolution.essence_bone_divine_marked", "Heavenly lightning brands your Essence Bone. Enter the Crimson Lotus Flame and begin the Divine ritual.");
+        add("ascension.message.physique_evolution.essence_bone_pill_fuel", "Refinement fuel gathered: %s/%s minutes.");
 
 
 
@@ -442,7 +449,6 @@ public class lang extends LanguageProvider {
         add("ascension.technique.zenith_sun_scripture.description", "Cultivates the Soul by drawing upon the blazing power of the sun at its peak. Must be practised under open sky. Greatly empowered when gazing directly at the sun. Harmful beneath moonlit night skies.");
 
 
-
         // Multi Part Technique Items
         add("item.ascension.scholarly_soul_rectification_of_names", "Rectification of Names");
         add("item.ascension.scholarly_soul_great_learning", "Great Learning");
@@ -455,8 +461,9 @@ public class lang extends LanguageProvider {
         add("ascension.technique.bloodfeast_soul_refining_scripture", "§4Bloodfeast Soul-Refining Scripture");
         add("ascension.technique.bloodfeast_soul_refining_scripture.short_desc", "§4A heretical scripture that refines the soul through the blood of the slain.");
         add("ascension.technique.bloodfeast_soul_refining_scripture.desc", "§4By feasting on the vital essence of nearby creatures the cultivator advances at an\nextraordinary pace. Yet the path is stained crimson each higher realm demands\nproof of the hunt, and those who hunt only their fellow cultivators grow ever more\nfearsome with each slaughter.");
-
-
+        add("ascension.technique.hellbound_marrow_scripture", "Hellbound Marrow Scripture");
+        add("ascension.technique.hellbound_marrow_scripture.description", "A brutal body scripture that burns qi through the bones, refining flesh and marrow through violence, pain, and survival.");
+        add("ascension.technique.hellbound_marrow_scripture.description.short", "Refines the body through pain and violent qi combustion.");
 
         //Skills
         add("ascension.skill.regeneration_boost", "Regenerative Body");
@@ -533,7 +540,20 @@ public class lang extends LanguageProvider {
         add("ascension.skill.soul_needle.description", "Pierces a target's soul with focused spiritual force.");
         add("ascension.skill.soul_suppression", "Soul Suppression");
         add("ascension.skill.soul_suppression.description", "Releases spiritual pressure, damaging and weakening nearby enemies.");
-
+        add("ascension.skill.sword_draw", "Sword Draw");
+        add("ascension.skill.sword_draw.description", "Unsheathe in an instant, surging forward and carving through enemies along your path.");
+        add("ascension.skill.soul_lantern", "Soul Lantern");
+        add("ascension.skill.soul_lantern.description", "Marks the soul of a nearby target, revealing it and weakening its body for a short time.");
+        add("ascension.skill.marrow_furnace", "Marrow Furnace");
+        add("ascension.skill.marrow_furnace.description", "Burns qi through the bones when dealing damage, refining the body path. The effect strengthens while below half health.");
+        add("ascension.skill.thunder_palm", "Thunder Palm");
+        add("ascension.skill.thunder_palm.description", "Strikes a nearby target with lightning qi, damaging and briefly slowing them.");
+        add("ascension.skill.thorn_bind", "Thorn Bind");
+        add("ascension.skill.thorn_bind.description", "Binds a target with wood qi, heavily slowing and poisoning them for a short time.");
+        add("ascension.skill.gale_step", "Gale Step");
+        add("ascension.skill.gale_step.description", "Surges forward on wind qi, pushing nearby enemies aside and softening your fall.");
+        add("ascension.skill.stone_root", "Stone Root");
+        add("ascension.skill.stone_root.description", "While grounded and still, roots your body like stone and grants brief resistance.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");
@@ -625,6 +645,13 @@ public class lang extends LanguageProvider {
         add("ascension.pill_effects.qi_enhanced_regen_effect.name","Qi Enhanced Regeneration");
         add("ascension.pill_effects.qi_enhanced_regen_effect.description","Regeneration enhanced with Qi");
 
+        add("ascension.pill_effects.qi_replenishing_effect.name","Qi Replenishing");
+        add("ascension.pill_effects.qi_replenishing_effect.description","Replenishing Qi");
+
+        add("ascension.pill_effects.crimson_lotus_bone_effect.name", "Crimson Lotus Bone Refinement");
+        add("ascension.pill_effects.crimson_lotus_bone_effect.description", "Fuels the Divine Essence Bone ritual when consumed after heavenly lightning has marked the body.");
+
+
 
 
 
@@ -701,6 +728,9 @@ public class lang extends LanguageProvider {
 
         add("item.ascension.fan", "Fan");
 
+        add("item.ascension.mortar_pestle", "Mortar & Pestle");
+        add("item.ascension.spiritual_meal", "Spiritual Meal");
+
 
         // Needles
         add("item.ascension.silver_needle", "Silver Needle");
@@ -759,8 +789,15 @@ public class lang extends LanguageProvider {
         add("entity.ascension.treasure_rat", "Treasure Rat");
 
 
+        //Powders
+        add("item.ascension.qi_devouring_powder", "Qi Devouring Powder");
+
+
+
+
         //Pills
         add("item.ascension.pill_residue", "Pill Residue");
+        add("item.ascension.qi_replenishing_pill", "Qi Replenishing Pill");
         add("item.ascension.regeneration_pill", "Regeneration Pill");
         add("item.ascension.neutrality_pill", "Neutrality Pill");
         add("item.ascension.rebirth_pill", "Rebirth Pill");
@@ -778,9 +815,9 @@ public class lang extends LanguageProvider {
 
         add("item.ascension.inner_reinforcement_pill", "Inner Reinforcement Pill");
         add("item.ascension.marrow_cleanse_pill", "Marrow Cleanse Pill");
+        add("item.ascension.crimson_lotus_bone_pill", "Crimson Lotus Bone Pill");
         add("item.ascension.essence_gathering_pill", "Essence Gathering Pill");
         add("item.ascension.soul_focus_pill", "Soul Focus Pill");
-
 
 
 
@@ -830,6 +867,7 @@ public class lang extends LanguageProvider {
         add("ascension.tooltip.waste", "Waste");
         add("ascension.tooltip.medicinal", "Medicinal");
         add("ascension.tooltip.cultivation", "Cultivation");
+        add("ascension.tooltip.evolutionary", "Evolutionary");
         add("ascension.tooltip.poisonous", "Poisonous");
         add("ascension.tooltip.qdppill", "Qi Devouring Parasite Antidote");
 

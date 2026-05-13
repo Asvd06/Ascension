@@ -79,10 +79,6 @@ public class GenericTechnique implements ITechnique {
         if(getPath().equals(ModPaths.ESSENCE.getId())){
             heldEntity.giveSkill(ModSkills.BASIC_CULTIVATION_SKILL.getId(),new GenericCultivationSkillData(baseRate, secondaryPaths), ModForms.MORTAL_VESSEL.getId());
         }
-        if(getPath().equals(ModPaths.SWORD.getId())){
-            heldEntity.giveSkill(ModSkills.SWORD_CULTIVATION_SKILL.getId(),ModForms.MORTAL_VESSEL.getId());
-            heldEntity.giveSkill(ModSkills.SWORD_MASTERY_SKILL.getId(),ModForms.MORTAL_VESSEL.getId());
-        }
 
         refreshUniversalTechniqueSkills(heldEntity);
     }
@@ -92,10 +88,6 @@ public class GenericTechnique implements ITechnique {
         heldEntity.getPathData(getPath()).handleRealmChange(heldEntity.getPathData(getPath()).getMajorRealm(),0,heldEntity);
         if(getPath().equals(ModPaths.ESSENCE.getId())){
             heldEntity.removeSkill(ModSkills.BASIC_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
-        }
-        if(getPath().equals(ModPaths.SWORD.getId())){
-            heldEntity.removeSkill(ModSkills.SWORD_CULTIVATION_SKILL.getId(),ModForms.MORTAL_VESSEL.getId());
-            heldEntity.removeSkill(ModSkills.SWORD_MASTERY_SKILL.getId(),ModForms.MORTAL_VESSEL.getId());
         }
 
         refreshUniversalTechniqueSkills(heldEntity);

@@ -54,20 +54,20 @@ public class ElementalPhysiqueHandler {
         PathBonusHandler bonuses = entityData.getPathBonusHandler();
 
         // Remove current tier bonuses
-        double oldTier = oldData.getActiveCount();
-        bonuses.removePathBonus(ModPaths.BODY.getId(), oldTier);
+        double oldBonus = ElementalBodyPhysique.bonusForTier(oldData.getActiveCount());
+        bonuses.removePathBonus(ModPaths.BODY.getId(), oldBonus);
         for (ResourceLocation el : oldData.getActiveElements()) {
-            bonuses.removePathBonus(el, oldTier);
+            bonuses.removePathBonus(el, oldBonus);
         }
 
         // Add the new element to the existing data in-place
         oldData.setFlag(newElemental.getElement(), true);
 
         // Apply upgraded tier bonuses
-        double newTier = oldData.getActiveCount();
-        bonuses.addPathBonus(ModPaths.BODY.getId(), newTier);
+        double newBonus = ElementalBodyPhysique.bonusForTier(oldData.getActiveCount());
+        bonuses.addPathBonus(ModPaths.BODY.getId(), newBonus);
         for (ResourceLocation el : oldData.getActiveElements()) {
-            bonuses.addPathBonus(el, newTier);
+            bonuses.addPathBonus(el, newBonus);
         }
 
         // Sync updated physique data to the client

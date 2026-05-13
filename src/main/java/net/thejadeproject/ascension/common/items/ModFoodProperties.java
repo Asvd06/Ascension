@@ -42,6 +42,7 @@ public class ModFoodProperties {
 
 
     public static final FoodProperties MARROW_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().build();
+    public static final FoodProperties RITUAL_PILL = new FoodProperties.Builder().nutrition(0).saturationModifier(0).fast().alwaysEdible().build();
 
 
 

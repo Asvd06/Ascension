@@ -104,6 +104,8 @@ public final class MobCultivationList {
         };
     }
 
+    // current base stats: Realm 1: 34/22/11. Realm 3: 129/91/36. Realm 5:382/241/96
+
 
     private static List<MobCultivationDefinition> buildAll() {
         List<MobCultivationDefinition> ranks = new ArrayList<>();

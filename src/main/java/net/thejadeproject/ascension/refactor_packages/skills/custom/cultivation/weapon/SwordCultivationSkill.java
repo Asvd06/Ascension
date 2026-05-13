@@ -2,85 +2,143 @@ package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation
 
 import net.lucent.easygui.gui.RenderableElement;
 import net.lucent.easygui.gui.UIFrame;
-import net.lucent.easygui.gui.textures.ITextureData;
-import net.lucent.easygui.gui.textures.TextureData;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.thejadeproject.ascension.AscensionCraft;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
+import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
-import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
-import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
-import net.thejadeproject.ascension.refactor_packages.skills.ISkill;
+import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
+import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
-public class SwordCultivationSkill implements ISkill {
-    @Override
-    public void onAdded(IEntityData attachedEntityData) {
+public class SwordCultivationSkill extends SimplePassiveSkill {
 
+    private static final float MIN_DAMAGE = 2.0f;
+    private static final double BASE_MULTIPLIER = 2.5D;
+    private static final double QI_COST_MULTIPLIER = 1.0D;
+
+    private final String titleKey;
+    private final String descriptionKey;
+    private final ResourceLocation skillId;
+
+    public SwordCultivationSkill(String titleKey, String descriptionKey, ResourceLocation skillId) {
+        this.titleKey = titleKey;
+        this.descriptionKey = descriptionKey;
+        this.skillId = skillId;
+
+        NeoForge.EVENT_BUS.addListener(this::onLivingDamage);
     }
 
-    @Override
-    public void onRemoved(IEntityData attachedEntityData, IPersistentSkillData persistentData) {
+    @SubscribeEvent
+    public void onLivingDamage(LivingDamageEvent.Post event) {
+        if (event.getEntity().level().isClientSide()) return;
 
-    }
+        if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
 
-    @Override
-    public void onFormAdded(IEntityData heldEntity, ResourceLocation form, IPhysiqueData physiqueData) {
+        float damage = event.getNewDamage();
+        if (damage < MIN_DAMAGE) return;
 
-    }
+        ItemStack mainHand = player.getMainHandItem();
+        if (mainHand.isEmpty()) return;
+        if (!mainHand.is(ItemTags.SWORDS)) return;
 
-    @Override
-    public void onFormRemoved(IEntityData heldEntity, ResourceLocation form, IPhysiqueData physiqueData) {
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        if (entityData == null) return;
+        if (!entityData.hasSkill(skillId)) return;
 
-    }
+        PathData swordPath = entityData.getPathData(ModPaths.SWORD.getId());
+        if (swordPath == null || swordPath.isBreakingThrough()) return;
 
-    @Override
-    public void finishedCooldown(IEntityData attachedEntityData, String identifier) {
+        EntityQiContainer qiContainer = entityData.getQiContainer();
+        if (qiContainer == null) return;
 
-    }
+        double qiCost = damage * QI_COST_MULTIPLIER;
+        if (!qiContainer.hasQi(qiCost)) return;
+        if (!qiContainer.tryConsumeQi(qiCost)) return;
 
-    @Override
-    public IPersistentSkillData freshPersistentData(IEntityData heldEntity) {
-        return null;
-    }
-
-    @Override
-    public IPersistentSkillData fromCompound(CompoundTag tag, IEntityData heldEntity) {
-        return null;
-    }
-
-    @Override
-    public IPersistentSkillData fromNetwork(RegistryFriendlyByteBuf buf) {
-        return null;
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public ITextureData getIcon(IEntityData entityData) {
-        return new TextureData(
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"textures/spells/icon/placeholder.png"),
-                16,16
+        double swordBonus = Math.max(
+                1.0D,
+                entityData.getPathBonusHandler().getPathBonus(ModPaths.SWORD.getId())
         );
+
+        double gain = damage * BASE_MULTIPLIER * swordBonus;
+
+        ITechnique technique = swordPath.getLastUsedTechnique() == null ? null :
+                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(swordPath.getLastUsedTechnique());
+
+        if (technique != null && swordPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(
+                swordPath.getMajorRealm(),
+                swordPath.getMinorRealm()
+        )) {
+            swordPath.setCurrentRealmProgress(
+                    technique.getMaxQiForRealm(
+                            swordPath.getMajorRealm(),
+                            swordPath.getMinorRealm()
+                    )
+            );
+
+            if (swordPath.getMinorRealm() < technique.getMaxMinorRealm(swordPath.getMajorRealm())
+                    && technique.canBreakthroughMinorRealm(
+                    entityData,
+                    swordPath.getMajorRealm(),
+                    swordPath.getMinorRealm(),
+                    swordPath.getCurrentRealmProgress()
+            )) {
+                swordPath.handleRealmChange(
+                        swordPath.getMajorRealm(),
+                        swordPath.getMinorRealm() + 1,
+                        entityData
+                );
+            } else if (swordPath.getMajorRealm() < technique.getMaxMajorRealm()
+                    && technique.canBreakthrough(
+                    entityData,
+                    swordPath.getMajorRealm(),
+                    swordPath.getMinorRealm(),
+                    swordPath.getCurrentRealmProgress()
+            )) {
+                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
+
+                if (instance != null) {
+                    swordPath.setBreakthroughInstance(instance);
+                    swordPath.setBreakingThrough(true);
+                }
+            }
+        } else {
+            swordPath.setCurrentRealmProgress(swordPath.getCurrentRealmProgress() + gain);
+        }
+
+        swordPath.sync(player);
     }
 
     @Override
-    public Component getTitle(IEntityData entityData) {
-        return Component.translatable("ascension.skill.sword_cultivation_skill");
+    protected String getTitleKey() {
+        return titleKey;
     }
 
     @Override
-    public Component getDescription(IEntityData entityData) {
-        return Component.translatable("ascension.skill.sword_cultivation_skill.description");
+    protected String getDescriptionKey() {
+        return descriptionKey;
+    }
+
+    @Override
+    protected String getIconPath() {
+        return "textures/spells/icon/placeholder.png";
     }
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public RenderableElement getInformationContainer(UIFrame frame,IEntityData entityData) {
+    public RenderableElement getInformationContainer(UIFrame frame, IEntityData entityData) {
         return new DescriptionDisplayContainer(frame,
                 getTitle(entityData),
                 getDescription(entityData));

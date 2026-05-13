@@ -4,15 +4,18 @@
   "key": {
     "B": {
       "item": "ascension:frost_silver_ingot"
+    },
+    "N": {
+      "item": "ascension:frost_silver_nugget"
     }
   },
   "pattern": [
-    "  B",
+    "  N",
     " B ",
-    "B  "
+    "N  "
   ],
   "result": {
-    "count": 1,
+    "count": 6,
     "id": "ascension:silver_needle"
   }
 }

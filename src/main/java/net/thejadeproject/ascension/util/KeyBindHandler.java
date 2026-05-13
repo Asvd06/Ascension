@@ -99,7 +99,6 @@ public class KeyBindHandler {
         }
     }
 
-    public static final KeyMapping OPEN_SPATIAL_RING_KEY = new KeyMapping("key.ascension.open_spatial_ring", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, InputConstants.KEY_B, CULTIVATION_CATEGORY);
     public static final KeyMapping TOGGLE_ARTIFACT_MODE_KEY = new KeyMapping("key.ascension.toggle_artifact_mode", 77, CULTIVATION_CATEGORY);
 
 

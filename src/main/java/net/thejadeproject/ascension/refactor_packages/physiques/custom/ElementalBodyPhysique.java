@@ -31,20 +31,30 @@ public class ElementalBodyPhysique implements IPhysique {
 
     public ResourceLocation getElement() { return element; }
 
+    public static double bonusForTier(int tier) {
+        return switch (tier) {
+            case 1 -> 1.5;
+            case 2 -> 2.25;
+            case 3 -> 3.0;
+            case 4 -> 4.0;
+            default -> 5.0;
+        };
+    }
+
     @Override
     public void onPhysiqueAdded(IEntityData heldEntity, ResourceLocation oldPhysique, IPhysiqueData oldPhysiqueData) {
-        // Tier 1 bonuses on first equip
-        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 2.0);
-        heldEntity.getPathBonusHandler().addPathBonus(element, 1.0);
+        double bonus = bonusForTier(1);
+        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), bonus);
+        heldEntity.getPathBonusHandler().addPathBonus(element, bonus);
     }
 
     @Override
     public void onPhysiqueRemoved(IEntityData heldEntity, IPhysiqueData physiqueData, ResourceLocation newPhysique) {
         if (!(physiqueData instanceof ElementalPhysiqueData data)) return;
-        double tier = data.getActiveCount();
-        heldEntity.getPathBonusHandler().removePathBonus(ModPaths.BODY.getId(), tier);
+        double bonus = bonusForTier(data.getActiveCount());
+        heldEntity.getPathBonusHandler().removePathBonus(ModPaths.BODY.getId(), bonus);
         for (ResourceLocation el : data.getActiveElements()) {
-            heldEntity.getPathBonusHandler().removePathBonus(el, tier);
+            heldEntity.getPathBonusHandler().removePathBonus(el, bonus);
         }
     }
 

@@ -44,9 +44,8 @@ public class ModConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> IRONWOOD_KEY = registerKey("ironwood");
 
 
-    // ── Spirit Vein ───────────────────────────────────────────────────────────
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SPIRIT_VEIN_FEATURE_KEY = registerKey("spirit_vein_feature");
+
 
     // ── Wild Herbs ────────────────────────────────────────────────────────────
     public static final ResourceKey<ConfiguredFeature<?, ?>> WILD_GINSENG_KEY =
@@ -109,10 +108,6 @@ public class ModConfiguredFeatures {
 
 
 
-        //Spirit Veins
-        register(context, SPIRIT_VEIN_FEATURE_KEY,
-                ModFeatureRegistration.SPIRIT_VEIN_FEATURE.get(),
-                FeatureConfiguration.NONE);
 
 
         // ── Wild Herbs ────────────────────────────────────────────────────────

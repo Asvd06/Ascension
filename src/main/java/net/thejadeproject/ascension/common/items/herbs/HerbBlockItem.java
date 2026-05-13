@@ -11,22 +11,9 @@ import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nullable;
 import java.util.List;
-/**
- * Base class for herb items that are also block items (plantable via ItemNameBlockItem).
- *
- * Custom eat effects are passed as a lambda — no subclass needed per herb.
- *
- * Usage — no special effect:
- *   new HerbBlockItem(ModBlocks.HUNDRED_YEAR_GINSENG_CROP.get(), new Item.Properties()...)
- *
- * Usage — with eat effect:
- *   new HerbBlockItem(ModBlocks.HUNDRED_YEAR_SNOW_GINSENG_CROP.get(), new Item.Properties()...,
- *       (stack, level, entity) -> {
- *           Player p = (Player) entity;
- *           p.setTicksFrozen(300);
- *           p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
- *       })
- */
+import java.util.function.Supplier;
+
+
 public class HerbBlockItem extends ItemNameBlockItem {
 
     /**
@@ -41,16 +28,34 @@ public class HerbBlockItem extends ItemNameBlockItem {
     @Nullable
     private final EatEffect eatEffect;
 
-    /** No special eat effect. */
+    // ── Supplier constructors (preferred — avoids circular init NPE) ──────
+
+    /** Lazy block reference, no special eat effect. */
+    public HerbBlockItem(Supplier<? extends Block> blockSupplier, Properties properties) {
+        this(blockSupplier, properties, null);
+    }
+
+    /** Lazy block reference, with a custom eat effect. */
+    public HerbBlockItem(Supplier<? extends Block> blockSupplier, Properties properties,
+                         @Nullable EatEffect eatEffect) {
+        super(blockSupplier.get(), properties);
+        this.eatEffect = eatEffect;
+    }
+
+    // ── Direct Block constructors (kept for compatibility) ────────────────
+
+    /** Direct block reference, no special eat effect. */
     public HerbBlockItem(Block block, Properties properties) {
         this(block, properties, null);
     }
 
-    /** With a custom eat effect. */
+    /** Direct block reference, with a custom eat effect. */
     public HerbBlockItem(Block block, Properties properties, @Nullable EatEffect eatEffect) {
         super(block, properties);
         this.eatEffect = eatEffect;
     }
+
+    // ── Item behaviour ────────────────────────────────────────────────────
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {

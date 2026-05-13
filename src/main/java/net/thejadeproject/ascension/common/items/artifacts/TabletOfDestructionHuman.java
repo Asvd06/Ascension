@@ -15,18 +15,12 @@ public class TabletOfDestructionHuman extends BaseTabletOfDestruction {
         super(properties);
     }
 
-    @Override
-    protected int getCooldownTicks() { return COOLDOWN; }
-    @Override
-    protected int getWidth() { return WIDTH; }
-    @Override
-    protected int getHeight() { return HEIGHT; }
-    @Override
-    protected int getDepth() { return DEPTH; }
-    @Override
-    protected boolean supportsDropBlocks() { return false; }
-    @Override
-    protected boolean supportsContainerLinking() { return false; }
+    @Override protected int getCooldownTicks() { return COOLDOWN; }
+    @Override protected int getWidth() { return WIDTH; }
+    @Override protected int getHeight() { return HEIGHT; }
+    @Override protected int getDepth() { return DEPTH; }
+    @Override protected boolean supportsDropBlocks() { return false; }
+    @Override protected boolean supportsContainerLinking() { return false; }
 
     @Override
     protected Component getCooldownMessage() {

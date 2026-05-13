@@ -22,25 +22,38 @@ import net.thejadeproject.ascension.common.items.herbs.HerbQuality;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Slow-growing generic crop for Ascension herbs.
  *
+ * ── Growth speed reference (default randomTickSpeed = 3) ─────────────────
+ * One random tick fires on average every ~68.27 seconds per block.
+ * Expected time per stage  =  68.27s / growthChance
+ * Total time (3 stages)    =  3 × (68.27s / growthChance)
+ *
+ *   growthChance  │  avg per stage  │  avg total (3 stages)
+ *   ──────────────┼─────────────────┼──────────────────────
+ *   0.014         │  ~81 min        │  ~4 h          ← DEFAULT (max realistic ceiling)
+ *   0.025         │  ~45 min        │  ~2.3 h
+ *   0.05          │  ~23 min        │  ~1.1 h
+ *
+ * Use HerbGrowthSpeed constants below for named presets.
+ *
  * ── Age & Quality stamping ────────────────────────────────────────────────
- * When the crop first reaches max age (3) via randomTick, it records the
- * current world game-time in block NBT as "grownSince". No per-tick work
- * is done — the timestamp is written once and never touched again.
- *
- * When the crop is broken, getDrops() reads the timestamp, computes
- * (currentTime - grownSince) = "ticks at max age", and stamps the result
- * as HERB_AGE_TICKS on every drop. Quality is rolled once at grownSince-time
- * and stored as "grownQuality" in block NBT, then copied to the drop item.
- *
- * Block NBT keys:
- *   "grownSince"   long  — game-time tick when age 3 was first reached
- *   "grownQuality" int   — quality tier rolled at that moment (0-3)
+ * When the crop first reaches max age (3) via randomTick, the game-time is
+ * stored in CropAgeCache. On harvest, (currentTime - grownSince) is stamped
+ * as HERB_AGE_TICKS and quality is copied to every drop ItemStack.
  */
 public class GenericSlowCropBlock extends CropBlock {
+
+    // ── Growth speed presets ──────────────────────────────────────────────
+    /** ~4 h total (3 stages). The slowest recommended ceiling. */
+    public static final float SPEED_SLOW   = 0.014f;
+    /** ~2.3 h total. */
+    public static final float SPEED_MEDIUM = 0.025f;
+    /** ~1.1 h total. A faster common-tier herb. */
+    public static final float SPEED_FAST   = 0.05f;
 
     public static final int MAX_AGE = 3;
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
@@ -52,42 +65,53 @@ public class GenericSlowCropBlock extends CropBlock {
             Block.box(0, 0, 0, 16, 8, 16)
     };
 
-    private final ItemLike seedItem;
-    private final float    growthChance;
+    private final Supplier<? extends ItemLike> seedItem;
+    private final float                        growthChance;
 
-    // ── Constructors ──────────────────────────────────────────────
+    // ── Constructors ──────────────────────────────────────────────────────
 
+    /** Convenience factory — kept for backwards compatibility. */
     public static GenericSlowCropBlock createHundredYearGinseng(Properties properties) {
-        return new GenericSlowCropBlock(properties, ModItems.HUNDRED_YEAR_GINSENG, 0.001f);
+        return new GenericSlowCropBlock(properties, ModItems.HUNDRED_YEAR_GINSENG, SPEED_SLOW);
     }
 
-    public GenericSlowCropBlock(Properties properties, ItemLike seedItem, float growthChance) {
+    /**
+     * Full constructor. Accepts a {@code Supplier<ItemLike>} so the seed item
+     * is resolved lazily — pass {@code () -> ModItems.YOUR_ITEM.get()} to avoid
+     * the circular ModBlocks <-> ModItems static-initialiser NPE.
+     *
+     * @param seedItem      Lazy supplier for the seed/drop item.
+     * @param growthChance  Probability (0-1) of advancing one age stage per random tick.
+     *                      Use the SPEED_* constants or pass a custom float.
+     */
+    public GenericSlowCropBlock(Properties properties, Supplier<? extends ItemLike> seedItem, float growthChance) {
         super(properties);
-        this.seedItem    = seedItem;
+        this.seedItem     = seedItem;
         this.growthChance = growthChance;
     }
 
-    public GenericSlowCropBlock(Properties properties, ItemLike seedItem) {
-        this(properties, seedItem, 0.001f);
+    /** Defaults to SPEED_SLOW (~4 h total). */
+    public GenericSlowCropBlock(Properties properties, Supplier<? extends ItemLike> seedItem) {
+        this(properties, seedItem, SPEED_SLOW);
     }
 
-    // ── Shape / Age ───────────────────────────────────────────────
+    // ── Shape / Age ───────────────────────────────────────────────────────
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
         return SHAPE_BY_AGE[state.getValue(AGE)];
     }
 
-    @Override protected ItemLike getBaseSeedId()    { return seedItem; }
+    @Override protected ItemLike getBaseSeedId()       { return seedItem.get(); }
     @Override public  IntegerProperty getAgeProperty() { return AGE; }
-    @Override public  int getMaxAge()                { return MAX_AGE; }
+    @Override public  int getMaxAge()                  { return MAX_AGE; }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }
 
-    // ── Growth ────────────────────────────────────────────────────
+    // ── Growth ────────────────────────────────────────────────────────────
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -95,91 +119,46 @@ public class GenericSlowCropBlock extends CropBlock {
         if (level.getRawBrightness(pos, 0) < 9) return;
 
         int currentAge = getAge(state);
-        if (currentAge >= getMaxAge()) {
-            // Already fully grown — nothing to do (age tracked in block entity NBT below)
-            return;
-        }
+        if (currentAge >= getMaxAge()) return;
 
         if (random.nextFloat() < growthChance) {
             int nextAge = currentAge + 1;
             level.setBlock(pos, getStateForAge(nextAge), 2);
 
-            // First time reaching max age — record timestamp and roll quality
             if (nextAge == getMaxAge()) {
-                onFirstFullyGrown(level, pos);
+                CropAgeCache.store(level, pos, level.getGameTime(), HerbQuality.rollQuality());
             }
         }
     }
 
-    /**
-     * Called exactly once when the crop transitions to max age.
-     * Writes grownSince + grownQuality into the level's per-block-pos custom data
-     * via a simple NBT trick: we use BlockEntity-less storage by saving into a
-     * companion data structure.
-     *
-     * Because vanilla CropBlock has no BlockEntity, we use a lightweight approach:
-     * store the data as block state extra data isn't possible for longs, so we
-     * use a static WeakHashMap keyed by ServerLevel + BlockPos, cleared on unload.
-     * This is zero-persistence-risk because if the chunk unloads and reloads before
-     * harvest, the crop will still appear fully grown — the harvest just won't have
-     * age data (it gets treated as Young quality).
-     */
-    private static void onFirstFullyGrown(ServerLevel level, BlockPos pos) {
-        long gameTick = level.getGameTime();
-        int  quality  = HerbQuality.rollQuality();
-        CropAgeCache.store(level, pos, gameTick, quality);
-    }
-
-    // ── Drops ─────────────────────────────────────────────────────
+    // ── Drops ─────────────────────────────────────────────────────────────
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>(super.getDrops(state, builder));
-
-        // Only stamp fully-grown crops
         if (getAge(state) < getMaxAge()) return drops;
 
-        // Retrieve from cache — null if chunk was unloaded/reloaded (treat as Young)
         ServerLevel level = null;
+        BlockPos pos = null;
         try {
-            var contextParam = net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_STATE;
-            // Access level via the origin param
+            if (builder.getLevel() instanceof ServerLevel sl) level = sl;
             var origin = builder.getOptionalParameter(
                     net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN);
-            if (origin != null) {
-                var levelParam = builder.getLevel();
-                if (levelParam instanceof ServerLevel sl) level = sl;
-            }
+            if (origin != null) pos = BlockPos.containing(origin);
         } catch (Exception ignored) {}
 
-        long grownSince = -1;
-        int  quality    = HerbQuality.BASIC;
+        long ageTicks = 0L;
+        int  quality  = HerbQuality.BASIC;
 
-        if (level != null) {
-            BlockPos pos = null;
-            try {
-                var origin = builder.getOptionalParameter(
-                        net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN);
-                if (origin != null) {
-                    pos = BlockPos.containing(origin);
-                }
-            } catch (Exception ignored) {}
-
-            if (pos != null) {
-                CropAgeCache.CropData data = CropAgeCache.retrieve(level, pos);
-                if (data != null) {
-                    grownSince = data.grownSince();
-                    quality    = data.quality();
-                    CropAgeCache.remove(level, pos);
-                }
+        if (level != null && pos != null) {
+            CropAgeCache.CropData data = CropAgeCache.retrieve(level, pos);
+            if (data != null) {
+                ageTicks = Math.max(0, level.getGameTime() - data.grownSince());
+                quality  = data.quality();
+                CropAgeCache.remove(level, pos);
             }
         }
 
-        long ageTicks = (grownSince >= 0 && level != null)
-                ? Math.max(0, level.getGameTime() - grownSince)
-                : 0L;
-
-        // Stamp every drop item
         for (ItemStack drop : drops) {
             if (!drop.isEmpty()) {
                 drop.set(ModDataComponents.HERB_AGE_TICKS.get(), ageTicks);
@@ -190,7 +169,7 @@ public class GenericSlowCropBlock extends CropBlock {
         return drops;
     }
 
-    // ── Bonemeal disabled ─────────────────────────────────────────
+    // ── Bonemeal disabled ─────────────────────────────────────────────────
 
     @Override public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) { return false; }
     @Override public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) { return false; }

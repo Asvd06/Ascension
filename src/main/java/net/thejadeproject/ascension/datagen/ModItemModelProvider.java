@@ -101,6 +101,10 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 
         //Tools & Armors & Weapons
+
+        basicItem(ModItems.SPIRITUAL_MEAL.get());
+        basicItem(ModItems.MORTAR_PESTLE.get());
+
         handheldItem(ModItems.WOODEN_BLADE.get());
         handheldItem(ModItems.STONE_BLADE.get());
         handheldItem(ModItems.IRON_BLADE.get());
@@ -199,13 +203,21 @@ public class ModItemModelProvider extends ItemModelProvider {
         pills(ModItems.INNER_REINFORCEMENT_PILL.get());
 
 
+        pills(ModItems.QI_REPLENISHING_PILL.get());
+
+
         pills(ModItems.ANTIDOTE_PILL_QDP.get());
 
 
         pills(ModItems.MARROW_CLEANSE_PILL.get());
+        pills(ModItems.CRIMSON_LOTUS_BONE_PILL.get());
 
 
         pills(ModItems.QI_DEVOURING_PARASITE_PILL.get());
+
+
+        //Powders
+        powder(ModItems.QI_DEVOURING_POWDER.get());
 
 
 
@@ -306,6 +318,15 @@ public class ModItemModelProvider extends ItemModelProvider {
         ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
         String itemName = itemId.getPath();
         ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "item/pills/" + itemName);
+
+        return getBuilder(itemName)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", textureLoc);
+    }
+    public ItemModelBuilder powder(Item item) {
+        ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
+        String itemName = itemId.getPath();
+        ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "item/powders/" + itemName);
 
         return getBuilder(itemName)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))

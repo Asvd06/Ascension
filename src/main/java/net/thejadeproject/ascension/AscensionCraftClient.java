@@ -37,6 +37,7 @@ import net.thejadeproject.ascension.menus.custom.pill_cauldron.PillCauldronLowHu
 import net.thejadeproject.ascension.menus.custom.spirit_ring.SpatialRingInventoryScreen;
 import net.thejadeproject.ascension.menus.custom.spirit_ring.SpatialRingModifierScreen;
 import net.thejadeproject.ascension.particle.ModParticles;
+import net.thejadeproject.ascension.particle.aura.*;
 import net.thejadeproject.ascension.particle.particles.CultivationParticles;
 import net.thejadeproject.ascension.refactor_packages.gui.ModOverlays;
 import net.thejadeproject.ascension.shaders.client.ModShaders;
@@ -76,6 +77,9 @@ public class AscensionCraftClient {
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticles.CULTIVATION_PARTICLES.get(), CultivationParticles.Provider::new);
+            event.registerSpriteSet(ModParticles.AURA_SMOKE.get(), AuraSmokeParticle.Provider::new);
+            event.registerSpriteSet(ModParticles.AURA_SPARK.get(), AuraSparkParticle.Provider::new);
+            event.registerSpriteSet(ModParticles.AURA_FLAME.get(), AuraFlameParticle.Provider::new);
         }
 
         @SubscribeEvent

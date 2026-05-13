@@ -393,6 +393,9 @@ public class ResetAscensionCommand {
         resetAttributeShell(player, Attributes.LUCK);
         resetAttributeShell(player, Attributes.MAX_ABSORPTION);
         resetAttributeShell(player, Attributes.WATER_MOVEMENT_EFFICIENCY);
+        resetAttributeShell(player, Attributes.STEP_HEIGHT);
+        resetAttributeShell(player, Attributes.MINING_EFFICIENCY);
+        resetAttributeShell(player, Attributes.SAFE_FALL_DISTANCE);
 
         resetAttributeShell(player, ModAttributes.MAX_QI);
         resetAttributeShell(player, ModAttributes.QI_REGEN_RATE);

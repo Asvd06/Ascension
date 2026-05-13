@@ -23,13 +23,35 @@ import net.thejadeproject.ascension.common.items.herbs.HerbQuality;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
+/**
+ * 7-stage grass-type crop for Jade Dew Grass.
+ *
+ * ── Growth speed reference (default randomTickSpeed = 3) ─────────────────
+ * One random tick fires on average every ~68.27 seconds per block.
+ * Expected time per stage  =  68.27s / growthChance
+ * Total time (7 stages)    =  7 × (68.27s / growthChance)
+ *
+ *   growthChance  │  avg per stage  │  avg total (7 stages)
+ *   ──────────────┼─────────────────┼──────────────────────
+ *   0.044         │  ~26 min        │  ~3 h          ← SPEED_SLOW (default, max ceiling)
+ *   0.07          │  ~16 min        │  ~1.9 h        ← SPEED_MEDIUM
+ *   0.13          │  ~8.7 min       │  ~1 h          ← SPEED_FAST
+ */
 public class JadeDewGrassCropBlock extends CropBlock {
+
+    // ── Growth speed presets ──────────────────────────────────────────────
+    /** ~3 h total (7 stages). The slowest recommended ceiling. */
+    public static final float SPEED_SLOW   = 0.044f;
+    /** ~1.9 h total. */
+    public static final float SPEED_MEDIUM = 0.07f;
+    /** ~1 h total. */
+    public static final float SPEED_FAST   = 0.13f;
 
     public static final int MAX_AGE = 7;
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 7);
 
-    // Shapes match wheat's 8-stage heights scaled to our range
     private static final VoxelShape[] SHAPE_BY_AGE = {
             Block.box(0, 0, 0, 16, 2, 16),
             Block.box(0, 0, 0, 16, 3, 16),
@@ -41,23 +63,39 @@ public class JadeDewGrassCropBlock extends CropBlock {
             Block.box(0, 0, 0, 16, 9, 16)
     };
 
-    private final ItemLike seedItem;
-    private final float    growthChance;
+    private final Supplier<? extends ItemLike> seedItem;
+    private final float                        growthChance;
 
-    public JadeDewGrassCropBlock(Properties properties, ItemLike seedItem, float growthChance) {
+    // ── Constructors ──────────────────────────────────────────────────────
+
+    /**
+     * Full constructor. Accepts a Supplier<ItemLike> so the seed item
+     * is resolved lazily — pass () -> ModItems.YOUR_ITEM.get() to avoid
+     * the circular ModBlocks <-> ModItems static-initialiser NPE.
+     *
+     * @param seedItem      Lazy supplier for the seed/drop item.
+     * @param growthChance  Probability (0-1) of advancing one age stage per random tick.
+     *                      Use the SPEED_* constants or pass a custom float.
+     */
+    public JadeDewGrassCropBlock(Properties properties, Supplier<? extends ItemLike> seedItem, float growthChance) {
         super(properties);
         this.seedItem     = seedItem;
         this.growthChance = growthChance;
     }
 
-    // ── Shape / Age ───────────────────────────────────────────────
+    /** Defaults to SPEED_SLOW (~3 h total). */
+    public JadeDewGrassCropBlock(Properties properties, Supplier<? extends ItemLike> seedItem) {
+        this(properties, seedItem, SPEED_SLOW);
+    }
+
+    // ── Shape / Age ───────────────────────────────────────────────────────
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
         return SHAPE_BY_AGE[state.getValue(AGE)];
     }
 
-    @Override protected ItemLike getBaseSeedId()       { return seedItem; }
+    @Override protected ItemLike getBaseSeedId()       { return seedItem.get(); }
     @Override public  IntegerProperty getAgeProperty() { return AGE; }
     @Override public  int getMaxAge()                  { return MAX_AGE; }
 
@@ -66,7 +104,7 @@ public class JadeDewGrassCropBlock extends CropBlock {
         builder.add(AGE);
     }
 
-    // ── Growth ────────────────────────────────────────────────────
+    // ── Growth ────────────────────────────────────────────────────────────
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -85,7 +123,7 @@ public class JadeDewGrassCropBlock extends CropBlock {
         }
     }
 
-    // ── Drops ─────────────────────────────────────────────────────
+    // ── Drops ─────────────────────────────────────────────────────────────
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
@@ -124,7 +162,7 @@ public class JadeDewGrassCropBlock extends CropBlock {
         return drops;
     }
 
-    // ── Bonemeal disabled ─────────────────────────────────────────
+    // ── Bonemeal disabled ─────────────────────────────────────────────────
 
     @Override public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) { return false; }
     @Override public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) { return false; }

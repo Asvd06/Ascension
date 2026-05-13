@@ -12,11 +12,17 @@ import net.thejadeproject.ascension.refactor_packages.skills.ISkill;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.body.WhiteLightningFist;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.FireSpray;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.ThornBind;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.ThunderPalm;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulLanternSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulNeedle;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulSuppression;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SwordDraw;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.GaleStep;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.VoidstepSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.MarrowFurnaceCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.BloodfeastBanquetSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.SwordCultivationSkill;
@@ -26,6 +32,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.form_change.EnterSpiritForm;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.StoneRootSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.QiSustainedBodySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.RegenerationBoostSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.TurbidEnergyPurgeSkill;
@@ -100,12 +107,17 @@ public class ModSkills {
             SKILLS.register("aquatic_circulation", AquaticCirculationSkill::new);
     public static final DeferredHolder<ISkill, ? extends VerdantRecoverySkill> VERDANT_RECOVERY =
             SKILLS.register("verdant_recovery", VerdantRecoverySkill::new);
-    // TODO: Metal and Earth Skill
+    public static final DeferredHolder<ISkill, ? extends StoneRootSkill> STONE_ROOT =
+            SKILLS.register("stone_root", StoneRootSkill::new);
 
     // Actives
-    // TODO: Wood and Metal and Lightning and Wind Skills
     public static final DeferredHolder<ISkill,? extends FireSpray> FIRE_SPRAY = SKILLS.register("fire_spray", FireSpray::new);
-
+    public static final DeferredHolder<ISkill, ? extends ThornBind> THORN_BIND =
+            SKILLS.register("thorn_bind", ThornBind::new);
+    public static final DeferredHolder<ISkill, ? extends GaleStep> GALE_STEP =
+            SKILLS.register("gale_step", GaleStep::new);
+    public static final DeferredHolder<ISkill, ? extends ThunderPalm> THUNDER_PALM =
+            SKILLS.register("thunder_palm", ThunderPalm::new);
 
     // ──── BODY SKILLS ────────────────────────────────────────────
     // Cultivation — T1
@@ -204,6 +216,8 @@ public class ModSkills {
 
     public static final DeferredHolder<ISkill, ? extends WhiteLightningCultivationSkill> WHITE_LIGHTNING_CULTIVATION_SKILL =
             SKILLS.register("white_lightning_cultivation_skill", WhiteLightningCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends MarrowFurnaceCultivationSkill> MARROW_FURNACE =
+            SKILLS.register("marrow_furnace", MarrowFurnaceCultivationSkill::new);
 
     // Passives
     public static final DeferredHolder<ISkill, ? extends TurbidEnergyPurgeSkill> TURBID_ENERGY_PURGE =
@@ -234,11 +248,16 @@ public class ModSkills {
             SKILLS.register("soul_needle", SoulNeedle::new);
     public static final DeferredHolder<ISkill, ? extends SoulSuppression> SOUL_SUPPRESSION =
             SKILLS.register("soul_suppression", SoulSuppression::new);
+    public static final DeferredHolder<ISkill, ? extends SoulLanternSkill> SOUL_LANTERN =
+            SKILLS.register("soul_lantern", SoulLanternSkill::new);
 
     // ──── WEAPON SKILLS ────────────────────────────────────────────
     // Cultivation
-    public static final DeferredHolder<ISkill,? extends SwordCultivationSkill> SWORD_CULTIVATION_SKILL =
-            SKILLS.register("sword_cultivation_skill", SwordCultivationSkill::new);
+    public static final DeferredHolder<ISkill, SwordCultivationSkill> SWORD_CULTIVATION_SKILL =
+            SKILLS.register("sword_cultivation_skill", () -> new SwordCultivationSkill(
+                    "ascension.skill.sword_cultivation_skill", "ascension.skill.sword_cultivation_skill.description",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "sword_cultivation_skill")
+            ));
 
     // Passives TODO: Give different weapons different damage multi
     public static final DeferredHolder<ISkill, ? extends SwordMasterySkill> SWORD_MASTERY_SKILL =
@@ -257,7 +276,8 @@ public class ModSkills {
             SKILLS.register("blade_mastery_skill", BladeMasterySkill::new);
 
     // Actives
-
+    public static final DeferredHolder<ISkill, ? extends SwordDraw> SWORD_DRAW =
+            SKILLS.register("sword_draw", SwordDraw::new);
 
 
 
@@ -303,6 +323,7 @@ public class ModSkills {
         registerTickingSkill(REGENERATION_BOOST);
         registerTickingSkill(QI_SUSTAINED_BODY);
         registerTickingSkill(TRUE_FLIGHT);
+        registerTickingSkill(STONE_ROOT);
         registerTickingSkill(PARALYZED_BODY);
         registerTickingSkill(VENOMOUS_MERIDIANS);
         registerTickingSkill(QI_DEVOURING_POISON);

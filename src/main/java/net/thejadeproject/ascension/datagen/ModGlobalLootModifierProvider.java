@@ -36,7 +36,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootItemRandomChanceCondition.randomChance(0.03f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "bloodfeast_soul_refining_scripture"),
-                4
+                5
         ));
 
         //Techniques
@@ -654,42 +654,43 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("mortal_essence_bone_from_dungeon", new AddPhysiqueRandomPurityModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/simple_dungeon")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.13f).build()
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mortal_essence_bone"),
-                8,
-                18
+                11,
+                24
         ));
 
-        add("special_essence_bone_from_desert_pyramid", new AddPhysiqueRandomPurityModifier(
-                new LootItemCondition[] {
-                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/desert_pyramid")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.19f).build()
-                },
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "special_essence_bone"),
-                10,
-                22
-        ));
+//        add("special_essence_bone_from_desert_pyramid", new AddPhysiqueRandomPurityModifier(
+//                new LootItemCondition[] {
+//                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/desert_pyramid")).build(),
+//                        LootItemRandomChanceCondition.randomChance(0.19f).build()
+//                },
+//                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "special_essence_bone"),
+//                10,
+//                22
+//        ));
+//
+//        add("heavenly_essence_bone_from_end_city", new AddPhysiqueRandomPurityModifier(
+//                new LootItemCondition[] {
+//                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/end_city_treasure")).build(),
+//                        LootItemRandomChanceCondition.randomChance(0.15f).build()
+//                },
+//                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "heavenly_essence_bone"),
+//                12,
+//                28
+//        ));
+//
+//        add("divine_essence_bone_from_ancient_city", new AddPhysiqueRandomPurityModifier(
+//                new LootItemCondition[] {
+//                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/ancient_city")).build(),
+//                        LootItemRandomChanceCondition.randomChance(0.17f).build()
+//                },
+//                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "divine_essence_bone"),
+//                15,
+//                35
+//        ));
 
-        add("heavenly_essence_bone_from_end_city", new AddPhysiqueRandomPurityModifier(
-                new LootItemCondition[] {
-                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/end_city_treasure")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.15f).build()
-                },
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "heavenly_essence_bone"),
-                12,
-                28
-        ));
-
-        add("divine_essence_bone_from_ancient_city", new AddPhysiqueRandomPurityModifier(
-                new LootItemCondition[] {
-                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/ancient_city")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.17f).build()
-                },
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "divine_essence_bone"),
-                15,
-                35
-        ));
 
         add("flow_severing_eyes_from_enderman", new AddPhysiqueRandomPurityModifier(
                 new LootItemCondition[] {
@@ -761,15 +762,15 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 15
         ));
 
-        add("blood_fiend_from_bastion", new AddPhysiqueRandomPurityModifier(
-                new LootItemCondition[] {
-                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/bastion_treasure")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.30f).build()
-                },
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blood_fiend"),
-                8,
-                20
-        ));
+//        add("blood_fiend_from_bastion", new AddPhysiqueRandomPurityModifier(
+//                new LootItemCondition[] {
+//                        LootTableIdCondition.builder(ResourceLocation.parse("minecraft:chests/bastion_treasure")).build(),
+//                        LootItemRandomChanceCondition.randomChance(0.30f).build()
+//                },
+//                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blood_fiend"),
+//                8,
+//                20
+//        ));
 
         add("stone_monkey_from_desert_archaeology", new AddPhysiqueRandomPurityModifier(
                 new LootItemCondition[] {

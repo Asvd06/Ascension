@@ -553,20 +553,16 @@ public class ModBlocks {
 
 
     // ── Herbs ──────────────────────────────────────────────────────────────────
-    public static final DeferredBlock<Block> WHITE_JADE_ORCHID_CROP = registerBlockNoItem("white_jade_orchid_crop",
-            () -> new StemSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.WHITE_JADE_ORCHID));
-    public static final DeferredBlock<Block> HUNDRED_YEAR_GINSENG_CROP = registerBlockNoItem("hundred_year_ginseng_crop",
-            () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_GINSENG));
-    public static final DeferredBlock<Block> HUNDRED_YEAR_SNOW_GINSENG_CROP = registerBlockNoItem("hundred_year_snow_ginseng_crop",
-            () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_SNOW_GINSENG));
-    public static final DeferredBlock<Block> HUNDRED_YEAR_FIRE_GINSENG_CROP = registerBlockNoItem("hundred_year_fire_ginseng_crop",
-            () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), ModItems.HUNDRED_YEAR_FIRE_GINSENG));
-    public static final DeferredBlock<Block> JADE_DEW_GRASS_CROP = registerBlockNoItem("jade_dew_grass_crop",
-            () -> new JadeDewGrassCropBlock(
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT),
-                    ModItems.JADE_DEW_GRASS_SEEDS,
-                    0.002f   // slightly faster than ginseng — it's a common tier herb
-            ));
+    public static final DeferredBlock<Block> WHITE_JADE_ORCHID_CROP = registerHerbStemCrop(
+            "white_jade_orchid_crop", ModItems.WHITE_JADE_ORCHID, StemSlowCropBlock.SPEED_SLOW);
+    public static final DeferredBlock<Block> HUNDRED_YEAR_GINSENG_CROP = registerHerbCrop(
+            "hundred_year_ginseng_crop", ModItems.HUNDRED_YEAR_GINSENG, GenericSlowCropBlock.SPEED_SLOW);
+    public static final DeferredBlock<Block> HUNDRED_YEAR_SNOW_GINSENG_CROP = registerHerbCrop(
+            "hundred_year_snow_ginseng_crop", ModItems.HUNDRED_YEAR_SNOW_GINSENG, GenericSlowCropBlock.SPEED_SLOW);
+    public static final DeferredBlock<Block> HUNDRED_YEAR_FIRE_GINSENG_CROP = registerHerbCrop(
+            "hundred_year_fire_ginseng_crop", ModItems.HUNDRED_YEAR_FIRE_GINSENG, GenericSlowCropBlock.SPEED_SLOW);
+    public static final DeferredBlock<Block> JADE_DEW_GRASS_CROP = registerHerbJadeDew(
+            "jade_dew_grass_crop", ModItems.JADE_DEW_GRASS_SEEDS, JadeDewGrassCropBlock.SPEED_SLOW);
 
     //Fires / Flames
 
@@ -584,6 +580,24 @@ public class ModBlocks {
                     20,    // Custom spread delay (lower = faster spread)
                     10     // Custom extinguish chance (higher = less likely to extinguish)
             ));
+
+    // ── Herb crop registration helpers ────────────────────────────────────────
+    private static DeferredBlock<Block> registerHerbCrop(String name, Supplier<? extends net.minecraft.world.level.ItemLike> seedItem, float growthChance) {
+        return registerBlockNoItem(name,
+                () -> new GenericSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), () -> seedItem.get(), growthChance));
+    }
+
+    /** Registers a {@link StemSlowCropBlock} (thin stem shape) with no BlockItem. */
+    private static DeferredBlock<Block> registerHerbStemCrop(String name, Supplier<? extends net.minecraft.world.level.ItemLike> seedItem, float growthChance) {
+        return registerBlockNoItem(name,
+                () -> new StemSlowCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), () -> seedItem.get(), growthChance));
+    }
+
+    /** Registers a {@link JadeDewGrassCropBlock} (7-stage grass) with no BlockItem. */
+    private static DeferredBlock<Block> registerHerbJadeDew(String name, Supplier<? extends net.minecraft.world.level.ItemLike> seedItem, float growthChance) {
+        return registerBlockNoItem(name,
+                () -> new JadeDewGrassCropBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT), () -> seedItem.get(), growthChance));
+    }
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCK.register(name, block);

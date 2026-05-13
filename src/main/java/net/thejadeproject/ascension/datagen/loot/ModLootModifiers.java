@@ -25,6 +25,8 @@ public class ModLootModifiers {
                     () -> AddPhysiqueRandomPurityModifier.CODEC);
 
 
+
+
     /** Drops a single technique page (identified by techniqueId + 0-based pageIndex). */
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_TECHNIQUE_PAGE =
             LOOT_MODIFIER_SERIALIZERS.register("add_technique_page",

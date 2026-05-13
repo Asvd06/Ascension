@@ -10,10 +10,10 @@ public class RegenerationBoostSkill extends SimplePassiveSkill implements ITicki
 
     //TODO: Completely random healing rate that need to be tuned later
 
-    private static final int HEAL_INTERVAL_TICKS = 60;
+    private static final int HEAL_INTERVAL_TICKS = 30;
 
     private static final float BASE_HEAL_AMOUNT = 1.0F;
-    private static final float HEAL_AMOUNT_PER_MAJOR_REALM = 1.0F;
+    private static final float HEAL_AMOUNT_PER_MAJOR_REALM = 3.0F;
 
     @Override
     protected String getTitleKey() {

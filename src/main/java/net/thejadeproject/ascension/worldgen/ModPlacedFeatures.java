@@ -33,7 +33,6 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> FROST_SILVER_ORE_PLACED_KEY = registerKey("frost_silver_ore_placed");
 
     public static final ResourceKey<PlacedFeature> GOLDEN_PALM_PLACED_KEY = registerKey("golden_palm_placed");
-    public static final ResourceKey<PlacedFeature> IRONWOOD_PLACED_KEY = registerKey("ironwood_placed");
 
     public static final ResourceKey<PlacedFeature> ORE_MARBLE_UPPER = registerKey("ore_marble_upper");
     public static final ResourceKey<PlacedFeature> ORE_MARBLE_LOWER = registerKey("ore_marble_lower");
@@ -41,8 +40,6 @@ public class ModPlacedFeatures {
 
 
 
-
-    public static final ResourceKey<PlacedFeature> SPIRIT_VEIN_FEATURE_PLACED_KEY = registerKey("spirit_vein_feature_placed");
 
 
 
@@ -86,31 +83,10 @@ public class ModPlacedFeatures {
         register(context, GOLDEN_PALM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GOLDEN_PALM_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1f, 1),
                         ModBlocks.GOLDEN_PALM_SAPLING.get()));
-        register(context, IRONWOOD_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.IRONWOOD_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1f, 1),
-                        ModBlocks.IRONWOOD_SAPLING.get()));
+//        register(context, IRONWOOD_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.IRONWOOD_KEY),
+//                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1f, 1),
+//                        ModBlocks.IRONWOOD_SAPLING.get()));
 
-
-        //Spirit Vein
-        register(context, SPIRIT_VEIN_FEATURE_PLACED_KEY,
-                configuredFeatures.getOrThrow(ModConfiguredFeatures.SPIRIT_VEIN_FEATURE_KEY),
-                List.of(
-                        CountPlacement.of(1),
-                        RarityFilter.onAverageOnceEvery(24),
-                        InSquarePlacement.spread(),
-                        HeightRangePlacement.uniform(
-                                VerticalAnchor.absolute(-32),
-                                VerticalAnchor.absolute(40)
-                        ),
-                        EnvironmentScanPlacement.scanningFor(
-                                Direction.DOWN,
-                                BlockPredicate.hasSturdyFace(Direction.UP),
-                                BlockPredicate.ONLY_IN_AIR_PREDICATE,
-                                12
-                        ),
-                        RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(1)),
-                        BiomeFilter.biome()
-                ));
 
 
 
@@ -159,7 +135,7 @@ public class ModPlacedFeatures {
                 configuredFeatures.getOrThrow(ModConfiguredFeatures.WILD_JADE_DEW_GRASS_KEY),
                 List.of(
                         CountPlacement.of(2),
-                        RarityFilter.onAverageOnceEvery(12),
+                        RarityFilter.onAverageOnceEvery(16),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(VerticalAnchor.absolute(60), VerticalAnchor.absolute(120)),
                         BiomeFilter.biome()));

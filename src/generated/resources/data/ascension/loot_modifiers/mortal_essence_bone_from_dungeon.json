@@ -6,11 +6,11 @@
       "loot_table_id": "minecraft:chests/simple_dungeon"
     },
     {
-      "chance": 0.13,
+      "chance": 0.16,
       "condition": "minecraft:random_chance"
     }
   ],
-  "maxPurity": 18,
-  "minPurity": 8,
+  "maxPurity": 24,
+  "minPurity": 11,
   "physiqueId": "ascension:mortal_essence_bone"
 }

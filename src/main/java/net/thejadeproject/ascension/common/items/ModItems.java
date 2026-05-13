@@ -17,6 +17,8 @@ import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.artifacts.talismans.*;
 import net.thejadeproject.ascension.common.items.techniques.TechniqueBinderItem;
 import net.thejadeproject.ascension.common.items.techniques.TechniquePageItem;
+import net.thejadeproject.ascension.common.items.tools.herbs.MortarAndPestle;
+import net.thejadeproject.ascension.common.items.tools.herbs.SpiritualMeal;
 import net.thejadeproject.ascension.common.items.tools.hidden_weapons.NeedleItem;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.common.items.artifacts.*;
@@ -122,6 +124,14 @@ public class ModItems {
 
 
     //Weapons & Tools
+
+    public static final DeferredItem<Item> MORTAR_PESTLE = ITEMS.register("mortar_pestle",
+            () -> new MortarAndPestle(new Item.Properties()));
+    public static final DeferredItem<Item> SPIRITUAL_MEAL = ITEMS.register("spiritual_meal",
+            () -> new SpiritualMeal(new Item.Properties()));
+
+
+
     public static final DeferredItem<BladeItem> WOODEN_BLADE = ITEMS.register("wooden_blade",
             () -> new BladeItem(Tiers.WOOD, new Item.Properties().durability(69).attributes(BladeItem.createAttributes((Tier) Tiers.WOOD, 2, (float) -2))));
     public static final DeferredItem<BladeItem> STONE_BLADE = ITEMS.register("stone_blade",
@@ -276,12 +286,15 @@ public class ModItems {
 
 
 
+
     // ── Poison Pills ──────────────────────────────────────────────
     public static final DeferredItem<PillItem> QI_DEVOURING_PARASITE_PILL = ITEMS.register("qi_devouring_parasite_pill",
             () -> new PillItem(new Item.Properties()
                     .food(ModFoodProperties.POISON_PILL)
                     .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.PARASITE_PILL_EFFECT.getId().toString()))
                     , 0, true));
+    public static final DeferredItem<Item> QI_DEVOURING_POWDER = ITEMS.register("qi_devouring_powder",
+            () -> new Item(new Item.Properties()));
 
 
     // ── Positive Pills ──────────────────────────────────────────────
@@ -290,6 +303,12 @@ public class ModItems {
                     .food(ModFoodProperties.MEDICINAL_PILL)
                     .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.QI_ENHANCED_REGEN_EFFECT.getId().toString()))
                     , 0, false));
+
+    public static final DeferredItem<PillItem> QI_REPLENISHING_PILL = ITEMS.register("qi_replenishing_pill",
+            () -> new PillItem(new Item.Properties()
+                    .food(ModFoodProperties.CULT_PILL)
+                    .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.QI_REPLENISHING_EFFECT.getId().toString()))
+                    , 100, false));
 
     // ── Antidote Pills ────────────────────────────────────────────
     public static final DeferredItem<PillItem> ANTIDOTE_PILL_QDP = ITEMS.register("antidote_qdp_pill",
@@ -305,6 +324,12 @@ public class ModItems {
                     .food(ModFoodProperties.MARROW_PILL)
                     .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.MARROW_CLEANSE_PILL_EFFECT.getId().toString()))
                     , 0, false));
+    public static final DeferredItem<PillItem> CRIMSON_LOTUS_BONE_PILL =
+            ITEMS.register("crimson_lotus_bone_pill",
+                    () -> new PillItem(new Item.Properties()
+                            .food(ModFoodProperties.RITUAL_PILL)
+                            .component(ModDataComponents.PILL_EFFECTS, List.of(ModPillEffects.CRIMSON_LOTUS_BONE_EFFECT.getId().toString()))
+                            , 0, false));
 
 
     //Phys Stuff
@@ -325,7 +350,6 @@ public class ModItems {
 
 
     // ── Herbs ─────────────────────────────────────────────────────────────────
-    // Simple non-block herbs — use HerbItem so Quality/Age tooltips show automatically
     public static final DeferredItem<Item> GOLDEN_SUN_LEAF = ITEMS.register("golden_sun_leaf",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.GOLDEN_SUN_LEAF)));
     public static final DeferredItem<Item> JADE_BAMBOO_OF_SERENITY = ITEMS.register("jade_bamboo_of_serenity",
@@ -334,21 +358,21 @@ public class ModItems {
     public static final DeferredItem<Item> JADE_DEW_GRASS = ITEMS.register("jade_dew_grass",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.JADE_DEW_GRASS)));
     public static final DeferredItem<Item> JADE_DEW_GRASS_SEEDS = ITEMS.register("jade_dew_grass_seeds",
-            () -> new ItemNameBlockItem(ModBlocks.JADE_DEW_GRASS_CROP.get(), new Item.Properties()));
+            () -> new ItemNameBlockItem(ModBlocks.JADE_DEW_GRASS_CROP.get(), new Item.Properties())); // safe: inside lambda, resolves at registration time
 
     public static final DeferredItem<Item> IRONWOOD_SPROUT = ITEMS.register("ironwood_sprout",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.IRONWOOD_SPROUT)));
 
     public static final DeferredItem<Item> WHITE_JADE_ORCHID = ITEMS.register("white_jade_orchid",
-            () -> new HerbBlockItem(ModBlocks.WHITE_JADE_ORCHID_CROP.get(),
+            () -> new HerbBlockItem(() -> ModBlocks.WHITE_JADE_ORCHID_CROP.get(),
                     new Item.Properties().food(ModFoodProperties.WHITE_JADE_ORCHID)));
 
     public static final DeferredItem<Item> HUNDRED_YEAR_GINSENG = ITEMS.register("hundred_year_ginseng",
-            () -> new HerbBlockItem(ModBlocks.HUNDRED_YEAR_GINSENG_CROP.get(),
+            () -> new HerbBlockItem(() -> ModBlocks.HUNDRED_YEAR_GINSENG_CROP.get(),
                     new Item.Properties().food(ModFoodProperties.HUNDRED_YEAR_GINSENG)));
 
     public static final DeferredItem<Item> HUNDRED_YEAR_SNOW_GINSENG = ITEMS.register("hundred_year_snow_ginseng",
-            () -> new HerbBlockItem(ModBlocks.HUNDRED_YEAR_SNOW_GINSENG_CROP.get(),
+            () -> new HerbBlockItem(() -> ModBlocks.HUNDRED_YEAR_SNOW_GINSENG_CROP.get(),
                     new Item.Properties().food(ModFoodProperties.HUNDRED_YEAR_SNOW_GINSENG),
                     (stack, level, entity) -> {
                         if (entity instanceof net.minecraft.world.entity.player.Player player) {
@@ -358,9 +382,8 @@ public class ModItems {
                         }
                     }));
 
-
     public static final DeferredItem<Item> HUNDRED_YEAR_FIRE_GINSENG = ITEMS.register("hundred_year_fire_ginseng",
-            () -> new HerbBlockItem(ModBlocks.HUNDRED_YEAR_FIRE_GINSENG_CROP.get(),
+            () -> new HerbBlockItem(() -> ModBlocks.HUNDRED_YEAR_FIRE_GINSENG_CROP.get(),
                     new Item.Properties().food(ModFoodProperties.HUNDRED_YEAR_FIRE_GINSENG),
                     (stack, level, entity) -> {
                         if (entity instanceof net.minecraft.world.entity.player.Player player) {

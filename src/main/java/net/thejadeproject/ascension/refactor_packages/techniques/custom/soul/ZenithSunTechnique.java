@@ -95,6 +95,11 @@ public class ZenithSunTechnique extends GenericTechnique {
                 ModSkills.SOUL_SUPPRESSION.getId(),
                 majorRealm >= SOUL_SUPPRESSION_UNLOCK_REALM
         );
+        TechniqueSkillHelper.refreshSkill(
+                entityData,
+                ModSkills.SOUL_LANTERN.getId(),
+                majorRealm >= SOUL_SUPPRESSION_UNLOCK_REALM
+        );
     }
 
     @Override

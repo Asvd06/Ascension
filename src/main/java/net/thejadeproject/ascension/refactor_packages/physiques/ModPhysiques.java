@@ -131,30 +131,33 @@ public class ModPhysiques {
 
     // Basic Essence Only Physiques -> Like derivatives of a supreme bone that is common in cultivation novels? IDK what I'm doing any more
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ESSENCE_BONE_MORTAL = PHYSIQUES.register("mortal_essence_bone", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.mortal_essence_bone"))
+            new EvolvingPhysique(Component.translatable("ascension.physiques.mortal_essence_bone"))
+                    .addEvolution(ModPhysiques.ESSENCE_BONE_SPECIAL.getId())
                     .addPath(ModPaths.ESSENCE.getId())
                     .addPathBonus(ModPaths.ESSENCE.getId(), 1.5)
                     .setDescription(Component.translatable("ascension.physiques.mortal_essence_bone.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.mortal_essence_bone.desc.short"))
     );
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ESSENCE_BONE_SPECIAL = PHYSIQUES.register("special_essence_bone", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.special_essence_bone"))
+            new EvolvingPhysique(Component.translatable("ascension.physiques.special_essence_bone"))
+                    .addEvolution(ModPhysiques.ESSENCE_BONE_HEAVENLY.getId())
                     .addPath(ModPaths.ESSENCE.getId())
                     .addPathBonus(ModPaths.ESSENCE.getId(), 3.0)
                     .setDescription(Component.translatable("ascension.physiques.special_essence_bone.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.special_essence_bone.desc.short"))
     );
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ESSENCE_BONE_HEAVENLY = PHYSIQUES.register("heavenly_essence_bone", () ->
-            new GenericPhysique(Component.translatable("ascension.physiques.heavenly_essence_bone"))
+            new EvolvingPhysique(Component.translatable("ascension.physiques.heavenly_essence_bone"))
+                    .addEvolution(ModPhysiques.ESSENCE_BONE_DIVINE.getId())
                     .addPath(ModPaths.ESSENCE.getId())
-                    .addPathBonus(ModPaths.ESSENCE.getId(), 6.0)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 4.0)
                     .setDescription(Component.translatable("ascension.physiques.heavenly_essence_bone.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.heavenly_essence_bone.desc.short"))
     );
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ESSENCE_BONE_DIVINE = PHYSIQUES.register("divine_essence_bone", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.divine_essence_bone"))
                     .addPath(ModPaths.ESSENCE.getId())
-                    .addPathBonus(ModPaths.ESSENCE.getId(), 10.0)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 5.0)
                     .setDescription(Component.translatable("ascension.physiques.divine_essence_bone.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.divine_essence_bone.desc.short"))
     );
@@ -205,8 +208,7 @@ public class ModPhysiques {
                         @Override
                         public void onPhysiqueAdded(IEntityData heldEntity, ResourceLocation oldPhysique, IPhysiqueData oldPhysiqueData) {
                             super.onPhysiqueAdded(heldEntity, oldPhysique, oldPhysiqueData);
-                            broadcastRareAcquired(heldEntity, "ascension.message.physique.world_dominator.acquired");
-                            }
+                            broadcastRareAcquired(heldEntity, "ascension.message.physique.world_dominator.acquired");}
             }
             .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 5.0)
                             .setDescription(Component.translatable("ascension.physiques.world_dominator.desc"))
@@ -313,7 +315,9 @@ public class ModPhysiques {
             new EvolvingPhysique(Component.translatable("ascension.physiques.yin_eyes"))
                     .addEvolution(ModPhysiques.YIN_YANG_EYES.getId())
                     .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
                     .addPathBonus(ModPaths.SOUL.getId(), 1.0)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 0.05)
                     .setDescription(Component.translatable("ascension.physiques.yin_eyes.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.yin_eyes.desc.short"))
     );
@@ -322,7 +326,9 @@ public class ModPhysiques {
             new EvolvingPhysique(Component.translatable("ascension.physiques.yang_eyes"))
                     .addEvolution(ModPhysiques.YIN_YANG_EYES.getId())
                     .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
                     .addPathBonus(ModPaths.SOUL.getId(), 1.0)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 0.05)
                     .setDescription(Component.translatable("ascension.physiques.yang_eyes.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.yang_eyes.desc.short"))
     );

@@ -109,21 +109,40 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
                     ModSkills.FLAME_TEMPERED_BODY.getId(),
                     majorRealm >= 3
             );
-        }
-
-        if (getElementPath().equals(ModPaths.WATER.getId())) {
+        } else if (getElementPath().equals(ModPaths.EARTH.getId())) {
+            refreshSkill(
+                    entityData,
+                    ModSkills.STONE_ROOT.getId(),
+                    majorRealm >= 2
+            );
+        } else if (getElementPath().equals(ModPaths.WATER.getId())) {
             refreshSkill(
                     entityData,
                     ModSkills.AQUATIC_CIRCULATION.getId(),
                     majorRealm >= 4
             );
-        }
-
-        if (getElementPath().equals(ModPaths.WOOD.getId())) {
+        } else if (getElementPath().equals(ModPaths.WOOD.getId())) {
             refreshSkill(
                     entityData,
                     ModSkills.VERDANT_RECOVERY.getId(),
+                    majorRealm >= 2
+            );
+            refreshSkill(
+                    entityData,
+                    ModSkills.THORN_BIND.getId(),
                     majorRealm >= 3
+            );
+        } else if (getElementPath().equals(ModPaths.LIGHTNING.getId())) {
+            refreshSkill(
+                    entityData,
+                    ModSkills.THUNDER_PALM.getId(),
+                    majorRealm >= 2
+            );
+        } else if (getElementPath().equals(ModPaths.WIND.getId())) {
+            refreshSkill(
+                    entityData,
+                    ModSkills.GALE_STEP.getId(),
+                    majorRealm >= 2
             );
         }
     }

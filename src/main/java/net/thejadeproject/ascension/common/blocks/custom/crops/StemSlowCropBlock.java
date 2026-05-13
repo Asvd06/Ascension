@@ -22,12 +22,28 @@ import net.thejadeproject.ascension.common.items.herbs.HerbQuality;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Stem-shaped slow-growing crop for Ascension herbs.
  * Same Age & Quality logic as GenericSlowCropBlock — see that class for details.
+ *
+ * ── Growth speed reference (default randomTickSpeed = 3) ─────────────────
+ *   growthChance  │  avg per stage  │  avg total (3 stages)
+ *   ──────────────┼─────────────────┼──────────────────────
+ *   0.014         │  ~81 min        │  ~4 h          ← SPEED_SLOW (default)
+ *   0.025         │  ~45 min        │  ~2.3 h        ← SPEED_MEDIUM
+ *   0.05          │  ~23 min        │  ~1.1 h        ← SPEED_FAST
  */
 public class StemSlowCropBlock extends CropBlock {
+
+    // ── Growth speed presets ──────────────────────────────────────────────
+    /** ~4 h total (3 stages). The slowest recommended ceiling. */
+    public static final float SPEED_SLOW   = 0.014f;
+    /** ~2.3 h total. */
+    public static final float SPEED_MEDIUM = 0.025f;
+    /** ~1.1 h total. */
+    public static final float SPEED_FAST   = 0.05f;
 
     public static final int MAX_AGE = 3;
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
@@ -39,29 +55,44 @@ public class StemSlowCropBlock extends CropBlock {
             Block.box(7, 0, 7, 9, 8, 9)
     };
 
-    private final ItemLike seedItem;
-    private final float    growthChance;
+    private final Supplier<? extends ItemLike> seedItem;
+    private final float                        growthChance;
 
+    // ── Constructors ──────────────────────────────────────────────────────
+
+    /** Convenience factory — kept for backwards compatibility. */
     public static StemSlowCropBlock createStemCrop(Properties properties) {
-        return new StemSlowCropBlock(properties, ModItems.HUNDRED_YEAR_GINSENG, 0.001f);
+        return new StemSlowCropBlock(properties, ModItems.HUNDRED_YEAR_GINSENG, SPEED_SLOW);
     }
 
-    public StemSlowCropBlock(Properties properties, ItemLike seedItem, float growthChance) {
+    /**
+     * Full constructor. Accepts a Supplier<ItemLike> so the seed item
+     * is resolved lazily — pass () -> ModItems.YOUR_ITEM.get() to avoid
+     * the circular ModBlocks <-> ModItems static-initialiser NPE.
+     *
+     * @param seedItem      Lazy supplier for the seed/drop item.
+     * @param growthChance  Probability (0-1) of advancing one age stage per random tick.
+     *                      Use the SPEED_* constants or pass a custom float.
+     */
+    public StemSlowCropBlock(Properties properties, Supplier<? extends ItemLike> seedItem, float growthChance) {
         super(properties);
         this.seedItem     = seedItem;
         this.growthChance = growthChance;
     }
 
-    public StemSlowCropBlock(Properties properties, ItemLike seedItem) {
-        this(properties, seedItem, 0.001f);
+    /** Defaults to SPEED_SLOW (~4 h total). */
+    public StemSlowCropBlock(Properties properties, Supplier<? extends ItemLike> seedItem) {
+        this(properties, seedItem, SPEED_SLOW);
     }
+
+    // ── Shape / Age ───────────────────────────────────────────────────────
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
         return SHAPE_BY_AGE[state.getValue(AGE)];
     }
 
-    @Override protected ItemLike getBaseSeedId()       { return seedItem; }
+    @Override protected ItemLike getBaseSeedId()       { return seedItem.get(); }
     @Override public  IntegerProperty getAgeProperty() { return AGE; }
     @Override public  int getMaxAge()                  { return MAX_AGE; }
 
@@ -69,6 +100,8 @@ public class StemSlowCropBlock extends CropBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(AGE);
     }
+
+    // ── Growth ────────────────────────────────────────────────────────────
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
@@ -86,6 +119,8 @@ public class StemSlowCropBlock extends CropBlock {
             }
         }
     }
+
+    // ── Drops ─────────────────────────────────────────────────────────────
 
     @Override
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
@@ -122,6 +157,8 @@ public class StemSlowCropBlock extends CropBlock {
 
         return drops;
     }
+
+    // ── Bonemeal disabled ─────────────────────────────────────────────────
 
     @Override public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) { return false; }
     @Override public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) { return false; }
