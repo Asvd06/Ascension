@@ -30,22 +30,23 @@ public class ModPhysiques {
         Physiques Tiers: Not Strict, just like a loose categorization subject to change.
         T5 = Bonuses of 5.0 = 0 Physiques
         T4 = Bonuses between 3.5 and 4.0 = 0 Physiques
-        T3 = Bonuses between 2.5 and 3.0 = 3 Physiques
-        T2 = Bonuses between 1.25 and 2.0 = 26 Physiques
-        T1 = Bonuses between 0.5 and 1.25 = 14 Physiques
-        T0 = Bonuses of 0.0 essentially = 3 Physiques
+        T3 = Bonuses between 2.5 and 3.0 = 7 Physiques
+        T2 = Bonuses between 1.25 and 2.0 = 31 Physiques
+        T1 = Bonuses between 0.5 and 1.25 = 18 Physiques
+        T0 = Bonuses of 0.0 essentially = 5 Physiques
+        61 Total Physiques (Excluding Flip's Combos)
 
      */
 
     // ── T0 ──────────────────────────────────────────────────────────
-    public static final DeferredHolder<IPhysique,? extends GenericPhysique> CRIPPLE = PHYSIQUES.register("cripple",()->
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CRIPPLE = PHYSIQUES.register("cripple",()->
             new EvolvingPhysique(Component.translatable("ascension.physiques.cripple"))
                     .addEvolution(ModPhysiques.MORTAL.getId())
                     .setDescription(Component.translatable("ascension.physiques.cripple.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.cripple.desc.short"))
     );
 
-    public static final DeferredHolder<IPhysique,? extends GenericPhysique> MORTAL = PHYSIQUES.register("mortal",()->
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> MORTAL = PHYSIQUES.register("mortal",()->
             new EvolvingPhysique(Component.translatable("ascension.physiques.mortal"))
                     .addEvolution(ModPhysiques.BLESSED.getId())
                     .addEvolution(ModPhysiques.BLOOD_FIEND.getId())
@@ -63,6 +64,25 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.BODY.getId(), 0.5)
                     .setDescription(Component.translatable("ascension.physiques.severed_meridians.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.severed_meridians.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> DULL_MIND = PHYSIQUES.register("dull_mind", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.dull_mind"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.BODY.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 0.25)
+                    .addPathBonus(ModPaths.BODY.getId(), 0.75)
+                    .setDescription(Component.translatable("ascension.physiques.dull_mind.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.dull_mind.desc.short"))
+    );
+
+    // Add an evolution method and sequence for this? maybe idk otherwise like a pill to make it better? who knows.
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> WEAK_SOUL = PHYSIQUES.register("weak_soul", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.weak_soul"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 0.5)
+                    .setDescription(Component.translatable("ascension.physiques.weak_soul.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.weak_soul.desc.short"))
     );
 
 
@@ -166,6 +186,16 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.yang_eyes.desc.short"))
     );
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> GENEROUS_SPIRIT = PHYSIQUES.register("generous_spirit", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.generous_spirit"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.VIRTUOUS.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.0)
+                    .addPathBonus(ModPaths.VIRTUOUS.getId(), 0.5)
+                    .setDescription(Component.translatable("ascension.physiques.generous_spirit.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.generous_spirit.desc.short"))
+    );
+
         // Weapon
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> FLOW_SEVERING_EYES = PHYSIQUES.register("flow_severing_eyes", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.flow_severing_eyes"))
@@ -181,10 +211,39 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.flow_severing_eyes.desc.short"))
     );
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_APPRENTICE = PHYSIQUES.register("sword_apprentice", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.sword_apprentice"))
+                    .addEvolution(ModPhysiques.SWORD_MONSTER.getId())
+                    .addPath(ModPaths.SWORD.getId())
+                    .addPathBonus(ModPaths.SWORD.getId(), 1.25)
+                    .setDescription(Component.translatable("ascension.physiques.sword_apprentice.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.sword_apprentice.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> THUGGISH_FORM = PHYSIQUES.register("thuggish_form", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.thuggish_form"))
+                    .addPath(ModPaths.BODY.getId())
+                    .addPath(ModPaths.FIST.getId())
+                    .addPathBonus(ModPaths.BODY.getId(), 0.75)
+                    .addPathBonus(ModPaths.FIST.getId(), 1.25)
+                    .setDescription(Component.translatable("ascension.physiques.thuggish_form.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.thuggish_form.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> HARDENED_GENERAL = PHYSIQUES.register("hardened_general", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.hardened_general"))
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPath(ModPaths.SPEAR.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 0.25)
+                    .addPathBonus(ModPaths.SPEAR.getId(), 1.25)
+                    .setDescription(Component.translatable("ascension.physiques.hardened_general.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.hardened_general.desc.short"))
+    );
+
 
 
     // ── T2 ─────────────────────────────────────────────────────────
-        // Essence
+        // Essence = 6
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> LIGHTNING_ATTUNED = PHYSIQUES.register("lightning_attuned", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.lightning_attuned"))
                     .addPath(ModPaths.ESSENCE.getId())
@@ -226,7 +285,30 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.flame_touched.desc.short"))
     );
 
-        // Soul
+    // Add an evolution method or pill to cure these, but then need to be eaten consistently over a period, like maybe an in-game week or month,
+    // and if they miss a pill take damage, but at the end get a good physique
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> DECAYING_MERIDIANS = PHYSIQUES.register("decaying_meridians", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.decaying_meridians"))
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPath(ModPaths.POISON.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 1.35)
+                    .addPathBonus(ModPaths.POISON.getId(), 0.5)
+                    .setDescription(Component.translatable("ascension.physiques.decaying_meridians.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.decaying_meridians.desc.short"))
+    );
+
+    // Add an evolution method or pill to cure these, but then need to be eaten consistently over a period, like maybe an in-game week or month,
+    // and if they miss a pill take damage, but at the end get a good physique
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> TWISTED_VESSELS = PHYSIQUES.register("twisted_vessels", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.twisted_vessels"))
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 1.25)
+                    .setDescription(Component.translatable("ascension.physiques.twisted_vessels.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.twisted_vessels.desc.short"))
+    );
+
+
+    // Soul = 11
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CLEAR_SPIRIT = PHYSIQUES.register("clear_spirit", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.clear_spirit"))
                     .addPath(ModPaths.SOUL.getId())
@@ -309,8 +391,27 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.yin_yang_eyes.desc.short"))
     );
 
-        // Weapon
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> DUAL_SOUL = PHYSIQUES.register("dual_soul", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.dual_soul"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.5)
+                    .setDescription(Component.translatable("ascension.physiques.dual_soul.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.dual_soul.desc.short"))
+    );
 
+    // Add an evolution into a demon-esque physique (you've been corrupted) or a soul only physique or soul only physique
+    // IDK maybe depending on how you cure the corruption
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CORRUPTED_ENTITY = PHYSIQUES.register("corrupted_entity", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.corrupted_entity"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.6666666667)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 1.3333333334)
+                    .setDescription(Component.translatable("ascension.physiques.corrupted_entity.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.corrupted_entity.desc.short"))
+    );
+
+        // Weapon = 7
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> IRON_BULWARK_SPINE = PHYSIQUES.register("iron_bulwark_spine", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.iron_bulwark_spine"))
                     .addPath(ModPaths.SHIELD.getId())
@@ -383,8 +484,8 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.arrow_blessed.desc.short"))
     );
 
-        // Body
-    public static final DeferredHolder<IPhysique,? extends GenericPhysique> BLESSED = PHYSIQUES.register("blessed",()->
+        // Body = 6
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> BLESSED = PHYSIQUES.register("blessed",()->
             new EvolvingPhysique(Component.translatable("ascension.physiques.blessed"))
                     .addEvolution(ModPhysiques.VIRTUOSO_BUDDHA.getId())
                     .addEvolution(ModPhysiques.WRATHFUL_VAJRA.getId())
@@ -427,6 +528,7 @@ public class ModPhysiques {
                     .setDescription(Component.translatable("ascension.physiques.virtuoso_buddha.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.virtuoso_buddha.desc.short"))
     );
+
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> WRATHFUL_VAJRA = PHYSIQUES.register("wrathful_vajra",()->
             new GenericPhysique(Component.translatable("ascension.physiques.wrathful_vajra"))
                     .addPath(ModPaths.BODY.getId())
@@ -437,8 +539,22 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.wrathful_vajra.desc.short"))
     );
 
-        // Demonic
-        public static final DeferredHolder<IPhysique, ? extends GenericPhysique> BLOOD_FIEND = PHYSIQUES.register("blood_fiend",()->
+    // Something like an evolution result for a lower tier body, where you need to be on be submerged in lava for a long period and then after a timer,
+    // immediately be submerged in water, and if you do it fast enough you gain it? or maybe not
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> MOLTEN_CASTED = PHYSIQUES.register("molten_casted",()->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.molten_casted"))
+                    .addPath(ModPaths.BODY.getId())
+                    .addPath(ModPaths.FIRE.getId())
+                    .addPath(ModPaths.WATER.getId())
+                    .addPathBonus(ModPaths.BODY.getId(), 1.5)
+                    .addPathBonus(ModPaths.FIRE.getId(), 1.0)
+                    .addPathBonus(ModPaths.WATER.getId(), 0.5)
+                    .setDescription(Component.translatable("ascension.physiques.molten_casted.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.molten_casted.desc.short"))
+    );
+
+        // Demonic = 1
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> BLOOD_FIEND = PHYSIQUES.register("blood_fiend",()->
                 new EvolvingPhysique(Component.translatable("ascension.physiques.blood_fiend"))
                         .addEvolution(ModPhysiques.BLOOD_WRAITH.getId())
                         .addPath(ModPaths.SOUL.getId())
@@ -482,6 +598,13 @@ public class ModPhysiques {
     );
 
         // Body
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> TITAN_BORN = PHYSIQUES.register("titan_born", () ->
+                new GenericPhysique(Component.translatable("ascension.physiques.titan_born"))
+                        .addPath(ModPaths.BODY.getId())
+                        .addPathBonus(ModPaths.BODY.getId(), 3.0)
+                        .setDescription(Component.translatable("ascension.physiques.titan_born.desc"))
+                        .setShortDescription(Component.translatable("ascension.physiques.titan_born.desc.short"))
+        );
 
         // Soul
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> BLOOD_WRAITH = PHYSIQUES.register("blood_wraith",()->
@@ -493,8 +616,22 @@ public class ModPhysiques {
                     .setDescription(Component.translatable("ascension.physiques.blood_wraith.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.blood_wraith.desc.short"))
     );
-        // Weapon
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CRYSTAL_SOUL = PHYSIQUES.register("crystal_soul", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.crystal_soul"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 3.0)
+                    .setDescription(Component.translatable("ascension.physiques.crystal_soul.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.crystal_soul.desc.short"))
+    );
+        // Weapon
+        public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_MONSTER = PHYSIQUES.register("sword_monster", () ->
+                new GenericPhysique(Component.translatable("ascension.physiques.sword_monster"))
+                        .addPath(ModPaths.SWORD.getId())
+                        .addPathBonus(ModPaths.SWORD.getId(), 2.5)
+                        .setDescription(Component.translatable("ascension.physiques.sword_monster.desc"))
+                        .setShortDescription(Component.translatable("ascension.physiques.sword_monster.desc.short"))
+        );
 
 
     // ── T4 ──────────────────────────────────────────────────────────
