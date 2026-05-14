@@ -40,6 +40,7 @@ import net.thejadeproject.ascension.particle.ModParticles;
 import net.thejadeproject.ascension.particle.aura.*;
 import net.thejadeproject.ascension.particle.particles.CultivationParticles;
 import net.thejadeproject.ascension.refactor_packages.gui.ModOverlays;
+import net.thejadeproject.ascension.refactor_packages.skills.vfx.weaponvfx.WeaponSwingVfxRenderer;
 import net.thejadeproject.ascension.shaders.client.ModShaders;
 import net.thejadeproject.ascension.shaders.client.RiftRenderer;
 
@@ -109,6 +110,10 @@ public class AscensionCraftClient {
                     ModBlockEntities.FLAME_STAND.get(),
                     FlameStandRenderer::new
             );
+
+            event.registerEntityRenderer(
+                    ModEntities.WEAPON_SWING_VFX.get(),
+                    WeaponSwingVfxRenderer::new);
 
         }
 

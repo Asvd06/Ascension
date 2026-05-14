@@ -22,6 +22,11 @@ public class TridentMasterySkill extends GenericWeaponMasterySkill {
     }
 
     @Override
+    protected String getVfxType() {
+        return "";
+    }
+
+    @Override
     public boolean matchesDamage(ServerPlayer player, DamageSource source) {
         return super.matchesDamage(player, source)
                 || source.getDirectEntity() instanceof ThrownTrident;

@@ -15,6 +15,7 @@ import net.thejadeproject.ascension.entity.custom.PillProjectile;
 import net.thejadeproject.ascension.entity.custom.form.PlayerBodyEntity;
 import net.thejadeproject.ascension.entity.custom.shaders.RiftEntity;
 import net.thejadeproject.ascension.entity.custom.TreasureRatEntity;
+import net.thejadeproject.ascension.refactor_packages.skills.vfx.weaponvfx.WeaponSwingVfxEntity;
 
 import java.util.function.Supplier;
 
@@ -83,6 +84,17 @@ public class ModEntities {
                             .updateInterval(2)
                             .build("player_body")
             );
+
+
+    public static final Supplier<EntityType<WeaponSwingVfxEntity>> WEAPON_SWING_VFX =
+            ENTITY_TYPES.register("weapon_swing_vfx", () ->
+                    EntityType.Builder.<WeaponSwingVfxEntity>of(WeaponSwingVfxEntity::new, MobCategory.MISC)
+                            .sized(1.0f, 1.0f)
+                            .clientTrackingRange(8)
+                            .updateInterval(1)
+                            .build("weapon_swing_vfx"));
+
+
     public static final Supplier<EntityType<CushionEntity>> CUSHION_ENTITY =
             ENTITY_TYPES.register("cushion_entity", () -> EntityType.Builder.of(CushionEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f).build("cushion_entity"));

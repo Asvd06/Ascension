@@ -773,6 +773,7 @@ public class lang extends LanguageProvider {
 
         add("item.ascension.fan", "Fan");
 
+
         add("item.ascension.mortar_pestle", "Mortar & Pestle");
         add("item.ascension.spiritual_meal", "Spiritual Meal");
 

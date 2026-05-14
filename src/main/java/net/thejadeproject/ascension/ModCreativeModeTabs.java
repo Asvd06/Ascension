@@ -97,6 +97,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SPIRITUAL_STONE_AXE);
                         output.accept(ModItems.SPIRITUAL_STONE_SHOVEL);
                         output.accept(ModItems.SPIRITUAL_STONE_HOE);
+
                     }).build());
 
     public static final Supplier<CreativeModeTab> ASCENSION_BLOCKS_TAB = CREATIVE_MODE_TAB.register("ascension_blocks_tab",

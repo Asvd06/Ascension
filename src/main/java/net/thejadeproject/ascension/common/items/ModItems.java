@@ -145,7 +145,7 @@ public class ModItems {
     public static final DeferredItem<BladeItem> NETHERITE_BLADE = ITEMS.register("netherite_blade",
             () -> new BladeItem(Tiers.NETHERITE, new Item.Properties().durability(2131).attributes(BladeItem.createAttributes((Tier) Tiers.NETHERITE, 2, (float) -2))));
 
-
+    // Spears
     public static final DeferredItem<SpearItem> WOODEN_SPEAR = ITEMS.register("wooden_spear",
             () -> new SpearItem(Tiers.WOOD, new Item.Properties().durability(49).attributes(ItemUtil.createAscensionItemAttributes(Tiers.WOOD, 3, -2.4f,0.5))));
     public static final DeferredItem<SpearItem> STONE_SPEAR = ITEMS.register("stone_spear",

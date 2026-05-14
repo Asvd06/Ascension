@@ -25,6 +25,11 @@ public class BowMasterySkill extends GenericWeaponMasterySkill {
     }
 
     @Override
+    protected String getVfxType() {
+        return "";
+    }
+
+    @Override
     protected String getTitleKey() {
         return "ascension.skill.bow_mastery_skill";
     }

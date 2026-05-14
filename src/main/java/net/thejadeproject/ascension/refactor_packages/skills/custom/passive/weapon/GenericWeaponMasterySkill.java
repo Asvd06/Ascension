@@ -9,29 +9,60 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
+import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.vfx.weaponvfx.WeaponVfxUtils;
+import org.joml.Vector3f;
 
-public abstract class GenericWeaponMasterySkill extends SimplePassiveSkill {
+/**
+ * Base class for all weapon mastery passives.
+ *
+ * Passive (ITickingSkill):
+ *   Every getSwingIntervalTicks() ticks, if the player holds the right weapon AND has qi:
+ *     1. Consume qi scaled by the damage multiplier.
+ *     2. Look up the technique the player is currently using on this path.
+ *     3. Pass that technique ID to WeaponVfxUtils → VfxColorRegistry resolves the color.
+ *     4. Spawn a WeaponSwingVfxEntity with the correct colored texture path.
+ *
+ * Subclasses register their technique → color mappings in a static block
+ * and supply getFallbackColor() for when no technique matches.
+ */
+public abstract class GenericWeaponMasterySkill extends SimplePassiveSkill implements ITickingSkill {
+
+    // ── Abstract surface ─────────────────────────────────────────────────────
 
     protected abstract ResourceLocation getPathId();
-
     protected abstract TagKey<Item> getWeaponTag();
+    /** The VFX logic / folder tag, e.g. WeaponSwingVfxEntity.TYPE_SWORD. */
+    protected abstract String getVfxType();
 
-    protected double getBaseBonus() {
-        return 0.10D;
-    }
+    // ── Overridable config ────────────────────────────────────────────────────
 
-    protected double getBonusPerMajorRealm() {
-        return 0.22D;
-    }
+    /** Ticks between passive swings. */
+    protected int getSwingIntervalTicks() { return 20; }
+    /** Hit-box scale of the spawned VFX entity. */
+    protected Vector3f getEffectRadius() { return new Vector3f(2.0f, 2.0f, 2.0f); }
+    /** Flat base damage before path multiplier. */
+    protected double  getBaseDamage() { return 4.0; }
+    /** How many ticks the VFX entity lives. */
+    protected int     getEffectDuration() { return 10; }
+    /** Z-rotation of the rendered quad (visual tilt). */
+    protected float   getRotationZ() { return 0.0f; }
+    /** Qi consumed per swing — receives the already-computed damage multiplier. */
+    protected double  getQiCostPerSwing(double damageMultiplier) { return 2.0 * damageMultiplier; }
+    /**
+     * Color folder used when the player's current technique has no registered mapping.
+     * Override in each subclass to match the default sprite you want.
+     */
+    protected String  getFallbackColor()      { return "blue";          }
 
-    protected double getBonusPerMinorRealm() {
-        return 0.025D;
-    }
+    // ── Damage multiplier (unchanged from original) ───────────────────────────
 
-    protected double getMaxBonus() {
-        return 5.0D;
-    }
+    protected double getBaseBonus()           { return 0.10D; }
+    protected double getBonusPerMajorRealm()  { return 0.22D; }
+    protected double getBonusPerMinorRealm()  { return 0.025D; }
+    protected double getMaxBonus()            { return 5.0D;  }
 
     public boolean matchesWeapon(ItemStack stack) {
         return !stack.isEmpty() && stack.is(getWeaponTag());
@@ -44,19 +75,45 @@ public abstract class GenericWeaponMasterySkill extends SimplePassiveSkill {
     public double getDamageMultiplier(IEntityData entityData) {
         if (entityData == null) return 1.0D;
         if (!entityData.hasPath(getPathId())) return 1.0D;
-
         PathData pathData = entityData.getPathData(getPathId());
         if (pathData == null) return 1.0D;
 
-        int majorRealm = pathData.getMajorRealm();
-        int minorRealm = pathData.getMinorRealm();
-
         double bonus = getBaseBonus()
-                + majorRealm * getBonusPerMajorRealm()
-                + minorRealm * getBonusPerMinorRealm();
+                + pathData.getMajorRealm() * getBonusPerMajorRealm()
+                + pathData.getMinorRealm() * getBonusPerMinorRealm();
 
-        bonus = Mth.clamp(bonus, 0.0D, getMaxBonus());
+        return 1.0D + Mth.clamp(bonus, 0.0D, getMaxBonus());
+    }
 
-        return 1.0D + bonus;
+    // ── ITickingSkill ─────────────────────────────────────────────────────────
+
+    @Override
+    public void onPlayerTick(ServerPlayer player, IEntityData entityData) {
+        if (player.tickCount % getSwingIntervalTicks() != 0) return;
+        if (!matchesWeapon(player.getMainHandItem())) return;
+
+        EntityQiContainer qi = entityData.getQiContainer();
+        if (qi == null) return;
+
+        double multiplier = getDamageMultiplier(entityData);
+        double qiCost     = getQiCostPerSwing(multiplier);
+        if (!qi.hasQi(qiCost) || !qi.tryConsumeQi(qiCost)) return;
+
+        // Resolve which technique the player has active on this path.
+        // getTechnique() returns the ResourceLocation of the active technique, or null.
+        ResourceLocation techniqueId = entityData.getTechnique(getPathId());
+
+        WeaponVfxUtils.spawnSwingVfxAhead(
+                player.level(),
+                player,
+                getRotationZ(),
+                getEffectRadius(),
+                getBaseDamage() * multiplier,
+                1.0,
+                getEffectDuration(),
+                getVfxType(),
+                techniqueId,       // ← resolved by VfxColorRegistry
+                getFallbackColor()
+        );
     }
 }
