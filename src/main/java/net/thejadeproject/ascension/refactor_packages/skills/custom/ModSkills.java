@@ -338,6 +338,12 @@ public class ModSkills {
         registerTickingSkill(SCORCHING_YANG_POISON);
         registerTickingSkill(FROST_SILKWORM_POISON);
         registerTickingSkill(FROST_SILKWORM_POISON_TEMP);
+
+        registerTickingSkill(SWORD_MASTERY_SKILL);
+        registerTickingSkill(BLADE_MASTERY_SKILL);
+        registerTickingSkill(AXE_MASTERY_SKILL);
+        registerTickingSkill(SPEAR_MASTERY_SKILL);
+        registerTickingSkill(MACE_MASTERY_SKILL);
     }
 
     private static void registerTickingSkill(DeferredHolder<ISkill, ? extends ISkill> skillHolder) {

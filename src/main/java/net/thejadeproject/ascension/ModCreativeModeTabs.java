@@ -91,6 +91,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DIAMOND_SPEAR);
                         output.accept(ModItems.NETHERITE_SPEAR);
 
+
+                        output.accept(ModItems.CULTIVATORS_SWORD_IRON);
+
                         output.accept(ModItems.SILVER_NEEDLE);
 
                         output.accept(ModItems.SPIRITUAL_STONE_PICKAXE);
