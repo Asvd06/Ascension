@@ -324,7 +324,49 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.yin_yang_eyes", "Yin-Yang Eyes");
         add("ascension.physiques.yin_yang_eyes.desc", "The divided gaze has found its balance. Moon and sun, stillness and fire — both paths now flow without resistance.");
         add("ascension.physiques.yin_yang_eyes.desc.short", "Balanced sight. Soul and Essence cultivation flow freely.");
-        add("ascension.message.physique_evolution.yinyang_pending", "Your eyes stir. A breakthrough will complete the balance.");
+        add("ascension.physiques.sword_monster", "Sword Monster");
+        add("ascension.physiques.sword_monster.desc", "Forsaking all other paths and delving only into the Sword, their nature twists and their body remolds itself, becoming a living sword. Their every bone possesses sharpness, their gaze piercing and their steps cutting.");
+        add("ascension.physiques.sword_monster.desc.short", "Living by the Sword, becoming a Sword.");
+        add("ascension.physiques.titan_born", "Titan Born");
+        add("ascension.physiques.titan_born.desc", "A mutation born from the blessings of the Heavens, wielding immense innate physical prowess and stature, but lacking in all other ways.");
+        add("ascension.physiques.titan_born.desc.short", "Blessed by the Heavens with an immense body.");
+        add("ascension.physiques.crystal_soul", "Crystal Soul");
+        add("ascension.physiques.crystal_soul.desc", "The soul is as clear and pure as the most vibrant, stunning gemstone, a veritable crystal through and through, lacking any influence from the harshness of the world.");
+        add("ascension.physiques.crystal_soul.desc.short", "A soul without impurities, a stunning gemstone in a world of want.");
+        add("ascension.physiques.dull_mind", "Dull Minded");
+        add("ascension.physiques.dull_mind.desc", "Even the most robust frames cannot function without a strong mind commanding it. Your is one for want...");
+        add("ascension.physiques.dull_mind.desc.short", "A strong body but lacking in intelligence.");
+        add("ascension.physiques.weak_soul", "Weak Soul");
+        add("ascension.physiques.weak_soul.desc", "Innately born with a fragile soul, you find yourself drawn to cultivating it, improving it and making it sturdy and mystical.");
+        add("ascension.physiques.weak_soul.desc.short", "You have a weak soul with potential.");
+        add("ascension.physiques.generous_spirit", "Generous Spirit");
+        add("ascension.physiques.generous_spirit.desc", "Since birth you have been kind and generous, sharing everything you own. This virtuous nature has seeped into your very soul.");
+        add("ascension.physiques.generous_spirit.desc.short", "You are a good person.");
+        add("ascension.physiques.sword_apprentice", "Sword Apprentice");
+        add("ascension.physiques.sword_apprentice.desc", "A natural trait some have which grants them an innate understanding and appreciation for the Sword.");
+        add("ascension.physiques.sword_apprentice.desc.short", "Good with Sword.");
+        add("ascension.physiques.thuggish_form", "Thuggish Form");
+        add("ascension.physiques.thuggish_form.desc", "A strong and broad body, with naturally tough muscles and vast veins.");
+        add("ascension.physiques.thuggish_form.desc.short", "Built like a wall.");
+        add("ascension.physiques.hardened_general", "War Hardened General");
+        add("ascension.physiques.hardened_general.desc", "Years and years on the mortal battlefield have shaped your body, wielding the spear with unnatural accuracy and skill.");
+        add("ascension.physiques.hardened_general.desc.short", "Good with spear, late to essence cultivation.");
+        add("ascension.physiques.decaying_meridians", "Decaying Meridians");
+        add("ascension.physiques.decaying_meridians.desc", "Meridians naturally born in a perpetual state of decay, fragments of dead cells being melted into the qi. Rumors float about of a pill that can cure this condition and evolve it.");
+        add("ascension.physiques.decaying_meridians.desc.short", "Born with dying meridians, which infect your qi.");
+        add("ascension.physiques.twisted_vessels", "Twisted Meridians");
+        add("ascension.physiques.twisted_vessels.desc", "Meridians naturally born twisted and coiled around itself, hampering and inhibiting the flow of Qi, but somehow letting more and more Qi in... Rumors float about of a pill that can cure this condition and evolve it.");
+        add("ascension.physiques.twisted_vessels.desc.short", "Born with twisted meridians, despite massive natural talent with Essence.");
+        add("ascension.physiques.dual_soul", "Dual Soul");
+        add("ascension.physiques.dual_soul.desc", "Two beings were conceived, but only one was born. Having consumed your sibling in the womb, you carry a portion of their soul with you.");
+        add("ascension.physiques.dual_soul.desc.short", "Two souls in one soul.");
+        add("ascension.physiques.corrupted_entity", "Corrupted Entity");
+        add("ascension.physiques.corrupted_entity.desc", "Through a series of experiments and tests, a highly talented being has been artificially created, but something is lacking, missing. Finding it could not only complete the being, but further enhance them.");
+        add("ascension.physiques.corrupted_entity.desc.short", "A strange being born incomplete from demonic experiments.");
+        add("ascension.physiques.molten_casted", "Molten Casted Body");
+        add("ascension.physiques.molten_casted.desc", "Using lava as a crucible to melt the body then quenching it in water, treat the body as steel, reforging it into something better.");
+        add("ascension.physiques.molten_casted.desc.short", "A melting and quenching strengthened the body");
+
 
         // Elemental body merged physiques (2-element)
         add("ascension.physiques.liver_heart_awakening", "Liver-Heart Awakening Physique");
@@ -375,6 +417,7 @@ public class lang extends LanguageProvider {
         add("ascension.message.physique_evolution.essence_bone_needs_pill_fuel", "The Divine Bone ritual starves. Consume refinement pills to fuel the crimson flame.");
         add("ascension.message.physique_evolution.essence_bone_divine_marked", "Heavenly lightning brands your Essence Bone. Enter the Crimson Lotus Flame and begin the Divine ritual.");
         add("ascension.message.physique_evolution.essence_bone_pill_fuel", "Refinement fuel gathered: %s/%s minutes.");
+        add("ascension.message.physique_evolution.yinyang_pending", "Your eyes stir. A breakthrough will complete the balance.");
 
 
 
