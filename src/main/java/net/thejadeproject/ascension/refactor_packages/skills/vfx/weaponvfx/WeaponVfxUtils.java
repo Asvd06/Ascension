@@ -55,14 +55,9 @@ public class WeaponVfxUtils {
 
         level.addFreshEntity(vfx);
     }
-
-    /**
-     * Convenience — spawns directly in front of the owner at eye-level.
-     * Technique ID is resolved through VfxColorRegistry automatically.
-     */
     public static void spawnSwingVfxAhead(Level level,
                                           LivingEntity owner, float rotZ, Vector3f radius, double damage, double knockback,
-                                          int duration, String vfxType, ResourceLocation techniqueId, String fallbackColor) {
+                                          int duration, String vfxType, ResourceLocation techniqueId, String fallbackColor,Vec3 movement) {
         Vec3 forward = owner.getLookAngle().normalize();
 
 
@@ -74,7 +69,16 @@ public class WeaponVfxUtils {
         spawnSwingVfx(level, owner, pos,
                 0, 0, rotZ,
                 radius, damage, knockback, duration,
-                vfxType, Vec3.ZERO,
+                vfxType, movement,
                 techniqueId, fallbackColor);
+    }
+    /**
+     * Convenience — spawns directly in front of the owner at eye-level.
+     * Technique ID is resolved through VfxColorRegistry automatically.
+     */
+    public static void spawnSwingVfxAhead(Level level,
+                                          LivingEntity owner, float rotZ, Vector3f radius, double damage, double knockback,
+                                          int duration, String vfxType, ResourceLocation techniqueId, String fallbackColor) {
+        spawnSwingVfxAhead(level,owner,rotZ,radius,damage,knockback,duration,vfxType,techniqueId,fallbackColor,Vec3.ZERO);
     }
 }

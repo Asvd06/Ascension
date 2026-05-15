@@ -26,6 +26,9 @@ import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
 import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueSkillHelper;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeHandler;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeType;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeUtil;
 import net.thejadeproject.ascension.refactor_packages.techniques.stability.IStabilityHandler;
 import net.thejadeproject.ascension.refactor_packages.techniques.stability.LnStabilityHandler;
 
@@ -40,6 +43,7 @@ public class GenericTechnique implements ITechnique {
     private Set<ResourceLocation> secondaryPaths;
     private final IStabilityHandler stabilityHandler = new LnStabilityHandler();
     private  BasicStatChangeHandler statChangeHandler = new BasicStatChangeHandler();
+    private RealmChangeHandler realmChangeHandler = RealmChangeHandler.fresh().build();
     public GenericTechnique(ResourceLocation path,Component title,double baseRate,Set<ResourceLocation> secondaryPaths){
         this.path = path;
         this.title = title;
@@ -49,6 +53,10 @@ public class GenericTechnique implements ITechnique {
 
     public GenericTechnique setStatChangeHandler(BasicStatChangeHandler statChangeHandler){
         this.statChangeHandler = statChangeHandler;
+        return this;
+    }
+    public GenericTechnique setRealmChangeHandler(RealmChangeHandler handler){
+        this.realmChangeHandler = handler;
         return this;
     }
 
@@ -79,6 +87,9 @@ public class GenericTechnique implements ITechnique {
         if(getPath().equals(ModPaths.ESSENCE.getId())){
             heldEntity.giveSkill(ModSkills.BASIC_CULTIVATION_SKILL.getId(),new GenericCultivationSkillData(baseRate, secondaryPaths), ModForms.MORTAL_VESSEL.getId());
         }
+        if(heldEntity.getPathData(getPath()).getMajorRealm() == 0 && heldEntity.getPathData(getPath()).getMinorRealm() == 0) {
+            realmChangeHandler.dispatch(heldEntity,heldEntity.getTechniqueData(getPath()),0,0, RealmChangeType.GAINED);
+        }
 
         refreshUniversalTechniqueSkills(heldEntity);
     }
@@ -89,7 +100,9 @@ public class GenericTechnique implements ITechnique {
         if(getPath().equals(ModPaths.ESSENCE.getId())){
             heldEntity.removeSkill(ModSkills.BASIC_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
         }
-
+        if(heldEntity.getPathData(getPath()).getMajorRealm() == 0 && heldEntity.getPathData(getPath()).getMinorRealm() == 0) {
+            realmChangeHandler.dispatch(heldEntity,heldEntity.getTechniqueData(getPath()),0,0, RealmChangeType.LOST);
+        }
         refreshUniversalTechniqueSkills(heldEntity);
     }
 
@@ -97,9 +110,11 @@ public class GenericTechnique implements ITechnique {
     public void onRealmChange(IEntityData entityData, int oldMajorRealm, int oldMinorRealm, int newMajorRealm, int newMinorRealm) {
         //System.out.println("technique: "+AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.getKey(this).toString());
         //System.out.println("realm: ("+oldMajorRealm+","+oldMinorRealm+") -> ("+newMajorRealm+","+newMinorRealm+")");
-        statChangeHandler.applyChanges(entityData,this,oldMajorRealm,oldMinorRealm,newMajorRealm,newMinorRealm);
+        //statChangeHandler.applyChanges(entityData,this,oldMajorRealm,oldMinorRealm,newMajorRealm,newMinorRealm);
 
         TechniqueSkillHelper.refreshUniversal(entityData, newMajorRealm);
+
+        RealmChangeUtil.realmChanged(entityData,this,entityData.getTechniqueData(this.getPath()),oldMajorRealm,oldMinorRealm,newMajorRealm,newMinorRealm,realmChangeHandler);
 
         entityData.getActiveFormData().getStatSheet().log();
         entityData.getAscensionAttributeHolder().log();

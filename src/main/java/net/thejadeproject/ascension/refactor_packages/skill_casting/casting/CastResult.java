@@ -3,6 +3,13 @@ package net.thejadeproject.ascension.refactor_packages.skill_casting.casting;
 import net.minecraft.network.chat.Component;
 
 public class CastResult {
+    public static CastResult success(){
+        return new CastResult(Type.SUCCESS);
+    }
+    public static CastResult fail(){
+        return new CastResult(Type.FAILURE);
+    }
+
     public enum Type {
         SUCCESS,
         FAILURE

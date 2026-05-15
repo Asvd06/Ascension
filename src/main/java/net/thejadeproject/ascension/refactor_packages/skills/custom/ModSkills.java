@@ -41,7 +41,8 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elem
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.FlameTemperedBodySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.VerdantRecoverySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.TrueFlightSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.*;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.mastery.*;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.projections.SwordProjectionSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.qi.QiRelease;
 
 public class ModSkills {
@@ -276,8 +277,9 @@ public class ModSkills {
     public static final DeferredHolder<ISkill, ? extends BladeMasterySkill> BLADE_MASTERY_SKILL =
             SKILLS.register("blade_mastery_skill", BladeMasterySkill::new);
 
-
-
+    //SLASH SKILLS
+    public static final DeferredHolder<ISkill, ? extends SwordProjectionSkill> SWORD_PROJECTIONS =
+            SKILLS.register("sword_projection_skill", SwordProjectionSkill::new);
     // Poison
     public static final DeferredHolder<ISkill, ? extends PoisonRefiningMeditationSkill> POISON_REFINING_MEDITATION_SKILL =
             SKILLS.register("poison_refining_meditation_skill", PoisonRefiningMeditationSkill::new);

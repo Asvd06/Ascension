@@ -1,18 +1,14 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.mastery;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.data_attachments.attachments.PlayerInputStates;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.entity.EntitySwingEvent;
 import net.thejadeproject.ascension.refactor_packages.paths.PathData;
@@ -75,7 +71,7 @@ public abstract class GenericWeaponMasterySkill extends SimplePassiveSkill imple
     protected double getBonusPerMinorRealm()  { return 0.025D; }
     protected double getMaxBonus()            { return 5.0D;  }
 
-    public boolean matchesWeapon(ItemStack stack) {
+    public  boolean matchesWeapon(ItemStack stack) {
         return !stack.isEmpty() && stack.is(getWeaponTag());
     }
 

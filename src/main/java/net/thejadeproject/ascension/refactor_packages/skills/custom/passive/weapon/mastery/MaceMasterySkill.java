@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.mastery;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;

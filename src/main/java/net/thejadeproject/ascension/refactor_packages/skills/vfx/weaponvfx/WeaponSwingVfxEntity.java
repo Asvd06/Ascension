@@ -36,7 +36,8 @@ public class WeaponSwingVfxEntity extends Entity {
     public static final String TYPE_SPEAR = "spear_thrust";
     public static final String TYPE_MACE  = "mace_smash";
 
-
+    // ── Animation fields ───────────────────────────────────────────────────
+    private int currentFrame;
     // ── Server-only fields ───────────────────────────────────────────────────
 
     private double damage = 4.0;
@@ -159,6 +160,7 @@ public class WeaponSwingVfxEntity extends Entity {
     public void setDamage(double damage) { this.damage = damage;}
     public void setKnockback(double knockback) { this.knockback = knockback;}
     public void setDuration(int ticks) { this.duration = ticks;}
+    public void setCurrentFrame(int frame){this.currentFrame=frame;}
 
     // ── Getters ──────────────────────────────────────────────────────────────
 
@@ -173,7 +175,7 @@ public class WeaponSwingVfxEntity extends Entity {
                 this.entityData.get(RADIUS_Y),
                 this.entityData.get(RADIUS_Z));
     }
-
+    public int getCurrentFrame(){return this.currentFrame;}
     @Override
     protected void readAdditionalSaveData(CompoundTag compoundTag) {
 
