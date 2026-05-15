@@ -16,6 +16,11 @@ public class AscensionCommonConfig {
     public final ModConfigSpec.IntValue REPAIR_INTERVAL;
     public final ModConfigSpec.IntValue REPAIR_AMOUNT;
 
+    // Armor Durability
+    public final ModConfigSpec.BooleanValue ARMOR_DURABILITY_LIMIT_ENABLED;
+    public final ModConfigSpec.DoubleValue ARMOR_DURABILITY_MAX_LOSS_PERCENT;
+    public final ModConfigSpec.IntValue ARMOR_DURABILITY_MIN_LOSS;
+
     // Starter Kit Config
     public final ModConfigSpec.BooleanValue STARTER_KIT_ENABLED;
     public final ModConfigSpec.ConfigValue<List<? extends String>> STARTER_KIT_ITEMS;
@@ -58,6 +63,30 @@ public class AscensionCommonConfig {
         REPAIR_AMOUNT = builder
                 .comment("Amount of durability to Repair each interval [Default: 2]")
                 .defineInRange("repairAmount", 2, 1, Integer.MAX_VALUE);
+        builder.pop();
+
+        // Armor Durability
+        builder.push("ArmorDurability");
+
+        ARMOR_DURABILITY_LIMIT_ENABLED = builder
+                .comment("Enable armor durability loss limiting [Default: true]")
+                .define("enabled", true);
+
+        ARMOR_DURABILITY_MAX_LOSS_PERCENT = builder
+                .comment(
+                        "Maximum percentage of an armor piece's max durability that can be lost from one hit.",
+                        "Example: 0.01 = 1% max durability loss per hit.",
+                        "Set lower for tougher armor durability. [Default: 0.01]"
+                )
+                .defineInRange("maxLossPercentPerHit", 0.01D, 0.0D, 1.0D);
+
+        ARMOR_DURABILITY_MIN_LOSS = builder
+                .comment(
+                        "Minimum armor durability lost when armor is damaged.",
+                        "Usually keep this at 1 so armor can still wear down. [Default: 1]"
+                )
+                .defineInRange("minLossPerHit", 1, 0, Integer.MAX_VALUE);
+
         builder.pop();
 
         // Starter Kit Section

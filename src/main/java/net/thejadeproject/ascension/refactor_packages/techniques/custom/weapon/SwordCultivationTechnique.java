@@ -38,7 +38,10 @@ public class SwordCultivationTechnique extends GenericTechnique {
                 ModSkills.SWORD_MASTERY_SKILL.getId(),
                 ModForms.MORTAL_VESSEL.getId()
         );
-
+        heldEntity.giveSkill(
+                ModSkills.SWORD_PROJECTIONS.getId(),
+                ModForms.MORTAL_VESSEL.getId()
+        );
         refreshUniversalTechniqueSkills(heldEntity);
 
         PathData pathData = heldEntity.getPathData(getPath());
@@ -66,6 +69,10 @@ public class SwordCultivationTechnique extends GenericTechnique {
                 ModForms.MORTAL_VESSEL.getId()
         );
 
+        heldEntity.removeSkill(
+                ModSkills.SWORD_PROJECTIONS.getId(),
+                ModForms.MORTAL_VESSEL.getId()
+        );
         refreshRealmUnlockSkills(heldEntity, -1);
         clearUniversalTechniqueSkills(heldEntity);
     }

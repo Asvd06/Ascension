@@ -5,7 +5,8 @@
   "mixins": [
     "LivingEntityMixin",
     "MilkBucketEffectMixin",
-    "PlayerMixin"
+    "PlayerMixin",
+    "ArmorDurabilityLossLimiterMixin"
   ],
   "injectors": {
     "defaultRequire": 1

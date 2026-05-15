@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WeaponSwingVfxRenderer extends EntityRenderer<WeaponSwingVfxEntity> {
 
     private static final int FRAME_COUNT = 7;
-    private static final int FRAME_TICKS = 2;
+    private static final int FRAME_TICKS = 1;
 
     private static final Map<String, ResourceLocation[]> TEXTURE_CACHE = new ConcurrentHashMap<>();
 
@@ -46,9 +46,11 @@ public class WeaponSwingVfxRenderer extends EntityRenderer<WeaponSwingVfxEntity>
         float rotZ = entity.getRotationZ();
         float xRot = entity.getXRot();
         float yRot = entity.getYRot();
-        int frame = (entity.tickCount / FRAME_TICKS) % FRAME_COUNT;
 
-        ResourceLocation texture = getTextures(texPath)[frame];
+        int frame = (entity.tickCount / FRAME_TICKS) % FRAME_COUNT;
+        if(frame > entity.getCurrentFrame()) entity.setCurrentFrame(frame);
+
+        ResourceLocation texture = getTextures(texPath)[entity.getCurrentFrame()];
 
         applyRotation(poseStack, xRot, yRot, rotZ);
         poseStack.scale(scale.x(), scale.y(), scale.z());

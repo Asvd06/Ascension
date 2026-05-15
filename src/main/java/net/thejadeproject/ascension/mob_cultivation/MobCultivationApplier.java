@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.thejadeproject.ascension.AscensionCraft;
+import net.thejadeproject.ascension.mob_cultivation.util.AscensionStatConversions;
 
 public final class MobCultivationApplier {
 
@@ -21,6 +22,8 @@ public final class MobCultivationApplier {
             ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mob_rank_speed");
     private static final ResourceLocation SAFE_FALL_ID =
             ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mob_rank_safe_fall");
+    private static final ResourceLocation STEP_HEIGHT_ID =
+            ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mob_rank_step_height");
 
     // Hostile and Boss Stats
     private static final ResourceLocation ARMOR_ID =
@@ -44,11 +47,12 @@ public final class MobCultivationApplier {
         MobCultivationCategory category = MobCultivationResolver.resolveCategory(entity);
 
         double healthBonus = AscensionStatConversions.maxHealthBonus(finalStats.vitality());
-        double damageBonus = AscensionStatConversions.attackDamageBonus(finalStats.strength());
-        double speedBonus = AscensionStatConversions.movementSpeedBonus(finalStats.strength(), finalStats.agility());
+        double damageBonus = AscensionStatConversions.attackDamageBonus(finalStats.strength(), category);
+        double speedBonus = AscensionStatConversions.movementSpeedBonus(finalStats.strength(), finalStats.agility(), category);
         double safeFall = AscensionStatConversions.safeFallBonus(finalStats);
+        double stepHeightBonus = AscensionStatConversions.stepHeightBonus(finalStats);
 
-        applyBaseStats(entity, healthBonus, damageBonus, speedBonus, safeFall);
+        applyBaseStats(entity, healthBonus, damageBonus, speedBonus, safeFall, stepHeightBonus);
 
         switch (category) {
             case PASSIVE -> applyPassiveStats(entity, definition, finalStats);
@@ -60,11 +64,12 @@ public final class MobCultivationApplier {
     }
 
 
-    private static void applyBaseStats(LivingEntity entity, double healthBonus, double damageBonus, double speedBonus, double safeFall) {
+    private static void applyBaseStats(LivingEntity entity, double healthBonus, double damageBonus, double speedBonus, double safeFall, double stepHeightBonus) {
         applyAddValue(entity, Attributes.MAX_HEALTH, HEALTH_ID, healthBonus);
         applyAddValue(entity, Attributes.ATTACK_DAMAGE, DAMAGE_ID, damageBonus);
         applyAddValue(entity, Attributes.MOVEMENT_SPEED, SPEED_ID, speedBonus);
         applyAddValue(entity, Attributes.SAFE_FALL_DISTANCE, SAFE_FALL_ID, safeFall);
+        applyAddValue(entity, Attributes.STEP_HEIGHT, STEP_HEIGHT_ID, stepHeightBonus);
     }
 
     private static void applyPassiveStats (LivingEntity entity, MobCultivationDefinition definition, MobCultivationStatProfile finalStats) {

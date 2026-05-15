@@ -20,6 +20,8 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_cha
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.weapon.SwordCultivationTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueManualRegistry;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeHandler;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeHandlers;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ModifierOperation;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ValueContainerModifier;
 
@@ -272,11 +274,11 @@ public class ModTechniques {
 
 
     // ──── WEAPON TECHNIQUES ────────────────────────────────────────────
-    public static final DeferredHolder<ITechnique, ? extends SwordCultivationTechnique> SWORD_COMPREHENSION_TECHNIQUE =
+    public static final DeferredHolder<ITechnique, ? extends GenericTechnique> SWORD_COMPREHENSION_TECHNIQUE =
             TECHNIQUES.register("sword_comprehension_technique",
                     () -> new SwordCultivationTechnique(ModPaths.SWORD.getId(),
                             Component.translatable("ascension.technique.sword_comprehension_technique"), 10.0D, Set.of()
-                    ).setStatChangeHandler(baseWeaponHandler)
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.HANDLER_1)
             );
 
 

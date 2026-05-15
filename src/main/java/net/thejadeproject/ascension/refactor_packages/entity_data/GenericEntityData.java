@@ -205,6 +205,7 @@ public class GenericEntityData implements IEntityData {
             //TODO make sure to set physique to default
             //if mortal vessel is present -> mortal
             //if soul is present -> smth?
+            setPhysique(ModPhysiques.MORTAL.getId());
         }
 //        try {
 //            String rawBloodline = tag.getString("bloodline");

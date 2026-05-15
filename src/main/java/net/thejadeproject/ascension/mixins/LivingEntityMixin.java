@@ -40,7 +40,6 @@ public class LivingEntityMixin {
             shift = At.Shift.AFTER
     ))
     private void swing(InteractionHand hand,boolean updateSelf,CallbackInfo ci){
-        System.out.println(swinging);
 
         LivingEntity self = (LivingEntity) (Object) this;
 

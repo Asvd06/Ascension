@@ -9,6 +9,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.mob_cultivation.*;
+import net.thejadeproject.ascension.mob_cultivation.util.AscensionStatConversions;
 
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID)
 public final class MobCultivationCombatEvents {

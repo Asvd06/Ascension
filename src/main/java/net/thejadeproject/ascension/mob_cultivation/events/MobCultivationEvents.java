@@ -2,14 +2,18 @@ package net.thejadeproject.ascension.mob_cultivation.events;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
+import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.mob_cultivation.*;
+import net.thejadeproject.ascension.mob_cultivation.util.MobCultivationInheritance;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.mob_culti.SyncMobCultivation;
 
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID)
@@ -92,7 +96,7 @@ public class MobCultivationEvents {
 //    }
 
     public static void initializeRank(LivingEntity entity) {
-        if (!MobCultivationRoller.canHaveRank(entity)) return;
+        if (!MobCultivationRoller.canInitializeRank(entity)) return;
 
         MobCultivationData data = entity.getData(ModAttachments.MOB_RANK);
         if (data == null || data.isInitialized()) return;
@@ -111,7 +115,7 @@ public class MobCultivationEvents {
     }
 
     public static void reapplyRank(LivingEntity entity) {
-        if (!MobCultivationRoller.canHaveRank(entity)) return;
+        if (!MobCultivationRoller.canInitializeRank(entity)) return;
 
         MobCultivationData data = entity.getData(ModAttachments.MOB_RANK);
         if (data == null || !data.isInitialized()) return;
@@ -194,6 +198,48 @@ public class MobCultivationEvents {
                         data.isInitialized()
                 )
         );
+    }
+
+    @SubscribeEvent
+    public static void onBabyEntitySpawn(BabyEntitySpawnEvent event) {
+        if (!(event.getChild() instanceof LivingEntity child)) return;
+        if (!(event.getParentA() instanceof LivingEntity parentA)) return;
+        if (!(event.getParentB() instanceof LivingEntity parentB)) return;
+
+        if (!MobCultivationRoller.canHaveRank(child)) return;
+
+        MobCultivationData inherited = MobCultivationInheritance.inheritFromParents(parentA, parentB);
+        if (inherited == null) return;
+
+        applyInheritedRank(child, inherited);
+    }
+
+    @SubscribeEvent
+    public static void onMobSplit(MobSplitEvent event) {
+        LivingEntity origin = event.getParent();
+
+        MobCultivationData inherited = MobCultivationInheritance.inheritFromOrigin(origin);
+        if (inherited == null) return;
+
+        for (Mob childMob : event.getChildren()) {
+            if (!MobCultivationRoller.canHaveRank(childMob)) continue;
+
+            applyInheritedRank(childMob, MobCultivationInheritance.copyOf(inherited));
+        }
+    }
+
+    private static void applyInheritedRank(LivingEntity entity, MobCultivationData inherited) {
+        if (inherited == null) return;
+
+        MobCultivationData data = entity.getData(ModAttachments.MOB_RANK);
+        if (data == null) return;
+
+        data.setRealmId(inherited.getRealmId());
+        data.setStage(inherited.getStage());
+        data.setInitialized(true);
+
+        MobCultivationApplier.applyFromData(entity, data);
+        syncMobRanks(entity);
     }
 
 }
