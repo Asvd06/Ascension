@@ -78,7 +78,7 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
 
             if (pathData == null) return false;
             if (pathData.isBreakingThrough()) return false;
-            if (pathData.getCurrentTechnique() == null) return false;
+            if (pathData.getCurrentTechniqueId() == null) return false;
 
             ITechnique rawTechnique = pathData.getCurrentTechnique();
 

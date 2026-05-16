@@ -42,8 +42,8 @@ public class CultivationProgressBar extends RenderableElement {
 
     double getProgress(){
         IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(path);
-        if(pathData != null && pathData.getCurrentTechnique() == null) return 0;
-        if(pathData == null || pathData.getCurrentTechnique() == null) return 0.0;
+        if(pathData != null && pathData.getCurrentTechniqueId() == null) return 0;
+        if(pathData == null || pathData.getCurrentTechniqueId() == null) return 0.0;
         ITechnique technique = pathData.getCurrentTechnique();
 
         return pathData.getCurrentRealmProgress()/technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());

@@ -39,7 +39,7 @@ public class BloodfeastKillHandler {
         IPathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
 
         if (pathData == null) return;
-        if (pathData.getCurrentTechnique() == null) return;
+        if (pathData.getCurrentTechniqueId() == null) return;
 
         Object rawTechnique = pathData.getCurrentTechnique();
 

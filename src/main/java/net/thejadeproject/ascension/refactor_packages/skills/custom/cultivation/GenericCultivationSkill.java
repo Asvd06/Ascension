@@ -158,7 +158,7 @@ public class GenericCultivationSkill implements ICastableSkill {
             //System.out.println("Player is trying to cultivate");
             IPathData pathData = caster.getData(ModAttachments.ENTITY_DATA).getPathData(path);
 
-            if (pathData == null || pathData.getCurrentTechnique() == null) return false;
+            if (pathData == null || pathData.getCurrentTechniqueId() == null) return false;
 
             //TODO add a cultivate event
             ITechnique technique = pathData.getCurrentTechnique();

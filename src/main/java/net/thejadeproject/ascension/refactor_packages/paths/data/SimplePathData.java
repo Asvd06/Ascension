@@ -144,12 +144,19 @@ public class SimplePathData implements IPathData{
 
     @Override
     public void setCurrentTechnique(ResourceLocation technique) {
-        if(technique.equals(currentTechnique)) return;
-        ResourceLocation oldTechnique = currentTechnique;
-        currentTechnique = technique;
-        if(oldTechnique != null && hasTechnique(oldTechnique)) return;
+        if(currentTechnique == null){
+            currentTechnique = technique;
+        }else{
+            if(currentTechnique.equals(technique)) return;
+            ResourceLocation oldTechnique = currentTechnique;
+            currentTechnique = technique;
+            if(hasTechnique(oldTechnique)) return;
 
-        removeTechniqueData(oldTechnique);
+            removeTechniqueData(oldTechnique);
+        }
+
+
+
 
     }
 
@@ -184,7 +191,8 @@ public class SimplePathData implements IPathData{
 
     @Override
     public void majorRealmUp(IEntityData entityData) {
-
+        techniqueHistory.add(currentTechnique);
+        progress = 0;
     }
 
     @Override
@@ -237,9 +245,13 @@ public class SimplePathData implements IPathData{
         }
         buf.writeInt(techniqueData.size());
         for(ResourceLocation technique:techniqueData.keySet()){
-            ByteBufUtil.encodeString(buf,technique.toString());
-            //System.out.println("trying to write data for skill : "+technique.toString());
-            techniqueData.get(technique).encode(buf);
+            ITechniqueData data = techniqueData.get(technique);
+            buf.writeBoolean(data != null);
+            if(data != null){
+                ByteBufUtil.encodeString(buf,technique.toString());
+                //System.out.println("trying to write data for skill : "+technique.toString());
+                techniqueData.get(technique).encode(buf);
+            }
         }
         //breakthrough stuff
         buf.writeBoolean(breakingThrough);
@@ -345,6 +357,7 @@ public class SimplePathData implements IPathData{
         size = buf.readInt();
         techniqueData.clear();
         for(int i =0;i<size;i++){
+            if(!buf.readBoolean()) continue;
             ResourceLocation technique = ByteBufUtil.readResourceLocation(buf);
             ITechniqueData techniqueDataInstance = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique).fromNetwork(buf);
             techniqueData.put(technique,techniqueDataInstance);

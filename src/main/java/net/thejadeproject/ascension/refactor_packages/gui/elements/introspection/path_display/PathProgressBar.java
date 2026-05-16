@@ -27,7 +27,7 @@ public class PathProgressBar extends RenderableElement {
     );
     ITextureData progressTexture = new TextureDataSubsection(
             textureIdentifier,
-            234,216,
+            234,287,
             1,181,
             84,9
     );
@@ -65,7 +65,7 @@ public class PathProgressBar extends RenderableElement {
         IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(selectedPath);
 
         double maxQi;
-        if(pathData.getCurrentTechnique() == null){
+        if(pathData.getCurrentTechniqueId() == null){
             maxQi = AscensionRegistries.Paths.PATHS_REGISTRY.get(selectedPath).getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());
         }else maxQi = pathData.getCurrentTechnique().getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());
         return maxQi;

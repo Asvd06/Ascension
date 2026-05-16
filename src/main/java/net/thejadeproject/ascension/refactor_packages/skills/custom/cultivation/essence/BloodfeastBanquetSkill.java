@@ -101,7 +101,7 @@ public class BloodfeastBanquetSkill implements ICastableSkill {
             double qiCost = BASE_QI_COST_PER_TICK + (pathData.getMajorRealm() * QI_COST_PER_REALM_PER_TICK);
             if (!entityData.getQiContainer().tryConsumeQi(qiCost)) return false;
             if (pathData.isBreakingThrough())            return false;
-            if (pathData.getCurrentTechnique() == null) return false;
+            if (pathData.getCurrentTechniqueId() == null) return false;
 
             ITechnique rawTechnique = pathData.getCurrentTechnique();
             if (!(rawTechnique instanceof BloodfeastSoulRefiningTechnique technique)) return false;

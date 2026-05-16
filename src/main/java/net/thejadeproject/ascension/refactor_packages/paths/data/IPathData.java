@@ -113,6 +113,7 @@ public interface IPathData {
                     minorRealmUp(entityData);
                 }
             }else{
+
                 for(int i = oldMinorRealm+1;i<=newMinorRealm;i++){
                     setMinorRealm(i);
                     minorRealmUp(entityData);
@@ -120,6 +121,7 @@ public interface IPathData {
             }
 
         }else{
+
             newMajorRealm = Math.max(newMajorRealm,0);
             newMinorRealm = Math.max(newMinorRealm,0);
 
@@ -148,12 +150,13 @@ public interface IPathData {
                 setMinorRealm(getMaxMinorRealm(getMajorRealm()));
                 majorRealmDown(entityData);
 
-                for(int i =getMinorRealm()-1;i>newMinorRealm;i--){
+                for(int i =getMinorRealm()-1;i>=newMinorRealm;i--){
                     setMinorRealm(i);
                     minorRealmDown(entityData);
                 }
             }else{
-                for(int i = oldMajorRealm-1;i>newMinorRealm;i--){
+
+                for(int i = oldMinorRealm-1;i>=newMinorRealm;i--){
                     setMinorRealm(i);
                     minorRealmDown(entityData);
                 }

@@ -31,7 +31,7 @@ public class PathDisplayContainer extends RenderableElement {
 
     ITextureData bg = new TextureDataSubsection(
             textureIdentifier,
-            234,216,
+            234,287,
             0,39,
             234,140
     );
@@ -88,7 +88,7 @@ public class PathDisplayContainer extends RenderableElement {
         pathContainer.removeChildren();
         selectedTechniqueLabel.setText(Component.literal("none"));
         pathProgressBar.setPath(path);
-        if(pathData.getCurrentTechnique() == null){
+        if(pathData.getCurrentTechniqueId() == null){
             IPath pathInstance = AscensionRegistries.Paths.PATHS_REGISTRY.get(path);
 
             RenderableElement element = pathInstance.getInformationContainer(getUiFrame(),pathData);
