@@ -119,6 +119,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.SOUL_FLAME.get())
                 .add(ModItems.CRIMSON_LOTUS_FLAME.get());
 
+        tag(ItemTags.SWORDS)
+                .add(ModItems.CULTIVATORS_SWORD_IRON.get());
+
         tag(ModTags.Items.SPEAR_ENCHANTABLE)
                 .addTag(ModTags.Items.SPEAR);
         tag(Tags.Items.ENCHANTABLES)
