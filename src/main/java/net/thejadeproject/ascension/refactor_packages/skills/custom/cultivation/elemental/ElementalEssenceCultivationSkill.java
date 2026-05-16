@@ -9,18 +9,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.particle.aura.AuraColourHelper;
-import net.thejadeproject.ascension.particle.aura.AuraParticleColor;
-import net.thejadeproject.ascension.particle.aura.AuraParticlePresets;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -28,7 +23,7 @@ import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skills.cultivation.CultivationProgressBar;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
@@ -79,15 +74,13 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
 
         if (!caster.level().isClientSide()) {
             IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
-            PathData pathData = entityData.getPathData(ESSENCE_PATH);
+            IPathData pathData = entityData.getPathData(ESSENCE_PATH);
 
             if (pathData == null) return false;
             if (pathData.isBreakingThrough()) return false;
-            if (pathData.getLastUsedTechnique() == null) return false;
+            if (pathData.getCurrentTechnique() == null) return false;
 
-            ITechnique rawTechnique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(
-                    pathData.getLastUsedTechnique()
-            );
+            ITechnique rawTechnique = pathData.getCurrentTechnique();
 
             if (!getTechniqueClass().isInstance(rawTechnique)) {
                 return false;
@@ -144,12 +137,8 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
                 } else if (
                         pathData.getMajorRealm() < technique.getMaxMajorRealm()
                                 && technique.getStabilityHandler() != null
-                                && pathData.getCurrentRealmStability() < technique.getStabilityHandler().getMaxCultivationTicks()
                 ) {
-                    IBreakthroughInstance instance = new NineHeavenlyTribulations(1);
-
-                    pathData.setBreakthroughInstance(instance);
-                    pathData.setBreakingThrough(true);
+                    pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
                 }
             } else {
                 pathData.setCurrentRealmProgress(

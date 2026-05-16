@@ -12,7 +12,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.PhysiqueChangeEvent;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.helpers.PhysiqueEvolutionHelper;
 import net.thejadeproject.ascension.refactor_packages.techniques.ModTechniques;
@@ -43,7 +43,7 @@ public final class YinYangEyesEvolutionEvents {
 
         if (!hasYinEyes && !hasYangEyes) return;
 
-        PathData soulData = entityData.getPathData(ModPaths.SOUL.getId());
+        IPathData soulData = entityData.getPathData(ModPaths.SOUL.getId());
         if (soulData == null) return;
 
         ResourceLocation currentTechnique = entityData.getTechnique(ModPaths.SOUL.getId());

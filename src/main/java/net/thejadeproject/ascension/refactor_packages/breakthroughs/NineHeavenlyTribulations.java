@@ -53,7 +53,7 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance{
     public void endBreakthrough(IEntityData entityData,ResourceLocation path){
         entityData.getPathData(path).handleRealmChange(entityData.getPathData(path).getMajorRealm()+1,0,entityData);
         entityData.getPathData(path).setBreakingThrough(false);
-        entityData.getPathData(path).setBreakthroughInstance(null);
+
     }
     @Override
     public void tick(IEntityData entity, ResourceLocation path) {
@@ -71,7 +71,7 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance{
     @Override
     public void onEntityDeath(IEntityData entity, ResourceLocation path) {
         entity.getPathData(path).setBreakingThrough(false);
-        entity.getPathData(path).setBreakthroughInstance(null);
+
 
     }
 

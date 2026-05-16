@@ -18,7 +18,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -95,7 +95,7 @@ public class QiRelease implements ICastableSkill {
         if (!caster.hasData(ModAttachments.ENTITY_DATA)) return 0;
         IEntityData data = caster.getData(ModAttachments.ENTITY_DATA);
         int highest = 0;
-        for (PathData pathData : data.getAllPathData()) {
+        for (IPathData pathData : data.getAllPathData()) {
             if (pathData == null) continue;
             highest = Math.max(highest, pathData.getMajorRealm());
         }

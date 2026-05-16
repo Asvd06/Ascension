@@ -20,8 +20,7 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_cha
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.weapon.SwordCultivationTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueManualRegistry;
-import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeHandler;
-import net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change.RealmChangeHandlers;
+import net.thejadeproject.ascension.refactor_packages.handlers.realm_change.RealmChangeHandlers;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ModifierOperation;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ValueContainerModifier;
 

@@ -27,7 +27,7 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.handlers.AscensionDamageHandler;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -141,7 +141,7 @@ public class SwordDraw implements ICastableSkill {
     private float calculateDamage(ServerPlayer player) {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
-        PathData swordData = entityData.getPathData(ModPaths.SWORD.getId());
+        IPathData swordData = entityData.getPathData(ModPaths.SWORD.getId());
         int major = swordData != null ? swordData.getMajorRealm() : 0;
         int minor = swordData != null ? swordData.getMinorRealm() : 0;
 

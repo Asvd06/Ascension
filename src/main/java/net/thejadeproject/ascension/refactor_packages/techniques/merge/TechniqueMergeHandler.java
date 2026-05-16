@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ModTechniques;
 
@@ -179,7 +179,7 @@ public class TechniqueMergeHandler {
     private static boolean meetsRealmRequirement(IEntityData entityData, ResourceLocation candidateId, ResourceLocation resultId) {
         var technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(candidateId);
         if (technique == null) return false;
-        PathData pathData = entityData.getPathData(technique.getPath());
+        IPathData pathData = entityData.getPathData(technique.getPath());
         int majorRealm = pathData != null ? pathData.getMajorRealm() : 0;
         int minorRealm = pathData != null ? pathData.getMinorRealm() : 0;
         int elementCount = RESULT_ELEMENT_COUNT.getOrDefault(resultId, 0);
@@ -193,9 +193,9 @@ public class TechniqueMergeHandler {
     }
 
     private static ResourceLocation getCurrentTechnique(IEntityData entityData) {
-        PathData pathData = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData pathData = entityData.getPathData(ModPaths.BODY.getId());
         if (pathData == null) return null;
-        return pathData.getLastUsedTechnique();
+        return pathData.getCurrentTechniqueId();
     }
 
     public static void applyMerge(ServerPlayer player, ResourceLocation mergedTechniqueId) {

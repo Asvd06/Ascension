@@ -14,7 +14,7 @@ import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroug
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
@@ -55,13 +55,11 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         if (!entityData.hasSkill(ModSkills.POISON_REFINING_MEDITATION_SKILL.getId())) return;
 
-        PathData poisonPath = entityData.getPathData(ModPaths.POISON.getId());
+        IPathData poisonPath = entityData.getPathData(ModPaths.POISON.getId());
         if (poisonPath == null || poisonPath.isBreakingThrough()) return;
-        if (poisonPath.getLastUsedTechnique() == null) return;
+        if (poisonPath.getCurrentTechniqueId() == null) return;
 
-        ITechnique rawTechnique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(
-                poisonPath.getLastUsedTechnique()
-        );
+        ITechnique rawTechnique = poisonPath.getCurrentTechnique();
         if (!(rawTechnique instanceof MyriadVenomRefinementTechnique technique)) return;
 
         ItemStack stack = event.getItem();
@@ -70,7 +68,7 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
         Double itemBaseValue = POISON_ITEM_VALUES.get(item);
         if (itemBaseValue == null) return;
 
-        ITechniqueData rawData = poisonPath.getTechniqueData(poisonPath.getLastUsedTechnique());
+        ITechniqueData rawData = poisonPath.getCurrentTechniqueData();
 
         double realmMultiplier;
         double purityScale;
@@ -109,7 +107,7 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
 
     private void advanceCultivation(
             IEntityData entityData,
-            PathData pathData,
+            IPathData pathData,
             MyriadVenomRefinementTechnique technique,
             ITechniqueData rawData,
             double gain
@@ -145,9 +143,7 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
             );
 
             if (canMajorBreakthrough) {
-                IBreakthroughInstance instance = new NineHeavenlyTribulations(1);
-                pathData.setBreakthroughInstance(instance);
-                pathData.setBreakingThrough(true);
+                pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
             }
         } else {
             pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress() + gain);

@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
@@ -52,7 +52,7 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
 
         heldEntity.getPathBonusHandler().addPathBonus(elementPath, 1.0D);
 
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
         refreshUniversalTechniqueSkills(heldEntity);
         refreshRealmUnlockSkills(
                 heldEntity,
@@ -62,7 +62,7 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
 
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);

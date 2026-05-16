@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.BloodfeastSoulRefiningTechnique;
@@ -36,18 +36,16 @@ public class BloodfeastKillHandler {
         if (!killer.hasData(ModAttachments.ENTITY_DATA)) return;
 
         IEntityData entityData = killer.getData(ModAttachments.ENTITY_DATA);
-        PathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
+        IPathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
 
         if (pathData == null) return;
-        if (pathData.getLastUsedTechnique() == null) return;
+        if (pathData.getCurrentTechnique() == null) return;
 
-        Object rawTechnique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(
-                pathData.getLastUsedTechnique()
-        );
+        Object rawTechnique = pathData.getCurrentTechnique();
 
         if (!(rawTechnique instanceof BloodfeastSoulRefiningTechnique)) return;
 
-        ITechniqueData rawData = pathData.getTechniqueData(pathData.getLastUsedTechnique());
+        ITechniqueData rawData = pathData.getCurrentTechniqueData();
 
         if (!(rawData instanceof BloodfeastTechniqueData data)) return;
 

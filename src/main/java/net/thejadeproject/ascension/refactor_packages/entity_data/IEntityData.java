@@ -19,7 +19,7 @@ import net.thejadeproject.ascension.refactor_packages.entity_data_source.IEntity
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityForm;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.paths.PathBonusHandler;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
@@ -28,8 +28,6 @@ import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillDat
 import net.thejadeproject.ascension.refactor_packages.stats.custom.ModStats;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.util.ModAttributes;
-import org.checkerframework.checker.units.qual.A;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -95,17 +93,17 @@ public interface IEntityData {
     boolean isCultivating(ResourceLocation path);
     ResourceLocation getTechnique(ResourceLocation path);
     ITechniqueData getTechniqueData(ResourceLocation path);
-    PathData getPathData(ResourceLocation path);
+    IPathData getPathData(ResourceLocation path);
     Collection<ResourceLocation> getPathDataForms(ResourceLocation path);
-    Collection<PathData> getAllPathData();
+    Collection<IPathData> getAllPathData();
     ITechniqueData removeTechnique(ResourceLocation path);
     void setPathForm(ResourceLocation path,ResourceLocation form);
     //techniques will check if the last used technique is compatible, if not will remove all cultivation
     //give some sort of warning beforehand?
     boolean setTechnique(ResourceLocation technique);
     boolean setTechnique(ResourceLocation technique,ITechniqueData techniqueData);
-    void addPathData(ResourceLocation path,PathData pathData, ResourceLocation form);
-    void addPathData(ResourceLocation path,PathData pathData);
+    void addPathData(ResourceLocation path,IPathData pathData, ResourceLocation form);
+    void addPathData(ResourceLocation path,IPathData pathData);
     //a shortcut for removing cultivation, anything more complex must be done through the path data and path
     void removePath(ResourceLocation path);
 

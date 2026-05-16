@@ -11,7 +11,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.entity.EntitySwingEvent;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
@@ -82,7 +82,7 @@ public abstract class GenericWeaponMasterySkill extends SimplePassiveSkill imple
     public double getDamageMultiplier(IEntityData entityData) {
         if (entityData == null) return 1.0D;
         if (!entityData.hasPath(getPathId())) return 1.0D;
-        PathData pathData = entityData.getPathData(getPathId());
+        IPathData pathData = entityData.getPathData(getPathId());
         if (pathData == null) return 1.0D;
 
         double bonus = getBaseBonus()

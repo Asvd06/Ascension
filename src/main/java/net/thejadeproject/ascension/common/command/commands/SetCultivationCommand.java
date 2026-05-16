@@ -13,11 +13,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.path_data.SyncPathData;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalBodyPhysique;
@@ -116,9 +114,9 @@ public class SetCultivationCommand {
         // Iterate all registered paths — new paths automatically appear here
         for (var entry : AscensionRegistries.Paths.PATHS_REGISTRY.entrySet()) {
             ResourceLocation pathId = entry.getKey().location();
-            PathData data = entityData.getPathData(pathId);
+            IPathData data = entityData.getPathData(pathId);
 
-            if (data == null || data.getLastUsedTechnique() == null) continue;
+            if (data == null || data.getCurrentTechniqueId() == null) continue;
 
             hasAnyPath = true;
             var path = entry.getValue();
@@ -131,7 +129,7 @@ public class SetCultivationCommand {
             Component realmName = path.getMajorRealmName(data.getMajorRealm());
 
             // Technique name from lang (e.g., ascension.technique.basic_cultivation_technique)
-            ResourceLocation techniqueId = data.getLastUsedTechnique();
+            ResourceLocation techniqueId = data.getCurrentTechniqueId();
             Component techniqueName = Component.translatable(
                     "ascension.technique." + techniqueId.getPath());
 
@@ -173,16 +171,16 @@ public class SetCultivationCommand {
         ));
 
         for (ResourceLocation pathId : AscensionRegistries.Paths.PATHS_REGISTRY.keySet()) {
-            PathData data = entityData.getPathData(pathId);
+            IPathData data = entityData.getPathData(pathId);
             if (data == null) continue;
 
             String pathName = AscensionRegistries.Paths.PATHS_REGISTRY.get(pathId).getDisplayTitle().getString();
             String realmStr = data.getMajorRealm() + "." + data.getMinorRealm();
 
             String techniqueStr = "none";
-            if (data.getLastUsedTechnique() != null) {
-                ITechnique tech = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(data.getLastUsedTechnique());
-                techniqueStr = (tech != null) ? tech.getDisplayTitle().getString() : data.getLastUsedTechnique().toString();
+            if (data.getCurrentTechnique() != null) {
+                ITechnique tech = data.getCurrentTechnique();
+                techniqueStr = (tech != null) ? tech.getDisplayTitle().getString() : data.getCurrentTechniqueId().toString();
             }
 
             sb.append("  ").append(pathName).append(": realm ").append(realmStr)
@@ -242,7 +240,7 @@ public class SetCultivationCommand {
                                                      int progressPercent,
                                                      CommandSourceStack source) {
         try {
-            PathData data = player.getData(ModAttachments.ENTITY_DATA).getPathData(pathId);
+            IPathData data = player.getData(ModAttachments.ENTITY_DATA).getPathData(pathId);
 
             if (data == null) {
                 source.sendFailure(Component.literal(
@@ -252,7 +250,7 @@ public class SetCultivationCommand {
 
             // handleRealmChange is a no-op when lastUsedTechnique is null —
             // warn the operator rather than silently doing nothing.
-            if (data.getLastUsedTechnique() == null) {
+            if (data.getCurrentTechniqueId() == null) {
                 source.sendFailure(Component.literal(
                         player.getName().getString() + " has no technique set on path " + pathId
                                 + ". Assign a technique first before setting realm."));
@@ -270,7 +268,7 @@ public class SetCultivationCommand {
             // realm the player actually ended up at (may be bounded by technique max)
             if (progressPercent >= 0) {
                 var technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY
-                        .get(data.getLastUsedTechnique());
+                        .get(data.getCurrentTechniqueId());
                 double maxQi = technique.getMaxQiForRealm(data.getMajorRealm(), data.getMinorRealm());
                 data.setCurrentRealmProgress(maxQi * (progressPercent / 100.0));
             }

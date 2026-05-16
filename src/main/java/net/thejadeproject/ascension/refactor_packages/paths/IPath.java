@@ -7,6 +7,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -25,7 +26,7 @@ public interface IPath {
     Component getMajorRealmName(int majorRealm);
     Component getMinorRealmName(int majorRealm,int minorRealm);
 
-    RenderableElement getInformationContainer(UIFrame frame,PathData pathData);
+    RenderableElement getInformationContainer(UIFrame frame,IPathData pathData);
 
     int getMaxMajorRealm();
     int getMaxMinorRealm(int majorRealm);
@@ -37,8 +38,8 @@ public interface IPath {
     //the default form that holds this
     ResourceLocation defaultForm();
 
-    PathData freshPathData(IEntityData heldEntity);
+    IPathData freshPathData(IEntityData heldEntity);
     //expected to simulate progression
-    PathData fromCompound(CompoundTag tag, IEntityData heldEntity);
-    PathData fromNetwork(RegistryFriendlyByteBuf buf);
+    IPathData fromCompound(CompoundTag tag, IEntityData heldEntity);
+    IPathData fromNetwork(RegistryFriendlyByteBuf buf);
 }

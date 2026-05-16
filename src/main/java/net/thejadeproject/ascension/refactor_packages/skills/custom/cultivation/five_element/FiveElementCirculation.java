@@ -23,7 +23,7 @@ import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skills.cultivation.CultivationProgressBar;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
@@ -74,13 +74,13 @@ public class FiveElementCirculation implements ICastableSkill {
 
             IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
             //System.out.println("Player is trying to cultivate");
-            PathData pathData = caster.getData(ModAttachments.ENTITY_DATA).getPathData(ModPaths.ESSENCE.getId());
+            IPathData pathData = caster.getData(ModAttachments.ENTITY_DATA).getPathData(ModPaths.ESSENCE.getId());
 
             if(pathData == null) return false;
             if(pathData.isBreakingThrough()) return false;
 
             //TODO add a cultivate event
-            ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+            ITechnique technique = pathData.getCurrentTechnique();
             if(!(technique instanceof FiveElementCultivationTechnique)) return false;
 
             ResourceLocation element = fiveElementCirculationCastData.getElement();
@@ -102,11 +102,8 @@ public class FiveElementCirculation implements ICastableSkill {
                         pathData.getCurrentRealmProgress()
                 )){
                     pathData.handleRealmChange(pathData.getMajorRealm(),pathData.getMinorRealm()+1,caster.getData(ModAttachments.ENTITY_DATA));
-                } else if(pathData.getMajorRealm()<technique.getMaxMajorRealm() && technique.getStabilityHandler() != null && pathData.getCurrentRealmStability() < technique.getStabilityHandler().getMaxCultivationTicks()) {
-                    IBreakthroughInstance instance = new NineHeavenlyTribulations(1);
-                    pathData.setBreakthroughInstance(instance);
-                    pathData.setBreakingThrough(true);
-                    //pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
+                } else if(pathData.getMajorRealm()<technique.getMaxMajorRealm() && technique.getStabilityHandler() != null ) {
+                    pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
                     //pathData.setCurrentRealmStability(pathData.getCurrentRealmStability()+1);
                 }
             }else {

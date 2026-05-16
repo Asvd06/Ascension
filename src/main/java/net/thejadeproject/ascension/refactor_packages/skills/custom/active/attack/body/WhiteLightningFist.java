@@ -27,7 +27,7 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.handlers.AscensionDamageHandler;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -149,7 +149,7 @@ public class WhiteLightningFist implements ICastableSkill {
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
-        PathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
         if (bodyData == null) return 0.0F;
 
         int majorRealm = bodyData.getMajorRealm();
@@ -232,7 +232,7 @@ public class WhiteLightningFist implements ICastableSkill {
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
-        PathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
         int majorRealm = bodyData != null ? bodyData.getMajorRealm() : 0;
         int minorRealm = bodyData != null ? bodyData.getMinorRealm() : 0;
 

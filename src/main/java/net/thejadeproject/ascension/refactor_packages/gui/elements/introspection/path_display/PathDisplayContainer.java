@@ -16,12 +16,11 @@ import net.thejadeproject.ascension.refactor_packages.gui.elements.general.Conta
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.IInformationContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.introspection.BackButton;
 import net.thejadeproject.ascension.refactor_packages.paths.IPath;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
 import java.util.Collection;
-import java.util.List;
 
 public class PathDisplayContainer extends RenderableElement {
     ResourceLocation textureIdentifier = ResourceLocation.fromNamespaceAndPath(
@@ -85,18 +84,18 @@ public class PathDisplayContainer extends RenderableElement {
         //TODO add description box
     }
     public void selectPath(ResourceLocation path){
-        PathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(path);
+        IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(path);
         pathContainer.removeChildren();
         selectedTechniqueLabel.setText(Component.literal("none"));
         pathProgressBar.setPath(path);
-        if(pathData.getLastUsedTechnique() == null){
+        if(pathData.getCurrentTechnique() == null){
             IPath pathInstance = AscensionRegistries.Paths.PATHS_REGISTRY.get(path);
 
             RenderableElement element = pathInstance.getInformationContainer(getUiFrame(),pathData);
             pathContainer.addChild(element);
             if(element instanceof IInformationContainer informationContainer)informationContainer.refresh();
         }else{
-            ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+            ITechnique technique = pathData.getCurrentTechnique();
             selectedTechniqueLabel.setText(technique.getDisplayTitle());
             RenderableElement element = technique.getInformationContainer(getUiFrame(),pathData);
             pathContainer.addChild(element);
@@ -106,8 +105,8 @@ public class PathDisplayContainer extends RenderableElement {
     public void addPaths(){
         //TODO handle filter from text box
         IEntityData entityData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA);
-        Collection<PathData> pathData =  entityData.getAllPathData();
-        for(PathData path : pathData){
+        Collection<IPathData> pathData =  entityData.getAllPathData();
+        for(IPathData path : pathData){
             PathSelectionButton selectionButton = new PathSelectionButton(getUiFrame(),path.getPath()){
                 @Override
                 public void onClick() {

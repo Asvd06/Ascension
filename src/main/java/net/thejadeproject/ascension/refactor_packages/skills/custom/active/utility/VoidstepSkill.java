@@ -22,7 +22,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -100,7 +100,7 @@ public class VoidstepSkill implements ICastableSkill {
         if (!caster.hasData(ModAttachments.ENTITY_DATA)) return new CastResult(CastResult.Type.FAILURE);
 
         IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
-        PathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
+        IPathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
         int majorRealm = (pathData != null) ? pathData.getMajorRealm() : 0;
         double qiCost = BASE_QI_COST + (majorRealm * QI_COST_PER_REALM);
 
@@ -118,7 +118,7 @@ public class VoidstepSkill implements ICastableSkill {
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
-        PathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
+        IPathData pathData = entityData.getPathData(ModPaths.ESSENCE.getId());
         int majorRealm = (pathData != null) ? pathData.getMajorRealm() : 0;
         double qiCost = BASE_QI_COST + (majorRealm * QI_COST_PER_REALM);
 

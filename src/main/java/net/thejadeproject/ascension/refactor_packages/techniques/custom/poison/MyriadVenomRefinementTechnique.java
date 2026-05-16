@@ -9,7 +9,7 @@ import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenly
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
@@ -44,10 +44,10 @@ public class MyriadVenomRefinementTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         ResourceLocation techniqueId = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.getKey(this);
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
 
         if (pathData != null && techniqueId != null && pathData.getTechniqueData(techniqueId) == null) {
-            pathData.addTechniqueData(techniqueId, new MyriadVenomTechniqueData(heldEntity));
+            pathData.setTechniqueData(techniqueId, new MyriadVenomTechniqueData(heldEntity));
         }
 
         heldEntity.giveSkill(
@@ -60,7 +60,7 @@ public class MyriadVenomRefinementTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
 
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
@@ -92,9 +92,9 @@ public class MyriadVenomRefinementTechnique extends GenericTechnique {
 
     @Override
     public boolean canBreakthrough(IEntityData entityData, int majorRealm, int minorRealm, double currentProgress) {
-        PathData pathData = entityData.getPathData(getPath());
+        IPathData pathData = entityData.getPathData(getPath());
         if (pathData == null) return false;
-        ITechniqueData raw = pathData.getTechniqueData(pathData.getLastUsedTechnique());
+        ITechniqueData raw = pathData.getTechniqueData(pathData.getCurrentTechniqueId());
         if (!(raw instanceof MyriadVenomTechniqueData venomData)) return false;
         return venomData.hasMetGateForNextRealm();
     }

@@ -17,14 +17,14 @@ import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.PathDataDisplayElement;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
-import net.thejadeproject.ascension.refactor_packages.techniques.stability.IStabilityHandler;
-import net.thejadeproject.ascension.refactor_packages.techniques.stability.LnStabilityHandler;
+import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.stability.IStabilityHandler;
+import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.stability.LnStabilityHandler;
 
 import java.util.List;
 
@@ -164,12 +164,12 @@ public class FiveElementCultivationTechnique implements ITechnique {
     }
 
     @Override
-    public void onFormRemoved(IEntityData heldEntity, IEntityFormData removedForm, PathData pathData) {
+    public void onFormRemoved(IEntityData heldEntity, IEntityFormData removedForm, IPathData pathData) {
 
     }
 
     @Override
-    public void onFormAdded(IEntityData heldEntity, IEntityFormData addedForm, PathData pathData) {
+    public void onFormAdded(IEntityData heldEntity, IEntityFormData addedForm, IPathData pathData) {
 
     }
 
@@ -180,7 +180,7 @@ public class FiveElementCultivationTechnique implements ITechnique {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public RenderableElement getInformationContainer(UIFrame frame, PathData pathData) {
+    public RenderableElement getInformationContainer(UIFrame frame, IPathData pathData) {
         return new PathDataDisplayElement(frame,
                 getMajorRealmName(pathData.getMajorRealm()),
                 getMinorRealmName(pathData.getMajorRealm(),pathData.getMinorRealm()),

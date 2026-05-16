@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change;
+package net.thejadeproject.ascension.refactor_packages.handlers.realm_change;
 
 /**
  * if direction is GAINED that mean the user has entered that realm

@@ -15,7 +15,7 @@ import net.thejadeproject.ascension.refactor_packages.forms.IEntityForm;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.PathBonusHandler;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
@@ -251,7 +251,7 @@ public class RemoteEntityData implements IEntityData{
     }
 
     @Override
-    public PathData getPathData(ResourceLocation path) {
+    public IPathData getPathData(ResourceLocation path) {
 
         return EntityDataManager.getEntityData(getWatchedEntityData()).getPathData(path);
     }
@@ -262,7 +262,7 @@ public class RemoteEntityData implements IEntityData{
     }
 
     @Override
-    public Collection<PathData> getAllPathData() {
+    public Collection<IPathData> getAllPathData() {
         return EntityDataManager.getEntityData(getWatchedEntityData()).getAllPathData();
     }
 
@@ -287,12 +287,12 @@ public class RemoteEntityData implements IEntityData{
     }
 
     @Override
-    public void addPathData(ResourceLocation path, PathData pathData, ResourceLocation form) {
+    public void addPathData(ResourceLocation path, IPathData pathData, ResourceLocation form) {
 
     }
 
     @Override
-    public void addPathData(ResourceLocation path, PathData pathData) {
+    public void addPathData(ResourceLocation path, IPathData pathData) {
         EntityDataManager.getEntityData(getWatchedEntityData()).addPathData(path,pathData);
     }
 

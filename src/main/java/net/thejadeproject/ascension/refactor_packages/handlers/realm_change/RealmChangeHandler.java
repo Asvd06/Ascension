@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change;
+package net.thejadeproject.ascension.refactor_packages.handlers.realm_change;
 
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -27,6 +27,9 @@ public class RealmChangeHandler {
     }
     public static RealmChangePredicate forEachMajorRealmIn(Set<Integer> majorRealms){
         return ( data)->data.minorRealm()  == 0 && majorRealms.contains(data.majorRealm());
+    }
+    public static RealmChangePredicate forEachMinorRealmIn(Set<Integer> minorRealms){
+        return ( data)->minorRealms.contains(data.minorRealm());
     }
     public static RealmChangePredicate forEachMinorRealmIn(Set<Integer> majorRealms, Set<Integer> minorRealms){
         return ( data)-> majorRealms.contains(data.majorRealm()) && minorRealms.contains(data.minorRealm());

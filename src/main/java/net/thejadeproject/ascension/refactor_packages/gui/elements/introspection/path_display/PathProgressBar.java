@@ -14,8 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.paths.IPath;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 
 import java.text.DecimalFormat;
@@ -63,17 +62,17 @@ public class PathProgressBar extends RenderableElement {
     }
     public double getMaxQi(){
         if(selectedPath == null) return 0;
-        PathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(selectedPath);
+        IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(selectedPath);
 
         double maxQi;
-        if(pathData.getLastUsedTechnique() == null){
+        if(pathData.getCurrentTechnique() == null){
             maxQi = AscensionRegistries.Paths.PATHS_REGISTRY.get(selectedPath).getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());
-        }else maxQi = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique()).getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());
+        }else maxQi = pathData.getCurrentTechnique().getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());
         return maxQi;
     }
     public double getCurrentQi(){
         if(selectedPath == null) return 0;
-        PathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(selectedPath);
+        IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(selectedPath);
         return pathData.getCurrentRealmProgress();
     }
     public double getProgress(){

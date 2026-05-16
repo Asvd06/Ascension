@@ -3,8 +3,7 @@ package net.thejadeproject.ascension.refactor_packages.paths.custom;
 import net.minecraft.network.chat.Component;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ModTechniques;
 
 public class ComprehensionPath extends GenericPath{
@@ -18,10 +17,10 @@ public class ComprehensionPath extends GenericPath{
     }
 
     @Override
-    public PathData freshPathData(IEntityData heldEntity) {
+    public IPathData freshPathData(IEntityData heldEntity) {
         if(this == ModPaths.SWORD.get()){
-            PathData pathData = super.freshPathData(heldEntity);
-            pathData.setLastUsedTechnique(ModTechniques.SWORD_COMPREHENSION_TECHNIQUE.getId());
+            IPathData pathData = super.freshPathData(heldEntity);
+            pathData.setCurrentTechnique(ModTechniques.SWORD_COMPREHENSION_TECHNIQUE.getId());
             return pathData;
         }
         return super.freshPathData(heldEntity);

@@ -1,6 +1,5 @@
 package net.thejadeproject.ascension.refactor_packages.entity_data;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -15,8 +14,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.AscensionCraft;
@@ -41,7 +38,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.entit
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.skills.SyncHeldSkills;
 import net.thejadeproject.ascension.refactor_packages.paths.IPath;
 import net.thejadeproject.ascension.refactor_packages.paths.PathBonusHandler;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 
@@ -379,7 +376,7 @@ public class GenericEntityData implements IEntityData {
                 }
             }
 
-            for(PathData pathData:heldFormData.get(form).getAllPathData()){
+            for(IPathData pathData:heldFormData.get(form).getAllPathData()){
                 CompoundTag pathDataTag = new CompoundTag();
                 pathDataTag.putString("path",pathData.getPath().toString());
                 pathDataTag.put("data",pathData.write());
@@ -455,10 +452,11 @@ public class GenericEntityData implements IEntityData {
         if (bloodlineForm.equals(form)) {
             //TODO
         }
-        for(PathData pathData : removedForm.getAllPathData()){
+        for(IPathData pathData : removedForm.getAllPathData()){
             //TODO handle realm change to 0,0 then remove technique
             pathDataLocation.remove(pathData.getPath());
-            pathData.remove(this);
+
+            //TODO call remove on pathData
         }
         //TODO trigger onFormRemoved of everything else
         for(Map.Entry<ResourceLocation,IEntityFormData> heldForm : heldFormData.entrySet()){
@@ -472,7 +470,7 @@ public class GenericEntityData implements IEntityData {
             if(heldFormData.getBloodlineKey() != null){
                 heldFormData.getBloodline().onFormRemoved(this,form,heldFormData.getBloodlineData());
             }
-            for(PathData pathData : heldFormData.getAllPathData()) pathData.onFormRemoved(this,removedForm);
+            for(IPathData pathData : heldFormData.getAllPathData()) pathData.onFormRemoved(this,removedForm);
             heldFormData.getHeldSkills().onFormRemoved(this,form);
         }
         heldFormData.remove(form);
@@ -615,7 +613,7 @@ public class GenericEntityData implements IEntityData {
         for(ResourceLocation path : heldFormData.get(physiqueForm).getPhysique().paths()){
 
             IPath pathInstance = AscensionRegistries.Paths.PATHS_REGISTRY.get(path);
-            PathData pathData = pathInstance.freshPathData(this);
+            IPathData pathData = pathInstance.freshPathData(this);
             if(heldFormData.containsKey(pathInstance.defaultForm())){
                 addPathData(path,pathData);
             }
@@ -785,18 +783,18 @@ public class GenericEntityData implements IEntityData {
     @Override
     public ResourceLocation getTechnique(ResourceLocation path) {
         if(!pathDataLocation.containsKey(path)) return null;
-        return getPathData(path).getLastUsedTechnique();
+        return getPathData(path).getCurrentTechniqueId();
     }
 
     @Override
     public ITechniqueData getTechniqueData(ResourceLocation path) {
         if(!pathDataLocation.containsKey(path)) return null;
-        if(getPathData(path).getLastUsedTechnique() == null) return null;
-        return getPathData(path).getTechniqueData(getPathData(path).getLastUsedTechnique());
+        if(getPathData(path).getCurrentTechniqueId() == null) return null;
+        return getPathData(path).getCurrentTechniqueData();
     }
 
     @Override
-    public PathData getPathData(ResourceLocation path) {
+    public IPathData getPathData(ResourceLocation path) {
         if(!pathDataLocation.containsKey(path)) return null;
         return heldFormData.get(pathDataLocation.get(path)).getPathData(path);//TODO
     }
@@ -811,8 +809,8 @@ public class GenericEntityData implements IEntityData {
     }
 
     @Override
-    public Collection<PathData> getAllPathData() {
-        HashSet<PathData> data = new HashSet<>();
+    public Collection<IPathData> getAllPathData() {
+        HashSet<IPathData> data = new HashSet<>();
         for(IEntityFormData formData : heldFormData.values()){
             data.addAll(formData.getAllPathData());
         }
@@ -822,15 +820,15 @@ public class GenericEntityData implements IEntityData {
     @Override
     public ITechniqueData removeTechnique(ResourceLocation path) {
         if(!pathDataLocation.containsKey(path)) return null;
-        if(getPathData(path).getLastUsedTechnique() == null) return null;
+        if(getPathData(path).getCurrentTechnique() == null) return null;
 
-        ITechniqueData techniqueData = getPathData(path).getTechniqueData(getPathData(path).getLastUsedTechnique());
+        ITechniqueData techniqueData = getPathData(path).getCurrentTechniqueData();
 
-        PathData pathData = getPathData(path);
+        IPathData pathData = getPathData(path);
         pathData.handleRealmChange(pathData.getMajorRealm(),0,this);
-        ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+        ITechnique technique = pathData.getCurrentTechnique();
         technique.onTechniqueRemoved(this,techniqueData);
-        pathData.removeLastUsedTechnique();
+        pathData.setCurrentTechnique(null);
 
         if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
             PacketDistributor.sendToPlayer(serverPlayer, new SyncPathData(pathDataLocation.get(path), pathData));
@@ -857,33 +855,33 @@ public class GenericEntityData implements IEntityData {
         ITechnique techniqueInstance = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
         ResourceLocation path = techniqueInstance.getPath();
         if(!pathDataLocation.containsKey(path)) return false;
-        PathData pathData = heldFormData.get(pathDataLocation.get(path)).getPathData(path);
+        IPathData pathData = heldFormData.get(pathDataLocation.get(path)).getPathData(path);
         if(pathData == null) return false;
         ITechnique oldTechnique = null;
-        if(pathData.getLastUsedTechnique() != null){
+        if(pathData.getCurrentTechniqueId()  != null){
 
-            if(technique.equals(pathData.getLastUsedTechnique())){
+            if(technique.equals(pathData.getCurrentTechniqueId())){
                 return false; //we have already learned this technique
             }
-            oldTechnique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
-            oldTechnique.onTechniqueRemoved(this,pathData.getTechniqueData(pathData.getLastUsedTechnique()));
+            oldTechnique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getCurrentTechniqueId());
+            oldTechnique.onTechniqueRemoved(this,pathData.getTechniqueData(pathData.getCurrentTechniqueId()));
         }
 
         //TODO then check compatibility with technique history, if even 1 is not compatible we reset cultivation data
         if(oldTechnique != null){
             //there was a previous technique so check for compatibility
-            pathData.removeLastUsedTechnique();
+            pathData.getCurrentTechnique();
             for(ResourceLocation usedTechnique : pathData.getTechniqueHistory()){
                 if(techniqueInstance.isCompatibleWith(usedTechnique)) continue;
 
-                pathData.resetCultivation();
+                pathData.resetCultivation(this);
 
                 break;
             }
 
         }
-        pathData.setLastUsedTechnique(technique);
-        pathData.addTechniqueData(technique,techniqueData);
+        pathData.setCurrentTechnique(technique);
+        pathData.setTechniqueData(technique,techniqueData);
 
         techniqueInstance.onTechniqueAdded(this);
         //System.out.println("technique changed to: "+technique.toString());
@@ -894,7 +892,7 @@ public class GenericEntityData implements IEntityData {
     }
 
     @Override
-    public void addPathData(ResourceLocation path, PathData pathData, ResourceLocation form) {
+    public void addPathData(ResourceLocation path, IPathData pathData, ResourceLocation form) {
         if(pathDataLocation.containsKey(path)) return;
 
 
@@ -903,9 +901,12 @@ public class GenericEntityData implements IEntityData {
 
         pathDataLocation.put(path,pathInstance.defaultForm());
         heldFormData.get(pathInstance.defaultForm()).addPathData(path,pathData);
-        if(pathData.getLastUsedTechnique() != null && !pathData.getLastUsedTechnique().toString().equals("ascension:none")){
-            AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique()).onTechniqueAdded(this);
+
+        if(pathData.getMajorRealm() == 0 && pathData.getMinorRealm() == 0 && pathData.getCurrentTechnique() != null){
+            pathData.getCurrentTechnique().onTechniqueAdded(this);
         }
+        //TODO if it already has cultivation data re-simulate it (write to compound tag then load it)
+
         if(getAttachedEntity() instanceof ServerPlayer serverPlayer  && serverPlayer.connection != null){
             //System.out.println("sending sync for path: "+path);
             PacketDistributor.sendToPlayer(serverPlayer,new SyncPathData(pathDataLocation.get(path),pathData));
@@ -923,7 +924,7 @@ public class GenericEntityData implements IEntityData {
 
 
     @Override
-    public void addPathData(ResourceLocation path, PathData pathData) {
+    public void addPathData(ResourceLocation path, IPathData pathData) {
         addPathData(path,pathData,AscensionRegistries.getRegistryObject(path,AscensionRegistries.Paths.PATHS_REGISTRY).defaultForm());
     }
 
@@ -940,7 +941,7 @@ public class GenericEntityData implements IEntityData {
         }
 
         IEntityFormData formData = heldFormData.get(form);
-        PathData pathData = formData.getPathData(path);
+        IPathData pathData = formData.getPathData(path);
 
         if(pathData == null) {
             pathDataLocation.remove(path);
@@ -948,14 +949,16 @@ public class GenericEntityData implements IEntityData {
         }
 
         pathData.handleRealmChange(0,0,this);
-        ITechnique technique = AscensionRegistries.getRegistryObject(pathData.getLastUsedTechnique(),AscensionRegistries.Techniques.TECHNIQUES_REGISTRY);
+        ITechnique technique = pathData.getCurrentTechnique();
         if(technique != null) {
-            ITechniqueData techniqueData = pathData.getTechniqueData(pathData.getLastUsedTechnique());
-            pathData.removeLastUsedTechnique();
+            ITechniqueData techniqueData = pathData.getCurrentTechniqueData();
+            pathData.setCurrentTechnique(null);
+
             technique.onTechniqueRemoved(this,techniqueData);
 
         }
-        pathData.remove(this);
+        //TODO fully remove path
+        //pathData.remove(this);
         formData.removePathData(path);
         pathDataLocation.remove(path);
 
@@ -977,7 +980,7 @@ public class GenericEntityData implements IEntityData {
         if(!pathDataLocation.containsKey(path)) return false;
         if(!heldFormData.containsKey(pathDataLocation.get(path))) return false;
 
-        PathData data = heldFormData.get(pathDataLocation.get(path)).getPathData(path);
+        IPathData data = heldFormData.get(pathDataLocation.get(path)).getPathData(path);
         if(data == null) return false;
         return data.isBreakingThrough();
     }

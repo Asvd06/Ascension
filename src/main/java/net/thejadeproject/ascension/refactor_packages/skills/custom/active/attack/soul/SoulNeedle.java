@@ -23,7 +23,7 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.handlers.AscensionDamageHandler;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -105,7 +105,7 @@ public class SoulNeedle implements ICastableSkill {
     private float calculateDamage(ServerPlayer player) {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
-        PathData soulData = entityData.getPathData(ModPaths.SOUL.getId());
+        IPathData soulData = entityData.getPathData(ModPaths.SOUL.getId());
         int majorRealm = soulData != null ? soulData.getMajorRealm() : 0;
         int minorRealm = soulData != null ? soulData.getMinorRealm() : 0;
 

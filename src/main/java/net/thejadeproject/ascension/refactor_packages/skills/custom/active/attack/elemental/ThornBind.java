@@ -10,7 +10,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.handlers.AscensionDamageHandler;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.SkillTargetingHelper;
@@ -46,7 +46,7 @@ public class ThornBind extends SimpleInstantCastSkill {
         LivingEntity target = SkillTargetingHelper.findLookTarget(player, RANGE, 1.5D);
         if (target == null) return;
 
-        PathData wood = entityData.getPathData(ModPaths.WOOD.getId());
+        IPathData wood = entityData.getPathData(ModPaths.WOOD.getId());
         int major = wood != null ? wood.getMajorRealm() : 0;
         int minor = wood != null ? wood.getMinorRealm() : 0;
 

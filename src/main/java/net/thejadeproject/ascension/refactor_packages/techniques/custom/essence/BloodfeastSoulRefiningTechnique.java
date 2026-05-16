@@ -16,7 +16,7 @@ import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
@@ -144,11 +144,11 @@ public class BloodfeastSoulRefiningTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
         ResourceLocation techniqueId = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.getKey(this);
 
         if (pathData != null && techniqueId != null && pathData.getTechniqueData(techniqueId) == null) {
-            pathData.addTechniqueData(techniqueId, freshTechniqueData(heldEntity));
+            pathData.setTechniqueData(techniqueId, freshTechniqueData(heldEntity));
         }
 
         heldEntity.giveSkill(
@@ -161,7 +161,7 @@ public class BloodfeastSoulRefiningTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
 
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
@@ -195,7 +195,7 @@ public class BloodfeastSoulRefiningTechnique extends GenericTechnique {
         ResourceLocation techniqueId = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.getKey(this);
         if (techniqueId == null) return;
 
-        PathData pathData = entityData.getPathData(getPath());
+        IPathData pathData = entityData.getPathData(getPath());
         if (pathData == null) return;
 
         ITechniqueData rawData = pathData.getTechniqueData(techniqueId);

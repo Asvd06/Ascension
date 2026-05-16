@@ -16,7 +16,7 @@ import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroug
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
@@ -57,7 +57,7 @@ public class SwordCultivationSkill extends SimplePassiveSkill {
         if (entityData == null) return;
         if (!entityData.hasSkill(skillId)) return;
 
-        PathData swordPath = entityData.getPathData(ModPaths.SWORD.getId());
+        IPathData swordPath = entityData.getPathData(ModPaths.SWORD.getId());
         if (swordPath == null || swordPath.isBreakingThrough()) return;
 
         EntityQiContainer qiContainer = entityData.getQiContainer();
@@ -74,8 +74,7 @@ public class SwordCultivationSkill extends SimplePassiveSkill {
 
         double gain = damage * BASE_MULTIPLIER * swordBonus;
 
-        ITechnique technique = swordPath.getLastUsedTechnique() == null ? null :
-                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(swordPath.getLastUsedTechnique());
+        ITechnique technique = swordPath.getCurrentTechnique();
 
         if (technique != null && swordPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(
                 swordPath.getMajorRealm(),
@@ -107,12 +106,7 @@ public class SwordCultivationSkill extends SimplePassiveSkill {
                     swordPath.getMinorRealm(),
                     swordPath.getCurrentRealmProgress()
             )) {
-                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
-
-                if (instance != null) {
-                    swordPath.setBreakthroughInstance(instance);
-                    swordPath.setBreakingThrough(true);
-                }
+                swordPath.handleRealmChange(swordPath.getMajorRealm()+1,0,entityData);
             }
         } else {
             swordPath.setCurrentRealmProgress(swordPath.getCurrentRealmProgress() + gain);

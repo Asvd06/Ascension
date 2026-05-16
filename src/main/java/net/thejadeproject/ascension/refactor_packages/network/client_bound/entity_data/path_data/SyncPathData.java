@@ -9,10 +9,11 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
+import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.util.ByteBufUtil;
 
-public record SyncPathData(ResourceLocation form,PathData pathData)implements CustomPacketPayload {
+public record SyncPathData(ResourceLocation form, IPathData pathData)implements CustomPacketPayload {
 
     public static final Type<SyncPathData> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"sync_path_data"));
     public static final StreamCodec<RegistryFriendlyByteBuf, SyncPathData> STREAM_CODEC =
@@ -26,8 +27,9 @@ public record SyncPathData(ResourceLocation form,PathData pathData)implements Cu
     public static SyncPathData decode(RegistryFriendlyByteBuf buf){
         ResourceLocation form = ByteBufUtil.readResourceLocation(buf);
         ResourceLocation path = ByteBufUtil.readResourceLocation(buf);
-        PathData pathData = new PathData(path);
-        pathData.decode(buf);
+
+        IPathData pathData = AscensionRegistries.getRegistryObject(path,AscensionRegistries.Paths.PATHS_REGISTRY).fromNetwork(buf);
+
         return new SyncPathData(form,pathData);
     }
     @Override
@@ -38,16 +40,10 @@ public record SyncPathData(ResourceLocation form,PathData pathData)implements Cu
         context.enqueueWork(()->{
             IEntityData entityData = context.player().getData(ModAttachments.ENTITY_DATA);
             IEntityFormData formData = entityData.getEntityFormData(payload.form);
-            //System.out.println("trying to sync for form: "+payload.form);
-            //System.out.println(payload.pathData);
-            //System.out.println(formData.getEntityFormId());
+
             formData.addPathData(payload.pathData.getPath(),payload.pathData);
             entityData.setPathForm(payload.pathData.getPath(),payload.form);
-            //System.out.println("synced path data :"+formData.getPathData(payload.pathData.getPath()).getPath().toString());
-            for(PathData path: entityData.getAllPathData()){
-                //System.out.println("path: "+path.getPath());
-                //System.out.println(path);
-            }
+
         });
     }
 }

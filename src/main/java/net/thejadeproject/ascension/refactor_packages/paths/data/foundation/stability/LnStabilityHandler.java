@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.techniques.stability;
+package net.thejadeproject.ascension.refactor_packages.paths.data.foundation.stability;
 
 public class LnStabilityHandler extends GenericCalculatedStabilityHandler{
 

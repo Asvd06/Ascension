@@ -10,8 +10,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
@@ -42,10 +41,10 @@ public class CultivationProgressBar extends RenderableElement {
     }
 
     double getProgress(){
-        PathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(path);
-        if(pathData != null && pathData.getLastUsedTechnique() == null) return 0;
-        if(pathData == null || pathData.getLastUsedTechnique() == null)return 0.0;
-        ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+        IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(path);
+        if(pathData != null && pathData.getCurrentTechnique() == null) return 0;
+        if(pathData == null || pathData.getCurrentTechnique() == null) return 0.0;
+        ITechnique technique = pathData.getCurrentTechnique();
 
         return pathData.getCurrentRealmProgress()/technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm());
     }

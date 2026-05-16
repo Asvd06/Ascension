@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ModTechniques;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.ScholarlySoulTechniqueData;
@@ -39,7 +39,7 @@ public class ScholarlySoulChapterItem extends Item {
         }
 
         IEntityData entityData = serverPlayer.getData(ModAttachments.ENTITY_DATA);
-        PathData pathData = entityData.getPathData(ModPaths.SOUL.getId());
+        IPathData pathData = entityData.getPathData(ModPaths.SOUL.getId());
 
         if (pathData == null) {
             serverPlayer.displayClientMessage(

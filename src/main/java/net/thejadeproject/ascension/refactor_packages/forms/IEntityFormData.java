@@ -3,7 +3,7 @@ package net.thejadeproject.ascension.refactor_packages.forms;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodline;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodlineData;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 
@@ -24,10 +24,10 @@ public interface IEntityFormData extends IDataInstance {
 
 
 
-    void addPathData(ResourceLocation path,PathData pathData);
-    PathData getPathData(ResourceLocation path);
+    void addPathData(ResourceLocation path, IPathData pathData);
+    IPathData getPathData(ResourceLocation path);
     void removePathData(ResourceLocation path);
-    Collection<PathData> getAllPathData();
+    Collection<IPathData> getAllPathData();
     Collection<ResourceLocation> getPaths();
     boolean hasPathData(ResourceLocation path);
 

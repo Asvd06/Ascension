@@ -8,9 +8,7 @@ import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodlineData;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityForm;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
-import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.skills.SyncHeldSkills;
-import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.HeldSkills;
@@ -125,7 +123,7 @@ public class GenericForm implements IEntityForm {
         //System.out.println("reading " + paths + " paths" );
         for(int i =0;i<paths;i++){
             ResourceLocation path = ResourceLocation.parse((String) buf.readCharSequence(buf.readInt(),Charset.defaultCharset()));
-            PathData pathData = AscensionRegistries.Paths.PATHS_REGISTRY.get(path).fromNetwork(buf);
+            IPathData pathData = AscensionRegistries.Paths.PATHS_REGISTRY.get(path).fromNetwork(buf);
             formData.addPathData(path,pathData);
         }
         return formData;

@@ -4,7 +4,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodline;
@@ -13,7 +12,7 @@ import net.thejadeproject.ascension.refactor_packages.forms.IEntityForm;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.physique.SyncPhysique;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.skills.SyncHeldSkills;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -28,7 +27,7 @@ import java.util.UUID;
 public class GenericFormData implements IEntityFormData {
     private UUID attachedEntity;
     private final ResourceLocation formId;
-    private final HashMap<ResourceLocation,PathData> pathData = new HashMap<>();
+    private final HashMap<ResourceLocation, IPathData> pathData = new HashMap<>();
 
     private ResourceLocation physique;
     private IPhysiqueData physiqueData;
@@ -75,12 +74,12 @@ public class GenericFormData implements IEntityFormData {
     }
 
     @Override
-    public void addPathData(ResourceLocation path, PathData pathData) {
+    public void addPathData(ResourceLocation path, IPathData pathData) {
         this.pathData.put(path,pathData);
     }
 
     @Override
-    public PathData getPathData(ResourceLocation path) {
+    public IPathData getPathData(ResourceLocation path) {
         return pathData.get(path);
     }
 
@@ -90,7 +89,7 @@ public class GenericFormData implements IEntityFormData {
     }
 
     @Override
-    public Collection<PathData> getAllPathData() {
+    public Collection<IPathData> getAllPathData() {
         return pathData.values();
     }
 

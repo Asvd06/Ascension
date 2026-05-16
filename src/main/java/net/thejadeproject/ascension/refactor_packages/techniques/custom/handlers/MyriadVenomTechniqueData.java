@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 
 public class MyriadVenomTechniqueData implements ITechniqueData {
@@ -38,7 +38,7 @@ public class MyriadVenomTechniqueData implements ITechniqueData {
 
     public int getCurrentMajorRealm() {
         if (entityData == null) return 0;
-        PathData pathData = entityData.getPathData(ModPaths.POISON.getId());
+        IPathData pathData = entityData.getPathData(ModPaths.POISON.getId());
         if (pathData == null) return 0;
         return pathData.getMajorRealm();
     }

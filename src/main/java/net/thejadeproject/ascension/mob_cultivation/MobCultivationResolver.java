@@ -4,7 +4,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 
 import java.util.Comparator;
 
@@ -34,7 +34,7 @@ public final class MobCultivationResolver {
 
 
     public static MobCultivationDefinition resolveFromPlayer(Player player) {
-        PathData strongest = getStrongestPath(player);
+        IPathData strongest = getStrongestPath(player);
         if (strongest == null) {
             return MobCultivationList.getFirst();
         }
@@ -46,13 +46,13 @@ public final class MobCultivationResolver {
     }
 
 
-    private static PathData getStrongestPath(Player player) {
+    private static IPathData getStrongestPath(Player player) {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         if (entityData == null) return null;
 
-        PathData best = null;
+        IPathData best = null;
 
-        for (PathData candidate : entityData.getAllPathData()) {
+        for (IPathData candidate : entityData.getAllPathData()) {
             if (candidate == null) continue;
 
             if (best == null || isStronger(candidate, best)) {
@@ -63,7 +63,7 @@ public final class MobCultivationResolver {
         return best;
     }
 
-    private static boolean isStronger(PathData candidate, PathData currentBest) {
+    private static boolean isStronger(IPathData candidate, IPathData currentBest) {
         if (candidate.getMajorRealm() != currentBest.getMajorRealm()) {
             return candidate.getMajorRealm() > currentBest.getMajorRealm();
         }
@@ -132,7 +132,7 @@ public final class MobCultivationResolver {
     }
 
     public static int resolvePlayerCombatPower(Player player) {
-        PathData strongest = getStrongestPath(player);
+        IPathData strongest = getStrongestPath(player);
         if (strongest == null) {
             return 0;
         }

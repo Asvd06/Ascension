@@ -2,7 +2,7 @@ package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.uni
 
 import net.minecraft.server.level.ServerPlayer;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
 
@@ -41,7 +41,7 @@ public class RegenerationBoostSkill extends SimplePassiveSkill implements ITicki
 
         int highestMajorRealm = 0;
 
-        for (PathData pathData : entityData.getAllPathData()) {
+        for (IPathData pathData : entityData.getAllPathData()) {
             if (pathData == null) continue;
 
             highestMajorRealm = Math.max(
@@ -50,7 +50,7 @@ public class RegenerationBoostSkill extends SimplePassiveSkill implements ITicki
             );
         }
 
-        return Math.max(0, highestMajorRealm);
+        return highestMajorRealm;
     }
 
     private float getHealAmount(int majorRealm) {

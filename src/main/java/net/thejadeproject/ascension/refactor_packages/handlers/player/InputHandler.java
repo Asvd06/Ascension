@@ -43,7 +43,6 @@ public class InputHandler {
             //System.out.println("pressed skill cast key");
 
         }));
-        put(Minecraft.getInstance().options.keyAttack,new ActionHandler("attack_action"));
         put(SKILL_WHEEL_OVERLAY,new ActionHandler("skill_wheel").setOnDown(mod->{
             ((SkillHotBarContainer) EasyOverlayHandler.getFrame(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"skill_wheel")).getRoot()).open();
         }).setOnRelease(mod->{

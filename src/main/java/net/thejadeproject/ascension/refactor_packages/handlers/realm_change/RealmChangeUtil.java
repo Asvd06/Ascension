@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.techniques.helpers.realm_change;
+package net.thejadeproject.ascension.refactor_packages.handlers.realm_change;
 
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;

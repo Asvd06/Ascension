@@ -3,14 +3,12 @@ package net.thejadeproject.ascension.refactor_packages.skills.custom.passive.bod
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -44,7 +42,7 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         if (!entityData.hasSkill(skillId)) return;
 
-        PathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
         if (bodyPath == null || bodyPath.isBreakingThrough()) return;
 
         EntityQiContainer qiContainer = entityData.getQiContainer();
@@ -54,8 +52,7 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
 
         double bodyBonus = Math.max(1.0D, entityData.getPathBonusHandler().getPathBonus(ModPaths.BODY.getId()));
         double gain = damage * BASE_MULTIPLIER * bodyBonus;
-        ITechnique technique = bodyPath.getLastUsedTechnique() == null ? null :
-                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(bodyPath.getLastUsedTechnique());
+        ITechnique technique = bodyPath.getCurrentTechnique();
 
         if (technique != null && bodyPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm())) {
             bodyPath.setCurrentRealmProgress(technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm()));
@@ -69,11 +66,7 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
                 bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
             } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
                     && technique.canBreakthrough(entityData, bodyPath.getMajorRealm(), bodyPath.getMinorRealm(), bodyPath.getCurrentRealmProgress())) {
-                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
-                if (instance != null) {
-                    bodyPath.setBreakthroughInstance(instance);
-                    bodyPath.setBreakingThrough(true);
-                }
+                bodyPath.handleRealmChange(bodyPath.getMajorRealm()+1,0,entityData);
             }
         } else {
             bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);

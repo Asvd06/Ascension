@@ -10,7 +10,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.handlers.AscensionDamageHandler;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.SkillTargetingHelper;
@@ -46,7 +46,7 @@ public class ThunderPalm extends SimpleInstantCastSkill {
         LivingEntity target = SkillTargetingHelper.findLookTarget(player, RANGE, 1.0D);
         if (target == null) return;
 
-        PathData lightning = entityData.getPathData(ModPaths.LIGHTNING.getId());
+        IPathData lightning = entityData.getPathData(ModPaths.LIGHTNING.getId());
         int major = lightning != null ? lightning.getMajorRealm() : 0;
         int minor = lightning != null ? lightning.getMinorRealm() : 0;
 

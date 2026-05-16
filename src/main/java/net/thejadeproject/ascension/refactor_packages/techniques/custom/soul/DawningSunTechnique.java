@@ -4,11 +4,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
@@ -49,7 +48,7 @@ public class DawningSunTechnique extends GenericTechnique {
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
         heldEntity.giveSkill(ModSkills.DAWNING_SUN_CULTIVATION_SKILL.getId(), ModForms.MORTAL_VESSEL.getId());
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
         refreshUniversalTechniqueSkills(heldEntity);
 
         refreshRealmUnlockSkills(
@@ -60,7 +59,7 @@ public class DawningSunTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
-        PathData pathData = heldEntity.getPathData(getPath());
+        IPathData pathData = heldEntity.getPathData(getPath());
         if (pathData != null) {
             pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
         }

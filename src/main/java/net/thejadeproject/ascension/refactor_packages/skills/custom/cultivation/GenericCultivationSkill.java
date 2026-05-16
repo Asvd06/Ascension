@@ -10,9 +10,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -22,21 +19,18 @@ import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroug
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skills.cultivation.CultivationProgressBar;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
-import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndReason;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
-import net.thejadeproject.ascension.refactor_packages.skills.ISkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.CastType;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.skill_data.GenericCultivationSkillData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
-import org.checkerframework.checker.guieffect.qual.UI;
 
 import java.util.Set;
 
@@ -162,12 +156,12 @@ public class GenericCultivationSkill implements ICastableSkill {
         if(!caster.level().isClientSide()){
 
             //System.out.println("Player is trying to cultivate");
-            PathData pathData = caster.getData(ModAttachments.ENTITY_DATA).getPathData(path);
+            IPathData pathData = caster.getData(ModAttachments.ENTITY_DATA).getPathData(path);
 
-            if (pathData == null || pathData.getLastUsedTechnique() == null) return false;
+            if (pathData == null || pathData.getCurrentTechnique() == null) return false;
 
             //TODO add a cultivate event
-            ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+            ITechnique technique = pathData.getCurrentTechnique();
             if (technique == null) return false;
             double amount = getEffectiveRate(caster);
 
@@ -192,14 +186,7 @@ public class GenericCultivationSkill implements ICastableSkill {
                                 pathData.getCurrentRealmProgress()
                         )
                 ) {
-                    IBreakthroughInstance instance = technique.freshBreakthroughData(
-                            caster.getData(ModAttachments.ENTITY_DATA)
-                    );
-
-                    if (instance != null) {
-                        pathData.setBreakthroughInstance(instance);
-                        pathData.setBreakingThrough(true);
-                    }
+                    pathData.handleRealmChange(pathData.getMajorRealm()+1,0,caster.getData(ModAttachments.ENTITY_DATA));
                 }
             }else {
                 pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress()+amount);

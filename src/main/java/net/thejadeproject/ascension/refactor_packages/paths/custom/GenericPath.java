@@ -12,8 +12,9 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.PathDataDisplayElement;
 import net.thejadeproject.ascension.refactor_packages.paths.IPath;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.paths.PathInteraction;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.SimplePathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class GenericPath implements IPath {
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public RenderableElement getInformationContainer(UIFrame frame, PathData pathData) {
+    public RenderableElement getInformationContainer(UIFrame frame, IPathData pathData) {
         return new PathDataDisplayElement(frame,
                 getMajorRealmName(pathData.getMajorRealm()),
                 getMinorRealmName(pathData.getMajorRealm(),pathData.getMinorRealm()),
@@ -160,14 +161,14 @@ public class GenericPath implements IPath {
     }
 
     @Override
-    public PathData freshPathData(IEntityData heldEntity) {
-        return new PathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this));
+    public IPathData freshPathData(IEntityData heldEntity) {
+        return new SimplePathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this));
     }
 
     @Override
-    public PathData fromCompound(CompoundTag tag, IEntityData heldEntity) {
+    public IPathData fromCompound(CompoundTag tag, IEntityData heldEntity) {
         //todo handle cultivation data simulations
-        PathData pathData = freshPathData(heldEntity);
+        IPathData pathData = freshPathData(heldEntity);
         heldEntity.addPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this),pathData);
         pathData = heldEntity.getPathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this)); //makes sure we are modifying the saved instance
         pathData.load(tag,heldEntity);
@@ -175,9 +176,9 @@ public class GenericPath implements IPath {
     }
 
     @Override
-    public PathData fromNetwork(RegistryFriendlyByteBuf buf) {
-        PathData pathData = new PathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this));
-        pathData.decode(buf);
+    public IPathData fromNetwork(RegistryFriendlyByteBuf buf) {
+        IPathData pathData = new SimplePathData(AscensionRegistries.Paths.PATHS_REGISTRY.getKey(this));
+        pathData.load(buf);
         return pathData;
     }
 }

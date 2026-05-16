@@ -8,7 +8,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
@@ -38,7 +38,7 @@ public class MarrowFurnaceCultivationSkill extends SimplePassiveSkill {
         if (entityData == null) return;
         if (!entityData.hasSkill(ModSkills.MARROW_FURNACE.getId())) return;
 
-        PathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
         if (bodyPath == null || bodyPath.isBreakingThrough()) return;
 
         EntityQiContainer qiContainer = entityData.getQiContainer();
@@ -61,9 +61,7 @@ public class MarrowFurnaceCultivationSkill extends SimplePassiveSkill {
         double effectiveDamage = Math.sqrt(damage);
         double gain = effectiveDamage * multiplier * bodyBonus;
 
-        ITechnique technique = bodyPath.getLastUsedTechnique() == null ? null :
-                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(bodyPath.getLastUsedTechnique());
-
+        ITechnique technique = bodyPath.getCurrentTechnique();
         if (technique == null) return;
 
         double maxProgress = technique.getMaxQiForRealm(
@@ -93,12 +91,7 @@ public class MarrowFurnaceCultivationSkill extends SimplePassiveSkill {
                     bodyPath.getMinorRealm(),
                     bodyPath.getCurrentRealmProgress()
             )) {
-                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
-
-                if (instance != null) {
-                    bodyPath.setBreakthroughInstance(instance);
-                    bodyPath.setBreakingThrough(true);
-                }
+                if(bodyPath.getCurrentTechnique().getMaxMajorRealm() < bodyPath.getMajorRealm()) bodyPath.handleRealmChange(bodyPath.getMajorRealm()+1,0,entityData);
             }
         } else {
             bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);

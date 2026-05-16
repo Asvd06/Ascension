@@ -11,7 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.SimpleInstantCastSkill;
@@ -42,7 +42,7 @@ public class GaleStep extends SimpleInstantCastSkill {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         if (!entityData.getQiContainer().tryConsumeQi(QI_COST)) return;
 
-        PathData wind = entityData.getPathData(ModPaths.WIND.getId());
+        IPathData wind = entityData.getPathData(ModPaths.WIND.getId());
         int major = wind != null ? wind.getMajorRealm() : 0;
 
         Vec3 dir = player.getLookAngle().normalize();

@@ -27,7 +27,7 @@ import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skills.cultivation.CultivationProgressBar;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
@@ -84,19 +84,18 @@ public class ScholarlySoulCultivationSkill implements ICastableSkill {
 
         if (!caster.level().isClientSide()) {
             IEntityData entityData = caster.getData(ModAttachments.ENTITY_DATA);
-            PathData pathData = entityData.getPathData(SOUL_PATH);
+            IPathData pathData = entityData.getPathData(SOUL_PATH);
 
             if (pathData == null) return false;
             if (pathData.isBreakingThrough()) return false;
-            if (pathData.getLastUsedTechnique() == null) return false;
+            if (pathData.getCurrentTechnique() == null) return false;
 
-            ITechnique rawTechnique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
-
+            ITechnique rawTechnique = pathData.getCurrentTechnique();
             if (!(rawTechnique instanceof ScholarlySoulTechnique technique)) {
                 return false;
             }
 
-            ITechniqueData techniqueData = pathData.getTechniqueData(pathData.getLastUsedTechnique());
+            ITechniqueData techniqueData = pathData.getTechniqueData(pathData.getCurrentTechniqueId());
 
             if (!technique.canCultivateMajorRealm(techniqueData, pathData.getMajorRealm())) {
                 return false;
@@ -141,12 +140,9 @@ public class ScholarlySoulCultivationSkill implements ICastableSkill {
                             technique.canCultivateMajorRealm(techniqueData, nextMajorRealm)
                                     && pathData.getMajorRealm() < technique.getMaxMajorRealm()
                                     && technique.getStabilityHandler() != null
-                                    && pathData.getCurrentRealmStability() < technique.getStabilityHandler().getMaxCultivationTicks()
-                    ) {
-                        IBreakthroughInstance instance = new NineHeavenlyTribulations(1);
 
-                        pathData.setBreakthroughInstance(instance);
-                        pathData.setBreakingThrough(true);
+                    ) {
+                        pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
                     }
                 }
             } else {

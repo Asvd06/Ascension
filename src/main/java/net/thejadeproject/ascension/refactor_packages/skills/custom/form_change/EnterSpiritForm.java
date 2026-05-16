@@ -19,7 +19,6 @@ import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.entity.custom.form.PlayerBodyEntity;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -28,8 +27,6 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.CastType;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
-
-import java.util.UUID;
 
 public class EnterSpiritForm implements ICastableSkill {
     @Override

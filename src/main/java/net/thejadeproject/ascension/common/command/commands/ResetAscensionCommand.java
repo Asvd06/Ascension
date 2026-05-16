@@ -29,7 +29,7 @@ import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.SyncEntityForm;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncCurrentHealth;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.HeldSkill;
 import net.thejadeproject.ascension.util.ModAttributes;
@@ -315,7 +315,7 @@ public class ResetAscensionCommand {
     private static void resetPlayerTechniques(IEntityData entityData) {
         List<ResourceLocation> pathsToReset = new ArrayList<>();
 
-        for (PathData pathData : entityData.getAllPathData()) {
+        for (IPathData pathData : entityData.getAllPathData()) {
             if (pathData != null && entityData.getTechnique(pathData.getPath()) != null) {
                 pathsToReset.add(pathData.getPath());
             }
@@ -329,7 +329,7 @@ public class ResetAscensionCommand {
     private static void resetPlayerPaths(IEntityData entityData) {
         List<ResourceLocation> pathsToRemove = new ArrayList<>();
 
-        for (PathData pathData : entityData.getAllPathData()) {
+        for (IPathData pathData : entityData.getAllPathData()) {
             if (pathData == null) continue;
 
             ResourceLocation pathId = pathData.getPath();

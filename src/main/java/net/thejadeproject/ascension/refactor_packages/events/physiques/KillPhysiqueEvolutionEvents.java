@@ -14,7 +14,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.helpers.PhysiqueEvolutionHelper;
 import net.thejadeproject.ascension.refactor_packages.util.PhysiqueEvolutionEventUtil;
@@ -75,7 +75,7 @@ public final class KillPhysiqueEvolutionEvents {
         }
 
         if (PhysiqueEvolutionEventUtil.hasPhysique(entityData, ModPhysiques.BLOOD_FIEND.getId())) {
-            PathData soulData = entityData.getPathData(ModPaths.SOUL.getId());
+            IPathData soulData = entityData.getPathData(ModPaths.SOUL.getId());
 
             if (soulData == null || soulData.getMajorRealm() < BLOOD_WRAITH_REQUIRED_SOUL_MAJOR_REALM) {
                 int weakSoulKills = tag.getInt(TAG_FIEND_WEAK_SOUL_KILLS) + 1;

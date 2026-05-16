@@ -14,7 +14,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.helpers.PhysiqueEvolutionHelper;
 import net.thejadeproject.ascension.refactor_packages.util.PhysiqueEvolutionEventUtil;
@@ -137,7 +137,7 @@ public final class PacifistPhysiqueEvolutionEvents {
 
         if (progress < BLESSED_PEACE_TICKS_REQUIRED) return;
 
-        PathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
         if (bodyData == null) return;
 
         if (bodyData.getMajorRealm() < VIRTUOSO_REQUIRED_BODY_MAJOR_REALM) return;

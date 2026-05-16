@@ -3,14 +3,13 @@ package net.thejadeproject.ascension.refactor_packages.util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.NeoForge;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
@@ -22,12 +21,12 @@ public class CultivationUtil {
     public static boolean tryCultivate(Entity entity, ResourceLocation path,List<ResourceLocation> attributedPaths,double amount){
         IEntityData entityData = entity.getData(ModAttachments.ENTITY_DATA);
         //System.out.println("Player is trying to cultivate");
-        PathData pathData = entity.getData(ModAttachments.ENTITY_DATA).getPathData(path);
+        IPathData pathData = entity.getData(ModAttachments.ENTITY_DATA).getPathData(path);
 
         if(pathData == null) return false;
         if(pathData.isBreakingThrough()) return false;
 
-        ITechnique technique = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(pathData.getLastUsedTechnique());
+        ITechnique technique = pathData.getCurrentTechnique();
 
         double base = amount*(entityData.getPathBonusHandler().getPathBonus(path));
         for(ResourceLocation attributedPath : attributedPaths){
@@ -49,12 +48,9 @@ public class CultivationUtil {
                     pathData.getCurrentRealmProgress()
             )){
                 pathData.handleRealmChange(pathData.getMajorRealm(),pathData.getMinorRealm()+1,entity.getData(ModAttachments.ENTITY_DATA));
-            } else if(pathData.getMajorRealm()<technique.getMaxMajorRealm() && technique.getStabilityHandler() != null && pathData.getCurrentRealmStability() < technique.getStabilityHandler().getMaxCultivationTicks()) {
-                //TODO temporary
-                IBreakthroughInstance instance = new NineHeavenlyTribulations(1);
-                pathData.setBreakthroughInstance(instance);
-                pathData.setBreakingThrough(true);
-                //pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
+            } else if(pathData.getMajorRealm()<technique.getMaxMajorRealm() && technique.getStabilityHandler() != null) {
+
+                pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
                 //pathData.setCurrentRealmStability(pathData.getCurrentRealmStability()+1);
             }
         }else {

@@ -15,7 +15,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.PhysiqueChangeEvent;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.helpers.PhysiqueEvolutionHelper;
 import net.thejadeproject.ascension.refactor_packages.util.PhysiqueEvolutionEventUtil;
@@ -129,7 +129,7 @@ public final class EssenceBonePhysiqueEvolutionEvents {
             ResourceLocation targetPhysique,
             EssenceBoneRitual ritual
     ) {
-        PathData essenceData = entityData.getPathData(ModPaths.ESSENCE.getId());
+        IPathData essenceData = entityData.getPathData(ModPaths.ESSENCE.getId());
 
         if (essenceData == null || essenceData.getMajorRealm() < requiredEssenceMajorRealm) {
             clearTimer(player);
@@ -256,7 +256,7 @@ public final class EssenceBonePhysiqueEvolutionEvents {
             return;
         }
 
-        PathData essenceData = entityData.getPathData(ModPaths.ESSENCE.getId());
+        IPathData essenceData = entityData.getPathData(ModPaths.ESSENCE.getId());
 
         if (essenceData == null || essenceData.getMajorRealm() < DIVINE_REQUIRED_ESSENCE_MAJOR_REALM) {
             return;

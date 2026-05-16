@@ -11,7 +11,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
@@ -39,7 +39,7 @@ public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
         if (damage < MIN_DAMAGE) return;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
-        PathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
+        IPathData bodyPath = entityData.getPathData(ModPaths.BODY.getId());
         if (bodyPath == null || bodyPath.isBreakingThrough()) return;
 
         if (!entityData.hasSkill(ModSkills.WHITE_LIGHTNING_CULTIVATION_SKILL.getId())) return;
@@ -52,8 +52,7 @@ public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
         double multiplier = BASE_MULTIPLIER * getCultivationMultiplier(player);
         double gain = damage * multiplier;
 
-        ITechnique technique = bodyPath.getLastUsedTechnique() == null ? null :
-                AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(bodyPath.getLastUsedTechnique());
+        ITechnique technique = bodyPath.getCurrentTechnique();
 
         if (technique != null && bodyPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm())) {
             bodyPath.setCurrentRealmProgress(technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm()));
@@ -67,11 +66,7 @@ public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
                 bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
             } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
                     && technique.canBreakthrough(entityData, bodyPath.getMajorRealm(), bodyPath.getMinorRealm(), bodyPath.getCurrentRealmProgress())) {
-                IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
-                if (instance != null) {
-                    bodyPath.setBreakthroughInstance(instance);
-                    bodyPath.setBreakingThrough(true);
-                }
+                bodyPath.handleRealmChange(bodyPath.getMajorRealm()+1,0,entityData);
             }
         } else {
             bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);

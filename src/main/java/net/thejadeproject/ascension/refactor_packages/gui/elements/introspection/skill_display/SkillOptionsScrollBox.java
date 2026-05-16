@@ -7,14 +7,10 @@ import net.lucent.easygui.gui.events.type.EasyEvent;
 import net.lucent.easygui.gui.events.type.EasyMouseEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.general.ScrollBox;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.introspection.skill_display.skill_buttons.SkillSelectionButton;
-import net.thejadeproject.ascension.refactor_packages.network.server_bound.skills.ClearSlot;
-import net.thejadeproject.ascension.refactor_packages.network.server_bound.skills.UpdateSkillSlot;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
 
 import java.util.Collection;
 

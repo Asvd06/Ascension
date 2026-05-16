@@ -10,14 +10,9 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
-import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
-import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
-import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
-import net.thejadeproject.ascension.refactor_packages.techniques.stability.IStabilityHandler;
-
-import java.util.UUID;
+import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.stability.IStabilityHandler;
 
 public interface ITechnique {
 
@@ -37,8 +32,8 @@ public interface ITechnique {
     void onRealmChange(IEntityData entityData,int oldMajorRealm,int oldMinorRealm,int newMajorRealm,int newMinorRealm);
 
 
-    void onFormRemoved(IEntityData heldEntity, IEntityFormData removedForm,PathData pathData);
-    void onFormAdded(IEntityData heldEntity,IEntityFormData addedForm,PathData pathData);
+    void onFormRemoved(IEntityData heldEntity, IEntityFormData removedForm, IPathData pathData);
+    void onFormAdded(IEntityData heldEntity,IEntityFormData addedForm,IPathData pathData);
 
 
     //figure something out with compatibility
@@ -75,7 +70,7 @@ public interface ITechnique {
     default ResourceLocation getDefaultForm(){
         return AscensionRegistries.Paths.PATHS_REGISTRY.get(getPath()).defaultForm();
     }
-    RenderableElement getInformationContainer(UIFrame frame,PathData pathData);
+    RenderableElement getInformationContainer(UIFrame frame,IPathData pathData);
 
     IStabilityHandler getStabilityHandler();
 

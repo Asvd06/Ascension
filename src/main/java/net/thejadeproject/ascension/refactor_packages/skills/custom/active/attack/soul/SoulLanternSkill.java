@@ -22,7 +22,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.PathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
@@ -59,7 +59,7 @@ public class SoulLanternSkill implements ICastableSkill {
         LivingEntity target = SkillTargetingHelper.findLookTarget(player, RANGE, 1.0D);
         if (target == null) return;
 
-        PathData soulPath = entityData.getPathData(ModPaths.SOUL.getId());
+        IPathData soulPath = entityData.getPathData(ModPaths.SOUL.getId());
         int major = soulPath != null ? soulPath.getMajorRealm() : 0;
 
         int duration = DURATION_TICKS + major * 30;
