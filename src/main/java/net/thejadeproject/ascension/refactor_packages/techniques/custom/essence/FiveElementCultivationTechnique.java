@@ -37,7 +37,7 @@ public class FiveElementCultivationTechnique implements ITechnique {
             ModPaths.WOOD.getId()
     );
     private final BasicStatChangeHandler statChangeHandler;
-    private final IStabilityHandler stabilityHandler = new LnStabilityHandler();
+    private final IStabilityHandler stabilityHandler = new LnStabilityHandler(100);
 
     public FiveElementCultivationTechnique(BasicStatChangeHandler statChangeHandler) {
         this.statChangeHandler = statChangeHandler;

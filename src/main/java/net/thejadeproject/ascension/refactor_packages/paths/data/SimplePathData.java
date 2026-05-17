@@ -182,21 +182,25 @@ public class SimplePathData implements IPathData{
     @Override
     public void minorRealmUp(IEntityData entityData) {
         progress = 0;
+        if(getCurrentTechnique() != null) getCurrentTechnique().onRealmChange(entityData,getMajorRealm(),getMinorRealm()-1,getMajorRealm(),getMinorRealm());
     }
 
     @Override
     public void minorRealmDown(IEntityData entityData) {
-
+        if(getCurrentTechnique() != null) getCurrentTechnique().onRealmChange(entityData,getMajorRealm(),getMinorRealm()+1,getMajorRealm(),getMinorRealm());
     }
 
     @Override
     public void majorRealmUp(IEntityData entityData) {
         techniqueHistory.add(currentTechnique);
         progress = 0;
+        if(getCurrentTechnique() != null) getCurrentTechnique().onRealmChange(entityData,getMajorRealm()-1,getMaxMinorRealm(getMajorRealm()-1),getMajorRealm(),getMinorRealm());
     }
 
     @Override
     public void majorRealmDown(IEntityData entityData) {
+        progress = 0;
+        if(getCurrentTechnique() != null) getCurrentTechnique().onRealmChange(entityData,getMajorRealm()+1,0,getMajorRealm(),getMinorRealm());
 
     }
     //────────────────────────Data Handling──────────────────────────

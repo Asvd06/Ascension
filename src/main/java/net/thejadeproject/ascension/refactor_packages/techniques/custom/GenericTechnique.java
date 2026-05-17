@@ -41,7 +41,7 @@ public class GenericTechnique implements ITechnique {
     private Component description;
     private double baseRate;
     private Set<ResourceLocation> secondaryPaths;
-    private final IStabilityHandler stabilityHandler = new LnStabilityHandler();
+    private final IStabilityHandler stabilityHandler = new LnStabilityHandler(100);
     private  BasicStatChangeHandler statChangeHandler = new BasicStatChangeHandler();
     private RealmChangeHandler realmChangeHandler = RealmChangeHandler.fresh().build();
     public GenericTechnique(ResourceLocation path,Component title,double baseRate,Set<ResourceLocation> secondaryPaths){
