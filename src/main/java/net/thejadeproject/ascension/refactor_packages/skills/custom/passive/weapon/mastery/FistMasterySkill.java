@@ -11,41 +11,31 @@ import net.thejadeproject.ascension.refactor_packages.skills.vfx.weaponvfx.VfxCo
 import net.thejadeproject.ascension.refactor_packages.skills.vfx.weaponvfx.WeaponSwingVfxEntity;
 import net.thejadeproject.ascension.refactor_packages.techniques.ModTechniques;
 import net.thejadeproject.ascension.util.ModTags;
+import org.joml.Vector3f;
 
 public class FistMasterySkill extends GenericWeaponMasterySkill{
+    static {
+        final String T = WeaponSwingVfxEntity.TYPE_FIST;
+
+    }
     @Override
     protected ResourceLocation getPathId() {
         return ModPaths.FIST.getId();
     }
-
     @Override
     protected TagKey<Item> getWeaponTag() {
         return ModTags.Items.FIST;
     }
-
     @Override
-    public boolean matchesWeapon(ItemStack stack) {
-        return stack.isEmpty() || (getWeaponTag() != null && stack.is(getWeaponTag()));
-    }
-
+    public boolean matchesWeapon(ItemStack stack) { return stack.isEmpty() || (getWeaponTag() != null && stack.is(getWeaponTag())); }
     @Override
-    protected String getVfxType() { return "";}
-
+    protected String getVfxType() { return WeaponSwingVfxEntity.TYPE_FIST;}
+    @Override protected String getFallbackColor() { return "simple_blue"; }
+    @Override protected Vector3f getEffectRadius() { return new Vector3f(0.8f, 0.8f, 4.5f); }
     @Override
-    public boolean matchesDamage(ServerPlayer player, DamageSource source) {
-        return super.matchesDamage(player, source) && source.getDirectEntity() == player;
-    }
-
+    protected String getTitleKey() { return "ascension.skill.fist_mastery_skill"; }
     @Override
-    protected String getTitleKey() {
-        return "ascension.skill.fist_mastery_skill";
-    }
-
-    @Override
-    protected String getDescriptionKey() {
-        return "ascension.skill.fist_mastery.description_skill";
-    }
-
+    protected String getDescriptionKey() { return "ascension.skill.fist_mastery.description_skill"; }
     @Override
     protected String getIconPath() { return "textures/spells/fist_aura.png"; }
 }
