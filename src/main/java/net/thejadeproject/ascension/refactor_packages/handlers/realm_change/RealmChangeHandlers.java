@@ -37,7 +37,7 @@ public class RealmChangeHandlers {
         return data ->{
             ResourceLocation id = ResourceLocation.fromNamespaceAndPath(
                     AscensionCraft.MOD_ID,
-                    stat.toString()+"_"+data.majorRealm()+"_"+data.minorRealm()
+                    stat.getDisplayName().getString().toLowerCase()+"_"+data.majorRealm()+"_"+data.minorRealm()
             );
             ResourceLocation groupId = ResourceLocation.fromNamespaceAndPath(
                     AscensionCraft.MOD_ID,

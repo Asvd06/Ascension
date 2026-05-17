@@ -42,6 +42,7 @@ import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.BloodfeastSoulRefiningTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.BloodfeastTechniqueData;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
 
 import java.util.List;
 
@@ -204,47 +205,13 @@ public class BloodfeastBanquetSkill implements ICastableSkill {
             ITechniqueData rawData,
             double cultivationGain
     ) {
+
+        int oldMajor = pathData.getMajorRealm();
+        CultivationUtil.tryCultivate(entityData.getAttachedEntity(),ESSENCE_PATH,List.of(),cultivationGain);
         double maxQi = technique.getMaxQiForRealm(pathData.getMajorRealm(), pathData.getMinorRealm());
 
-        if (pathData.getCurrentRealmProgress() + cultivationGain >= maxQi) {
-            pathData.setCurrentRealmProgress(maxQi);
-
-            // Minor realm breakthrough
-            if (
-                    pathData.getMinorRealm() < technique.getMaxMinorRealm(pathData.getMajorRealm())
-                            && technique.canBreakthroughMinorRealm(
-                            entityData,
-                            pathData.getMajorRealm(),
-                            pathData.getMinorRealm(),
-                            pathData.getCurrentRealmProgress()
-                    )
-            ) {
-                pathData.handleRealmChange(
-                        pathData.getMajorRealm(),
-                        pathData.getMinorRealm() + 1,
-                        entityData
-                );
-            }
-            // Major realm breakthrough — gate-gated
-            else if (
-                    pathData.getMajorRealm() < technique.getMaxMajorRealm()
-                            && technique.getStabilityHandler() != null
-            ) {
-                int nextMajor = pathData.getMajorRealm() + 1;
-
-                if (technique.canCultivateMajorRealm(rawData, nextMajor)) {
-                    // Snapshot the player-only window NOW, before the
-                    // breakthrough fires and realm numbers change.
-                    if (rawData instanceof BloodfeastTechniqueData data) {
-                        data.onGateCleared(nextMajor);
-                    }
-
-                    pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
-                }
-                // Kill gate not met → cultivation stalls at cap, no breakthrough.
-            }
-        } else {
-            pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress() + cultivationGain);
+        if (pathData.getMajorRealm() == oldMajor+1 && rawData instanceof BloodfeastTechniqueData data) {
+            data.onGateCleared(pathData.getMajorRealm());
         }
     }
 
