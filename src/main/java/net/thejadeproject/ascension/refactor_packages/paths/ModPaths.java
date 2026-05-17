@@ -37,10 +37,10 @@ public class ModPaths {
     // Central Paths
     public static final DeferredHolder<IPath, ? extends GenericPath> ESSENCE = PATHS.register("essence",()->
             new FoundationPath(Component.translatable("ascension.path.essence"))
-                    .addFoundationRequirement(0,10000)
-                    .addFoundationRequirement(1,20000)
-                    .addFoundationRequirement(2,30000)
-                    .addFoundationRequirement(3,40000)
+                    .addFoundationRequirement(0,100000)
+                    .addFoundationRequirement(1,200000)
+                    .addFoundationRequirement(2,300000)
+                    .addFoundationRequirement(3,400000)
                     .addFoundationRequirement(4,1000000)
                     .addMajorRealmName("ascension.path.essence.mortal")
                     .addMajorRealmName("ascension.path.essence.qi_condensation")
@@ -50,7 +50,12 @@ public class ModPaths {
 
             );
     public static final DeferredHolder<IPath, ? extends GenericPath> BODY = PATHS.register("body",()->
-            new GenericPath(Component.translatable("ascension.path.body"))
+            new FoundationPath(Component.translatable("ascension.path.body"))
+                    .addFoundationRequirement(0,100000)
+                    .addFoundationRequirement(1,200000)
+                    .addFoundationRequirement(2,300000)
+                    .addFoundationRequirement(3,400000)
+                    .addFoundationRequirement(4,1000000)
                     .addMajorRealmName("ascension.path.body.mortal")
                     .addMajorRealmName("ascension.path.body.skin_tempering")
                     .addMajorRealmName("ascension.path.body.sinew_weaving")
@@ -58,7 +63,12 @@ public class ModPaths {
                     .addMajorRealmName("ascension.path.body.heart_kindling")
     );
     public static final DeferredHolder<IPath, ? extends GenericPath> SOUL = PATHS.register("soul",()->
-            new GenericPath(Component.translatable("ascension.path.soul"))
+            new FoundationPath(Component.translatable("ascension.path.soul"))
+                    .addFoundationRequirement(0,100000)
+                    .addFoundationRequirement(1,200000)
+                    .addFoundationRequirement(2,300000)
+                    .addFoundationRequirement(3,400000)
+                    .addFoundationRequirement(4,1000000)
                     .addMajorRealmName("ascension.path.soul.mortal")
                     .addMajorRealmName("ascension.path.soul.battle_soul")
                     .addMajorRealmName("ascension.path.soul.azure_soul")
