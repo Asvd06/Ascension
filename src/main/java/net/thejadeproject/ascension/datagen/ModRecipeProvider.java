@@ -73,6 +73,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         }
 
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get(), 1)
+                .requires(ModItems.FIRE_CORE)
+                .requires(ModItems.WATER_CORE)
+                .requires(ModItems.WOOD_CORE)
+                .requires(ModItems.EARTH_CORE)
+                .requires(ModItems.METAL_CORE)
+                .unlockedBy("has_fire_core", has(ModItems.FIRE_CORE))
+                .save(recipeOutput, "ascension:shapeless/unstable_5_element_essence");
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLINDED_SENSES_POWDER.get(), 2)
                 .requires(ModItems.MORTAR_PESTLE)
                 .requires(ModItems.BLINDED_SENSES_POISON_PILL)
@@ -1025,6 +1034,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
         // ── Physique Changing Pills ───────────────────────────────────
+
+        // Five Element Harmony Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.FIVE_ELEMENT_HARMONY_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get(), 1)
+                .ingredient(ModItems.JADE_BAMBOO_OF_SERENITY.get(), 1)
+                .ingredient(Items.WITHER_ROSE, 1)
+                .chance(0.50D)
+                .temperature(600, 950, 775)
+                .timeSeconds(30)
+                .realm(3, "lower")
+                .purity(10, 100)
+                .bonusChance(0.04D)
+                .unlockedBy("has_unstable_5_element_essence", has(ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/five_element_harmony_pill"));
 
         // Marrow Cleanse Pill
         PillCauldronRecipeBuilder.lowHuman(

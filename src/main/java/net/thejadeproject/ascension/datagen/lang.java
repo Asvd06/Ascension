@@ -289,11 +289,25 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.blessed.desc", "Virtue clings to your body like morning light, marking you as one who may walk a higher path.");
         add("ascension.physiques.blessed.desc.short", "You are touched by virtue.");
 
-        add("ascension.physiques.metal_body", "Metal Body");
-        add("ascension.physiques.water_body", "Water Body");
         add("ascension.physiques.fire_body", "Fire Body");
+        add("ascension.physiques.fire_body.desc", "Your body resonates with the flame. Fire is no longer an element — it is an extension of your will, a furnace that never cools.");
+        add("ascension.physiques.fire_body.desc.short", "Your body is one with fire.");
+
+        add("ascension.physiques.water_body", "Water Body");
+        add("ascension.physiques.water_body.desc", "Your flesh flows like still water over stone. You do not strike — you seep, wearing away all resistance in time.");
+        add("ascension.physiques.water_body.desc.short", "Your body moves with the river.");
+
         add("ascension.physiques.wood_body", "Wood Body");
+        add("ascension.physiques.wood_body.desc", "Life pulses through your meridians like sap through ancient roots. You endure not by force, but by growth.");
+        add("ascension.physiques.wood_body.desc.short", "Your body holds the vitality of ancient wood.");
+
         add("ascension.physiques.earth_body", "Earth Body");
+        add("ascension.physiques.earth_body.desc", "Your bones are heavy with the patience of mountains. You do not fall — you are the ground others fall upon.");
+        add("ascension.physiques.earth_body.desc.short", "Your body is as immovable as the earth.");
+
+        add("ascension.physiques.metal_body", "Metal Body");
+        add("ascension.physiques.metal_body.desc", "Your flesh has been tempered like iron from the forge. Each blow that should break you only refines your edge.");
+        add("ascension.physiques.metal_body.desc.short", "Your body is forged and unyielding.");
 
 
         add("ascension.physiques.myriad_poison_vessel", "Myriad Poison Vessel");
@@ -397,6 +411,8 @@ public class lang extends LanguageProvider {
 
         // Elemental body merged physiques (5-element)
         add("ascension.physiques.five_palace_immortal", "Five Palace Immortal Physique");
+        add("ascension.physiques.five_palace_immortal.desc", "You have unified the five elemental palaces within your body. Fire, Water, Wood, Earth, and Metal no longer conflict — they cycle endlessly, each feeding the next. The realm trembles before a body that is all things at once.");
+        add("ascension.physiques.five_palace_immortal.desc.short", "Five elements unified, the palaces complete.");
 
 
         add("ascension.physiques.world_dominator", "World Dominator");
@@ -873,6 +889,26 @@ public class lang extends LanguageProvider {
         add("item.ascension.ascension_icon", "Ascension Icon");
         add("item.ascension.undead_core", "Undead Core");
         add("item.ascension.living_core", "Living Core");
+
+        add("item.ascension.fire_core",      "Fire Core");
+        add("item.ascension.water_core",     "Water Core");
+        add("item.ascension.wood_core",      "Wood Core");
+        add("item.ascension.earth_core",     "Earth Core");
+        add("item.ascension.metal_core",     "Metal Core");
+        add("item.ascension.lightning_core", "Lightning Core");
+        add("item.ascension.wind_core",      "Wind Core");
+
+        add("item.ascension.unstable_5_element_essence", "5 Elemental Core");
+        add("ascension.item.unstable_5_element_essence.tooltip", "Extremely Unstable");
+        add("ascension.unstable_essence.exploded", "The elemental energies destabilised and detonated!");
+        add("ascension.unstable_essence.time_remaining", "Detonates in: %s seconds");
+
+        add("item.ascension.five_element_harmony_pill", "Five Element Harmony Pill");
+        add("ascension.item.five_element_harmony_pill.tooltip", "Consume to undergo the Five Palace Immortal Body transformation.");
+        add("ascension.item.five_element_harmony_pill.tooltip2", "Requires an Elemental Body physique.");
+        add("ascension.harmony_pill.not_elemental_body", "You do not possess an Elemental Body physique.");
+        add("ascension.harmony_pill.already_transforming", "The transformation is already underway.");
+        add("ascension.transformation.started", "The five elements surge through your body. Endure.");
 
 
         //Spiritual Fires

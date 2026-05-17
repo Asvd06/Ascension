@@ -18,8 +18,6 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
-import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalBodyPhysique;
-import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 
@@ -100,9 +98,7 @@ public class SetCultivationCommand {
             ResourceLocation physiqueId = AscensionRegistries.Physiques.PHSIQUES_REGISTRY.getKey(physique);
             if (physiqueId != null && !physiqueId.toString().equals("minecraft:none")) {
                 var physiqueData = entityData.getActiveFormData().getPhysiqueData();
-                Component physiqueName = (physique instanceof ElementalBodyPhysique ebp && physiqueData instanceof ElementalPhysiqueData ep)
-                        ? ebp.getDisplayTitle(ep)
-                        : Component.translatable("ascension.physiques." + physiqueId.getPath());
+                Component physiqueName = physique.getDisplayTitle();
                 context.getSource().sendSuccess(() ->
                         Component.translatable("command.ascension.cultivation.info.physique",
                                 physiqueName), false);
@@ -204,25 +200,12 @@ public class SetCultivationCommand {
         ResourceLocation physiqueId = AscensionRegistries.Physiques.PHSIQUES_REGISTRY.getKey(physique);
         var physiqueData = entityData.getActiveFormData().getPhysiqueData();
 
-        String name;
-        if (physique instanceof ElementalBodyPhysique ebp && physiqueData instanceof ElementalPhysiqueData ep) {
-            name = ebp.getDisplayTitle(ep).getString();
-        } else {
-            name = physique.getDisplayTitle().getString();
-        }
+        String name = physique.getDisplayTitle().getString();
 
         StringBuilder sb = new StringBuilder();
         sb.append("=== ").append(player.getName().getString()).append(" — Physique ===\n");
         sb.append("  Name: ").append(name).append("\n");
         sb.append("  ID:   ").append(physiqueId != null ? physiqueId : "unknown").append("\n");
-
-        if (physiqueData instanceof ElementalPhysiqueData ep) {
-            sb.append("  Elements (").append(ep.getActiveCount()).append("/5): ");
-            sb.append(ep.getActiveElements().stream()
-                    .map(el -> AscensionRegistries.Paths.PATHS_REGISTRY.get(el).getDisplayTitle().getString())
-                    .reduce((a, b) -> a + ", " + b).orElse("none"));
-            sb.append("\n");
-        }
 
         context.getSource().sendSuccess(() -> Component.literal(sb.toString()), false);
         return 1;

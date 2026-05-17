@@ -77,7 +77,14 @@
     "ascension:undead_core_from_zombie_horse",
     "ascension:undead_core_from_phantom",
     "ascension:undead_core_from_zoglin",
-    "ascension:undead_core_from_wither"
+    "ascension:undead_core_from_wither",
+    "ascension:fire_core_from_blaze",
+    "ascension:water_core_from_drowned",
+    "ascension:wood_core_from_creeper",
+    "ascension:earth_core_from_husk",
+    "ascension:metal_core_from_skeleton",
+    "ascension:lightning_core_from_witch",
+    "ascension:wind_core_from_phantom"
   ],
   "replace": false
 }

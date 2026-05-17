@@ -551,6 +551,36 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/wither")).build(),
                 LootItemRandomChanceCondition.randomChance(0.29F).build()}, ModItems.UNDEAD_CORE.get()));
 
+        // Elemental Cores
+        this.add("fire_core_from_blaze", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/blaze")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.FIRE_CORE.get()));
+        this.add("water_core_from_drowned", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/drowned")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.WATER_CORE.get()));
+        this.add("wood_core_from_creeper", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/creeper")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.WOOD_CORE.get()));
+        this.add("earth_core_from_husk", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/husk")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.EARTH_CORE.get()));
+        this.add("metal_core_from_skeleton", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/skeleton")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.METAL_CORE.get()));
+        this.add("lightning_core_from_witch", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/witch")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.LIGHTNING_CORE.get()));
+        this.add("wind_core_from_phantom", new AddItemModifier(new LootItemCondition[] {
+                new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
+                LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.WIND_CORE.get()));
+
         // Example implementation of rank conditional drops (P.S. this can also be used in ModEntityLootTables (different pattern))
 
         /*
