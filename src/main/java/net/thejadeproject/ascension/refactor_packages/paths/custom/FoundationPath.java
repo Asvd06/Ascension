@@ -39,24 +39,46 @@ public class FoundationPath extends GenericPath{
 
     public void onFoundationBreakthrough(IEntityData entityData, int majorRealm, int foundationStage){
 
-        if(foundationStage <= 0) return;
-
+        if (foundationStage <= 0) return;
         entityData.getEntityFormData(ModForms.MORTAL_VESSEL.getId()).getStatSheet().addStatModifier(ModStats.VITALITY.get(),
                 new ValueContainerModifier(
-                        0.1*foundationStage,
+                        0.1 * foundationStage,
                         ModifierOperation.MULTIPLY_FINAL,
-                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"vitality_"+foundationStage+"_"+majorRealm),
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"vit_"+foundationStage+"_"+majorRealm),
                         ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"foundation_stats")
                 ));
+        entityData.getEntityFormData(ModForms.MORTAL_VESSEL.getId()).getStatSheet().addStatModifier(ModStats.INTELLIGENCE.get(),
+                new ValueContainerModifier(
+                        0.1 * foundationStage,
+                        ModifierOperation.MULTIPLY_FINAL,
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"int_"+foundationStage+"_"+majorRealm),
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"foundation_stats")
+                ));
+        entityData.getEntityFormData(ModForms.MORTAL_VESSEL.getId()).getStatSheet().addStatModifier(ModStats.AGILITY.get(),
+                new ValueContainerModifier(
+                        0.1 * foundationStage,
+                        ModifierOperation.MULTIPLY_FINAL,
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"agi_"+foundationStage+"_"+majorRealm),
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"foundation_stats")
+                ));
+        entityData.getEntityFormData(ModForms.MORTAL_VESSEL.getId()).getStatSheet().addStatModifier(ModStats.STRENGTH.get(),
+                new ValueContainerModifier(
+                        0.1 * foundationStage,
+                        ModifierOperation.MULTIPLY_FINAL,
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"str_"+foundationStage+"_"+majorRealm),
+                        ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"foundation_stats")
+                ));
+
     }
     public void onFoundationDown(IEntityData entityData,int majorRealm,int newStage){
-
-
         int oldStage = newStage + 1;
         if(oldStage <= 0) return;
         StatSheet statSheet = entityData.getEntityFormData(ModForms.MORTAL_VESSEL.getId()).getStatSheet();
 
-        statSheet.removeStatModifier(ModStats.VITALITY.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"vitality_"+oldStage+"_"+majorRealm));
+        statSheet.removeStatModifier(ModStats.VITALITY.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"vit_"+oldStage+"_"+majorRealm));
+        statSheet.removeStatModifier(ModStats.AGILITY.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"agi_"+oldStage+"_"+majorRealm));
+        statSheet.removeStatModifier(ModStats.INTELLIGENCE.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"int_"+oldStage+"_"+majorRealm));
+        statSheet.removeStatModifier(ModStats.STRENGTH.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"str_"+oldStage+"_"+majorRealm));
 
     }
 
