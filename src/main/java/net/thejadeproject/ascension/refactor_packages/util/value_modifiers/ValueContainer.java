@@ -36,7 +36,7 @@ public class ValueContainer {
 
         calculateCachedVal();
     }
-    public Collection<ValueContainerModifier> getAllModifiers(){
+    public synchronized Collection<ValueContainerModifier> getAllModifiers(){
         List<ValueContainerModifier> modifiers = new ArrayList<>();
         modifiers.addAll(addBase.values());
         modifiers.addAll(addFinal.values());
@@ -46,7 +46,7 @@ public class ValueContainer {
     }
     public ResourceLocation getIdentifier(){return valueIdentifier;}
     public Component getDisplayName(){return valueName;}
-    public void calculateCachedVal(){
+    public synchronized void calculateCachedVal(){
 
         double finalBaseMultiplier = 1;
         for(HashSet<ValueContainerModifier> group : multiBaseByGroup.values()){
@@ -78,11 +78,11 @@ public class ValueContainer {
 
         cachedVal = Math.max(0,finalVal);
     }
-    public void setBaseValue(double base){
+    public synchronized void setBaseValue(double base){
         this.base = Math.max(0,base);
         calculateCachedVal();
     }
-    public void addModifier(ValueContainerModifier modifier){
+    public synchronized  void addModifier(ValueContainerModifier modifier){
         if(modifier == null) return;
         if(modifier.getOperation() == ModifierOperation.ADD_BASE)addBase.put(modifier.getIdentifier(),modifier);
         else if(modifier.getOperation() == ModifierOperation.ADD_FINAL) addFinal.put(modifier.getIdentifier(),modifier);
@@ -108,7 +108,7 @@ public class ValueContainer {
         }
         calculateCachedVal();
     }
-    public void removeModifier(ResourceLocation id){
+    public synchronized void removeModifier(ResourceLocation id){
         addFinal.remove(id);
         addBase.remove(id);
         if(multiFinal.containsKey(id)){

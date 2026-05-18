@@ -13,9 +13,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.FoundationPathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.RealmFoundation;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
@@ -48,6 +53,22 @@ public class SetCultivationCommand {
                                 .executes(SetCultivationCommand::getCultivationInfo)
                                 .then(Commands.literal("physique")
                                         .executes(SetCultivationCommand::getPhysiqueInfo)
+                                )
+                        )
+                )
+                .then(Commands.literal("foundation")
+                        .then(Commands.literal("set")
+                                .then(Commands.argument("target", EntityArgument.players())
+                                        .then(Commands.argument("path", ResourceLocationArgument.id())
+                                                .suggests((context, builder) -> SharedSuggestionProvider.suggestResource(
+                                                        AscensionRegistries.Paths.PATHS_REGISTRY.keySet(), builder))
+                                                .then(Commands.argument("foundationStage", IntegerArgumentType.integer(-4, 5))
+                                                        .executes(SetCultivationCommand::setFoundation)
+                                                        .then(Commands.argument("progressPercent", IntegerArgumentType.integer(0, 100))
+                                                                .executes(SetCultivationCommand::setFoundation)
+                                                        )
+                                                )
+                                        )
                                 )
                         )
                 );
@@ -286,4 +307,126 @@ public class SetCultivationCommand {
             return false;
         }
     }
+
+    private static int setFoundation(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        var players = EntityArgument.getPlayers(context, "target");
+        ResourceLocation pathId = ResourceLocationArgument.getId(context, "path");
+        int foundationStage = IntegerArgumentType.getInteger(context, "foundationStage");
+
+        int progressPercent = 0;
+        try {
+            progressPercent = IntegerArgumentType.getInteger(context, "progressPercent");
+        } catch (IllegalArgumentException ignored) {
+        }
+
+        if (!isValidPath(pathId)) {
+            context.getSource().sendFailure(Component.literal("Unknown path: " + pathId));
+            return 0;
+        }
+
+        int successCount = 0;
+
+        for (ServerPlayer player : players) {
+            if (setPlayerFoundation(player, pathId, foundationStage, progressPercent, context.getSource())) {
+                successCount++;
+            }
+        }
+
+        int finalSuccessCount = successCount;
+        context.getSource().sendSuccess(
+                () -> Component.literal("Set foundation for " + finalSuccessCount + " player(s)."),
+                true
+        );
+
+        return successCount;
+    }
+
+    private static boolean setPlayerFoundation(
+            ServerPlayer player,
+            ResourceLocation pathId,
+            int foundationStage,
+            int progressPercent,
+            CommandSourceStack source
+    ) {
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        IPathData pathData = entityData.getPathData(pathId);
+
+        if (!(pathData instanceof FoundationPathData foundationPathData)) {
+            source.sendFailure(Component.literal(
+                    player.getName().getString() + " has no foundation data for path " + pathId
+            ));
+            return false;
+        }
+
+        RealmFoundation foundation = foundationPathData.getCurrentFoundation();
+
+        double targetStability = getTargetFoundationStability(foundationStage, progressPercent);
+        double targetProgress = findProgressForStability(foundation, targetStability);
+
+        foundation.setPrimordial(foundationStage == 5);
+        foundation.setFoundationProgress(targetProgress, entityData);
+
+        pathData.sync(player);
+        refreshAttributes(player, entityData);
+
+        source.sendSuccess(() -> Component.literal(
+                "Set " + player.getName().getString() + "'s " + pathId
+                        + " foundation to stage " + foundation.getFoundationRealm()
+                        + " (" + foundation.getFoundationPercentage() + "%)"
+        ), true);
+
+        return true;
+    }
+
+    private static double getTargetFoundationStability(int stage, int progressPercent) {
+        if (stage == 5) {
+            return 1.0;
+        }
+
+        double stageStart = stage * 0.25;
+        double stageProgress = (progressPercent / 100.0) * 0.25;
+
+        return Math.clamp(stageStart + stageProgress, -1.0, 1.0);
+    }
+
+    private static double findProgressForStability(RealmFoundation foundation, double targetStability) {
+        double max = foundation.getHandler().getMaxCultivationTicks();
+
+        if (targetStability >= 1.0) return max;
+        if (targetStability <= -1.0) return -max;
+        if (targetStability == 0.0) return 0;
+
+        double low = 0;
+        double high = max;
+        double target = Math.abs(targetStability);
+
+        for (int i = 0; i < 64; i++) {
+            double mid = (low + high) / 2.0;
+            double stability = foundation.getHandler().getStability(mid);
+
+            if (stability < target) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        double result = (low + high) / 2.0;
+        return targetStability < 0 ? -result : result;
+    }
+
+    private static void refreshAttributes(ServerPlayer player, IEntityData entityData) {
+        entityData.getAscensionAttributeHolder().updateAttributes(entityData);
+
+        double maxHealth = entityData.getAttributeValue(Attributes.MAX_HEALTH);
+        if (maxHealth > 0 && entityData.getHealth() > maxHealth) {
+            entityData.setHealth(maxHealth);
+        }
+
+        PacketDistributor.sendToPlayer(
+                player,
+                new SyncAttributeHolder(entityData.getAscensionAttributeHolder())
+        );
+    }
+
 }

@@ -115,4 +115,9 @@ public class RealmFoundation {
         primordial = buf.readBoolean();
     }
 
+    public void reset(IEntityData entityData) {
+        setPrimordial(false);
+        setFoundationProgress(0, entityData);
+    }
+
 }
