@@ -168,13 +168,11 @@ public class ModItemModelProvider extends ItemModelProvider {
                 .override().predicate(elementCycleKey, 0.8F).model(new ModelFile.UncheckedModelFile("ascension:item/unstable_metal")).end();
 
         // Five Element Harmony Pill — cycles through harmony textures
-        withExistingParent(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.FIVE_ELEMENT_HARMONY_PILL.get())).getPath(), "item/generated")
-                .texture("layer0", "ascension:item/fire_harmony")
-                .override().predicate(elementCycleKey, 0.2F).model(new ModelFile.UncheckedModelFile("ascension:item/harmony_water")).end()
-                .override().predicate(elementCycleKey, 0.4F).model(new ModelFile.UncheckedModelFile("ascension:item/harmony_wood")).end()
-                .override().predicate(elementCycleKey, 0.6F).model(new ModelFile.UncheckedModelFile("ascension:item/harmony_earth")).end()
-                .override().predicate(elementCycleKey, 0.8F).model(new ModelFile.UncheckedModelFile("ascension:item/harmony_metal")).end();
-
+        withExistingParent(
+                Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.FIVE_ELEMENT_HARMONY_PILL.get())).getPath(),
+                "item/generated"
+        )
+                .texture("layer0", "ascension:item/five_element_harmony_pill");
 
 
         withExistingParent(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.TECHNIQUE_MANUAL.get())).getPath(), "item/generated")

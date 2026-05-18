@@ -14,9 +14,25 @@ import net.thejadeproject.ascension.mob_cultivation.util.AscensionStatConversion
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID)
 public final class MobCultivationCombatEvents {
 
-    private static final double REALM_DAMAGE_STEP = 1.25D;
-    private static final double MIN_REALM_DAMAGE_MULTIPLIER = 0.08D;
-    private static final double MAX_REALM_DAMAGE_MULTIPLIER = 2.5D;
+    private static final double REALM_DAMAGE_STEP = 1.15D;
+    private static final double MIN_REALM_DAMAGE_MULTIPLIER = 0.05D;
+    private static final double MAX_REALM_DAMAGE_MULTIPLIER = 10.0D;
+
+    /*
+    mob dealt damage:
+        3 stages / 1 major realm higher:   1.52x
+        6 stages / 2 major realms higher:  2.31x
+        9 stages / 3 major realms higher:  3.52x
+        12 stages / 4 major realms higher: 5.35x
+        18 stages / 6 major realms higher: 10.0x capped
+
+        player dealt damage:
+        1 major realm lower:  0.66x
+        2 major realms lower: 0.43x
+        3 major realms lower: 0.28x
+        4 major realms lower: 0.19x
+        6 major realms lower: 0.08x
+     */
 
     private MobCultivationCombatEvents() {
     }
