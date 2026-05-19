@@ -16,8 +16,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.NeoForge;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
@@ -25,7 +23,6 @@ import net.thejadeproject.ascension.refactor_packages.gui.elements.skills.cultiv
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;

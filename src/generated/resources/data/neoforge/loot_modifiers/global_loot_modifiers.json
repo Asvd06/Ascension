@@ -11,7 +11,6 @@
     "ascension:metal_essence_technique_from_iron_golem",
     "ascension:lightning_essence_technique_from_creeper",
     "ascension:wind_essence_technique_from_phantom",
-    "ascension:five_element_cultivation_technique_from_end_city",
     "ascension:heart_fire_technique_from_nether_fortress",
     "ascension:heart_fire_technique_from_wither_skeleton",
     "ascension:kidney_water_technique_from_drowned",
@@ -77,7 +76,14 @@
     "ascension:undead_core_from_zombie_horse",
     "ascension:undead_core_from_phantom",
     "ascension:undead_core_from_zoglin",
-    "ascension:undead_core_from_wither"
+    "ascension:undead_core_from_wither",
+    "ascension:fire_core_from_blaze",
+    "ascension:water_core_from_drowned",
+    "ascension:wood_core_from_creeper",
+    "ascension:earth_core_from_husk",
+    "ascension:metal_core_from_skeleton",
+    "ascension:lightning_core_from_witch",
+    "ascension:wind_core_from_phantom"
   ],
   "replace": false
 }

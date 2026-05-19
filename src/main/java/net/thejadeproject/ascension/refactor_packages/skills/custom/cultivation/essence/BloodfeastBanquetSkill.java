@@ -208,7 +208,6 @@ public class BloodfeastBanquetSkill implements ICastableSkill {
 
         int oldMajor = pathData.getMajorRealm();
         CultivationUtil.tryCultivate(entityData.getAttachedEntity(),ESSENCE_PATH,List.of(),cultivationGain);
-        double maxQi = technique.getMaxQiForRealm(pathData.getMajorRealm(), pathData.getMinorRealm());
 
         if (pathData.getMajorRealm() == oldMajor+1 && rawData instanceof BloodfeastTechniqueData data) {
             data.onGateCleared(pathData.getMajorRealm());

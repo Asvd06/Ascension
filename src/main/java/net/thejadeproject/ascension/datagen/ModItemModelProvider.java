@@ -149,6 +149,30 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.LIVING_CORE.get());
         basicItem(ModItems.UNDEAD_CORE.get());
 
+        //Elemental Cores
+        basicItem(ModItems.FIRE_CORE.get());
+        basicItem(ModItems.WATER_CORE.get());
+        basicItem(ModItems.WOOD_CORE.get());
+        basicItem(ModItems.EARTH_CORE.get());
+        basicItem(ModItems.METAL_CORE.get());
+        basicItem(ModItems.LIGHTNING_CORE.get());
+        basicItem(ModItems.WIND_CORE.get());
+
+        // Unstable 5 Element Essence — cycles through 5 core textures via element_cycle property
+        ResourceLocation elementCycleKey = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "element_cycle");
+        withExistingParent(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get())).getPath(), "item/generated")
+                .texture("layer0", "ascension:item/fire_core")
+                .override().predicate(elementCycleKey, 0.2F).model(new ModelFile.UncheckedModelFile("ascension:item/unstable_water")).end()
+                .override().predicate(elementCycleKey, 0.4F).model(new ModelFile.UncheckedModelFile("ascension:item/unstable_wood")).end()
+                .override().predicate(elementCycleKey, 0.6F).model(new ModelFile.UncheckedModelFile("ascension:item/unstable_earth")).end()
+                .override().predicate(elementCycleKey, 0.8F).model(new ModelFile.UncheckedModelFile("ascension:item/unstable_metal")).end();
+
+        // Five Element Harmony Pill — cycles through harmony textures
+        withExistingParent(
+                Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.FIVE_ELEMENT_HARMONY_PILL.get())).getPath(),
+                "item/generated"
+        )
+                .texture("layer0", "ascension:item/five_element_harmony_pill");
 
 
         withExistingParent(Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(ModItems.TECHNIQUE_MANUAL.get())).getPath(), "item/generated")

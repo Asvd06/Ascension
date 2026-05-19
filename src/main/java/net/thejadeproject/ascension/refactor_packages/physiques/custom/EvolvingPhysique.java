@@ -3,6 +3,7 @@ package net.thejadeproject.ascension.refactor_packages.physiques.custom;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.common.items.ModItems;
@@ -11,7 +12,9 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.toast
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface.DEFAULT_BACKGROUND;
@@ -19,6 +22,7 @@ import static net.thejadeproject.ascension.clients.toast.AscensionToastInterface
 public class EvolvingPhysique extends GenericPhysique {
 
     private final Set<ResourceLocation> possibleEvolutions = new HashSet<>();
+    private final Map<ResourceLocation, Item> conditionalEvolutionItems = new HashMap<>();
 
     public EvolvingPhysique(Component title) {
         super(title);
@@ -26,6 +30,12 @@ public class EvolvingPhysique extends GenericPhysique {
 
     public EvolvingPhysique addEvolution(ResourceLocation evolvesInto) {
         possibleEvolutions.add(evolvesInto);
+        return this;
+    }
+
+    public EvolvingPhysique addConditionalEvolution(ResourceLocation evolvesInto, Item requiredItem) {
+        possibleEvolutions.add(evolvesInto);
+        conditionalEvolutionItems.put(evolvesInto, requiredItem);
         return this;
     }
 
@@ -78,8 +88,14 @@ public class EvolvingPhysique extends GenericPhysique {
         return stack;
     }
 
-    // Override in Physique Registration to change evolution conditions
     protected boolean meetsEvolutionRequirements(ServerPlayer player, IEntityData entityData, ResourceLocation evolvesInto) {
-        return true;
+        Item required = conditionalEvolutionItems.get(evolvesInto);
+        if (required == null) return true;
+        return player.getMainHandItem().is(required);
     }
+
+    @Override public EvolvingPhysique addPath(ResourceLocation path) { super.addPath(path); return this; }
+    @Override public EvolvingPhysique addPathBonus(ResourceLocation path, Double val) { super.addPathBonus(path, val); return this; }
+    @Override public EvolvingPhysique setDescription(net.minecraft.network.chat.Component description) { super.setDescription(description); return this; }
+    @Override public EvolvingPhysique setShortDescription(net.minecraft.network.chat.Component shortDescription) { super.setShortDescription(shortDescription); return this; }
 }

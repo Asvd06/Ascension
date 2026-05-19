@@ -149,7 +149,7 @@ public class ModItems {
 
     //Swords
     public static final DeferredItem<SwordItem> CULTIVATORS_SWORD_IRON = ITEMS.register("cultivators_sword_iron",
-            () -> new SwordItem(Tiers.IRON, new Item.Properties().durability(675).attributes(SwordItem.createAttributes((Tier) Tiers.IRON, 2, (float) -2))));
+            () -> new SwordItem(Tiers.IRON, new Item.Properties().durability(675).attributes(SwordItem.createAttributes((Tier) Tiers.IRON, 2.4f, (float) -2))));
 
 
 
@@ -398,6 +398,21 @@ public class ModItems {
     //Change it into a Blood Essence texture and also make it so blood essence drop then you can combine blood essences to make the purity 100% and when its 100% only then can you use it.
     public static final DeferredItem<Item> PHYSIQUE_ESSENCE = ITEMS.register("physique_essence",
             () -> new PhysiqueTransferItem(new Item.Properties().stacksTo(1)));
+
+    // --- Elemental Cores ---
+    public static final DeferredItem<Item> FIRE_CORE      = ITEMS.register("fire_core",      () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> WATER_CORE     = ITEMS.register("water_core",     () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> WOOD_CORE      = ITEMS.register("wood_core",      () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> EARTH_CORE     = ITEMS.register("earth_core",     () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> METAL_CORE     = ITEMS.register("metal_core",     () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> LIGHTNING_CORE = ITEMS.register("lightning_core", () -> new Item(new Item.Properties()));
+    public static final DeferredItem<Item> WIND_CORE      = ITEMS.register("wind_core",      () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> UNSTABLE_5_ELEMENT_ESSENCE = ITEMS.register("unstable_5_element_essence",
+            () -> new net.thejadeproject.ascension.common.items.physiques.UnstableElementalCoreAmalgamItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> FIVE_ELEMENT_HARMONY_PILL = ITEMS.register("five_element_harmony_pill",
+            () -> new net.thejadeproject.ascension.common.items.physiques.FiveElementHarmonyPillItem(new Item.Properties().stacksTo(1)));
 
     public static final DeferredItem<TechniqueTransferItem> TECHNIQUE_MANUAL = ITEMS.register("technique_manual",
             () -> new TechniqueTransferItem(new Item.Properties().stacksTo(1)));

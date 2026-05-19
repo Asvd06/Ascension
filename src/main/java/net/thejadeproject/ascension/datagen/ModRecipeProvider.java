@@ -73,6 +73,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         }
 
 
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get(), 1)
+                .requires(ModItems.FIRE_CORE)
+                .requires(ModItems.WATER_CORE)
+                .requires(ModItems.WOOD_CORE)
+                .requires(ModItems.EARTH_CORE)
+                .requires(ModItems.METAL_CORE)
+                .unlockedBy("has_fire_core", has(ModItems.FIRE_CORE))
+                .save(recipeOutput, "ascension:shapeless/unstable_5_element_essence");
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.BLINDED_SENSES_POWDER.get(), 2)
                 .requires(ModItems.MORTAR_PESTLE)
                 .requires(ModItems.BLINDED_SENSES_POISON_PILL)
@@ -193,6 +203,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('A', ItemTags.STONE_CRAFTING_MATERIALS)
                 .unlockedBy("has_frost_silver", has(ModItems.FROST_SILVER_INGOT)).save(recipeOutput, "ascension:shaped/mortar_and_pestle");
 
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CULTIVATORS_SWORD_IRON.get())
+                .pattern(" B ")
+                .pattern(" B ")
+                .pattern(" S ")
+                .define('B', ModItems.BLACK_IRON_INGOT.get())
+                .define('S', Items.STICK)
+                .unlockedBy("has_black_iron", has(ModItems.BLACK_IRON_INGOT)).save(recipeOutput, "ascension:shaped/cultivators_sword_iron_from_black_iron");
 
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.TECHNIQUE_BINDER.get())
@@ -966,7 +984,92 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
         // ── Poison Pills ──────────────────────────────────────────────
 
-        // Qi Devouring Parasite Pill
+        // Cracked Meridians Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.CRACKED_MERIDIANS_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.POISONOUS_POTATO, 8)
+                .ingredient(Items.BONE, 4)
+                .ingredient(Items.PUFFERFISH, 2)
+                .chance(0.55D)
+                .temperature(520, 1380, 610)
+                .timeSeconds(6)
+                .realm(1, "lower")
+                .purity(15, 75)
+                .bonusChance(0.04D)
+                .unlockedBy("has_poisonous_potato", has(Items.POISONOUS_POTATO))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/cracked_meridians_poison_pill"));
+
+        // Blinded Senses Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.BLINDED_SENSES_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.SPIDER_EYE, 12)
+                .ingredient(Items.INK_SAC, 8)
+                .ingredient(Items.GLOWSTONE_DUST, 4)
+                .chance(0.50D)
+                .temperature(480, 1250, 580)
+                .timeSeconds(7)
+                .realm(1, "lower")
+                .purity(10, 70)
+                .bonusChance(0.03D)
+                .unlockedBy("has_spider_eye", has(Items.SPIDER_EYE))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/blinded_senses_poison_pill"));
+
+        // Paralyzed Body Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.PARALYZED_BODY_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.HONEYCOMB, 6)
+                .ingredient(Items.COCOA_BEANS, 8)
+                .ingredient(Items.RABBIT_FOOT, 2)
+                .chance(0.48D)
+                .temperature(620, 1420, 720)
+                .timeSeconds(8)
+                .realm(1, "lower")
+                .purity(12, 65)
+                .bonusChance(0.03D)
+                .unlockedBy("has_rabbit_foot", has(Items.RABBIT_FOOT))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/paralyzed_body_poison_pill"));
+
+        // Venomous Meridian Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.VENOMOUS_MERIDIAN_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.CAVE_SPIDER_SPAWN_EGG, 1)  // or a mod venom item
+                .ingredient(Items.FERMENTED_SPIDER_EYE, 10)
+                .ingredient(Items.LAPIS_LAZULI, 6)
+                .chance(0.52D)
+                .temperature(550, 1320, 640)
+                .timeSeconds(6)
+                .realm(1, "lower")
+                .purity(18, 72)
+                .bonusChance(0.04D)
+                .unlockedBy("has_fermented_spider_eye", has(Items.FERMENTED_SPIDER_EYE))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/venomous_meridian_poison_pill"));
+
+        // Scorching Yang Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.SCORCHING_YANG_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.BLAZE_POWDER, 6)
+                .ingredient(Items.MAGMA_CREAM, 4)
+                .ingredient(Items.NETHER_WART, 8)
+                .chance(0.58D)
+                .temperature(890, 1650, 980)
+                .timeSeconds(5)
+                .realm(1, "lower")
+                .purity(22, 78)
+                .bonusChance(0.05D)
+                .unlockedBy("has_blaze_powder", has(Items.BLAZE_POWDER))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/scorching_yang_poison_pill"));
+
+        // Qi Devouring Parasite Pill (your existing recipe)
         PillCauldronRecipeBuilder.lowHuman(
                         ModItems.QI_DEVOURING_PARASITE_PILL.get(),
                         ModItems.PILL_RESIDUE.get()
@@ -982,6 +1085,40 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .bonusChance(0.05D)
                 .unlockedBy("has_hundred_year_fire_ginseng", has(ModItems.HUNDRED_YEAR_FIRE_GINSENG.get()))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/qi_devouring_parasite_pill"));
+
+        // Corrosive Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.CORROSIVE_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.SLIME_BALL, 8)
+                .ingredient(Items.GUNPOWDER, 6)
+                .ingredient(Items.COPPER_INGOT, 3)
+                .chance(0.45D)
+                .temperature(710, 1520, 820)
+                .timeSeconds(9)
+                .realm(1, "lower")
+                .purity(8, 60)
+                .bonusChance(0.02D)
+                .unlockedBy("has_gunpowder", has(Items.GUNPOWDER))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/corrosive_poison_pill"));
+
+        // Frost Silkworm Poison Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.FROST_SILKWORM_POISON_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(Items.POWDER_SNOW_BUCKET, 1)
+                .ingredient(Items.STRING, 12)
+                .ingredient(Items.BLUE_ICE, 4)
+                .chance(0.53D)
+                .temperature(310, 980, 420)
+                .timeSeconds(10)
+                .realm(1, "lower")
+                .purity(16, 68)
+                .bonusChance(0.04D)
+                .unlockedBy("has_blue_ice", has(Items.BLUE_ICE))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/frost_silkworm_poison_pill"));
 
 
         // ── Positive / Medicinal Pills ────────────────────────────────
@@ -1025,6 +1162,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
 
         // ── Physique Changing Pills ───────────────────────────────────
+
+        // Five Element Harmony Pill
+        PillCauldronRecipeBuilder.lowHuman(
+                        ModItems.FIVE_ELEMENT_HARMONY_PILL.get(),
+                        ModItems.PILL_RESIDUE.get()
+                )
+                .ingredient(ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get(), 1)
+                .ingredient(ModItems.JADE_BAMBOO_OF_SERENITY.get(), 1)
+                .ingredient(Items.WITHER_ROSE, 1)
+                .chance(0.50D)
+                .temperature(600, 950, 775)
+                .timeSeconds(30)
+                .realm(3, "lower")
+                .purity(10, 100)
+                .bonusChance(0.04D)
+                .unlockedBy("has_unstable_5_element_essence", has(ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get()))
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "cauldron/five_element_harmony_pill"));
 
         // Marrow Cleanse Pill
         PillCauldronRecipeBuilder.lowHuman(

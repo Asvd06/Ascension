@@ -124,4 +124,16 @@ public class FoundationPathData extends SimplePathData {
         super.majorRealmDown(entityData);
     }
 
+    public void resetCurrentFoundation(IEntityData entityData) {
+        currentFoundation.reset(entityData);
+    }
+
+    public void resetAllFoundations(IEntityData entityData) {
+        currentFoundation.reset(entityData);
+
+        for (RealmFoundation foundation : foundations) {
+            foundation.reset(entityData);
+        }
+    }
+
 }

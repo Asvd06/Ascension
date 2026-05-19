@@ -62,6 +62,13 @@ public class ModAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerInputStates>> INPUT_STATES = ATTACHMENT_TYPES.register("input_states",
             () -> AttachmentType.builder((holder) -> holder instanceof Player player ? new PlayerInputStates(player):null).build());
 
+    public static final Supplier<AttachmentType<Integer>> TRANSFORMATION_TICKS = ATTACHMENT_TYPES.register(
+            "transformation_ticks", () -> AttachmentType.builder(() -> -1).serialize(Codec.INT).build()
+    );
+    public static final Supplier<AttachmentType<Integer>> TRANSFORMATION_PURITY = ATTACHMENT_TYPES.register(
+            "transformation_purity", () -> AttachmentType.builder(() -> 50).serialize(Codec.INT).build()
+    );
+
 
     public static void register(IEventBus modEventBus){
         ATTACHMENT_TYPES.register(modEventBus);

@@ -5,22 +5,22 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
-import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
+
+import java.util.List;
 
 public class MarrowFurnaceCultivationSkill extends SimplePassiveSkill {
 
-    private static final float MIN_DAMAGE = 4.0F;
-    private static final double BASE_MULTIPLIER = 2.0D;
+    private static final float  MIN_DAMAGE        = 4.0F;
+    private static final double BASE_MULTIPLIER   = 2.0D;
     private static final double QI_COST_MULTIPLIER = 0.35D;
-    private static final double LOW_HEALTH_BONUS = 0.35D;
+    private static final double LOW_HEALTH_BONUS  = 0.35D;
 
     public MarrowFurnaceCultivationSkill() {
         NeoForge.EVENT_BUS.addListener(this::onLivingDamage);
@@ -48,70 +48,22 @@ public class MarrowFurnaceCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.tryConsumeQi(qiCost)) return;
 
         double multiplier = BASE_MULTIPLIER;
-
         if (player.getHealth() <= player.getMaxHealth() * 0.5F) {
             multiplier += LOW_HEALTH_BONUS;
         }
 
-        double bodyBonus = Math.max(
-                1.0D,
-                entityData.getPathBonusHandler().getPathBonus(ModPaths.BODY.getId())
-        );
+        double gain = Math.sqrt(damage) * multiplier;
 
-        double effectiveDamage = Math.sqrt(damage);
-        double gain = effectiveDamage * multiplier * bodyBonus;
-
-        ITechnique technique = bodyPath.getCurrentTechnique();
-        if (technique == null) return;
-
-        double maxProgress = technique.getMaxQiForRealm(
-                bodyPath.getMajorRealm(),
-                bodyPath.getMinorRealm()
-        );
-
-        if (bodyPath.getCurrentRealmProgress() + gain >= maxProgress) {
-            bodyPath.setCurrentRealmProgress(maxProgress);
-
-            if (bodyPath.getMinorRealm() < technique.getMaxMinorRealm(bodyPath.getMajorRealm())
-                    && technique.canBreakthroughMinorRealm(
-                    entityData,
-                    bodyPath.getMajorRealm(),
-                    bodyPath.getMinorRealm(),
-                    bodyPath.getCurrentRealmProgress()
-            )) {
-                bodyPath.handleRealmChange(
-                        bodyPath.getMajorRealm(),
-                        bodyPath.getMinorRealm() + 1,
-                        entityData
-                );
-            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
-                    && technique.canBreakthrough(
-                    entityData,
-                    bodyPath.getMajorRealm(),
-                    bodyPath.getMinorRealm(),
-                    bodyPath.getCurrentRealmProgress()
-            )) {
-                if(bodyPath.getCurrentTechnique().getMaxMajorRealm() < bodyPath.getMajorRealm()) bodyPath.handleRealmChange(bodyPath.getMajorRealm()+1,0,entityData);
-            }
-        } else {
-            bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);
-        }
-
+        CultivationUtil.tryCultivate(player, ModPaths.BODY.getId(), List.of(), gain);
         bodyPath.sync(player);
     }
 
     @Override
-    protected String getTitleKey() {
-        return "ascension.skill.marrow_furnace";
-    }
+    protected String getTitleKey()       { return "ascension.skill.marrow_furnace"; }
 
     @Override
-    protected String getDescriptionKey() {
-        return "ascension.skill.marrow_furnace.description";
-    }
+    protected String getDescriptionKey() { return "ascension.skill.marrow_furnace.description"; }
 
     @Override
-    protected String getIconPath() {
-        return "textures/spells/icon/placeholder.png";
-    }
+    protected String getIconPath()       { return "textures/spells/icon/placeholder.png"; }
 }

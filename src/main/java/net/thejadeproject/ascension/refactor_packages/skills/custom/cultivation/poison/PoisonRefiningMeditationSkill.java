@@ -10,20 +10,19 @@ import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.pills.PillItem;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.handlers.MyriadVenomTechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.poison.MyriadVenomRefinementTechnique;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
@@ -60,7 +59,7 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
         if (poisonPath.getCurrentTechniqueId() == null) return;
 
         ITechnique rawTechnique = poisonPath.getCurrentTechnique();
-        if (!(rawTechnique instanceof MyriadVenomRefinementTechnique technique)) return;
+        if (!(rawTechnique instanceof MyriadVenomRefinementTechnique)) return;
 
         ItemStack stack = event.getItem();
         Item item = stack.getItem();
@@ -78,8 +77,8 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
             Integer pillMajorRealm = stack.get(ModDataComponents.PILL_MAJOR_REALM.get());
             Integer pillPurity     = stack.get(ModDataComponents.PILL_PURITY.get());
 
-            int resolvedRealm   = pillMajorRealm != null ? pillMajorRealm : 1;
-            int resolvedPurity  = pillPurity     != null ? pillPurity     : 1;
+            int resolvedRealm  = pillMajorRealm != null ? pillMajorRealm : 1;
+            int resolvedPurity = pillPurity     != null ? pillPurity     : 1;
 
             realmMultiplier = 1.0D + (resolvedRealm - 1) * REALM_STEP;
             purityScale     = resolvedPurity / PURITY_DIVISOR;
@@ -98,56 +97,11 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
             venomData.incrementConsumption();
         }
 
-        double pathBonus = Math.max(1.0D, entityData.getPathBonusHandler().getPathBonus(ModPaths.POISON.getId()));
-        double gain      = BASE_GAIN * itemBaseValue * realmMultiplier * purityScale * pathBonus;
+        // Path bonus is handled inside tryCultivate; pass raw gain only.
+        double gain = BASE_GAIN * itemBaseValue * realmMultiplier * purityScale;
 
-        advanceCultivation(entityData, poisonPath, technique, rawData, gain);
+        CultivationUtil.tryCultivate(player, ModPaths.POISON.getId(), List.of(), gain);
         poisonPath.sync(player);
-    }
-
-    private void advanceCultivation(
-            IEntityData entityData,
-            IPathData pathData,
-            MyriadVenomRefinementTechnique technique,
-            ITechniqueData rawData,
-            double gain
-    ) {
-        double maxQi = technique.getMaxQiForRealm(pathData.getMajorRealm(), pathData.getMinorRealm());
-
-        if (pathData.getCurrentRealmProgress() + gain >= maxQi) {
-            pathData.setCurrentRealmProgress(maxQi);
-
-            boolean canMinorBreakthrough = pathData.getMinorRealm() < technique.getMaxMinorRealm(pathData.getMajorRealm())
-                    && technique.canBreakthroughMinorRealm(
-                    entityData,
-                    pathData.getMajorRealm(),
-                    pathData.getMinorRealm(),
-                    pathData.getCurrentRealmProgress()
-            );
-
-            if (canMinorBreakthrough) {
-                pathData.handleRealmChange(
-                        pathData.getMajorRealm(),
-                        pathData.getMinorRealm() + 1,
-                        entityData
-                );
-                return;
-            }
-
-            boolean canMajorBreakthrough = pathData.getMajorRealm() < technique.getMaxMajorRealm()
-                    && technique.canBreakthrough(
-                    entityData,
-                    pathData.getMajorRealm(),
-                    pathData.getMinorRealm(),
-                    pathData.getCurrentRealmProgress()
-            );
-
-            if (canMajorBreakthrough) {
-                pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
-            }
-        } else {
-            pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress() + gain);
-        }
     }
 
     @Override

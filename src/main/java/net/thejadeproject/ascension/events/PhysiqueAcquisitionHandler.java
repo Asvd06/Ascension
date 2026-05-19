@@ -85,7 +85,7 @@ public class PhysiqueAcquisitionHandler {
     private static final float CHANCE_CRYSTAL_SOUL           = 0.11f;
     private static final float CHANCE_SWORD_MONSTER          = 0.13f;
     private static final float CHANCE_MOLTEN_CASTED          = 0.16f;
-    private static final float CHANCE_WORLD_DOMINATOR        = 0.12f;
+    //private static final float CHANCE_WORLD_DOMINATOR        = 0.12f;
 
     private static final int FIRE_HITS_FOR_ATTUNED          = 80;
     private static final int WATER_HITS_FOR_ATTUNED         = 60;
@@ -125,7 +125,7 @@ public class PhysiqueAcquisitionHandler {
     private static final int BOSS_KILLS_SOUL_GAZE           = 100;
     private static final int BOSS_KILLS_BLOOD_WRAITH        = 100;
     private static final int BOSS_KILLS_SWORD_MONSTER       = 100;
-    private static final int WARDEN_KILLS_WORLD_DOMINATOR   = 100;
+    //private static final int WARDEN_KILLS_WORLD_DOMINATOR   = 100;
 
     private static final Map<UUID, ItemStack> PENDING_DUAL_SOUL = new HashMap<>();
 
@@ -418,14 +418,14 @@ public class PhysiqueAcquisitionHandler {
                     CHANCE_FLOW_SEVERING_EYES, 25, 45);
         }
 
-        if (entityType == EntityType.WARDEN) {
-            c.t1.wardenKills++;
-            if (c.t1.wardenKills >= WARDEN_KILLS_WORLD_DOMINATOR) {
-                c.t1.wardenKills -= WARDEN_KILLS_WORLD_DOMINATOR;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":world_dominator",
-                        CHANCE_WORLD_DOMINATOR, 15, 25);
-            }
-        }
+//        if (entityType == EntityType.WARDEN) {
+//            c.t1.wardenKills++;
+//            if (c.t1.wardenKills >= WARDEN_KILLS_WORLD_DOMINATOR) {
+//                c.t1.wardenKills -= WARDEN_KILLS_WORLD_DOMINATOR;
+//                tryGiveEssence(player, AscensionCraft.MOD_ID + ":world_dominator",
+//                        CHANCE_WORLD_DOMINATOR, 15, 25);
+//            }
+//        }
 
         if (veryLowHp && isBossKill) {
             c.t2.soulKillsLowHp++;

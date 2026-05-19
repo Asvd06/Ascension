@@ -21,6 +21,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.entit
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.ToggleSuppressedPacket;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.ExtractHerbFromPouchPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.InsertCarriedHerbIntoPouchPayload;
+import net.thejadeproject.ascension.refactor_packages.network.server_bound.spatial_ring.OpenSpatialRingPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.supressors.UpdateSuppressionValue;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.techniques.MergeResponsePayload;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.skills.casting.SyncCastingInstance;
@@ -195,5 +196,12 @@ public class ModPayloads {
                 InsertCarriedHerbIntoPouchPayload.STREAM_CODEC,
                 InsertCarriedHerbIntoPouchPayload::handlePayload
         );
+
+        registrar.playToServer(
+                OpenSpatialRingPayload.TYPE,
+                OpenSpatialRingPayload.STREAM_CODEC,
+                OpenSpatialRingPayload::handlePayload
+        );
+
     }
 }

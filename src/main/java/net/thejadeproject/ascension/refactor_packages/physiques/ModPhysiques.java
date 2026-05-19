@@ -8,10 +8,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalBodyPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.EvolvingPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.GenericPhysique;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
+import net.thejadeproject.ascension.common.items.ModItems;
 
 public class ModPhysiques {
     public static final DeferredRegister<IPhysique> PHYSIQUES = DeferredRegister.create(AscensionRegistries.Physiques.PHSIQUES_REGISTRY, AscensionCraft.MOD_ID);
@@ -30,11 +30,11 @@ public class ModPhysiques {
         Physiques Tiers: Not Strict, just like a loose categorization subject to change.
         T5 = Bonuses of 5.0 = 0 Physiques
         T4 = Bonuses between 3.5 and 4.0 = 0 Physiques
-        T3 = Bonuses between 2.5 and 3.0 = 7 Physiques
+        T3 = Bonuses between 2.5 and 3.0 = 8 Physiques
         T2 = Bonuses between 1.25 and 2.0 = 31 Physiques
         T1 = Bonuses between 0.5 and 1.25 = 18 Physiques
         T0 = Bonuses of 0.0 essentially = 5 Physiques
-        61 Total Physiques (Excluding Flip's Combos)
+        62 Total Physiques
 
      */
 
@@ -145,21 +145,51 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.metal_attuned.desc.short"))
     );
 
-        // Body
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> FIRE_BODY = PHYSIQUES.register("fire_body", () ->
-                new ElementalBodyPhysique(ModPaths.FIRE.getId(), Component.translatable("ascension.physiques.fire_body")));
+    // ── Elemental Body — T1 ─────────────────────────────────────
+    public static final DeferredHolder<IPhysique, ? extends EvolvingPhysique> FIRE_BODY = PHYSIQUES.register("fire_body", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.fire_body"))
+                    .addEvolution(ModPhysiques.FIVE_PALACE_IMMORTAL.getId())
+                    .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 1.5)
+                    .addPath(ModPaths.FIRE.getId()).addPathBonus(ModPaths.FIRE.getId(), 1.5)
+                    .setDescription(Component.translatable("ascension.physiques.fire_body.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.fire_body.desc.short"))
+    );
 
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WATER_BODY = PHYSIQUES.register("water_body", () ->
-            new ElementalBodyPhysique(ModPaths.WATER.getId(), Component.translatable("ascension.physiques.water_body")));
+    public static final DeferredHolder<IPhysique, ? extends EvolvingPhysique> WATER_BODY = PHYSIQUES.register("water_body", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.water_body"))
+                    .addEvolution(ModPhysiques.FIVE_PALACE_IMMORTAL.getId())
+                    .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 1.5)
+                    .addPath(ModPaths.WATER.getId()).addPathBonus(ModPaths.WATER.getId(), 1.5)
+                    .setDescription(Component.translatable("ascension.physiques.water_body.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.water_body.desc.short"))
+    );
 
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> WOOD_BODY = PHYSIQUES.register("wood_body", () ->
-            new ElementalBodyPhysique(ModPaths.WOOD.getId(), Component.translatable("ascension.physiques.wood_body")));
+    public static final DeferredHolder<IPhysique, ? extends EvolvingPhysique> WOOD_BODY = PHYSIQUES.register("wood_body", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.wood_body"))
+                    .addEvolution(ModPhysiques.FIVE_PALACE_IMMORTAL.getId())
+                    .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 1.5)
+                    .addPath(ModPaths.WOOD.getId()).addPathBonus(ModPaths.WOOD.getId(), 1.5)
+                    .setDescription(Component.translatable("ascension.physiques.wood_body.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.wood_body.desc.short"))
+    );
 
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> EARTH_BODY = PHYSIQUES.register("earth_body", () ->
-            new ElementalBodyPhysique(ModPaths.EARTH.getId(), Component.translatable("ascension.physiques.earth_body")));
+    public static final DeferredHolder<IPhysique, ? extends EvolvingPhysique> EARTH_BODY = PHYSIQUES.register("earth_body", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.earth_body"))
+                    .addEvolution(ModPhysiques.FIVE_PALACE_IMMORTAL.getId())
+                    .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 1.5)
+                    .addPath(ModPaths.EARTH.getId()).addPathBonus(ModPaths.EARTH.getId(), 1.5)
+                    .setDescription(Component.translatable("ascension.physiques.earth_body.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.earth_body.desc.short"))
+    );
 
-    public static final DeferredHolder<IPhysique, ? extends ElementalBodyPhysique> METAL_BODY = PHYSIQUES.register("metal_body", () ->
-            new ElementalBodyPhysique(ModPaths.METAL.getId(), Component.translatable("ascension.physiques.metal_body")));
+    public static final DeferredHolder<IPhysique, ? extends EvolvingPhysique> METAL_BODY = PHYSIQUES.register("metal_body", () ->
+            new EvolvingPhysique(Component.translatable("ascension.physiques.metal_body"))
+                    .addEvolution(ModPhysiques.FIVE_PALACE_IMMORTAL.getId())
+                    .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 1.5)
+                    .addPath(ModPaths.METAL.getId()).addPathBonus(ModPaths.METAL.getId(), 1.5)
+                    .setDescription(Component.translatable("ascension.physiques.metal_body.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.metal_body.desc.short"))
+    );
 
         // Soul
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> YIN_EYES = PHYSIQUES.register("yin_eyes", () ->
@@ -596,6 +626,18 @@ public class ModPhysiques {
     );
 
         // Body
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> FIVE_PALACE_IMMORTAL = PHYSIQUES.register("five_palace_immortal", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.five_palace_immortal"))
+                    .addPath(ModPaths.BODY.getId()).addPathBonus(ModPaths.BODY.getId(), 3.0)
+                    .addPath(ModPaths.FIRE.getId()).addPathBonus(ModPaths.FIRE.getId(), 3.0)
+                    .addPath(ModPaths.WATER.getId()).addPathBonus(ModPaths.WATER.getId(), 3.0)
+                    .addPath(ModPaths.WOOD.getId()).addPathBonus(ModPaths.WOOD.getId(), 3.0)
+                    .addPath(ModPaths.EARTH.getId()).addPathBonus(ModPaths.EARTH.getId(), 3.0)
+                    .addPath(ModPaths.METAL.getId()).addPathBonus(ModPaths.METAL.getId(), 3.0)
+                    .setDescription(Component.translatable("ascension.physiques.five_palace_immortal.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.five_palace_immortal.desc.short"))
+    );
+
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> TITAN_BORN = PHYSIQUES.register("titan_born", () ->
                 new GenericPhysique(Component.translatable("ascension.physiques.titan_born"))
                         .addPath(ModPaths.BODY.getId())

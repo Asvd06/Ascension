@@ -265,7 +265,6 @@ public class SimplePathData implements IPathData{
     @Override
     public void load(CompoundTag tag,IEntityData entityData) {
         try {
-            System.out.println(tag);
 
             ListTag techniqueData = tag.getList("technique_data",Tag.TAG_COMPOUND);
             ListTag techniqueHistory = tag.getList("technique_history",Tag.TAG_STRING);

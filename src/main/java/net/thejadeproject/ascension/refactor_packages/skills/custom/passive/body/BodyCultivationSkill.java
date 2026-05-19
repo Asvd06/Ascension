@@ -10,15 +10,15 @@ import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
-import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
+
+import java.util.List;
 
 public class BodyCultivationSkill extends SimplePassiveSkill {
 
-    private static final float   MIN_DAMAGE       = 10.0f;
-    private static final double  BASE_MULTIPLIER  = 3.3;
+    private static final float  MIN_DAMAGE      = 10.0f;
+    private static final double BASE_MULTIPLIER = 3.3;
 
     private final String titleKey;
     private final String descriptionKey;
@@ -32,7 +32,7 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
     }
 
     @SubscribeEvent
-    public  void onLivingDamage(LivingDamageEvent.Post event) {
+    public void onLivingDamage(LivingDamageEvent.Post event) {
         if (event.getEntity().level().isClientSide()) return;
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
@@ -50,37 +50,18 @@ public class BodyCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.hasQi(damage)) return;
         if (!qiContainer.tryConsumeQi(damage)) return;
 
-        double bodyBonus = Math.max(1.0D, entityData.getPathBonusHandler().getPathBonus(ModPaths.BODY.getId()));
-        double gain = damage * BASE_MULTIPLIER * bodyBonus;
-        ITechnique technique = bodyPath.getCurrentTechnique();
+        double gain = damage * BASE_MULTIPLIER;
 
-        if (technique != null && bodyPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm())) {
-            bodyPath.setCurrentRealmProgress(technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm()));
-
-            if (bodyPath.getMinorRealm() < technique.getMaxMinorRealm(bodyPath.getMajorRealm()) && technique.canBreakthroughMinorRealm(
-                    entityData,
-                    bodyPath.getMajorRealm(),
-                    bodyPath.getMinorRealm(),
-                    bodyPath.getCurrentRealmProgress()
-            )) {
-                bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
-            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
-                    && technique.canBreakthrough(entityData, bodyPath.getMajorRealm(), bodyPath.getMinorRealm(), bodyPath.getCurrentRealmProgress())) {
-                bodyPath.handleRealmChange(bodyPath.getMajorRealm()+1,0,entityData);
-            }
-        } else {
-            bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);
-        }
-
+        CultivationUtil.tryCultivate(player, ModPaths.BODY.getId(), List.of(), gain);
         bodyPath.sync(player);
     }
 
     @Override
-    protected String getTitleKey() { return titleKey; }
+    protected String getTitleKey()       { return titleKey; }
 
     @Override
     protected String getDescriptionKey() { return descriptionKey; }
 
     @Override
-    protected String getIconPath() { return "textures/spells/icon/placeholder.png"; }
+    protected String getIconPath()       { return "textures/spells/icon/placeholder.png"; }
 }

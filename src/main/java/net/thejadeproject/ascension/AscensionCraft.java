@@ -214,6 +214,7 @@ public class AscensionCraft {
         event.register(InputHandler.INTROSPECTION);
         event.register(InputHandler.SKILL_WHEEL_OVERLAY);
         event.register(InputHandler.CAST_SKILL_KEY);
+        event.register(InputHandler.OPEN_SPATIAL_RING);
 
     }
 

@@ -20,6 +20,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SwordDraw;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.GaleStep;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulForgeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.VoidstepSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.MarrowFurnaceCultivationSkill;
@@ -233,7 +234,9 @@ public class ModSkills {
 
 
     // ──── SOUL SKILLS ────────────────────────────────────────────
-    // Scholarly Soul Skills
+    // Cultivation
+    public static final DeferredHolder<ISkill, ? extends SimpleSoulCultivationSkill> SIMPLE_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("simple_soul_cultivation_skill",SimpleSoulCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends ScholarlySoulCultivationSkill> SCHOLARLY_SOUL_CULTIVATION_SKILL =
             SKILLS.register("scholarly_soul_cultivation_skill", ScholarlySoulCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends PaleMoonCultivationSkill> PALE_MOON_CULTIVATION_SKILL =
@@ -244,6 +247,7 @@ public class ModSkills {
             SKILLS.register("dawning_sun_cultivation_skill",DawningSunCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends ZenithSunCultivationSkill> ZENITH_SUN_CULTIVATION_SKILL =
             SKILLS.register("zenith_sun_cultivation_skill",ZenithSunCultivationSkill::new);
+
     // Passives
 
     // Actives

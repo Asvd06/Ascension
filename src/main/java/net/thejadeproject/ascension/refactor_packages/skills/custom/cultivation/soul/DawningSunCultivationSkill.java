@@ -15,67 +15,75 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.DawningSunTechnique;
 
-public class DawningSunCultivationSkill extends GenericCultivationSkill {
+public class DawningSunCultivationSkill extends SimpleSoulCultivationSkill {
 
     private static final double SUN_MULTIPLIER = 1.5D;
 
     public DawningSunCultivationSkill() {
-        super(DawningSunTechnique.BASE_RATE, ModPaths.SOUL.getId());
+        super(DawningSunTechnique.BASE_RATE);
     }
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
         if (!caster.level().canSeeSky(caster.blockPosition())) {
-            return new CastResult(CastResult.Type.FAILURE,
-                    Component.translatable("ascension.skill.dawning_sun_cultivation_skill.blocked_indoors"));
+            return new CastResult(
+                    CastResult.Type.FAILURE,
+                    Component.translatable("ascension.skill.dawning_sun_cultivation_skill.blocked_indoors")
+            );
         }
-        return new CastResult(CastResult.Type.SUCCESS);
+
+        return super.canCast(caster, preCastData);
     }
 
     @Override
     protected double getEffectiveRate(Entity caster) {
         double rate = super.getEffectiveRate(caster);
+
         if (isLookingAtSun(caster)) {
             rate *= SUN_MULTIPLIER;
         }
+
         return rate;
     }
 
     @Override
     public boolean continueCasting(int ticksElapsed, Entity caster, ICastData castData) {
         boolean continuing = super.continueCasting(ticksElapsed, caster, castData);
+
         if (continuing && !caster.level().isClientSide()) {
-            if (isMoonExposed(caster)) {
-                if (caster instanceof LivingEntity living) {
-                    float damage = living.getMaxHealth() * 0.01f;
-                    DamageSource source = new DamageSource(
-                            caster.level().registryAccess()
-                                    .registryOrThrow(Registries.DAMAGE_TYPE)
-                                    .getHolderOrThrow(DamageTypes.FREEZE)
-                    );
-                    living.hurt(source, damage);
-                }
-            }
+            damageIfMoonExposed(caster);
         }
+
         return continuing;
     }
 
-    // --- Shared helpers (reused by ZenithSunCultivationSkill) ---
+    protected static void damageIfMoonExposed(Entity caster) {
+        if (!isMoonExposed(caster)) return;
+        if (!(caster instanceof LivingEntity living)) return;
+
+        DamageSource source = new DamageSource(
+                caster.level().registryAccess()
+                        .registryOrThrow(Registries.DAMAGE_TYPE)
+                        .getHolderOrThrow(DamageTypes.FREEZE)
+        );
+
+        living.hurt(source, living.getMaxHealth() * 0.01F);
+    }
 
     public static boolean isLookingAtSun(Entity entity) {
         Level level = entity.level();
+
         if (level.isNight()) return false;
         if (!level.canSeeSky(entity.blockPosition())) return false;
 
-        float sunAngle = level.getSunAngle(1.0f);
-        Vec3 sunDir = new Vec3(-Math.sin(sunAngle), Math.cos(sunAngle), 0);
+        float sunAngle = level.getSunAngle(1.0F);
+        Vec3 sunDir = new Vec3(-Math.sin(sunAngle), Math.cos(sunAngle), 0).normalize();
+
         return sunDir.dot(entity.getLookAngle()) > 0.98D;
     }
 
@@ -84,7 +92,6 @@ public class DawningSunCultivationSkill extends GenericCultivationSkill {
         return level.isNight() && level.canSeeSky(entity.blockPosition());
     }
 
-    // --- Icon / display ---
     @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon(IEntityData entityData) {

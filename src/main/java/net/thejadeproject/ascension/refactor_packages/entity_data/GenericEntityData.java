@@ -309,7 +309,7 @@ public class GenericEntityData implements IEntityData {
         }catch (Exception e){
             AscensionCraft.LOGGER.error("error loading suppressed values",e);
         }
-
+        getSkillCastHandler().getHotBar().refreshSkillSlots(this);
         loading = false;
         clearCache();
     }
@@ -323,11 +323,14 @@ public class GenericEntityData implements IEntityData {
     }
 
     public void sync(Player player){
+
         for(ResourceLocation form:heldFormData.keySet()){
 
             PacketDistributor.sendToPlayer((ServerPlayer) player,new SyncEntityForm(heldFormData.get(form)));
         }
         PacketDistributor.sendToPlayer((ServerPlayer) player,new SyncCultivationSuppressed(isSuppressed()));
+
+
     }
 
 
@@ -1040,9 +1043,11 @@ public class GenericEntityData implements IEntityData {
 
         ISkill skillInstance = AscensionRegistries.Skills.SKILL_REGISTRY.get(skill);
         skillInstance.onRemoved(this,skillData);
+        //getSkillCastHandler().getHotBar().refreshSkillSlots(this);
         //TODO update to sync only changes
         if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null){
             PacketDistributor.sendToPlayer(serverPlayer,new SyncHeldSkills(form.toString(),heldFormData.get(form).getHeldSkills()));
+            //getSkillCastHandler().sync(serverPlayer);
         }
     }
 

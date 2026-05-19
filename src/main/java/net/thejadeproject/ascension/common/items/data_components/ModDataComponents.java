@@ -202,6 +202,14 @@ public class ModDataComponents {
                     .build()
     );
 
+    public static final Supplier<DataComponentType<Long>> CRAFT_TIMESTAMP = DATA_COMPONENTS.register(
+            "craft_timestamp",
+            () -> DataComponentType.<Long>builder()
+                    .persistent(Codec.LONG)
+                    .networkSynchronized(ByteBufCodecs.VAR_LONG)
+                    .build()
+    );
+
     public static final Supplier<DataComponentType<Long>> HERB_AGE_TICKS = DATA_COMPONENTS.register(
             "herb_age_ticks",
             () -> DataComponentType.<Long>builder()

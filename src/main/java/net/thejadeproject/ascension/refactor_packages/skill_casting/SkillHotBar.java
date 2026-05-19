@@ -150,7 +150,12 @@ public class SkillHotBar {
         used when it is detected a change was made to the skill list
      */
     public void refreshSkillSlots(IEntityData entityData) {
-        // TODO
+        for(HotBarSkillSlot slot : skillSlots){
+            if(!slot.isEmpty() && !entityData.hasSkill(slot.getSkillKey())) {
+                slot.unSlotSKill(entityData);
+
+            }
+        }
     }
 
     public void write(CompoundTag tag) {

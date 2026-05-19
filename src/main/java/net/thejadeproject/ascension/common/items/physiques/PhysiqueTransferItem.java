@@ -14,14 +14,11 @@ import net.minecraft.world.level.Level;
 
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.events.ElementalPhysiqueHandler;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.toast.ShowAscensionToast;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysique;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
-import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalBodyPhysique;
-import net.thejadeproject.ascension.refactor_packages.physiques.custom.ElementalPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 
 import java.util.List;
@@ -96,31 +93,7 @@ public class PhysiqueTransferItem extends Item {
             return InteractionResultHolder.success(stack);
         }
 
-        // Right-click: attempt elemental fusion
-        if (!(targetPhysique instanceof ElementalBodyPhysique targetElemental)) {
-            return InteractionResultHolder.pass(stack);
-        }
-
-        IPhysiqueData currentData = player.getData(ModAttachments.ENTITY_DATA).getActiveFormData().getPhysiqueData();
-        if (!(currentData instanceof ElementalPhysiqueData elementalData)) {
-            player.sendSystemMessage(Component.literal("Your current physique cannot be fused.").withStyle(ChatFormatting.RED));
-            return InteractionResultHolder.fail(stack);
-        }
-
-        if (!ElementalPhysiqueHandler.canMerge(elementalData, targetElemental.getElement())) {
-            player.sendSystemMessage(Component.literal("This essence is not compatible with your current physique.").withStyle(ChatFormatting.RED));
-            return InteractionResultHolder.fail(stack);
-        }
-
-        // setPhysique fires PhysiqueChangeEvent.Pre — our handler cancels it and upgrades the data
-        if (!player.getAbilities().instabuild) stack.shrink(1);
-        player.getData(ModAttachments.ENTITY_DATA).setPhysique(targetId);
-        player.sendSystemMessage(
-                Component.literal("Physique fused with ")
-                        .append(getPhysiqueDisplayName(targetPhysiqueId))
-                        .append(Component.literal("!"))
-        );
-        return InteractionResultHolder.success(stack);
+        return InteractionResultHolder.pass(stack);
     }
 
     @Override
@@ -175,13 +148,6 @@ public class PhysiqueTransferItem extends Item {
             tooltip.add(Component.literal("No physique set").withStyle(ChatFormatting.GRAY));
         }
 
-        if (targetPhysiqueId != null && !targetPhysiqueId.isEmpty()) {
-            IPhysique targetPhysique = AscensionRegistries.Physiques.PHSIQUES_REGISTRY.get(ResourceLocation.parse(targetPhysiqueId));
-            if (targetPhysique instanceof ElementalBodyPhysique) {
-                tooltip.add(Component.translatable("ascension.physique_essence.tooltip.fuse")
-                        .withStyle(ChatFormatting.YELLOW));
-            }
-        }
         tooltip.add(Component.translatable("ascension.physique_essence.tooltip.replace")
                 .withStyle(ChatFormatting.GRAY));
 

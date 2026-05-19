@@ -289,11 +289,25 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.blessed.desc", "Virtue clings to your body like morning light, marking you as one who may walk a higher path.");
         add("ascension.physiques.blessed.desc.short", "You are touched by virtue.");
 
-        add("ascension.physiques.metal_body", "Metal Body");
-        add("ascension.physiques.water_body", "Water Body");
         add("ascension.physiques.fire_body", "Fire Body");
+        add("ascension.physiques.fire_body.desc", "Your body resonates with the flame. Fire is no longer an element — it is an extension of your will, a furnace that never cools.");
+        add("ascension.physiques.fire_body.desc.short", "Your body is one with fire.");
+
+        add("ascension.physiques.water_body", "Water Body");
+        add("ascension.physiques.water_body.desc", "Your flesh flows like still water over stone. You do not strike — you seep, wearing away all resistance in time.");
+        add("ascension.physiques.water_body.desc.short", "Your body moves with the river.");
+
         add("ascension.physiques.wood_body", "Wood Body");
+        add("ascension.physiques.wood_body.desc", "Life pulses through your meridians like sap through ancient roots. You endure not by force, but by growth.");
+        add("ascension.physiques.wood_body.desc.short", "Your body holds the vitality of ancient wood.");
+
         add("ascension.physiques.earth_body", "Earth Body");
+        add("ascension.physiques.earth_body.desc", "Your bones are heavy with the patience of mountains. You do not fall — you are the ground others fall upon.");
+        add("ascension.physiques.earth_body.desc.short", "Your body is as immovable as the earth.");
+
+        add("ascension.physiques.metal_body", "Metal Body");
+        add("ascension.physiques.metal_body.desc", "Your flesh has been tempered like iron from the forge. Each blow that should break you only refines your edge.");
+        add("ascension.physiques.metal_body.desc.short", "Your body is forged and unyielding.");
 
 
         add("ascension.physiques.myriad_poison_vessel", "Myriad Poison Vessel");
@@ -397,6 +411,8 @@ public class lang extends LanguageProvider {
 
         // Elemental body merged physiques (5-element)
         add("ascension.physiques.five_palace_immortal", "Five Palace Immortal Physique");
+        add("ascension.physiques.five_palace_immortal.desc", "You have unified the five elemental palaces within your body. Fire, Water, Wood, Earth, and Metal no longer conflict — they cycle endlessly, each feeding the next. The realm trembles before a body that is all things at once.");
+        add("ascension.physiques.five_palace_immortal.desc.short", "Five elements unified, the palaces complete.");
 
 
         add("ascension.physiques.world_dominator", "World Dominator");
@@ -508,6 +524,9 @@ public class lang extends LanguageProvider {
         add("ascension.technique.zenith_sun_scripture", "Zenith Sun Scripture");
         add("ascension.technique.zenith_sun_scripture.description.short", "A stronger solar soul scripture attuned to the sun at its zenith.");
         add("ascension.technique.zenith_sun_scripture.description", "Cultivates the Soul by drawing upon the blazing power of the sun at its peak. Must be practised under open sky. Greatly empowered when gazing directly at the sun. Harmful beneath moonlit night skies.");
+        add("ascension.technique.soul_forged_weapon_manual", "Soul Forged Weapon Manual");
+        add("ascension.technique.soul_forged_weapon_manual.description.short", "Binds a weapon into the cultivator's soul.");
+        add("ascension.technique.soul_forged_weapon_manual.description", "A hybrid soul and weapon technique that tempers a bound weapon through battle and soul cultivation.");
 
 
         // Multi Part Technique Items
@@ -622,6 +641,18 @@ public class lang extends LanguageProvider {
         add("ascension.skill.gale_step.description", "Surges forward on wind qi, pushing nearby enemies aside and softening your fall.");
         add("ascension.skill.stone_root", "Stone Root");
         add("ascension.skill.stone_root.description", "While grounded and still, roots your body like stone and grants brief resistance.");
+        add("ascension.skill.soul_forge", "Soul Forge");
+        add("ascension.skill.soul_forge.description", "Bind a weapon into your soul, then summon or dismiss it.");
+        add("ascension.skill.soul_forge.no_weapon", "No suitable weapon to bind.");
+        add("ascension.skill.soul_forge.bound", "Bound %s to your soul.");
+        add("ascension.skill.soul_forge.weapon_unbound", "Your soul weapon fades as the Soul Forge art leaves you.");
+        add("ascension.skill.soul_forge.summoned", "Your soul weapon awakens.");
+        add("ascension.skill.soul_forge.unsummoned", "Your soul weapon returns to your soul.");
+        add("ascension.skill.soul_forge.returned_from_container", "Your soul weapon refuses to be stored away.");
+        add("ascension.skill.soul_forge.status.unbound", "No soul weapon is bound.");
+        add("ascension.skill.soul_forge.status.bound", "Soul Weapon: %s | Grade: %s | Tempering: %s / %s | Summoned: %s");
+        add("ascension.skill.simple_soul_cultivation_skill", "Basic Soul Cultivation");
+        add("ascension.skill.simple_soul_cultivation_skill.description", "A basic soul cultivation method. Quiet the body, steady the spirit, and draw soul essence into your foundation.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");
@@ -814,6 +845,14 @@ public class lang extends LanguageProvider {
         add("item.ascension.cultivators_sword_iron", "Iron Cultivators Sword");
 
 
+        add("item.ascension.soulbound_weapon", "Soulbound Weapon");
+        add("item.ascension.soulbound_weapon.typed", "Soulbound %s");
+        add("item.ascension.soulbound_weapon.tooltip", "A weapon forged from the cultivator's soul.");
+        add("item.ascension.soulbound_weapon.type", "Form: %s");
+        add("item.ascension.soulbound_weapon.currentGrade", "Soul Grade: %s");
+        add("item.ascension.soulbound_weapon.grade_advanced", "Your soul weapon has advanced to Grade %s");
+        add("item.ascension.soulbound_weapon.tempering", "Tempering: %s / %s");
+        add("item.ascension.soulbound_weapon.damage", "Soul Weapon Power: %s");
 
 
         add("item.ascension.wooden_spear", "Wooden Spear");
@@ -873,6 +912,26 @@ public class lang extends LanguageProvider {
         add("item.ascension.ascension_icon", "Ascension Icon");
         add("item.ascension.undead_core", "Undead Core");
         add("item.ascension.living_core", "Living Core");
+
+        add("item.ascension.fire_core",      "Fire Core");
+        add("item.ascension.water_core",     "Water Core");
+        add("item.ascension.wood_core",      "Wood Core");
+        add("item.ascension.earth_core",     "Earth Core");
+        add("item.ascension.metal_core",     "Metal Core");
+        add("item.ascension.lightning_core", "Lightning Core");
+        add("item.ascension.wind_core",      "Wind Core");
+
+        add("item.ascension.unstable_5_element_essence", "5 Elemental Core");
+        add("ascension.item.unstable_5_element_essence.tooltip", "Extremely Unstable");
+        add("ascension.unstable_essence.exploded", "The elemental energies destabilised and detonated!");
+        add("ascension.unstable_essence.time_remaining", "Detonates in: %s seconds");
+
+        add("item.ascension.five_element_harmony_pill", "Five Element Harmony Pill");
+        add("ascension.item.five_element_harmony_pill.tooltip", "Consume to undergo the Five Palace Immortal Body transformation.");
+        add("ascension.item.five_element_harmony_pill.tooltip2", "Requires an Elemental Body physique.");
+        add("ascension.harmony_pill.not_elemental_body", "You do not possess an Elemental Body physique.");
+        add("ascension.harmony_pill.already_transforming", "The transformation is already underway.");
+        add("ascension.transformation.started", "The five elements surge through your body. Endure.");
 
 
         //Spiritual Fires

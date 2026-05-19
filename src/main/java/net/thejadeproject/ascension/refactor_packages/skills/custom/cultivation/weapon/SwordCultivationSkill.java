@@ -12,20 +12,20 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
-import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
+
+import java.util.List;
 
 public class SwordCultivationSkill extends SimplePassiveSkill {
 
-    private static final float MIN_DAMAGE = 2.0f;
-    private static final double BASE_MULTIPLIER = 2.5D;
+    private static final float  MIN_DAMAGE         = 2.0f;
+    private static final double BASE_MULTIPLIER    = 2.5D;
     private static final double QI_COST_MULTIPLIER = 1.0D;
 
     private final String titleKey;
@@ -36,22 +36,19 @@ public class SwordCultivationSkill extends SimplePassiveSkill {
         this.titleKey = titleKey;
         this.descriptionKey = descriptionKey;
         this.skillId = skillId;
-
         NeoForge.EVENT_BUS.addListener(this::onLivingDamage);
     }
 
     @SubscribeEvent
     public void onLivingDamage(LivingDamageEvent.Post event) {
         if (event.getEntity().level().isClientSide()) return;
-
         if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
 
         float damage = event.getNewDamage();
         if (damage < MIN_DAMAGE) return;
 
         ItemStack mainHand = player.getMainHandItem();
-        if (mainHand.isEmpty()) return;
-        if (!mainHand.is(ItemTags.SWORDS)) return;
+        if (mainHand.isEmpty() || !mainHand.is(ItemTags.SWORDS)) return;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         if (entityData == null) return;
@@ -67,74 +64,24 @@ public class SwordCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.hasQi(qiCost)) return;
         if (!qiContainer.tryConsumeQi(qiCost)) return;
 
-        double swordBonus = Math.max(
-                1.0D,
-                entityData.getPathBonusHandler().getPathBonus(ModPaths.SWORD.getId())
-        );
+        double gain = damage * BASE_MULTIPLIER;
 
-        double gain = damage * BASE_MULTIPLIER * swordBonus;
-
-        ITechnique technique = swordPath.getCurrentTechnique();
-
-        if (technique != null && swordPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(
-                swordPath.getMajorRealm(),
-                swordPath.getMinorRealm()
-        )) {
-            swordPath.setCurrentRealmProgress(
-                    technique.getMaxQiForRealm(
-                            swordPath.getMajorRealm(),
-                            swordPath.getMinorRealm()
-                    )
-            );
-
-            if (swordPath.getMinorRealm() < technique.getMaxMinorRealm(swordPath.getMajorRealm())
-                    && technique.canBreakthroughMinorRealm(
-                    entityData,
-                    swordPath.getMajorRealm(),
-                    swordPath.getMinorRealm(),
-                    swordPath.getCurrentRealmProgress()
-            )) {
-                swordPath.handleRealmChange(
-                        swordPath.getMajorRealm(),
-                        swordPath.getMinorRealm() + 1,
-                        entityData
-                );
-            } else if (swordPath.getMajorRealm() < technique.getMaxMajorRealm()
-                    && technique.canBreakthrough(
-                    entityData,
-                    swordPath.getMajorRealm(),
-                    swordPath.getMinorRealm(),
-                    swordPath.getCurrentRealmProgress()
-            )) {
-                swordPath.handleRealmChange(swordPath.getMajorRealm()+1,0,entityData);
-            }
-        } else {
-            swordPath.setCurrentRealmProgress(swordPath.getCurrentRealmProgress() + gain);
-        }
-
+        CultivationUtil.tryCultivate(player, ModPaths.SWORD.getId(), List.of(), gain);
         swordPath.sync(player);
     }
 
     @Override
-    protected String getTitleKey() {
-        return titleKey;
-    }
+    protected String getTitleKey()       { return titleKey; }
 
     @Override
-    protected String getDescriptionKey() {
-        return descriptionKey;
-    }
+    protected String getDescriptionKey() { return descriptionKey; }
 
     @Override
-    protected String getIconPath() {
-        return "textures/spells/icon/placeholder.png";
-    }
+    protected String getIconPath()       { return "textures/spells/icon/placeholder.png"; }
 
     @OnlyIn(Dist.CLIENT)
     @Override
     public RenderableElement getInformationContainer(UIFrame frame, IEntityData entityData) {
-        return new DescriptionDisplayContainer(frame,
-                getTitle(entityData),
-                getDescription(entityData));
+        return new DescriptionDisplayContainer(frame, getTitle(entityData), getDescription(entityData));
     }
 }

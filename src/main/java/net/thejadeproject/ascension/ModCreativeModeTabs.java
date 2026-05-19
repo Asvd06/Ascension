@@ -34,6 +34,15 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.JADE);
                         output.accept(ModItems.UNDEAD_CORE);
                         output.accept(ModItems.LIVING_CORE);
+                        output.accept(ModItems.FIRE_CORE);
+                        output.accept(ModItems.WATER_CORE);
+                        output.accept(ModItems.WOOD_CORE);
+                        output.accept(ModItems.EARTH_CORE);
+                        output.accept(ModItems.METAL_CORE);
+                        output.accept(ModItems.LIGHTNING_CORE);
+                        output.accept(ModItems.WIND_CORE);
+                        output.accept(ModItems.UNSTABLE_5_ELEMENT_ESSENCE);
+                        output.accept(ModItems.FIVE_ELEMENT_HARMONY_PILL);
                         output.accept(ModItems.TALISMAN_PAPER);
 
                         output.accept(ModItems.ANCESTOR_JOURNAL);
@@ -431,6 +440,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.NEUTRALITY_PILL);
                         output.accept(ModItems.MARROW_CLEANSE_PILL);
                         output.accept(ModItems.CRIMSON_LOTUS_BONE_PILL);
+                        output.accept(ModItems.FIVE_ELEMENT_HARMONY_PILL);
 
 
                         //Powders

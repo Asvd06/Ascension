@@ -177,6 +177,21 @@ public class AscensionCraftClient {
                                 default -> 0.0F;
                             };
                         });
+
+                // Unstable 5 Element Essence
+                ItemProperties.register(ModItems.UNSTABLE_5_ELEMENT_ESSENCE.get(),
+                        ResourceLocation.fromNamespaceAndPath("ascension", "element_cycle"),
+                        (itemStack, clientLevel, livingEntity, seed) ->
+                                net.thejadeproject.ascension.common.items.physiques.UnstableElementalCoreAmalgamItem
+                                        .getCyclePredicate(itemStack, clientLevel));
+
+                // Five Element Harmony Pill
+                ItemProperties.register(ModItems.FIVE_ELEMENT_HARMONY_PILL.get(),
+                        ResourceLocation.fromNamespaceAndPath("ascension", "element_cycle"),
+                        (itemStack, clientLevel, livingEntity, seed) -> {
+                            if (clientLevel == null) return 0.0F;
+                            return ((int)(clientLevel.getGameTime() / 12L) % 5) * 0.2f;
+                        });
             });
         }
 

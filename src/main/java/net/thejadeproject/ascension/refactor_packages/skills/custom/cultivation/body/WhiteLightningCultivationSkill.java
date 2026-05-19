@@ -8,23 +8,23 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.qi.EntityQiContainer;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.SimplePassiveSkill;
-import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
+
+import java.util.List;
 
 public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
 
-    private static final float  MIN_DAMAGE        = 10.0f;
-    private static final double BASE_MULTIPLIER   = 3.3;
-    private static final double UNARMED_BONUS     = 0.25;
-    private static final double NO_ARMOR_BONUS    = 0.20;
-    private static final double DEBUFF_BONUS      = 0.35;
+    private static final float  MIN_DAMAGE      = 10.0f;
+    private static final double BASE_MULTIPLIER = 3.3;
+    private static final double UNARMED_BONUS   = 0.25;
+    private static final double NO_ARMOR_BONUS  = 0.20;
+    private static final double DEBUFF_BONUS    = 0.35;
 
     public WhiteLightningCultivationSkill() {
         NeoForge.EVENT_BUS.addListener(this::onLivingDamage);
@@ -49,39 +49,17 @@ public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
         if (!qiContainer.hasQi(damage)) return;
         if (!qiContainer.tryConsumeQi(damage)) return;
 
-        double multiplier = BASE_MULTIPLIER * getCultivationMultiplier(player);
-        double gain = damage * multiplier;
+        double gain = damage * BASE_MULTIPLIER * getCultivationMultiplier(player);
 
-        ITechnique technique = bodyPath.getCurrentTechnique();
-
-        if (technique != null && bodyPath.getCurrentRealmProgress() + gain >= technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm())) {
-            bodyPath.setCurrentRealmProgress(technique.getMaxQiForRealm(bodyPath.getMajorRealm(), bodyPath.getMinorRealm()));
-
-            if (bodyPath.getMinorRealm() < technique.getMaxMinorRealm(bodyPath.getMajorRealm()) && technique.canBreakthroughMinorRealm(
-                    entityData,
-                    bodyPath.getMajorRealm(),
-                    bodyPath.getMinorRealm(),
-                    bodyPath.getCurrentRealmProgress()
-            )) {
-                bodyPath.handleRealmChange(bodyPath.getMajorRealm(), bodyPath.getMinorRealm() + 1, entityData);
-            } else if (bodyPath.getMajorRealm() < technique.getMaxMajorRealm()
-                    && technique.canBreakthrough(entityData, bodyPath.getMajorRealm(), bodyPath.getMinorRealm(), bodyPath.getCurrentRealmProgress())) {
-                bodyPath.handleRealmChange(bodyPath.getMajorRealm()+1,0,entityData);
-            }
-        } else {
-            bodyPath.setCurrentRealmProgress(bodyPath.getCurrentRealmProgress() + gain);
-        }
-
+        CultivationUtil.tryCultivate(player, ModPaths.BODY.getId(), List.of(), gain);
         bodyPath.sync(player);
     }
 
     private double getCultivationMultiplier(ServerPlayer player) {
         double bonus = 1.0;
-
-        if (isUnarmed(player))   bonus += UNARMED_BONUS;
-        if (hasNoArmor(player))  bonus += NO_ARMOR_BONUS;
-        if (hasDebuffs(player))  bonus += DEBUFF_BONUS;
-
+        if (isUnarmed(player))  bonus += UNARMED_BONUS;
+        if (hasNoArmor(player)) bonus += NO_ARMOR_BONUS;
+        if (hasDebuffs(player)) bonus += DEBUFF_BONUS;
         return bonus;
     }
 
@@ -104,17 +82,11 @@ public class WhiteLightningCultivationSkill extends SimplePassiveSkill {
     }
 
     @Override
-    protected String getTitleKey() {
-        return "ascension.skill.white_lightning_cultivation_skill";
-    }
+    protected String getTitleKey()       { return "ascension.skill.white_lightning_cultivation_skill"; }
 
     @Override
-    protected String getDescriptionKey() {
-        return "ascension.skill.white_lightning_cultivation_skill.description";
-    }
+    protected String getDescriptionKey() { return "ascension.skill.white_lightning_cultivation_skill.description"; }
 
     @Override
-    protected String getIconPath() {
-        return "textures/spells/icon/placeholder_white.png";
-    }
+    protected String getIconPath()       { return "textures/spells/icon/placeholder_white.png"; }
 }

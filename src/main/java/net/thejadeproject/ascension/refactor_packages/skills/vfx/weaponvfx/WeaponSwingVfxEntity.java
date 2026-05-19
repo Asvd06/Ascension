@@ -35,6 +35,7 @@ public class WeaponSwingVfxEntity extends Entity {
     public static final String TYPE_AXE   = "axe_swing";
     public static final String TYPE_SPEAR = "spear_thrust";
     public static final String TYPE_MACE  = "mace_smash";
+    public static final String TYPE_FIST = "fist_punch";
 
     // ── Animation fields ───────────────────────────────────────────────────
     private int currentFrame;
