@@ -620,8 +620,8 @@ public class lang extends LanguageProvider {
         add("ascension.skill.sword_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Sword.");
         add("ascension.skill.trident_mastery_skill", "Trident Mastery");
         add("ascension.skill.trident_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Trident.");
-        add("ascension.skill.fist_mastery_skill", "Trident Mastery");
-        add("ascension.skill.fist_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Fist.");
+        add("ascension.skill.fist_mastery_skill", "Fist Mastery");
+        add("ascension.skill.fist_mastery.description_skill", "As your worldview and realm increase, so to does your command over the Fist.");
         add("ascension.skill.pale_moon_cultivation_skill", "Pale Moon Cultivation");
         add("ascension.skill.pale_moon_cultivation_skill.description", "Cultivates the Soul by drawing upon pale lunar essence. Must be practised under open sky. Stronger when gazing directly at the moon. Harmful beneath direct sunlight.");
         add("ascension.skill.pale_moon_cultivation_skill.blocked_indoors", "You cannot cultivate the Pale Moon Scripture indoors.");
