@@ -34,7 +34,7 @@ public record MobRankLootCondition(
                     Codec.STRING.fieldOf("realm").forGetter(MobRankLootCondition::realm),
                     Codec.INT.optionalFieldOf("stage", 1).forGetter(MobRankLootCondition::stage),
                     Codec.STRING.optionalFieldOf("other_realm", "").forGetter(MobRankLootCondition::otherRealm),
-                    Codec.INT.optionalFieldOf("other_stage", 3).forGetter(MobRankLootCondition::otherStage)
+                    Codec.INT.optionalFieldOf("other_stage", MobCultivationList.getStagesPerRealm()).forGetter(MobRankLootCondition::otherStage)
             ).apply(instance, MobRankLootCondition::new)
     );
 
@@ -66,16 +66,39 @@ public record MobRankLootCondition(
 
     // checks exact
     public static Builder exact(String realmId, int stage) {
-        return () -> new MobRankLootCondition(Mode.EXACT, realmId, stage, "", 3);
+        return () -> new MobRankLootCondition(
+                Mode.EXACT,
+                realmId,
+                clampStage(stage),
+                "",
+                MobCultivationList.getStagesPerRealm()
+        );
     }
 
     // checks inclusive range
     public static Builder between(String minRealmId, int minStage, String maxRealmId, int maxStage) {
-        return () -> new MobRankLootCondition(Mode.BETWEEN, minRealmId, minStage, maxRealmId, maxStage);
+        return () -> new MobRankLootCondition(
+                Mode.BETWEEN,
+                minRealmId,
+                clampStage(minStage),
+                maxRealmId,
+                clampStage(maxStage)
+        );
     }
 
     // checks min
     public static Builder atLeast(String realmId, int stage) {
-        return () -> new MobRankLootCondition(Mode.AT_LEAST, realmId, stage, "", 3);
+        return () -> new MobRankLootCondition(
+                Mode.AT_LEAST,
+                realmId,
+                clampStage(stage),
+                "",
+                MobCultivationList.getStagesPerRealm()
+        );
     }
+
+    private static int clampStage(int stage) {
+        return Math.clamp(stage, 1, MobCultivationList.getStagesPerRealm());
+    }
+
 }

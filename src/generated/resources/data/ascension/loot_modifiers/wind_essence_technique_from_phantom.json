@@ -14,8 +14,7 @@
     },
     {
       "condition": "ascension:mob_rank",
-      "mode": "BETWEEN",
-      "other_realm": "formation_establishment",
+      "mode": "EXACT",
       "realm": "formation_establishment"
     }
   ],

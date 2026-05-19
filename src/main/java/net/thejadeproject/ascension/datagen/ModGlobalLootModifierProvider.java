@@ -49,7 +49,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/zombie_villager")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("qi_gathering", 5, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 2, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "advanced_cultivation_technique")
         ));
@@ -67,7 +67,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/blaze")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("formation_establishment", 5, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("formation_establishment", 2, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "fire_essence_technique")
         ));
@@ -77,7 +77,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/elder_guardian")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.05f).build(),
-                        MobRankLootCondition.between("formation_establishment", 6, "formation_establishment", 9).build()
+                        MobRankLootCondition.atLeast("formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "water_essence_technique")
         ));
@@ -103,7 +103,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/iron_golem")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("formation_establishment", 4, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("formation_establishment", 2, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "metal_essence_technique")
         ));
@@ -113,7 +113,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/creeper")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("formation_establishment", 1, "formation_establishment", 3).build()
+                        MobRankLootCondition.between("formation_establishment", 1, "formation_establishment", 2).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "lightning_essence_technique")
         ));
@@ -123,17 +123,9 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("formation_establishment", 1, "formation_establishment", 3).build()
+                        MobRankLootCondition.exact("formation_establishment", 1).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wind_essence_technique")
-        ));
-
-        add("five_element_cultivation_technique_from_end_city", new AddTechniqueManualModifier(
-                new LootItemCondition[] {
-                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/end_city_treasure")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.03f).build()
-                },
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "five_element_cultivation_technique")
         ));
 
         add("heart_fire_technique_from_nether_fortress", new AddTechniqueManualModifier(
@@ -149,7 +141,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wither_skeleton")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "heart_fire_technique")
         ));
@@ -159,7 +151,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/drowned")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "kidney_water_technique")
         ));
@@ -201,7 +193,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/iron_golem")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("qi_gathering", 1, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "lung_metal_technique")
         ));
@@ -339,7 +331,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/zombie_villager")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 6, "formation_establishment", 9).build()
+                        MobRankLootCondition.exact("formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "scholarly_soul_technique")
         ));
@@ -357,7 +349,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 8, "formation_establishment", 9).build()
+                        MobRankLootCondition.atLeast("formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "pale_moon_scripture")
         ));
@@ -375,7 +367,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/enderman")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.02f).build(),
-                        MobRankLootCondition.between("formation_establishment", 8, "formation_establishment", 9).build()
+                        MobRankLootCondition.atLeast("formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "gibbous_moon_scripture")
         ));
@@ -393,7 +385,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/vindicator")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 4, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("formation_establishment", 2, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "sword_comprehension_technique")
         ));
@@ -419,7 +411,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/blaze")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.03f).build(),
-                        MobRankLootCondition.between("formation_establishment", 6, "formation_establishment", 9).build()
+                        MobRankLootCondition.atLeast("formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dawning_sun_scripture")
         ));
@@ -580,34 +572,6 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
                 LootItemKilledByPlayerCondition.killedByPlayer().build(),
                 LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.WIND_CORE.get()));
-
-        // Example implementation of rank conditional drops (P.S. this can also be used in ModEntityLootTables (different pattern))
-
-        /*
-                Example of at least (if golden core or greater, drops a hundred-year ginseng when killed by a player)
-        this.add("hundred_year_ginseng_from_ranked_zombie", new AddItemModifier(new LootItemCondition[] {
-                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/zombie")).build(),
-                LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                LootItemRandomChanceCondition.randomChance(0.10F).build(),
-                MobRankLootCondition.atLeast("golden_core", 1).build()
-        }, ModItems.HUNDRED_YEAR_GINSENG.get()));
-
-                Example of exact (if exactly nascent soul, drops a white jade orchid when killed by a player)
-        this.add("white_jade_orchid_from_ranked_zombie", new AddItemModifier(new LootItemCondition[] {
-                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/zombie")).build(),
-                LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                LootItemRandomChanceCondition.randomChance(0.25F).build(),
-                MobRankLootCondition.exact("nascent_soul", 2).build()
-        }, ModItems.WHITE_JADE_ORCHID.get()));
-
-                Example of between (if between soul formation and tribulation transcendence, drops a hundred-year fire ginseng when killed by a player)
-        this.add("hundred_year_fire_ginseng_from_ranked_zombie", new AddItemModifier(new LootItemCondition[] {
-                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/zombie")).build(),
-                LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                LootItemRandomChanceCondition.randomChance(0.18F).build(),
-                MobRankLootCondition.between("soul_formation", 1, "tribulation_transcendence", 3).build()
-        }, ModItems.HUNDRED_YEAR_FIRE_GINSENG.get()));
-        */
 
     }
 }

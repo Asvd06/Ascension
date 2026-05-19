@@ -14,11 +14,9 @@
     },
     {
       "condition": "ascension:mob_rank",
-      "mode": "BETWEEN",
-      "other_realm": "formation_establishment",
-      "other_stage": 9,
+      "mode": "AT_LEAST",
       "realm": "formation_establishment",
-      "stage": 6
+      "stage": 3
     }
   ],
   "techniqueId": "ascension:water_essence_technique"
