@@ -128,14 +128,6 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wind_essence_technique")
         ));
 
-        add("five_element_cultivation_technique_from_end_city", new AddTechniqueManualModifier(
-                new LootItemCondition[] {
-                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/end_city_treasure")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.03f).build()
-                },
-                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "five_element_cultivation_technique")
-        ));
-
         add("heart_fire_technique_from_nether_fortress", new AddTechniqueManualModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),
