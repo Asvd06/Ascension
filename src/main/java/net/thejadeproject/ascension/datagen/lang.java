@@ -527,6 +527,9 @@ public class lang extends LanguageProvider {
         add("ascension.technique.soul_forged_weapon_manual", "Soul Forged Weapon Manual");
         add("ascension.technique.soul_forged_weapon_manual.description.short", "Binds a weapon into the cultivator's soul.");
         add("ascension.technique.soul_forged_weapon_manual.description", "A hybrid soul and weapon technique that tempers a bound weapon through battle and soul cultivation.");
+        add("ascension.technique.fist_comprehension_technique", "Fist Comprehension Technique");
+        add("ascension.technique.fist_comprehension_technique.description.short", "Cultivates the Fist Path through unarmed combat.");
+        add("ascension.technique.fist_comprehension_technique.description", "A foundational unarmed scripture. By circulating Qi through the knuckles and joints, flesh and bone become as dense and lethal as forged steel.");
 
 
         // Multi Part Technique Items
@@ -601,6 +604,8 @@ public class lang extends LanguageProvider {
                         A thousand swings awaken intent.
                         Ten thousand swings… heaven yields to the sword.
                         """);
+        add("ascension.skill.fist_cultivation_skill", "Fist Comprehension");
+        add("ascension.skill.fist_cultivation_skill.description", "To fight without a weapon is to make a weapon of oneself. Every strike refines your martial intent, turning bare flesh into an unstoppable force.");
         add("ascension.skill.axe_mastery_skill", "Axe Mastery");
         add("ascension.skill.axe_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Axe.");
         add("ascension.skill.blade_mastery_skill", "Blade Mastery");
@@ -615,6 +620,8 @@ public class lang extends LanguageProvider {
         add("ascension.skill.sword_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Sword.");
         add("ascension.skill.trident_mastery_skill", "Trident Mastery");
         add("ascension.skill.trident_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Trident.");
+        add("ascension.skill.fist_mastery_skill", "Trident Mastery");
+        add("ascension.skill.fist_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Fist.");
         add("ascension.skill.pale_moon_cultivation_skill", "Pale Moon Cultivation");
         add("ascension.skill.pale_moon_cultivation_skill.description", "Cultivates the Soul by drawing upon pale lunar essence. Must be practised under open sky. Stronger when gazing directly at the moon. Harmful beneath direct sunlight.");
         add("ascension.skill.pale_moon_cultivation_skill.blocked_indoors", "You cannot cultivate the Pale Moon Scripture indoors.");
