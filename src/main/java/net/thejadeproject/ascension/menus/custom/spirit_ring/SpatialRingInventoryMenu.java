@@ -1,7 +1,6 @@
 package net.thejadeproject.ascension.menus.custom.spirit_ring;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -10,6 +9,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.thejadeproject.ascension.common.items.artifacts.SpatialRing;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.common.items.data_components.spatial_ring.SpatialRingComponent;
 import net.thejadeproject.ascension.menus.ModMenuTypes;
 
 public class SpatialRingInventoryMenu extends AbstractContainerMenu {
@@ -24,16 +24,26 @@ public class SpatialRingInventoryMenu extends AbstractContainerMenu {
     private final int ringStart;
     private final int ringEnd;
 
-    public SpatialRingInventoryMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        super(ModMenuTypes.SPATIAL_RING_INVENTORY_MENU.get(),containerId);
+    public SpatialRingInventoryMenu(int containerId, Inventory inventory, RegistryFriendlyByteBuf extraData) {
+        this(containerId, inventory, ItemStack.STREAM_CODEC.decode(extraData));
+    }
+
+    public SpatialRingInventoryMenu(int containerId, Inventory inventory, ItemStack stack) {
+        super(ModMenuTypes.SPATIAL_RING_INVENTORY_MENU.get(), containerId);
         this.inventory = inventory;
+        this.stack = stack;
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
-        this.stack = inventory.player.getItemInHand(InteractionHand.MAIN_HAND);
-        this.handler = stack.get(ModDataComponents.SPIRIT_RING_DATA).createItemHandler(stack);
+
+        if (!this.stack.has(ModDataComponents.SPIRIT_RING_DATA)) {
+            this.stack.set(ModDataComponents.SPIRIT_RING_DATA, new SpatialRingComponent(27, 18, 18));
+        }
+
+        this.handler = this.stack.get(ModDataComponents.SPIRIT_RING_DATA).createItemHandler(this.stack);
+
         this.ringStart = HOTBAR_END;
-        for(int i = 0; i<handler.getSlots();i++){
-            this.addSlot(new SlotItemHandler(handler,i,0,0){
+        for (int i = 0; i < handler.getSlots(); i++) {
+            this.addSlot(new SlotItemHandler(handler, i, 0, 0) {
                 @Override
                 public boolean mayPlace(ItemStack stack) {
                     return !(stack.getItem() instanceof SpatialRing) && super.mayPlace(stack);
@@ -106,8 +116,5 @@ public class SpatialRingInventoryMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return player.getItemInHand(InteractionHand.MAIN_HAND).equals(stack);
-    }
-
+    public boolean stillValid(Player player) {return !stack.isEmpty() && stack.getItem() instanceof SpatialRing;}
 }

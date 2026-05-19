@@ -18,19 +18,29 @@ public class SpatialRing extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        if(usedHand != InteractionHand.MAIN_HAND) return InteractionResultHolder.fail(player.getItemInHand(usedHand));
+        if (usedHand != InteractionHand.MAIN_HAND) {
+            return InteractionResultHolder.fail(player.getItemInHand(usedHand));
+        }
 
         ItemStack stack = player.getMainHandItem();
-        if(!stack.has(ModDataComponents.SPIRIT_RING_DATA)) stack.set(ModDataComponents.SPIRIT_RING_DATA,
-                new SpatialRingComponent(27, 18, 18));
-        if(!player.isShiftKeyDown()){
-                player.openMenu(new SpatialRingMenuProvider(SpatialRingItemStackHandler.Type.INVENTORY));
-            }else{
-                player.openMenu(new SpatialRingMenuProvider(SpatialRingItemStackHandler.Type.MODIFIERS));
-            }
+
+        if (!stack.has(ModDataComponents.SPIRIT_RING_DATA)) {
+            stack.set(ModDataComponents.SPIRIT_RING_DATA, new SpatialRingComponent(27, 18, 18));
+        }
+
+        if (!level.isClientSide()) {
+            player.openMenu(
+                    new SpatialRingMenuProvider(
+                            player.isShiftKeyDown()
+                                    ? SpatialRingItemStackHandler.Type.MODIFIERS
+                                    : SpatialRingItemStackHandler.Type.INVENTORY,
+                            stack
+                    ),
+                    buf -> ItemStack.STREAM_CODEC.encode(buf, stack)
+            );
+        }
+
         return InteractionResultHolder.success(stack);
-
-
     }
 
 

@@ -12,6 +12,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import net.thejadeproject.ascension.common.items.artifacts.SpatialRing;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.common.items.data_components.spatial_ring.SpatialRingComponent;
 import net.thejadeproject.ascension.menus.ModMenuTypes;
 
 public class SpatialRingModifierMenu extends AbstractContainerMenu {
@@ -30,13 +31,20 @@ public class SpatialRingModifierMenu extends AbstractContainerMenu {
     private final int upgradeEnd;
 
     public SpatialRingModifierMenu(int containerId, Inventory inventory, FriendlyByteBuf extraData) {
-        super(ModMenuTypes.SPATIAL_RING_MODIFIER_MENU.get(),containerId);
+        this(containerId, inventory, inventory.player.getMainHandItem());
+    }
+
+    public SpatialRingModifierMenu(int containerId, Inventory inventory, ItemStack stack) {
+        super(ModMenuTypes.SPATIAL_RING_MODIFIER_MENU.get(), containerId);
         this.inventory = inventory;
+        this.stack = stack;
         addPlayerInventory(inventory);
         addPlayerHotbar(inventory);
-        this.stack = inventory.player.getItemInHand(InteractionHand.MAIN_HAND);
-        this.modifierHandler = stack.get(ModDataComponents.SPIRIT_RING_DATA).createModifierHandler(stack);
-        this.upgradeHandler = stack.get(ModDataComponents.SPIRIT_RING_DATA).createUpgradeHandler(stack);
+        if (!this.stack.has(ModDataComponents.SPIRIT_RING_DATA)) {
+            this.stack.set(ModDataComponents.SPIRIT_RING_DATA, new SpatialRingComponent(27, 18, 18));
+        }
+        this.modifierHandler = this.stack.get(ModDataComponents.SPIRIT_RING_DATA).createModifierHandler(this.stack);
+        this.upgradeHandler = this.stack.get(ModDataComponents.SPIRIT_RING_DATA).createUpgradeHandler(this.stack);
         this.modifierStart = HOTBAR_END;
         for(int i = 0; i<modifierHandler.getSlots();i++){
             this.addSlot(new SlotItemHandler(modifierHandler,i,0,0){
