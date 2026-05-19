@@ -16,9 +16,7 @@
       "condition": "ascension:mob_rank",
       "mode": "BETWEEN",
       "other_realm": "formation_establishment",
-      "other_stage": 9,
-      "realm": "formation_establishment",
-      "stage": 6
+      "realm": "formation_establishment"
     }
   ],
   "techniqueId": "ascension:lightning_essence_technique"

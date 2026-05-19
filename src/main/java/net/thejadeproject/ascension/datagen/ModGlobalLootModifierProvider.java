@@ -113,7 +113,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/creeper")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("formation_establishment", 6, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("formation_establishment", 1, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "lightning_essence_technique")
         ));
@@ -123,7 +123,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceCondition.randomChance(0.04f).build(),
-                        MobRankLootCondition.between("formation_establishment", 7, "formation_establishment", 9).build()
+                        MobRankLootCondition.between("formation_establishment", 1, "formation_establishment", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wind_essence_technique")
         ));
