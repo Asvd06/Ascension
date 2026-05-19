@@ -31,7 +31,9 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableS
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.skill_data.GenericCultivationSkillData;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
+import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
 
+import java.util.List;
 import java.util.Set;
 
 public class GenericCultivationSkill implements ICastableSkill {
@@ -160,39 +162,11 @@ public class GenericCultivationSkill implements ICastableSkill {
 
             if (pathData == null || pathData.getCurrentTechniqueId() == null) return false;
 
-            //TODO add a cultivate event
             ITechnique technique = pathData.getCurrentTechnique();
             if (technique == null) return false;
             double amount = getEffectiveRate(caster);
 
-
-            if(pathData.getCurrentRealmProgress()+amount >= technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm())){
-                //TODO minor/major realm breakthrough shenanigans here
-                pathData.setCurrentRealmProgress(technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm()));
-
-                if(pathData.getMinorRealm() < technique.getMaxMinorRealm(pathData.getMajorRealm()) && technique.canBreakthroughMinorRealm(
-                        caster.getData(ModAttachments.ENTITY_DATA),
-                        pathData.getMajorRealm(),
-                        pathData.getMinorRealm(),
-                        pathData.getCurrentRealmProgress()
-                )){
-                    pathData.handleRealmChange(pathData.getMajorRealm(),pathData.getMinorRealm()+1,caster.getData(ModAttachments.ENTITY_DATA));
-                } else if (
-                        pathData.getMajorRealm() < technique.getMaxMajorRealm()
-                                && technique.canBreakthrough(
-                                caster.getData(ModAttachments.ENTITY_DATA),
-                                pathData.getMajorRealm(),
-                                pathData.getMinorRealm(),
-                                pathData.getCurrentRealmProgress()
-                        )
-                ) {
-                    pathData.handleRealmChange(pathData.getMajorRealm()+1,0,caster.getData(ModAttachments.ENTITY_DATA));
-                }
-            }else {
-                pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress()+amount);
-            }
-
-            if(caster instanceof Player player) pathData.sync(player);
+            CultivationUtil.tryCultivate(caster,path, List.of(),amount);
 
         }
 
