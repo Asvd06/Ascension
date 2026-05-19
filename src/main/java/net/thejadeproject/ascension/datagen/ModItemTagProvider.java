@@ -144,6 +144,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(ModTags.Items.NUGGETS_FROST_SILVER)
                 .add(ModItems.FROST_SILVER_NUGGET.get());
 
+        tag(ModTags.Items.CURIOS_RING)
+                .add(ModItems.SPATIAL_RING.get());
+
 
 
 

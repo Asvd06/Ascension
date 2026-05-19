@@ -10,9 +10,9 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
-import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueSkillHelper;
 
 import java.util.Set;
+
 public class FistCultivationTechnique extends GenericTechnique {
 
     public FistCultivationTechnique(
@@ -47,7 +47,6 @@ public class FistCultivationTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
-        // UPDATED: Using IPathData
         IPathData pathData = heldEntity.getPathData(getPath());
 
         if (pathData != null) {
@@ -81,7 +80,6 @@ public class FistCultivationTechnique extends GenericTechnique {
     }
 
     private void refreshRealmUnlockSkills(IEntityData entityData, int majorRealm) {
-
     }
 
     @Override
@@ -95,5 +93,4 @@ public class FistCultivationTechnique extends GenericTechnique {
         return AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique)
                 instanceof FistCultivationTechnique;
     }
-
 }
