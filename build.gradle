@@ -36,7 +36,6 @@ repositories {
         url = "https://modmaven.dev"
     }
 
-
 }
 
 base {
@@ -145,6 +144,8 @@ dependencies {
 
     compileOnly "net.favouriteless.modopedia:modopedia-neoforge-${minecraft_version}:${modopedia_version}"
     localRuntime "net.favouriteless.modopedia:modopedia-neoforge-${minecraft_version}:${modopedia_version}"
+
+    localRuntime "maven.modrinth:worldedit:${worldedit_version}"
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
