@@ -129,6 +129,17 @@
           "type": "minecraft:item",
           "functions": [
             {
+              "function": "ascension:set_technique_manual",
+              "techniqueId": "ascension:fist_comprehension_technique"
+            }
+          ],
+          "name": "ascension:technique_manual",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",

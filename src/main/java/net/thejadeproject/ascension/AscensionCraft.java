@@ -48,6 +48,7 @@ import net.thejadeproject.ascension.common.command.commands.ReadChapterCommand;
 import net.thejadeproject.ascension.common.items.artifacts.talismans.SoulAnchorTalisman;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
+import net.thejadeproject.ascension.datagen.loot.functions.SetTechniqueManualFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
 import net.thejadeproject.ascension.entity.custom.NeedleProjectile;
 import net.thejadeproject.ascension.events.TeleportationEventHandler;
@@ -146,6 +147,7 @@ public class AscensionCraft {
 
         SetRandomIntComponentFunction.LOOT_FUNCTION_TYPES.register(modEventBus);
         SetTechniquePageFunction.LOOT_FUNCTION_TYPES.register(modEventBus);
+        SetTechniqueManualFunction.LOOT_FUNCTION_TYPES.register(modEventBus);
 
         ModParticles.register(modEventBus);
         ModEntities.register(modEventBus);

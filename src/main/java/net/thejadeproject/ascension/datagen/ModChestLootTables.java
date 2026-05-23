@@ -19,6 +19,7 @@ import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
+import net.thejadeproject.ascension.datagen.loot.functions.SetTechniqueManualFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
 
 import java.util.function.BiConsumer;
@@ -186,6 +187,10 @@ public class ModChestLootTables implements LootTableSubProvider {
                                 .add(LootItem.lootTableItem(ModItems.TECHNIQUE_PAGE.get())
                                         .apply(SetTechniquePageFunction.builder(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "bloodfeast_soul_refining_scripture"), 0, 4))
                                         .setWeight(7))
+                                .add(LootItem.lootTableItem(ModItems.TECHNIQUE_MANUAL.get())
+                                        .apply(SetTechniqueManualFunction.builder(
+                                                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "fist_comprehension_technique")))
+                                        .setWeight(10))
                                 .add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE)
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 6)))
                                         .setWeight(32))

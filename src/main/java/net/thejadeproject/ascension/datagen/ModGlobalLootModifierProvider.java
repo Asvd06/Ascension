@@ -10,6 +10,7 @@ import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.ModItems;
+import net.thejadeproject.ascension.datagen.loot.AddBloodlineRandomPurityModifier;
 import net.thejadeproject.ascension.datagen.loot.AddItemModifier;
 import net.thejadeproject.ascension.datagen.loot.AddTechniquePageModifier;
 import net.thejadeproject.ascension.datagen.loot.conditions.AddTechniqueManualModifier;
@@ -23,6 +24,114 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
     }
     @Override
     protected void start() {
+
+        // ── Bloodline Essences ────────────────────────────────────────────────
+
+        add("human_bloodline_from_village_house", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/village/village_plains_house")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.15f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "human_bloodline"), 10, 60
+        ));
+        add("human_bloodline_from_village_temple", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/village/village_desert_house")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.15f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "human_bloodline"), 10, 60
+        ));
+
+        add("beast_bloodline_from_wolf", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wolf")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "beast_bloodline"), 5, 40
+        ));
+        add("beast_bloodline_from_spider", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/spider")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "beast_bloodline"), 5, 40
+        ));
+        add("beast_bloodline_from_cave_spider", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/cave_spider")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.025f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "beast_bloodline"), 5, 45
+        ));
+
+        add("phoenix_bloodline_from_nether_fortress", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.015f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "phoenix_bloodline"), 5, 35
+        ));
+
+        add("dragon_bloodline_from_ender_dragon", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/ender_dragon")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.01f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dragon_bloodline"), 5, 35
+        ));
+        add("dragon_bloodline_from_end_city", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/end_city_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.015f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dragon_bloodline"), 5, 35
+        ));
+
+        add("astral_bloodline_from_end_city", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/end_city_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.015f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "astral_bloodline"), 5, 35
+        ));
+        add("astral_bloodline_from_shulker", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/shulker")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.015f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "astral_bloodline"), 5, 30
+        ));
+
+        add("raven_bloodline_from_pillager", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/pillager")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "raven_bloodline"), 5, 40
+        ));
+        add("raven_bloodline_from_phantom", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "raven_bloodline"), 5, 40
+        ));
+        add("raven_bloodline_from_woodland_mansion", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/woodland_mansion")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "raven_bloodline"), 10, 45
+        ));
+
+
+
 
         //Technique Pages
 
