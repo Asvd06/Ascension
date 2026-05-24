@@ -92,25 +92,15 @@ public class AddRankedMobLootModifier extends LootModifier {
     private ItemStack processDrop(RankLootTable.RankLootEntry entry, LootContext context, int realmIndex, int stage) {
         ItemStack base = entry.stack().copy();
 
-        // ── Technique Pages ──
-        if (base.is(ModItems.TECHNIQUE_PAGE.get())) {
-            String techniqueId = base.get(ModDataComponents.TECHNIQUE_ID.get());
-            if (techniqueId != null) {
-                int page;
-                if (entry.minPage() >= 0 && entry.maxPage() >= entry.minPage()) {
-                    page = entry.minPage() + context.getRandom().nextInt(entry.maxPage() - entry.minPage() + 1);
-                } else {
-                    int fallbackMax = Math.min(7, 2 + realmIndex * 2 + stage);
-                    page = context.getRandom().nextInt(fallbackMax + 1);
-                }
-                return TechniquePageItem.createWithTechnique(techniqueId, page);
-            }
+        // ── Technique Pages: apply SetTechniquePageFunction at drop time ──
+        if (entry.techniquePageFunction() != null) {
+            return entry.techniquePageFunction().apply(base, context);
         }
 
         // ── Pills: apply SetRandomIntComponentFunction builders at drop time ──
         if (entry.randomComponents() != null && !entry.randomComponents().isEmpty()) {
             for (SetRandomIntComponentFunction function : entry.randomComponents()) {
-                base = function.apply(base, context);  // Exact same apply as chest loot
+                base = function.apply(base, context);
             }
         }
 

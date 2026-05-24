@@ -1,11 +1,14 @@
 package net.thejadeproject.ascension.mob_cultivation.loot;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
+import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
 import net.thejadeproject.ascension.mob_cultivation.MobCultivationList;
 
 import java.util.*;
@@ -256,9 +259,10 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 10, 1.0f, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 8, 1.0f, 1, 1),
                 // Technique drops
-                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24, 1.0f),
-                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20, 1.0f),
-                pageEntry("soul_forged_weapon_manual", 0, 3, 22, 1.0f),
+                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24),
+                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20),
+                pageEntry("soul_forged_weapon_manual", 0, 3, 23),
+
                 entry(techniqueManual("lung_metal_technique"), 15, 1.0f, 1, 1),
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 15,
@@ -313,9 +317,9 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 12, 1.0f, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 10, 1.0f, 1, 1),
                 // Technique drops — higher chances
-                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24, 1.0f),
-                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20, 1.0f),
-                pageEntry("soul_forged_weapon_manual", 0, 3, 22, 1.0f),
+                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24),
+                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20),
+                pageEntry("soul_forged_weapon_manual", 0, 3, 22),
                 entry(techniqueManual("lung_metal_technique"), 20, 1.0f, 1, 1),
                 entry(techniqueManual("lightning_essence_technique"), 20, 1.0f, 1, 1),
 
@@ -374,9 +378,9 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 15, 1.0f, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 12, 1.0f, 1, 1),
                 // Max technique drops — random page ranges (like chest loot)
-                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24, 1.0f),
-                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20, 1.0f),
-                pageEntry("soul_forged_weapon_manual", 0, 3, 22, 1.0f),
+                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24),
+                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20),
+                pageEntry("soul_forged_weapon_manual", 0, 3, 22),
                 entry(techniqueManual("lung_metal_technique"), 22, 1.0f, 1, 1),
                 entry(techniqueManual("lightning_essence_technique"), 22, 1.0f, 1, 1),
                 entry(techniqueManual("sword_comprehension_technique"), 18, 1.0f, 1, 1),
@@ -437,9 +441,9 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 18, 1.0f, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 15, 1.0f, 1, 1),
                 // Technique drops
-                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24, 1.0f),
-                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20, 1.0f),
-                pageEntry("soul_forged_weapon_manual", 0, 3, 22, 1.0f),
+                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24),
+                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20),
+                pageEntry("soul_forged_weapon_manual", 0, 3, 22),
                 entry(techniqueManual("sword_comprehension_technique"), 22, 1.0f, 1, 1),
                 entry(techniqueManual("dawning_sun_scripture"), 22, 1.0f, 1, 1),
 
@@ -496,9 +500,9 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 22, 1.0f, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 18, 1.0f, 1, 1),
                 // Technique drops — higher chances
-                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24, 1.0f),
-                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20, 1.0f),
-                pageEntry("soul_forged_weapon_manual", 0, 3, 22, 1.0f),
+                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24),
+                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20),
+                pageEntry("soul_forged_weapon_manual", 0, 3, 22),
                 entry(techniqueManual("sword_comprehension_technique"), 25, 1.0f, 1, 1),
                 entry(techniqueManual("dawning_sun_scripture"), 25, 1.0f, 1, 1),
                 entry(techniqueManual("pale_moon_scripture"), 22, 1.0f, 1, 1),
@@ -557,9 +561,9 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 25, 1.0f, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 22, 1.0f, 1, 1),
                 // Max technique drops — full random page ranges
-                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24, 1.0f),
-                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20, 1.0f),
-                pageEntry("soul_forged_weapon_manual", 0, 3, 22, 1.0f),
+                pageEntry("bloodfeast_soul_refining_scripture", 0, 5, 24),
+                pageEntry("white_lightning_ten_stage_technique", 0, 9, 20),
+                pageEntry("soul_forged_weapon_manual", 0, 3, 22),
                 entry(techniqueManual("sword_comprehension_technique"), 28, 1.0f, 1, 1),
                 entry(techniqueManual("dawning_sun_scripture"), 28, 1.0f, 1, 1),
                 entry(techniqueManual("pale_moon_scripture"), 25, 1.0f, 1, 1),
@@ -630,9 +634,6 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 25, scale, 1, 1),
                 entry(new ItemStack(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get()), 22, scale, 1, 1),
                 // Scaled page entries — weight and max page grow with realm depth
-                pageEntryScale("bloodfeast_soul_refining_scripture", 0, 5, 24, scale, realmIdx),
-                pageEntryScale("white_lightning_ten_stage_technique", 0, 9, 20, scale, realmIdx),
-                pageEntryScale("soul_forged_weapon_manual", 0, 3, 22, scale, realmIdx),
                 entry(techniqueManual("sword_comprehension_technique"), 30, scale, 1, 1)
         ));
     }
@@ -656,22 +657,21 @@ public final class RankLootRegistry {
     }
 
     private static RankLootTable.RankLootEntry entry(ItemStack stack, int weight, float quantityScale, int min, int max) {
-        return new RankLootTable.RankLootEntry(stack.copy(), weight, quantityScale, min, max);
+        return RankLootTable.RankLootEntry.of(stack.copy(), weight, quantityScale, min, max);
     }
 
+    /** Pill entry using SetRandomIntComponentFunction builders */
     @SafeVarargs
     private static RankLootTable.RankLootEntry pillEntry(net.minecraft.world.item.Item pillItem, int weight, SetRandomIntComponentFunction.Builder... componentBuilders) {
         ItemStack stack = new ItemStack(pillItem);
-        // Build the functions and apply them immediately to set the stack's components
-        // Actually we store the builders and apply at drop time for true randomness
         List<SetRandomIntComponentFunction> functions = new ArrayList<>();
         for (SetRandomIntComponentFunction.Builder builder : componentBuilders) {
             functions.add(builder.build());
         }
-        return new RankLootTable.RankLootEntry(stack, weight, 1.0f, 1, 1, functions);
+        return RankLootTable.RankLootEntry.ofPill(stack, weight, 1.0f, 1, 1, functions);
     }
 
-    /** Convenience: pill with count range */
+    /** Pill entry with count range */
     @SafeVarargs
     private static RankLootTable.RankLootEntry pillEntry(net.minecraft.world.item.Item pillItem, int weight, int minCount, int maxCount, SetRandomIntComponentFunction.Builder... componentBuilders) {
         ItemStack stack = new ItemStack(pillItem);
@@ -679,9 +679,20 @@ public final class RankLootRegistry {
         for (SetRandomIntComponentFunction.Builder builder : componentBuilders) {
             functions.add(builder.build());
         }
-        return new RankLootTable.RankLootEntry(stack, weight, 1.0f, minCount, maxCount, functions);
+        return RankLootTable.RankLootEntry.ofPill(stack, weight, 1.0f, minCount, maxCount, functions);
     }
 
+    /** Technique page entry using SetTechniquePageFunction */
+    private static RankLootTable.RankLootEntry pageEntry(String techniqueId, int minPage, int maxPage, int weight) {
+        ItemStack stack = new ItemStack(ModItems.TECHNIQUE_PAGE.get());
+        stack.set(ModDataComponents.TECHNIQUE_ID.get(), techniqueId);
+        SetTechniquePageFunction function = (SetTechniquePageFunction) SetTechniquePageFunction.builder(
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, techniqueId),
+                minPage,
+                maxPage
+        ).build();
+        return RankLootTable.RankLootEntry.ofPage(stack, weight, 1.0f, 1, 1, function);
+    }
 
     /** Creates a technique manual stack */
     private static ItemStack techniqueManual(String techniqueId) {
@@ -693,19 +704,4 @@ public final class RankLootRegistry {
         return net.thejadeproject.ascension.common.items.techniques.TechniquePageItem.createWithTechnique(techniqueId, page);
     }
 
-    /** Creates a technique page with random page range (like chest loot) */
-    private static RankLootTable.RankLootEntry pageEntry(String techniqueId, int minPage, int maxPage, int weight, float quantityScale) {
-        ItemStack stack = new ItemStack(ModItems.TECHNIQUE_PAGE.get());
-        stack.set(ModDataComponents.TECHNIQUE_ID.get(), techniqueId);
-        return new RankLootTable.RankLootEntry(stack, weight, quantityScale, 1, 1, minPage, maxPage);
-    }
-
-    private static RankLootTable.RankLootEntry pageEntryScale(String techniqueId, int minPage, int baseMaxPage, int baseWeight, float quantityScale, int realmIdx) {
-        // Every 2 realms beyond nascent soul, increase max page by 1 (capped at technique's actual max)
-        int extraPages = (realmIdx - 4) / 2;
-        int maxPage = Math.min(baseMaxPage, minPage + baseMaxPage - minPage + extraPages);
-        // Weight grows by 10% per realm index
-        int weight = (int) (baseWeight * (1.0f + (realmIdx - 4) * 0.10f));
-        return pageEntry(techniqueId, minPage, maxPage, weight, quantityScale);
-    }
 }

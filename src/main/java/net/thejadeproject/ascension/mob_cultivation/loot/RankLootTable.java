@@ -2,6 +2,7 @@ package net.thejadeproject.ascension.mob_cultivation.loot;
 
 import net.minecraft.world.item.ItemStack;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
+import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
 
 import java.util.List;
 
@@ -20,23 +21,30 @@ public record RankLootTable(
             float quantityScale,
             int minCount,
             int maxCount,
-            int minPage,     // -1 when unused
-            int maxPage,     // -1 when unused
-            List<SetRandomIntComponentFunction> randomComponents  // null when unused
+            List<SetRandomIntComponentFunction> randomComponents,
+            SetTechniquePageFunction techniquePageFunction
     ) {
-        // Standard item entry
-        public RankLootEntry(ItemStack stack, int weight, float quantityScale, int minCount, int maxCount) {
-            this(stack, weight, quantityScale, minCount, maxCount, -1, -1, null);
+        // Compact canonical constructor for validation
+        public RankLootEntry {
+            if (randomComponents == null && techniquePageFunction == null) {
+                // Standard entry — OK
+            }
+            // No validation needed, just ensure fields are set
         }
 
-        // Technique page entry
-        public RankLootEntry(ItemStack stack, int weight, float quantityScale, int minCount, int maxCount, int minPage, int maxPage) {
-            this(stack, weight, quantityScale, minCount, maxCount, minPage, maxPage, null);
+        // Static factory: Standard item entry
+        public static RankLootEntry of(ItemStack stack, int weight, float quantityScale, int minCount, int maxCount) {
+            return new RankLootEntry(stack, weight, quantityScale, minCount, maxCount, null, null);
         }
 
-        // Pill entry with random component builders
-        public RankLootEntry(ItemStack stack, int weight, float quantityScale, int minCount, int maxCount, List<SetRandomIntComponentFunction> randomComponents) {
-            this(stack, weight, quantityScale, minCount, maxCount, -1, -1, randomComponents);
+        // Static factory: Pill entry with random component builders
+        public static RankLootEntry ofPill(ItemStack stack, int weight, float quantityScale, int minCount, int maxCount, List<SetRandomIntComponentFunction> randomComponents) {
+            return new RankLootEntry(stack, weight, quantityScale, minCount, maxCount, randomComponents, null);
+        }
+
+        // Static factory: Technique page entry with SetTechniquePageFunction
+        public static RankLootEntry ofPage(ItemStack stack, int weight, float quantityScale, int minCount, int maxCount, SetTechniquePageFunction techniquePageFunction) {
+            return new RankLootEntry(stack, weight, quantityScale, minCount, maxCount, null, techniquePageFunction);
         }
     }
 }

@@ -1073,10 +1073,10 @@ public class lang extends LanguageProvider {
         add("ascension.chapter.white_lightning_ten_stage_technique.9", "Stage 9: Heaven's Wrath");
         add("ascension.chapter.white_lightning_ten_stage_technique.10", "Stage 10: The Fist King's Rebirth");
 
-        add("ascension.chapter.soul_forged_weapon_manual.1", "Binding the Soul Steel");
-        add("ascension.chapter.soul_forged_weapon_manual.2", "Tempering Through Slaughter");
-        add("ascension.chapter.soul_forged_weapon_manual.3", "The Hundred Forged Marks");
-        add("ascension.chapter.soul_forged_weapon_manual.4", "Manifestation of the Soul Armament");
+        add("ascension.chapter.soul_forged_weapon_manual.1", "Stage 1: Binding the Soul Steel");
+        add("ascension.chapter.soul_forged_weapon_manual.2", "Stage 2: Tempering Through Slaughter");
+        add("ascension.chapter.soul_forged_weapon_manual.3", "Stage 3: The Hundred Forged Marks");
+        add("ascension.chapter.soul_forged_weapon_manual.4", "Stage 4: Manifestation of the Soul Armament");
 
 
         //Tooltips
