@@ -7,7 +7,7 @@
       "loot_table_id": "minecraft:entities/ender_dragon"
     },
     {
-      "chance": 0.01,
+      "chance": 0.11,
       "condition": "minecraft:random_chance"
     }
   ],

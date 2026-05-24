@@ -7,7 +7,7 @@
       "loot_table_id": "minecraft:chests/woodland_mansion"
     },
     {
-      "chance": 0.02,
+      "chance": 0.12,
       "condition": "minecraft:random_chance"
     }
   ],

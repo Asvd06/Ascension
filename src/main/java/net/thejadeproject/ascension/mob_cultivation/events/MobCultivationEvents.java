@@ -43,7 +43,7 @@ public class MobCultivationEvents {
      * Chance (0–1) that a naturally spawned mob will roll from the elite pool
      * instead of the mortal pool. 5% by default.
      */
-    private static final float ELITE_RANK_CHANCE = 0.15f;
+    private static final float ELITE_RANK_CHANCE = 0.25f;
 
     /**
      * Cooldown in ticks between elite-rank spawns per dimension.

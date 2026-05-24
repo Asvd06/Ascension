@@ -32,14 +32,14 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("human_bloodline_from_village_house", new AddBloodlineRandomPurityModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/village/village_plains_house")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.15f).build()
+                        LootItemRandomChanceCondition.randomChance(0.25f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "human_bloodline"), 10, 60
         ));
         add("human_bloodline_from_village_temple", new AddBloodlineRandomPurityModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/village/village_desert_house")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.15f).build()
+                        LootItemRandomChanceCondition.randomChance(0.25f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "human_bloodline"), 10, 60
         ));
@@ -48,7 +48,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wolf")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "beast_bloodline"), 5, 40
         ));
@@ -56,7 +56,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/spider")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "beast_bloodline"), 5, 40
         ));
@@ -64,7 +64,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/cave_spider")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                        LootItemRandomChanceCondition.randomChance(0.025f).build()
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "beast_bloodline"), 5, 45
         ));
@@ -72,7 +72,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("phoenix_bloodline_from_nether_fortress", new AddBloodlineRandomPurityModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.015f).build()
+                        LootItemRandomChanceCondition.randomChance(0.15f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "phoenix_bloodline"), 5, 35
         ));
@@ -80,7 +80,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
         add("dragon_bloodline_from_ender_dragon", new AddBloodlineRandomPurityModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/ender_dragon")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.01f).build()
+                        LootItemRandomChanceCondition.randomChance(0.11f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "dragon_bloodline"), 5, 35
         ));
@@ -112,7 +112,7 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/pillager")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "raven_bloodline"), 5, 40
         ));
@@ -120,14 +120,14 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
-                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "raven_bloodline"), 5, 40
         ));
         add("raven_bloodline_from_woodland_mansion", new AddBloodlineRandomPurityModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/woodland_mansion")).build(),
-                        LootItemRandomChanceCondition.randomChance(0.02f).build()
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "raven_bloodline"), 10, 45
         ));

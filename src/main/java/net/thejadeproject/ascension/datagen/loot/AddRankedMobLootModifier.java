@@ -92,6 +92,11 @@ public class AddRankedMobLootModifier extends LootModifier {
     private ItemStack processDrop(RankLootTable.RankLootEntry entry, LootContext context, int realmIndex, int stage) {
         ItemStack base = entry.stack().copy();
 
+        // ── Technique Manuals: apply SetTechniqueManualFunction at drop time ──
+        if (entry.techniqueManualFunction() != null) {
+            return entry.techniqueManualFunction().apply(base, context);
+        }
+
         // ── Technique Pages: apply SetTechniquePageFunction at drop time ──
         if (entry.techniquePageFunction() != null) {
             return entry.techniquePageFunction().apply(base, context);
