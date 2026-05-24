@@ -16,9 +16,6 @@
     "ascension:bloodfeast_ch5_from_ender_dragon",
     "ascension:soul_forged_weapon_manual_ch1_from_bastion",
     "ascension:soul_forged_weapon_manual_ch3_from_vindicator",
-    "ascension:basic_cultivation_technique_from_village",
-    "ascension:advanced_cultivation_technique_from_zombie_villager",
-    "ascension:advanced_cultivation_technique_from_stronghold_library",
     "ascension:fire_essence_technique_from_blaze",
     "ascension:water_essence_technique_from_elder_guardian",
     "ascension:wood_essence_technique_from_jungle_temple",
@@ -101,7 +98,8 @@
     "ascension:earth_core_from_husk",
     "ascension:metal_core_from_skeleton",
     "ascension:lightning_core_from_witch",
-    "ascension:wind_core_from_phantom"
+    "ascension:wind_core_from_phantom",
+    "ascension:ranked_mob_loot"
   ],
   "replace": false
 }

@@ -30,6 +30,7 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.mob_cultivation.*;
 import net.thejadeproject.ascension.mob_cultivation.util.MobCultivationInheritance;
+import net.thejadeproject.ascension.mob_cultivation.util.EliteGearApplier;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.mob_culti.SyncMobCultivation;
 
 import java.util.HashMap;
@@ -42,13 +43,13 @@ public class MobCultivationEvents {
      * Chance (0–1) that a naturally spawned mob will roll from the elite pool
      * instead of the mortal pool. 5% by default.
      */
-    private static final float ELITE_RANK_CHANCE = 0.5f; //0.05f
+    private static final float ELITE_RANK_CHANCE = 0.15f;
 
     /**
      * Cooldown in ticks between elite-rank spawns per dimension.
      * 6000 ticks = 5 minutes.
      */
-    private static final int ELITE_RANK_COOLDOWN = 100; //6000
+    private static final int ELITE_RANK_COOLDOWN = 6000; //6000
 
     /**
      * Announce range in blocks. Players within this radius receive the action
@@ -108,6 +109,7 @@ public class MobCultivationEvents {
 
         assignRank(living, data, eliteDef);
         startCooldown(event.getLevel().getLevel(), ELITE_RANK_COOLDOWN);
+        EliteGearApplier.applyGear((ServerLevel) event.getLevel().getLevel(), living, eliteDef);
         sendEliteSpawnNotification((ServerLevel) event.getLevel().getLevel(), living, eliteDef);
     }
 
@@ -381,7 +383,7 @@ public class MobCultivationEvents {
             case "body_integration"          -> ChatFormatting.DARK_PURPLE;
             case "tribulation_transcendence" -> ChatFormatting.DARK_RED;
             case "mahayana"                  -> ChatFormatting.DARK_GREEN;
-            case "earth_immortal"            -> ChatFormatting.BLUE;
+            case "earth_immortal"            -> ChatFormatting.DARK_BLUE;
             default                          -> ChatFormatting.WHITE;
         };
     }

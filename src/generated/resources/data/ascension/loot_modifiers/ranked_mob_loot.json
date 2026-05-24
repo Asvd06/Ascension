@@ -1,0 +1,8 @@
+{
+  "type": "ascension:add_ranked_mob_loot",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    }
+  ]
+}
