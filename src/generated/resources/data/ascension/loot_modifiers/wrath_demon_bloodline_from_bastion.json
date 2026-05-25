@@ -1,0 +1,16 @@
+{
+  "type": "ascension:add_bloodline_random_purity",
+  "bloodlineId": "ascension:wrath_demon_bloodline",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/bastion_treasure"
+    },
+    {
+      "chance": 0.05,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "maxPurity": 40,
+  "minPurity": 10
+}

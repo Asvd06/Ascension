@@ -192,6 +192,66 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "crane_bloodline"), 10, 40
         ));
 
+        add("panda_bloodline_from_panda", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/panda")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.12f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "panda_bloodline"), 5, 40
+        ));
+
+        add("wrath_demon_bloodline_from_blaze", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/blaze")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.08f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wrath_demon_bloodline"), 5, 30
+        ));
+
+        add("wrath_demon_bloodline_from_bastion", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/bastion_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.05f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wrath_demon_bloodline"), 10, 40
+        ));
+
+        add("pride_demon_bloodline_from_wither_skeleton", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wither_skeleton")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.07f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "pride_demon_bloodline"), 5, 30
+        ));
+
+        add("pride_demon_bloodline_from_nether_fortress", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.05f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "pride_demon_bloodline"), 10, 40
+        ));
+
+        add("greed_demon_bloodline_from_piglin", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/piglin")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.08f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "greed_demon_bloodline"), 5, 30
+        ));
+
+        add("greed_demon_bloodline_from_bastion", new AddBloodlineRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/bastion_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.06f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "greed_demon_bloodline"), 10, 45
+        ));
+
 
         //Technique Pages
 

@@ -31,6 +31,10 @@ public class ModBloodlines {
     private static final ResourceLocation TIGER_KEY = rl("tiger_bloodline");
     private static final ResourceLocation SERPENT_KEY = rl("serpent_bloodline");
     private static final ResourceLocation CRANE_KEY = rl("crane_bloodline");
+    private static final ResourceLocation PANDA_KEY = rl("panda_bloodline");
+    private static final ResourceLocation WRATH_KEY = rl("wrath_demon_bloodline");
+    private static final ResourceLocation PRIDE_KEY = rl("pride_demon_bloodline");
+    private static final ResourceLocation GREED_KEY = rl("greed_demon_bloodline");
 
     // ── Evolution target ResourceLocations ───────────────────────────────────
     // Defined as plain fields so they can be referenced before the DeferredHolder is constructed.
@@ -217,6 +221,42 @@ public class ModBloodlines {
                             .addFlatAttribute(ModAttributes.MAX_QI, 75, CRANE_KEY)
                             .addFlatAttribute(Attributes.MOVEMENT_SPEED, 0.025, CRANE_KEY)
                             .addFlatAttribute(Attributes.SAFE_FALL_DISTANCE, 4, CRANE_KEY)
+            );
+
+    public static final DeferredHolder<IBloodline, GenericBloodline> PANDA_BLOODLINE =
+            BLOODLINES.register("panda_bloodline", () ->
+                    new GenericBloodline(Component.translatable("ascension.bloodline.panda_bloodline"))
+                            .setShortDescription(Component.translatable("ascension.bloodline.panda_bloodline.short"))
+                            .setDescription(Component.translatable("ascension.bloodline.panda_bloodline.desc"))
+                            .addFlatAttribute(Attributes.MAX_HEALTH, 24, PANDA_KEY)
+                            .addFlatAttribute(Attributes.ARMOR, 2, PANDA_KEY)
+            );
+
+    public static final DeferredHolder<IBloodline, GenericBloodline> WRATH_DEMON_BLOODLINE =
+            BLOODLINES.register("wrath_demon_bloodline", () ->
+                    new GenericBloodline(Component.translatable("ascension.bloodline.wrath_demon_bloodline"))
+                            .setShortDescription(Component.translatable("ascension.bloodline.wrath_demon_bloodline.short"))
+                            .setDescription(Component.translatable("ascension.bloodline.wrath_demon_bloodline.desc"))
+                            .addFlatAttribute(Attributes.ATTACK_DAMAGE, 5, WRATH_KEY)
+                            .addFlatAttribute(Attributes.ATTACK_SPEED, 0.15, WRATH_KEY)
+            );
+
+    public static final DeferredHolder<IBloodline, GenericBloodline> PRIDE_DEMON_BLOODLINE =
+            BLOODLINES.register("pride_demon_bloodline", () ->
+                    new GenericBloodline(Component.translatable("ascension.bloodline.pride_demon_bloodline"))
+                            .setShortDescription(Component.translatable("ascension.bloodline.pride_demon_bloodline.short"))
+                            .setDescription(Component.translatable("ascension.bloodline.pride_demon_bloodline.desc"))
+                            .addFlatAttribute(Attributes.ARMOR, 4, PRIDE_KEY)
+                            .addFlatAttribute(Attributes.ARMOR_TOUGHNESS, 2, PRIDE_KEY)
+            );
+
+    public static final DeferredHolder<IBloodline, GenericBloodline> GREED_DEMON_BLOODLINE =
+            BLOODLINES.register("greed_demon_bloodline", () ->
+                    new GenericBloodline(Component.translatable("ascension.bloodline.greed_demon_bloodline"))
+                            .setShortDescription(Component.translatable("ascension.bloodline.greed_demon_bloodline.short"))
+                            .setDescription(Component.translatable("ascension.bloodline.greed_demon_bloodline.desc"))
+                            .addFlatAttribute(ModAttributes.MAX_QI, 95, GREED_KEY)
+                            .addFlatAttribute(ModAttributes.QI_REGEN_RATE, 0.2, GREED_KEY)
             );
 
 

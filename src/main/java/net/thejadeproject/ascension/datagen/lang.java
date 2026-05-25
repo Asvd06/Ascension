@@ -480,6 +480,19 @@ public class lang extends LanguageProvider {
         add("ascension.bloodline.crane_bloodline", "Crane Bloodline");
         add("ascension.bloodline.crane_bloodline.short", "A calm and elegant lineage.");
         add("ascension.bloodline.crane_bloodline.desc", "A refined bloodline associated with balance, grace, and clear skies.");
+        add("ascension.bloodline.panda_bloodline", "Panda Bloodline");
+        add("ascension.bloodline.panda_bloodline.short", "A peaceful but enduring lineage.");
+        add("ascension.bloodline.panda_bloodline.desc", "A calm bloodline known for resilience, patience, and unexpected strength.");
+        add("ascension.bloodline.wrath_demon_bloodline", "Wrath Demon Bloodline");
+        add("ascension.bloodline.wrath_demon_bloodline.short", "A violent demonic kind.");
+        add("ascension.bloodline.wrath_demon_bloodline.desc", "A fierce evil consumed by endless rage and battle.");
+        add("ascension.bloodline.pride_demon_bloodline", "Pride Demon Bloodline");
+        add("ascension.bloodline.pride_demon_bloodline.short", "A lofty and domineering demonic kind.");
+        add("ascension.bloodline.pride_demon_bloodline.desc", "A powerful demonic bloodline that refuses to bow before others.");
+        add("ascension.bloodline.greed_demon_bloodline", "Greed Demon Bloodline");
+        add("ascension.bloodline.greed_demon_bloodline.short", "A hungry and ambitious demonic kind.");
+        add("ascension.bloodline.greed_demon_bloodline.desc", "A demonic bloodline driven by endless desire and accumulation.");
+
 
 
         //Techniques
