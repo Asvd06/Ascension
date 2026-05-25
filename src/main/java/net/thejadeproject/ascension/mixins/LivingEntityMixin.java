@@ -58,15 +58,7 @@ public class LivingEntityMixin {
             }
         }
     }
-    @Inject(method = "getHealth", at = @At("HEAD"), cancellable = true)
-    private void getHealth(CallbackInfoReturnable<Float> cir){
-        LivingEntity self = (LivingEntity) (Object) this;
 
-        if(self.hasData(ModAttachments.ENTITY_DATA)){
-
-            cir.setReturnValue((float)self.getData(ModAttachments.ENTITY_DATA).getHealth());
-        }
-    }
     @Inject(method = "getMaxHealth", at = @At("HEAD"), cancellable = true)
     private void getMaxHealth(CallbackInfoReturnable<Float> cir){
         LivingEntity self = (LivingEntity) (Object) this;
@@ -76,15 +68,7 @@ public class LivingEntityMixin {
             cir.setReturnValue((float)self.getData(ModAttachments.ENTITY_DATA).getAscensionAttributeHolder().getAttribute(Attributes.MAX_HEALTH).getValue());
         }
     }
-    @Inject(method = "setHealth", at = @At("HEAD"), cancellable = true)
-    private void setHealth(float health, CallbackInfo ci){
-        LivingEntity self = (LivingEntity) (Object) this;
 
-        if(self.hasData(ModAttachments.ENTITY_DATA)){
-            self.getData(ModAttachments.ENTITY_DATA).setHealth(health);
-            ci.cancel();
-        }
-    }
     @Inject(method = "getSpeed", at = @At("HEAD"), cancellable = true)
     private void overrideSpeed(CallbackInfoReturnable<Float> cir) {
         LivingEntity self = (LivingEntity) (Object) this;

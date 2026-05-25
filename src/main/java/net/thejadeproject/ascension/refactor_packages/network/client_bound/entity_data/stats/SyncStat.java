@@ -38,8 +38,8 @@ public record SyncStat(String form, ValueContainer container)implements CustomPa
             entityData.getEntityFormData(ResourceLocation.parse(payload.form)).getStatSheet().setContainer(stat,payload.container);
             entityData.getAscensionAttributeHolder().updateAttributes(entityData);
             //System.out.println("==============================================");
-            entityData.getEntityFormData(ResourceLocation.parse(payload.form)).getStatSheet().log();
-            entityData.getAscensionAttributeHolder().log();
+            //entityData.getEntityFormData(ResourceLocation.parse(payload.form)).getStatSheet().log();
+            //entityData.getAscensionAttributeHolder().log();
         });
     }
 }

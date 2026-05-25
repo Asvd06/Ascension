@@ -93,7 +93,7 @@ public class FoundationPath extends GenericPath{
         statSheet.removeStatModifier(ModStats.INTELLIGENCE.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"int_"+oldStage+"_"+majorRealm));
         statSheet.removeStatModifier(ModStats.STRENGTH.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"str_"+oldStage+"_"+majorRealm));
 
-        if(entityData.getAttachedEntity() instanceof ServerPlayer player){
+        if(entityData.getAttachedEntity() instanceof ServerPlayer player && player.connection != null){
 
             PacketDistributor.sendToPlayer(player,
                     new SyncAttributeHolder(entityData.getAscensionAttributeHolder()));
