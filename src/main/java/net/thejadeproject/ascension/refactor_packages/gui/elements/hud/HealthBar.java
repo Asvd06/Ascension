@@ -65,7 +65,7 @@ public class HealthBar extends RenderableElement {
                 format.format(player.getHealth())+"/"+
                         format.format(player.getMaxHealth())));
 
-        return Math.clamp(entityData.getHealth()/player.getMaxHealth(),0,1);
+        return Math.clamp(player.getHealth()/player.getMaxHealth(),0,1);
 
     }
     public double getAbsorptionProgress(){

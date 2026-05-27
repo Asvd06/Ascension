@@ -4,6 +4,7 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.thejadeproject.ascension.AscensionCraft;
 
+import net.thejadeproject.ascension.network.serverBound.SoulboundPactScrollPacket;
 import net.thejadeproject.ascension.network.serverBound.ToggleTabletDropModePayload;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.SyncCultivationSuppressed;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.bloodline.SyncBloodline;
@@ -132,6 +133,13 @@ public class ModPayloads {
         );
 
         //===================================== SERVER ==================================
+
+
+        registrar.playToServer(
+                SoulboundPactScrollPacket.TYPE,
+                SoulboundPactScrollPacket.STREAM_CODEC,
+                SoulboundPactScrollPacket::handlePayload
+        );
 
 
 

@@ -42,6 +42,7 @@ public class ModStructureGen {
     public static final ResourceKey<Structure> SWORD_TOMB2 = createStructureKey("sword_tomb2");
     public static final ResourceKey<Structure> SWORD_TOMB3 = createStructureKey("sword_tomb3");
     public static final ResourceKey<Structure> FLOATING_IRONWOOD_ISLAND = createStructureKey("floating_ironwood_island");
+    public static final ResourceKey<Structure> GOLDEN_PALM_OASIS = createStructureKey("golden_palm_oasis");
 
     // Structure Set Keys
     public static final ResourceKey<StructureSet> CRIMSON_LOTUS_STRUCTURE_SET = createStructureSetKey("crimson_lotus_structure_set");
@@ -50,6 +51,8 @@ public class ModStructureGen {
     public static final ResourceKey<StructureSet> SWORD_TOMB2_SET = createStructureSetKey("sword_tomb2_set");
     public static final ResourceKey<StructureSet> SWORD_TOMB3_SET = createStructureSetKey("sword_tomb3_set");
     public static final ResourceKey<StructureSet> FLOATING_IRONWOOD_ISLAND_SET = createStructureSetKey("floating_ironwood_island_set");
+    public static final ResourceKey<StructureSet> GOLDEN_PALM_OASIS_SET = createStructureSetKey("golden_palm_oasis_set");
+
 
     // Template Pool Keys (must match the paths in your JSONs)
     public static final ResourceKey<StructureTemplatePool> CRIMSON_LOTUS_POOL = createPoolKey("crimson_lotus_structures/crimson_lotus_structure_pool");
@@ -58,6 +61,7 @@ public class ModStructureGen {
     public static final ResourceKey<StructureTemplatePool> SWORD_TOMB2_POOL = createPoolKey("sword_tombs/sword_tomb2_pool");
     public static final ResourceKey<StructureTemplatePool> SWORD_TOMB3_POOL = createPoolKey("sword_tombs/sword_tomb3_pool");
     public static final ResourceKey<StructureTemplatePool> FLOATING_IRONWOOD_ISLAND_POOL = createPoolKey("floating_ironwood_island/floating_ironwood_island_pool");
+    public static final ResourceKey<StructureTemplatePool> GOLDEN_PALM_OASIS_POOL = createPoolKey("golden_palm_oasis/golden_palm_oasis_pool");
 
     // Empty processor reference
     private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSORS = ResourceKey.create(
@@ -70,7 +74,6 @@ public class ModStructureGen {
     private static final boolean BWG_LOADED = ModList.get().isLoaded("biomeswevegone");
     private static final boolean ATMOSPHERIC_LOADED = ModList.get().isLoaded("atmospheric");
     private static final boolean ENVIRONMENTAL_LOADED = ModList.get().isLoaded("environmental");
-    private static final boolean MORE_ORN_PLANTS = ModList.get().isLoaded("more_orn_plants");
 
     private static ResourceKey<Structure> createStructureKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, name));
@@ -103,6 +106,18 @@ public class ModStructureGen {
             if (entry.modLoaded()) {
                 biomes.get(entry.biomeKey()).ifPresent(holders::add);
             }
+        }
+
+        return HolderSet.direct(holders.toArray(new Holder[0]));
+    }
+
+    private static HolderSet<Biome> buildBiomeSetVanilla(HolderGetter<Biome> biomes,
+                                                  List<ResourceKey<Biome>> vanillaBiomes) {
+        List<Holder<Biome>> holders = new ArrayList<>();
+
+        // Add vanilla biomes (always present)
+        for (ResourceKey<Biome> key : vanillaBiomes) {
+            biomes.get(key).ifPresent(holders::add);
         }
 
         return HolderSet.direct(holders.toArray(new Holder[0]));
@@ -210,11 +225,7 @@ public class ModStructureGen {
                 new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "rainforest")), "atmospheric"),
                 new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "sparse_rainforest")), "atmospheric"),
                 new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "blossom_valleys")), "environmental"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "marsh")), "environmental"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "fragrant_snow_sea")), "more_orn_plants"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "sweetgum_woods")), "more_orn_plants"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "ginkgo_forest")), "more_orn_plants"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "flowers_grove")), "more_orn_plants")
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "marsh")), "environmental")
         );
 
         context.register(SWORD_TOMB2, new JigsawStructure(
@@ -344,11 +355,7 @@ public class ModStructureGen {
                 new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "rainforest")), "atmospheric"),
                 new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("atmospheric", "sparse_rainforest")), "atmospheric"),
                 new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "blossom_valleys")), "environmental"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "marsh")), "environmental"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "fragrant_snow_sea")), "more_orn_plants"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "sweetgum_woods")), "more_orn_plants"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "ginkgo_forest")), "more_orn_plants"),
-                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("more_orn_plants", "flowers_grove")), "more_orn_plants")
+                new ModdedBiomeEntry(ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("environmental", "marsh")), "environmental")
         );
 
         context.register(FLOATING_IRONWOOD_ISLAND, new JigsawStructure(
@@ -362,6 +369,27 @@ public class ModStructureGen {
                 1,
                 UniformHeight.of(VerticalAnchor.absolute(90), VerticalAnchor.absolute(250)),
                 false
+        ));
+
+        // ============================================
+        // Golden Palm Oasis
+        // ============================================
+        List<ResourceKey<Biome>> goldenPalmOasisVanilla = List.of(
+                Biomes.DESERT
+        );
+
+        context.register(GOLDEN_PALM_OASIS, new JigsawStructure(
+                new Structure.StructureSettings(
+                        buildBiomeSetVanilla(biomes, goldenPalmOasisVanilla),
+                        Map.of(),
+                        GenerationStep.Decoration.SURFACE_STRUCTURES,
+                        TerrainAdjustment.BEARD_THIN
+                ),
+                pools.getOrThrow(GOLDEN_PALM_OASIS_POOL),
+                1,
+                ConstantHeight.of(VerticalAnchor.absolute(1)),
+                false,
+                Heightmap.Types.WORLD_SURFACE_WG
         ));
     }
 
@@ -393,6 +421,11 @@ public class ModStructureGen {
         context.register(FLOATING_IRONWOOD_ISLAND_SET, new StructureSet(
                 structures.getOrThrow(FLOATING_IRONWOOD_ISLAND),
                 new RandomSpreadStructurePlacement(40, 16, RandomSpreadType.LINEAR, 12244329)
+        ));
+
+        context.register(GOLDEN_PALM_OASIS_SET, new StructureSet(
+                structures.getOrThrow(GOLDEN_PALM_OASIS),
+                new RandomSpreadStructurePlacement(20, 12, RandomSpreadType.LINEAR, 123124512)
         ));
     }
 
@@ -460,6 +493,17 @@ public class ModStructureGen {
                 List.of(
                         Pair.of(
                                 StructurePoolElement.single("ascension:floating_ironwood_island", emptyProcessorList),
+                                1
+                        )
+                ),
+                StructureTemplatePool.Projection.RIGID
+        ));
+
+        context.register(GOLDEN_PALM_OASIS_POOL, new StructureTemplatePool(
+                emptyPool,
+                List.of(
+                        Pair.of(
+                                StructurePoolElement.single("ascension:golden_palm_oasis", emptyProcessorList),
                                 1
                         )
                 ),

@@ -65,8 +65,11 @@ public class FiveElementHarmonyPillItem extends Item {
 
         if (!player.getAbilities().instabuild) stack.shrink(1);
 
-        Integer purity = stack.get(ModDataComponents.PILL_PURITY.get());
-        ElementalBodyTransformationEvents.beginTransformation(player, purity != null ? purity : 50);
+        // PILL_PURITY now stores a grade (0-3). Pass the grade directly.
+        // ElementalBodyTransformationEvents.beginTransformation should accept
+        // a grade in place of the old raw purity; adjust its signature if needed.
+        Integer grade = stack.get(ModDataComponents.PILL_PURITY.get());
+        ElementalBodyTransformationEvents.beginTransformation(player, grade != null ? grade : PillRealmData.GRADE_BASIC);
         return result;
     }
 
@@ -75,15 +78,15 @@ public class FiveElementHarmonyPillItem extends Item {
         super.appendHoverText(stack, context, tooltip, flag);
 
         Integer majorRealm = stack.get(ModDataComponents.PILL_MAJOR_REALM.get());
-        Integer purity     = stack.get(ModDataComponents.PILL_PURITY.get());
+        Integer grade      = stack.get(ModDataComponents.PILL_PURITY.get());
 
-        if (majorRealm == null && purity == null) {
+        if (majorRealm == null && grade == null) {
             tooltip.add(Component.literal("Unrefined").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-        } else if (majorRealm != null && purity != null) {
+        } else if (majorRealm != null && grade != null) {
             tooltip.add(Component.literal("Pill Realm: ").withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(majorRealm + " — " + PillRealmData.getMajorRealmName(majorRealm)).withStyle(ChatFormatting.WHITE)));
             tooltip.add(Component.literal("Purity: ").withStyle(ChatFormatting.YELLOW)
-                    .append(Component.literal(PillRealmData.getPurityGrade(purity)).withStyle(PillRealmData.getPurityGradeColor(purity))));
+                    .append(Component.literal(PillRealmData.getPurityGradeName(grade)).withStyle(PillRealmData.getPurityGradeColor(grade))));
         }
 
         tooltip.add(Component.literal("✦ Effects: ").withStyle(ChatFormatting.AQUA));

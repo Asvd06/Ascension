@@ -154,7 +154,7 @@ public class JadeDewGrassCropBlock extends CropBlock {
         for (ItemStack drop : drops) {
             // Only stamp the herb item (JADE_DEW_GRASS), not the seeds
             if (!drop.isEmpty() && drop.getItem() == ModItems.JADE_DEW_GRASS.get()) {
-                drop.set(ModDataComponents.HERB_AGE_TICKS.get(), ageTicks);
+                drop.set(ModDataComponents.HERB_AGE_TIER.get(), ageTicks);
                 drop.set(ModDataComponents.HERB_QUALITY.get(), quality);
             }
         }

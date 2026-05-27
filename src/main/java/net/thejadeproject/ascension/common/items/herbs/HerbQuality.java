@@ -135,7 +135,7 @@ public class HerbQuality {
         if (stack.isEmpty()) return 0;
 
         Integer qualityComp = stack.get(ModDataComponents.HERB_QUALITY.get());
-        Long    ageTicks    = stack.get(ModDataComponents.HERB_AGE_TICKS.get());
+        Long    ageTicks    = stack.get(ModDataComponents.HERB_AGE_TIER.get());
 
         int quality  = (qualityComp != null) ? qualityComp : BASIC;
         long age     = (ageTicks    != null) ? ageTicks    : 0L;
@@ -170,7 +170,7 @@ public class HerbQuality {
         if (stack.isEmpty()) return 0.0;
 
         Integer qualityComp = stack.get(ModDataComponents.HERB_QUALITY.get());
-        Long    ageTicks    = stack.get(ModDataComponents.HERB_AGE_TICKS.get());
+        Long    ageTicks    = stack.get(ModDataComponents.HERB_AGE_TIER.get());
 
         int  quality = (qualityComp != null) ? qualityComp : BASIC;
         long age     = (ageTicks    != null) ? ageTicks    : 0L;
@@ -190,7 +190,7 @@ public class HerbQuality {
      */
     public static void appendHerbTooltip(ItemStack stack, List<Component> tooltip) {
         Integer qualityComp = stack.get(ModDataComponents.HERB_QUALITY.get());
-        Long    ageTicks    = stack.get(ModDataComponents.HERB_AGE_TICKS.get());
+        Long    ageTicks    = stack.get(ModDataComponents.HERB_AGE_TIER.get());
 
         if (qualityComp == null && ageTicks == null) return;
 

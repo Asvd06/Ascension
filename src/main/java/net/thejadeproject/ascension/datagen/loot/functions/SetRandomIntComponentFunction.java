@@ -75,7 +75,7 @@ public class SetRandomIntComponentFunction implements LootItemFunction {
         }
 
         @Override
-        public LootItemFunction build() {
+        public SetRandomIntComponentFunction build() {
             return new SetRandomIntComponentFunction(component, min, max);
         }
     }

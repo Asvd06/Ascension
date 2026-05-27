@@ -12,6 +12,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.attachments.PhysiqueAcquisitionCounters;
 import net.thejadeproject.ascension.data_attachments.attachments.PlayerInputStates;
+import net.thejadeproject.ascension.data_attachments.attachments.SoulWeaponData;
 import net.thejadeproject.ascension.mob_cultivation.MobCultivationData;
 import net.thejadeproject.ascension.refactor_packages.entity_data.EntityDataProvider;
 import net.thejadeproject.ascension.refactor_packages.entity_data.GenericEntityData;
@@ -44,6 +45,15 @@ public class ModAttachments {
                     .serialize(MobCultivationData.CODEC)
                     .build()
     );
+
+
+    public static final Supplier<AttachmentType<SoulWeaponData>> SOUL_WEAPON =
+            ATTACHMENT_TYPES.register("soul_weapon", () ->
+                    AttachmentType.builder(SoulWeaponData::new)
+                            .serialize(SoulWeaponData.CODEC)
+                            .copyOnDeath()
+                            .build()
+            );
 
 
 

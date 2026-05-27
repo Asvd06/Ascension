@@ -32,8 +32,6 @@ public class ModPlacedFeatures {
     public static final ResourceKey<PlacedFeature> BLACK_IRON_ORE_PLACED_KEY = registerKey("black_iron_ore_placed");
     public static final ResourceKey<PlacedFeature> FROST_SILVER_ORE_PLACED_KEY = registerKey("frost_silver_ore_placed");
 
-    public static final ResourceKey<PlacedFeature> GOLDEN_PALM_PLACED_KEY = registerKey("golden_palm_placed");
-
     public static final ResourceKey<PlacedFeature> ORE_MARBLE_UPPER = registerKey("ore_marble_upper");
     public static final ResourceKey<PlacedFeature> ORE_MARBLE_LOWER = registerKey("ore_marble_lower");
 
@@ -78,15 +76,6 @@ public class ModPlacedFeatures {
             commonOrePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(10), VerticalAnchor.absolute(120))));
         register(context, FROST_SILVER_ORE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.OVERWORLD_FROST_SILVER_ORE_KEY),
             commonOrePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(0))));
-
-
-        register(context, GOLDEN_PALM_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.GOLDEN_PALM_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1f, 1),
-                        ModBlocks.GOLDEN_PALM_SAPLING.get()));
-//        register(context, IRONWOOD_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.IRONWOOD_KEY),
-//                VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.1f, 1),
-//                        ModBlocks.IRONWOOD_SAPLING.get()));
-
 
 
 

@@ -52,6 +52,28 @@ public class CreativeTabHandler {
                     generatePhysiqueTransferItems(output);
                 })
                 .build());
+
+        CREATIVE_TABS.register("bloodline_transfers", () -> CreativeModeTab.builder()
+                .title(Component.literal("Ascension - Bloodline Essences"))
+                .icon(() -> {
+                    ItemStack stack = new ItemStack(ModItems.BLOODLINE_ESSENCE.get());
+                    String firstBloodlineId = "ascension:human_bloodline";
+
+                    for (var entry : AscensionRegistries.Bloodlines.BLOODLINE_REGISTRY.entrySet()) {
+                        if (!entry.getKey().toString().equals("ascension:human_bloodline")) {
+                            firstBloodlineId = entry.getKey().toString();
+                            break;
+                        }
+                    }
+
+                    stack.set(ModDataComponents.BLOODLINE_ID.get(), firstBloodlineId);
+                    stack.set(ModDataComponents.PURITY.get(), 100);
+                    return stack;
+                })
+                .displayItems((parameters, output) -> {
+                    generateBloodlineTransferItems(output);
+                })
+                .build());
     }
 
     private static void generateTechniqueTransferItems(CreativeModeTab.Output output) {
@@ -81,4 +103,14 @@ public class CreativeTabHandler {
             output.accept(fullStack);
         });
     }
+
+    private static void generateBloodlineTransferItems(CreativeModeTab.Output output) {
+        AscensionRegistries.Bloodlines.BLOODLINE_REGISTRY.keySet().forEach(resourceLocation -> {
+            ItemStack fullStack = new ItemStack(ModItems.BLOODLINE_ESSENCE.get());
+            fullStack.set(ModDataComponents.BLOODLINE_ID.get(), resourceLocation.toString());
+            fullStack.set(ModDataComponents.PURITY.get(), 100);
+            output.accept(fullStack);
+        });
+    }
+
 }

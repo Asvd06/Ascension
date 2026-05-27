@@ -1,0 +1,16 @@
+{
+  "type": "ascension:add_bloodline_random_purity",
+  "bloodlineId": "ascension:tiger_bloodline",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/jungle_temple"
+    },
+    {
+      "chance": 0.08,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "maxPurity": 45,
+  "minPurity": 10
+}

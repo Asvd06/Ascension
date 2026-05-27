@@ -54,7 +54,7 @@ public class AscensionRegistries {
         public static final ResourceKey<Registry<IBloodline>> BLOODLINE_REGISTRY_KEY = ResourceKey.createRegistryKey(ResourceLocation
                 .fromNamespaceAndPath(AscensionCraft.MOD_ID,"bloodlines"));
         public static final Registry<IBloodline> BLOODLINE_REGISTRY = new RegistryBuilder<>(BLOODLINE_REGISTRY_KEY)
-                .defaultKey(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"human"))
+                .defaultKey(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"human_bloodline"))
                 .create();
     }
     public static class Skills{

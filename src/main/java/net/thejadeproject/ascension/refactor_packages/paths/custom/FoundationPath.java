@@ -4,9 +4,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
+import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.paths.data.SimplePathData;
 import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.FoundationPathData;
@@ -69,6 +73,15 @@ public class FoundationPath extends GenericPath{
                         ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"foundation_stats")
                 ));
 
+        if(entityData.getAttachedEntity() instanceof ServerPlayer player && player.connection != null){
+
+            PacketDistributor.sendToPlayer(player,
+                    new SyncAttributeHolder(entityData.getAscensionAttributeHolder()));
+            for (IEntityFormData formData : entityData.getFormData()) {
+                formData.getStatSheet().sync(player, formData.getEntityFormId());
+            }
+        }
+
     }
     public void onFoundationDown(IEntityData entityData,int majorRealm,int newStage){
         int oldStage = newStage + 1;
@@ -80,6 +93,14 @@ public class FoundationPath extends GenericPath{
         statSheet.removeStatModifier(ModStats.INTELLIGENCE.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"int_"+oldStage+"_"+majorRealm));
         statSheet.removeStatModifier(ModStats.STRENGTH.get(),ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"str_"+oldStage+"_"+majorRealm));
 
+        if(entityData.getAttachedEntity() instanceof ServerPlayer player && player.connection != null){
+
+            PacketDistributor.sendToPlayer(player,
+                    new SyncAttributeHolder(entityData.getAscensionAttributeHolder()));
+            for (IEntityFormData formData : entityData.getFormData()) {
+                formData.getStatSheet().sync(player, formData.getEntityFormId());
+            }
+        }
     }
 
     @Override

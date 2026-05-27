@@ -30,7 +30,6 @@ import net.thejadeproject.ascension.common.items.data_components.ModDataComponen
 
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.artifacts.FlameGourd;
-import net.thejadeproject.ascension.entity.custom.NeedleProjectile;
 import net.thejadeproject.ascension.menus.ModMenuTypes;
 import net.thejadeproject.ascension.menus.custom.herb_pouch.HerbPouchScreen;
 import net.thejadeproject.ascension.menus.custom.pill_cauldron.PillCauldronLowHumanScreen;

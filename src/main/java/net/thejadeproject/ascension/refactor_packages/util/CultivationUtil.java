@@ -46,6 +46,7 @@ public class CultivationUtil {
         }
         ITechnique technique = pathData.getCurrentTechnique();
 
+
         double base = amount*(entityData.getPathBonusHandler().getPathBonus(path));
         for(ResourceLocation attributedPath : attributedPaths){
             base *= entityData.getPathBonusHandler().getPathBonus(attributedPath);

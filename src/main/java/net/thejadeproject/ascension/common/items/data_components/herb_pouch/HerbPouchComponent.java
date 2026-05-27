@@ -131,7 +131,7 @@ public record HerbPouchComponent(int capacity, List<ItemStack> herbs) {
 
             if (!found) {
                 ItemStack summary = herb.copy();
-                summary.remove(ModDataComponents.HERB_AGE_TICKS.get());
+                summary.remove(ModDataComponents.HERB_AGE_TIER.get());
                 summary.remove(ModDataComponents.HERB_QUALITY.get());
                 summaries.add(summary);
             }

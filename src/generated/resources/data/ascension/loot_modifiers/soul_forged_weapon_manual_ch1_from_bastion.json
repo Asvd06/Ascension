@@ -1,0 +1,15 @@
+{
+  "type": "ascension:add_technique_page",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/bastion_treasure"
+    },
+    {
+      "chance": 0.17,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "pageIndex": 1,
+  "techniqueId": "ascension:soul_forged_weapon_manual"
+}

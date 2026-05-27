@@ -48,6 +48,7 @@ import net.thejadeproject.ascension.common.command.commands.ReadChapterCommand;
 import net.thejadeproject.ascension.common.items.artifacts.talismans.SoulAnchorTalisman;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
+import net.thejadeproject.ascension.datagen.loot.functions.SetTechniqueManualFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
 import net.thejadeproject.ascension.entity.custom.NeedleProjectile;
 import net.thejadeproject.ascension.events.TeleportationEventHandler;
@@ -146,6 +147,7 @@ public class AscensionCraft {
 
         SetRandomIntComponentFunction.LOOT_FUNCTION_TYPES.register(modEventBus);
         SetTechniquePageFunction.LOOT_FUNCTION_TYPES.register(modEventBus);
+        SetTechniqueManualFunction.LOOT_FUNCTION_TYPES.register(modEventBus);
 
         ModParticles.register(modEventBus);
         ModEntities.register(modEventBus);
@@ -445,6 +447,16 @@ public class AscensionCraft {
             rareTrades.add((entity, randomSource) -> new MerchantOffer(
                     new ItemCost(ModItems.SPIRITUAL_STONE.get(), 64),
                     makePageStack(AscensionCraft.MOD_ID + ":white_lightning_ten_stage_technique", 9),
+                    1, 10, 0f
+            ));
+            rareTrades.add((entity, randomSource) -> new MerchantOffer(
+                    new ItemCost(ModItems.SPIRITUAL_STONE.get(), 64),
+                    makePageStack(AscensionCraft.MOD_ID + ":soul_forged_weapon_manual", 2),
+                    1, 10, 0f
+            ));
+            rareTrades.add((entity, randomSource) -> new MerchantOffer(
+                    new ItemCost(ModItems.SPIRITUAL_STONE.get(), 64),
+                    makePageStack(AscensionCraft.MOD_ID + ":soul_forged_weapon_manual", 4),
                     1, 10, 0f
             ));
         }

@@ -84,6 +84,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         talisman(ModItems.SOUL_ANCHOR_TALISMAN.get());
 
+        talisman(ModItems.SOULBOUND_PACT_TALISMAN.get());
+
 
 
         talisman(ModItems.SPATIAL_RUPTURE_TALISMAN_T1.get());
@@ -127,6 +129,27 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 
         handheldItem(ModItems.FAN.get());
+
+        // Legacy Fallback to be removed soon
+        withExistingParent("soulbound_weapon", "item/handheld")
+                .texture("layer0", "ascension:item/soulbound_weapon");
+
+        // Current Soul Bound Item Textures (plan on adding bow, shield and trident in the future)
+        withExistingParent("soulbound_sword", "item/handheld")
+                .texture("layer0", "ascension:item/soulbound_weapon_sword");
+
+        withExistingParent("soulbound_blade", "item/handheld")
+                .texture("layer0", "ascension:item/soulbound_weapon_blade");
+
+        withExistingParent("soulbound_spear", "item/handheld")
+                .texture("layer0", "ascension:item/soulbound_weapon_spear");
+
+        withExistingParent("soulbound_axe", "item/handheld")
+                .texture("layer0", "ascension:item/soulbound_weapon_axe");
+
+        withExistingParent("soulbound_mace", "item/handheld")
+                .texture("layer0", "ascension:item/soulbound_weapon_mace");
+
 
 
         //Items

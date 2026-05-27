@@ -1,0 +1,19 @@
+{
+  "type": "ascension:add_bloodline_random_purity",
+  "bloodlineId": "ascension:greed_demon_bloodline",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/piglin"
+    },
+    {
+      "condition": "minecraft:killed_by_player"
+    },
+    {
+      "chance": 0.08,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "maxPurity": 30,
+  "minPurity": 5
+}

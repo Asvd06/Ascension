@@ -49,10 +49,10 @@ public class MainContainer extends RenderableElement {
         addChild(physiqueOpenButton);
         ToggleSuppressed btn = new ToggleSuppressed(frame, 216,5);
         addChild(btn);
-//        BloodlineOpenButton bloodlineOpenButton = new BloodlineOpenButton(frame);
-//        bloodlineOpenButton.getPositioning().setX(112);
-//        bloodlineOpenButton.getPositioning().setY(35);
-//        addChild(bloodlineOpenButton);
+        BloodlineOpenButton bloodlineOpenButton = new BloodlineOpenButton(frame);
+        bloodlineOpenButton.getPositioning().setX(112);
+        bloodlineOpenButton.getPositioning().setY(35);
+        addChild(bloodlineOpenButton);
 
 
     }
@@ -69,17 +69,17 @@ public class MainContainer extends RenderableElement {
     public void displayBloodline() {
         infoContainer.removeChildren();
 
-//        IEntityData entityData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA);
-//        IBloodline bloodline = entityData.getBloodline();
-//
-//        if (bloodline == null) return;
-//
-//        RenderableElement element = bloodline.getInformationContainer(getUiFrame());
-//        infoContainer.addChild(element);
-//
-//        if (element instanceof IInformationContainer informationContainer) {
-//            informationContainer.refresh();
-//        }
+        IEntityData entityData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA);
+        IBloodline bloodline = entityData.getBloodline();
+
+        if (bloodline == null) return;
+
+        RenderableElement element = bloodline.getInformationContainer(getUiFrame());
+        infoContainer.addChild(element);
+
+        if (element instanceof IInformationContainer informationContainer) {
+            informationContainer.refresh();
+        }
     }
 
 

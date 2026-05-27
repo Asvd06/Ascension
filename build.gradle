@@ -36,7 +36,6 @@ repositories {
         url = "https://modmaven.dev"
     }
 
-
 }
 
 base {
@@ -138,13 +137,15 @@ dependencies {
 
     implementation "maven.modrinth:jade:${project.jade_version}"
 
-    implementation 'com.github.OliverHesse:EasyGui:-SNAPSHOT'
+    implementation 'com.github.OliverHesse:EasyGui:9f4a4b2aa1'
     implementation 'com.github.MrEizy:Builders-Zenith:ae34247ef0'
 
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
     compileOnly "net.favouriteless.modopedia:modopedia-neoforge-${minecraft_version}:${modopedia_version}"
     localRuntime "net.favouriteless.modopedia:modopedia-neoforge-${minecraft_version}:${modopedia_version}"
+
+    localRuntime "maven.modrinth:worldedit:${worldedit_version}"
 
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime

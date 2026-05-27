@@ -132,12 +132,15 @@ public final class EssenceBonePhysiqueEvolutionEvents {
         IPathData essenceData = entityData.getPathData(ModPaths.ESSENCE.getId());
 
         if (essenceData == null || essenceData.getMajorRealm() < requiredEssenceMajorRealm) {
-            clearTimer(player);
+            if (ritual == EssenceBoneRitual.HEAVENLY_TO_DIVINE) {
+                clearTag(player);
+            } else {
+                clearTimer(player);
+            }
             return;
         }
 
         if (!canProgressRitual(player, ritual)) {
-            clearTimer(player);
             return;
         }
 
@@ -263,13 +266,15 @@ public final class EssenceBonePhysiqueEvolutionEvents {
         }
 
         CompoundTag tag = getTag(player);
-        tag.putBoolean(TAG_DIVINE_LIGHTNING_MARKED, true);
-        tag.putLong(TAG_PURIFICATION_TIMER, 0L);
-        tag.putLong(TAG_DIVINE_PILL_FUEL, 0L);
+        if (!tag.getBoolean(TAG_DIVINE_LIGHTNING_MARKED)) {
+            tag.putBoolean(TAG_DIVINE_LIGHTNING_MARKED, true);
+            tag.putLong(TAG_PURIFICATION_TIMER, 0L);
+            tag.putLong(TAG_DIVINE_PILL_FUEL, 0L);
 
-        sendActionBar(player, Component.translatable(
-                "ascension.message.physique_evolution.essence_bone_divine_marked"
-        ));
+            sendActionBar(player, Component.translatable(
+                    "ascension.message.physique_evolution.essence_bone_divine_marked"
+            ));
+        }
     }
 
     @SubscribeEvent
@@ -330,7 +335,7 @@ public final class EssenceBonePhysiqueEvolutionEvents {
 
         return minute == 1
                 || timer >= requiredTime
-                || minute % 10 == 0
+                || minute % 5 == 0
                 || requiredMinutes - minute <= 5;
     }
 

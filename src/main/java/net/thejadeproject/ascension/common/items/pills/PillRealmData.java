@@ -6,19 +6,18 @@ import net.minecraft.ChatFormatting;
  * Central data class for pill realm names, purity grades, and bonus display text.
  *
  * ── Purity Grade system ───────────────────────────────────────────────────
- * The numeric purity (1-100) maps to a named grade shown in tooltips.
- * The number is kept for all game logic; only the tooltip shows the name.
+ * Pills store a grade integer (0-3), NOT a raw 1-100 number.
+ * This means two pills with the same realm + grade are byte-identical and stack.
  *
- *   1  – 30   Basic      (dark red)
- *   31 – 70   Average    (gold)
- *   71 – 89   Advanced   (green)
- *   90 – 100  Peak       (aqua)
+ *   0  Basic     (dark red)
+ *   1  Average   (gold)
+ *   2  Advanced  (green)
+ *   3  Peak      (aqua)
  *
- * PILL_MINOR_REALM data component is removed. All code that previously
- * wrote or read minor realm should use getPurityGrade() instead.
+ * Use purityToGrade(int rawPurity) at craft-completion time to convert the
+ * internal 1-100 roll into the stored grade before writing to the ItemStack.
  *
  * ── Major Realm names (1-9) ───────────────────────────────────────────────
- * Rename here freely.
  */
 public class PillRealmData {
 
@@ -35,35 +34,59 @@ public class PillRealmData {
             "Transcendent"  // 9
     };
 
-    // ── Purity grade names ────────────────────────────────────────
-    public static final String GRADE_BASIC    = "Basic";
-    public static final String GRADE_AVERAGE  = "Average";
-    public static final String GRADE_ADVANCED = "Advanced";
-    public static final String GRADE_PEAK     = "Peak";
+    // ── Purity grade tier constants ───────────────────────────────
+    public static final int GRADE_BASIC    = 0;
+    public static final int GRADE_AVERAGE  = 1;
+    public static final int GRADE_ADVANCED = 2;
+    public static final int GRADE_PEAK     = 3;
+
+    // ── Kept for recipe/internal logic only ───────────────────────
+    // These string constants are no longer stored on items; the int
+    // grade (0-3) is stored instead.
+    public static final String GRADE_BASIC_NAME    = "Basic";
+    public static final String GRADE_AVERAGE_NAME  = "Average";
+    public static final String GRADE_ADVANCED_NAME = "Advanced";
+    public static final String GRADE_PEAK_NAME     = "Peak";
 
     /**
-     * Returns the purity grade name for a given numeric purity value.
+     * Converts a raw internal purity roll (1-100) into the stored grade (0-3).
+     * Call this once when a craft finishes; write the grade to PILL_PURITY,
+     * never the raw number.
      *
-     *   1  – 30  → Basic
-     *   31 – 70  → Average
-     *   71 – 89  → Advanced
-     *   90 – 100 → Peak
+     *   1  – 30  → GRADE_BASIC    (0)
+     *   31 – 70  → GRADE_AVERAGE  (1)
+     *   71 – 89  → GRADE_ADVANCED (2)
+     *   90 – 100 → GRADE_PEAK     (3)
      */
-    public static String getPurityGrade(int purity) {
-        if (purity >= 90) return GRADE_PEAK;
-        if (purity >= 71) return GRADE_ADVANCED;
-        if (purity >= 31) return GRADE_AVERAGE;
+    public static int purityToGrade(int rawPurity) {
+        if (rawPurity >= 90) return GRADE_PEAK;
+        if (rawPurity >= 71) return GRADE_ADVANCED;
+        if (rawPurity >= 31) return GRADE_AVERAGE;
         return GRADE_BASIC;
     }
 
     /**
-     * Returns the ChatFormatting colour for a purity grade name.
+     * Returns the display name for a stored purity grade (0-3).
      */
-    public static ChatFormatting getPurityGradeColor(int purity) {
-        if (purity >= 90) return ChatFormatting.AQUA;
-        if (purity >= 71) return ChatFormatting.GREEN;
-        if (purity >= 31) return ChatFormatting.GOLD;
-        return ChatFormatting.DARK_RED;
+    public static String getPurityGradeName(int grade) {
+        return switch (grade) {
+            case GRADE_PEAK     -> GRADE_PEAK_NAME;
+            case GRADE_ADVANCED -> GRADE_ADVANCED_NAME;
+            case GRADE_AVERAGE  -> GRADE_AVERAGE_NAME;
+            default             -> GRADE_BASIC_NAME;
+        };
+    }
+
+    /**
+     * Returns the ChatFormatting colour for a stored purity grade (0-3).
+     */
+    public static ChatFormatting getPurityGradeColor(int grade) {
+        return switch (grade) {
+            case GRADE_PEAK     -> ChatFormatting.AQUA;
+            case GRADE_ADVANCED -> ChatFormatting.GREEN;
+            case GRADE_AVERAGE  -> ChatFormatting.GOLD;
+            default             -> ChatFormatting.DARK_RED;
+        };
     }
 
     public static String getMajorRealmName(int majorRealm) {
@@ -71,8 +94,8 @@ public class PillRealmData {
         return MAJOR_REALM_NAMES[majorRealm - 1];
     }
 
-    public static String getFullRealmDisplay(int majorRealm, int purity) {
-        return getMajorRealmName(majorRealm) + " — " + getPurityGrade(purity);
+    public static String getFullRealmDisplay(int majorRealm, int grade) {
+        return getMajorRealmName(majorRealm) + " — " + getPurityGradeName(grade);
     }
 
     //TODO setup a registry for pill effects...

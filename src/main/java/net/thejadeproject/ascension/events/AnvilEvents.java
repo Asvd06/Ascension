@@ -6,6 +6,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.ModItems;
+import net.thejadeproject.ascension.common.items.bloodlines.BloodlineTransferItem;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.physiques.PhysiqueTransferItem;
 
@@ -36,5 +37,21 @@ public class AnvilEvents {
                 event.setOutput(result);
             }
         }
+
+        if (left.getItem() == ModItems.BLOODLINE_ESSENCE.get() &&
+                right.getItem() == ModItems.BLOODLINE_ESSENCE.get()) {
+
+            if (BloodlineTransferItem.canCombine(left, right)) {
+                int combinedPurity = BloodlineTransferItem.getCombinedPurity(left, right);
+                String bloodlineId = left.get(ModDataComponents.BLOODLINE_ID.get());
+
+                ItemStack result = BloodlineTransferItem.createWithBloodline(bloodlineId, combinedPurity);
+
+                event.setOutput(result);
+                event.setCost(1 + Math.min(combinedPurity / 10, 5));
+                event.setMaterialCost(1);
+            }
+        }
+
     }
 }

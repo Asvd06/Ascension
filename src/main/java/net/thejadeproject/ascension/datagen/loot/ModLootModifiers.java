@@ -17,12 +17,25 @@ public class ModLootModifiers {
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_ITEM =
             LOOT_MODIFIER_SERIALIZERS.register("add_item", () -> AddItemModifier.CODEC);
 
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_WEIGHTED_ITEM =
+            LOOT_MODIFIER_SERIALIZERS.register("add_weighted_item", () -> AddWeightedItemModifier.CODEC);
+
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_PHYSIQUE_ITEM =
             LOOT_MODIFIER_SERIALIZERS.register("add_physique_item", () -> AddPhysiqueItemModifier.CODEC);
 
     public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_PHYSIQUE_RANDOM_PURITY =
             LOOT_MODIFIER_SERIALIZERS.register("add_physique_random_purity",
                     () -> AddPhysiqueRandomPurityModifier.CODEC);
+
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_BLOODLINE_ITEM  =
+            LOOT_MODIFIER_SERIALIZERS.register("add_bloodline_item", () -> AddBloodlineItemModifier.CODEC);
+
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> ADD_BLOODLINE_RANDOM_PURITY =
+            LOOT_MODIFIER_SERIALIZERS.register("add_bloodline_random_purity",
+                    () -> AddBloodlineRandomPurityModifier.CODEC);
+
+    public static final Supplier<MapCodec<? extends IGlobalLootModifier>> RANKED_MOB_LOOT =
+            LOOT_MODIFIER_SERIALIZERS.register("add_ranked_mob_loot", () -> AddRankedMobLootModifier.CODEC);
 
 
 

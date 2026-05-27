@@ -259,7 +259,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('T', Items.STICK)
                 .unlockedBy("has_spiritual_stone", has(ModItems.SPIRITUAL_STONE)).save(recipeOutput, "ascension:shaped/spiritual_stone_shovel");
 
-
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SOULBOUND_PACT_TALISMAN.get())
+                .pattern("HEH")
+                .pattern("ETE")
+                .pattern("HEH")
+                .define('T', ModItems.TALISMAN_PAPER.get())
+                .define('E', Items.ENDER_EYE)
+                .define('H', Items.ENDER_PEARL)
+                .unlockedBy("has_talisman_paper", has(ModItems.TALISMAN_PAPER)).save(recipeOutput, "ascension:shaped/soul_pact_talisman");
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.SOUL_ANCHOR_TALISMAN.get())
                 .pattern("HEH")

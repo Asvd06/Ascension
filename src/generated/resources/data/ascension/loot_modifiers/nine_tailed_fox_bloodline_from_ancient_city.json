@@ -1,0 +1,16 @@
+{
+  "type": "ascension:add_bloodline_random_purity",
+  "bloodlineId": "ascension:nine_tailed_fox_bloodline",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    },
+    {
+      "chance": 0.025,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "maxPurity": 45,
+  "minPurity": 10
+}

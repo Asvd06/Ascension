@@ -1,0 +1,23 @@
+{
+  "type": "ascension:add_technique_manual",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:entities/chicken"
+    },
+    {
+      "condition": "minecraft:killed_by_player"
+    },
+    {
+      "chance": 0.15,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "ascension:mob_rank",
+      "mode": "BETWEEN",
+      "other_realm": "qi_gathering",
+      "realm": "qi_gathering"
+    }
+  ],
+  "techniqueId": "ascension:open_sky_breathing_scripture"
+}

@@ -78,11 +78,11 @@ public class ValueContainer {
 
         cachedVal = Math.max(0,finalVal);
     }
-    public synchronized void setBaseValue(double base){
+    public void setBaseValue(double base){
         this.base = Math.max(0,base);
         calculateCachedVal();
     }
-    public synchronized  void addModifier(ValueContainerModifier modifier){
+    public  void addModifier(ValueContainerModifier modifier){
         if(modifier == null) return;
         if(modifier.getOperation() == ModifierOperation.ADD_BASE)addBase.put(modifier.getIdentifier(),modifier);
         else if(modifier.getOperation() == ModifierOperation.ADD_FINAL) addFinal.put(modifier.getIdentifier(),modifier);
@@ -108,7 +108,7 @@ public class ValueContainer {
         }
         calculateCachedVal();
     }
-    public synchronized void removeModifier(ResourceLocation id){
+    public void removeModifier(ResourceLocation id){
         addFinal.remove(id);
         addBase.remove(id);
         if(multiFinal.containsKey(id)){
@@ -121,6 +121,7 @@ public class ValueContainer {
             ResourceLocation group = modifier.getGroupIdentifier();
             multiBaseByGroup.get(group).remove(modifier);
         }
+        calculateCachedVal();
     }
 
     public double getValue(){return cachedVal;}

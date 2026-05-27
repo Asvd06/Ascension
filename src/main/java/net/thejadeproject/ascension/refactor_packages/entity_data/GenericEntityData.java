@@ -105,7 +105,7 @@ public class GenericEntityData implements IEntityData {
         currentHealth = getAscensionAttributeHolder().getAttribute(Attributes.MAX_HEALTH).getValue();
 
         setPhysique(ModPhysiques.MORTAL.getId());//give default physique
-        //setBloodline(ModBloodlines.MORTAL_BLOODLINE.getId());
+        setBloodline(ModBloodlines.HUMAN_BLOODLINE.getId());
 
     }
 
@@ -205,31 +205,30 @@ public class GenericEntityData implements IEntityData {
             //if soul is present -> smth?
             setPhysique(ModPhysiques.MORTAL.getId());
         }
-//        try {
-//            String rawBloodline = tag.getString("bloodline");
-//
-//            if (rawBloodline.isBlank() || rawBloodline.equals("none")) {
-//                setBloodline(ModBloodlines.MORTAL_BLOODLINE.getId());
-//            } else {
-//                ResourceLocation bloodline = ResourceLocation.bySeparator(rawBloodline, ':');
-//                IBloodline bloodlineInstance = AscensionRegistries.getRegistryObject(
-//                        bloodline,
-//                        AscensionRegistries.Bloodlines.BLOODLINE_REGISTRY
-//                );
-//
-//                IBloodlineData bloodlineData = IBloodline.getFromCompound(
-//                        this,
-//                        bloodlineInstance,
-//                        tag.getCompound("bloodline_data")
-//                );
-//
-//                setBloodline(bloodline, bloodlineData);
-//            }
-//        } catch (Exception e) {
-//            AscensionCraft.LOGGER.error("error when trying to load bloodline", e);
-//            setBloodline(ModBloodlines.MORTAL_BLOODLINE.getId());
-//        }
-        bloodlineForm = null;
+        try {
+            String rawBloodline = tag.getString("bloodline");
+
+            if (rawBloodline.isBlank() || rawBloodline.equals("none")) {
+                setBloodline(ModBloodlines.HUMAN_BLOODLINE.getId());
+            } else {
+                ResourceLocation bloodline = ResourceLocation.bySeparator(rawBloodline, ':');
+                IBloodline bloodlineInstance = AscensionRegistries.getRegistryObject(
+                        bloodline,
+                        AscensionRegistries.Bloodlines.BLOODLINE_REGISTRY
+                );
+
+                IBloodlineData bloodlineData = IBloodline.getFromCompound(
+                        this,
+                        bloodlineInstance,
+                        tag.getCompound("bloodline_data")
+                );
+
+                setBloodline(bloodline, bloodlineData);
+            }
+        } catch (Exception e) {
+            AscensionCraft.LOGGER.error("error when trying to load bloodline", e);
+            setBloodline(ModBloodlines.HUMAN_BLOODLINE.getId());
+        }
         try{
             ListTag dataSources = tag.getList("entity_data_sources",Tag.TAG_COMPOUND);
             for(int i = 0;i<dataSources.size();i++){
@@ -344,13 +343,11 @@ public class GenericEntityData implements IEntityData {
             tag.put("physique_data",heldFormData.get(physiqueForm).getPhysiqueData().write());
         }
 
-//        tag.putString("bloodline", bloodlineForm == null ? "none" : heldFormData.get(bloodlineForm).getBloodlineKey().toString());
-//
-//        if (bloodlineForm != null && heldFormData.get(bloodlineForm).getBloodlineData() != null) {
-//            tag.put("bloodline_data", heldFormData.get(bloodlineForm).getBloodlineData().write());
-//        }
+        tag.putString("bloodline", bloodlineForm == null ? "none" : heldFormData.get(bloodlineForm).getBloodlineKey().toString());
 
-        tag.putString("bloodline", "none");
+        if (bloodlineForm != null && heldFormData.get(bloodlineForm).getBloodlineData() != null) {
+            tag.put("bloodline_data", heldFormData.get(bloodlineForm).getBloodlineData().write());
+        }
 
         ListTag formTags = new ListTag();
         //since this is only for caching only cache forms that have data
@@ -608,6 +605,11 @@ public class GenericEntityData implements IEntityData {
                     removePath(path);
                 }
             }
+
+            Map<ResourceLocation,Double> bonus = physiqueInstance.pathBonuses();
+            for(ResourceLocation path : bonus.keySet()){
+                pathBonusHandler.removePathBonus(path,bonus.get(path));
+            }
         }
 
 
@@ -625,6 +627,10 @@ public class GenericEntityData implements IEntityData {
             }
         }
 
+        Map<ResourceLocation,Double> bonus = heldFormData.get(physiqueForm).getPhysique().pathBonuses();
+        for(ResourceLocation path : bonus.keySet()){
+            pathBonusHandler.addPathBonus(path,bonus.get(path));
+        }
         PhysiqueChangeEvent.Post event = new PhysiqueChangeEvent.Post(preEvent,heldFormData.get(physiqueForm).getPhysiqueData());
         //System.out.println("changed physique to : "+heldFormData.get(physiqueForm).getPhysique().getDisplayTitle().getString());
         NeoForge.EVENT_BUS.post(event);

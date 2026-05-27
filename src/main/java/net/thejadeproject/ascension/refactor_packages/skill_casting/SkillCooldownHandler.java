@@ -16,6 +16,7 @@ import org.checkerframework.checker.units.qual.C;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /*
     works for all skills
@@ -59,18 +60,23 @@ public class SkillCooldownHandler {
     }
 
     public void tick(IEntityData entityData){
-        for (ResourceLocation key : cooldowns.keySet()){
-
-            for(String identifier : cooldowns.get(key).keySet()){
+        Iterator<ResourceLocation> iterator = cooldowns.keySet().iterator();
+        while(iterator.hasNext()){
+            ResourceLocation key = iterator.next();
+            Iterator<String> localIterator = cooldowns.get(key).keySet().iterator();
+            while(localIterator.hasNext()){
+                String identifier = localIterator.next();
                 cooldowns.get(key).put(identifier,cooldowns.get(key).get(identifier)-1);
-                if(cooldowns.get(key).get(identifier) <= 0){
-                    cooldowns.get(key).remove(identifier);
-                    if(cooldowns.get(key).isEmpty()) cooldowns.remove(key);
+                if(cooldowns.get(key).get(identifier) <= 0) {
+                    localIterator.remove();
                     AscensionRegistries.Skills.SKILL_REGISTRY.get(key).finishedCooldown(entityData,identifier);
                 }
             }
+            if(cooldowns.get(key).isEmpty()) iterator.remove();
+
 
         }
+
     }
 
 

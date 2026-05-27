@@ -1,5 +1,6 @@
 package net.thejadeproject.ascension.common.items;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -15,11 +16,14 @@ import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
 
 import net.thejadeproject.ascension.common.items.artifacts.talismans.*;
+import net.thejadeproject.ascension.common.items.bloodlines.BloodlineTransferItem;
 import net.thejadeproject.ascension.common.items.techniques.TechniqueBinderItem;
 import net.thejadeproject.ascension.common.items.techniques.TechniquePageItem;
+import net.thejadeproject.ascension.common.items.tools.*;
 import net.thejadeproject.ascension.common.items.tools.herbs.MortarAndPestle;
 import net.thejadeproject.ascension.common.items.tools.herbs.SpiritualMeal;
 import net.thejadeproject.ascension.common.items.tools.hidden_weapons.NeedleItem;
+import net.thejadeproject.ascension.common.items.tools.soul_weapon.*;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.common.items.artifacts.*;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
@@ -30,10 +34,6 @@ import net.thejadeproject.ascension.common.items.pills.*;
 import net.thejadeproject.ascension.common.items.stones.SpatialStoneItem;
 import net.thejadeproject.ascension.common.items.techniques.ScholarlySoulChapterItem;
 import net.thejadeproject.ascension.common.items.techniques.TechniqueTransferItem;
-import net.thejadeproject.ascension.common.items.tools.BladeItem;
-import net.thejadeproject.ascension.common.items.tools.FanItem;
-import net.thejadeproject.ascension.common.items.tools.SpearItem;
-import net.thejadeproject.ascension.common.items.tools.SpiritualStoneTools;
 import net.thejadeproject.ascension.refactor_packages.alchemy.ModPillEffects;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.ScholarlySoulTechniqueData;
 import net.thejadeproject.ascension.util.ItemUtil;
@@ -152,6 +152,80 @@ public class ModItems {
             () -> new SwordItem(Tiers.IRON, new Item.Properties().durability(675).attributes(SwordItem.createAttributes((Tier) Tiers.IRON, 2.4f, (float) -2))));
 
 
+    // Soulbound Items
+
+        // Legacy Item that will be removed in a later version :)
+    public static final DeferredItem<Item> SOULBOUND_WEAPON = ITEMS.register(
+            "soulbound_weapon",
+            () -> new SoulboundWeaponItem(
+                    Tiers.IRON,
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.RARE)
+            )
+    );
+
+        // Actual Soul Bound Items
+        public static final DeferredItem<SoulboundConstructItem> SOULBOUND_SWORD = ITEMS.register(
+                "soulbound_sword",
+                () -> new SoulboundConstructItem(
+                        SoulWeaponType.SWORD,
+                        new Item.Properties()
+                                .stacksTo(1)
+                                .rarity(Rarity.RARE)
+                                .attributes(SwordItem.createAttributes(Tiers.IRON, 3.0F, -2.4F))
+                )
+        );
+
+    public static final DeferredItem<SoulboundConstructItem> SOULBOUND_BLADE = ITEMS.register(
+            "soulbound_blade",
+            () -> new SoulboundConstructItem(
+                    SoulWeaponType.BLADE,
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.RARE)
+                            .attributes(BladeItem.createAttributes(Tiers.IRON, 3.0F, -2.4F))
+            )
+    );
+
+    public static final DeferredItem<SoulboundConstructItem> SOULBOUND_SPEAR = ITEMS.register(
+            "soulbound_spear",
+            () -> new SoulboundConstructItem(
+                    SoulWeaponType.SPEAR,
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.RARE)
+                            .attributes(ItemUtil.createAscensionItemAttributes(
+                                    Tiers.IRON,
+                                    3.0F,
+                                    -2.4F,
+                                    1.5D
+                            ))
+            )
+    );
+
+    public static final DeferredItem<SoulboundConstructItem> SOULBOUND_AXE = ITEMS.register(
+            "soulbound_axe",
+            () -> new SoulboundConstructItem(
+                    SoulWeaponType.AXE,
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.RARE)
+                            .attributes(AxeItem.createAttributes(Tiers.IRON, 4.0F, -3.1F))
+            )
+    );
+
+    public static final DeferredItem<SoulboundMaceItem> SOULBOUND_MACE = ITEMS.register(
+            "soulbound_mace",
+            () -> new SoulboundMaceItem(
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.RARE)
+                            .attributes(MaceItem.createAttributes())
+                            .component(DataComponents.TOOL, MaceItem.createToolProperties())
+            )
+    );
+
 
     // Spears
     public static final DeferredItem<SpearItem> WOODEN_SPEAR = ITEMS.register("wooden_spear",
@@ -195,6 +269,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> SOUL_ANCHOR_TALISMAN = ITEMS.register("soul_anchor_talisman",
             () -> new SoulAnchorTalisman(new Item.Properties()));
+
+    public static final DeferredItem<Item> SOULBOUND_PACT_TALISMAN = ITEMS.register("soulbound_pact_talisman",
+            () -> new SoulboundPactTalisman(new Item.Properties()));
 
 
 
@@ -398,6 +475,9 @@ public class ModItems {
     //Change it into a Blood Essence texture and also make it so blood essence drop then you can combine blood essences to make the purity 100% and when its 100% only then can you use it.
     public static final DeferredItem<Item> PHYSIQUE_ESSENCE = ITEMS.register("physique_essence",
             () -> new PhysiqueTransferItem(new Item.Properties().stacksTo(1)));
+
+    public static final DeferredItem<Item> BLOODLINE_ESSENCE  = ITEMS.register("bloodline_essence",
+            () -> new BloodlineTransferItem(new Item.Properties().stacksTo(1)));
 
     // --- Elemental Cores ---
     public static final DeferredItem<Item> FIRE_CORE      = ITEMS.register("fire_core",      () -> new Item(new Item.Properties()));

@@ -45,7 +45,7 @@ public class ServerPlayerEventHandlers {
     @SubscribeEvent
     public static void onDimensionChange(PlayerEvent.PlayerChangedDimensionEvent event){
         Player player = event.getEntity();
-        player.getData(ModAttachments.ENTITY_DATA).setHealth(player.getData(ModAttachments.ENTITY_DATA).getAscensionAttributeHolder().getAttribute(Attributes.MAX_HEALTH).getValue());
+        //player.getData(ModAttachments.ENTITY_DATA).setHealth(player.getData(ModAttachments.ENTITY_DATA).getAscensionAttributeHolder().getAttribute(Attributes.MAX_HEALTH).getValue());
 
         if(!event.getEntity().level().isClientSide()){
             if(player.getData(ModAttachments.ENTITY_DATA) instanceof GenericEntityData genericEntityData){
@@ -78,6 +78,8 @@ public class ServerPlayerEventHandlers {
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event){
         Player player = event.getEntity();
+        player.getData(ModAttachments.ENTITY_DATA).getAscensionAttributeHolder().updateAttributes(player.getData(ModAttachments.ENTITY_DATA));
+
         player.getData(ModAttachments.ENTITY_DATA).setHealth(player.getData(ModAttachments.ENTITY_DATA).getAscensionAttributeHolder().getAttribute(Attributes.MAX_HEALTH).getValue());
         for(IPathData pathData:player.getData(ModAttachments.ENTITY_DATA).getAllPathData()){
            //TODO update for when tribulations
@@ -93,6 +95,7 @@ public class ServerPlayerEventHandlers {
             for(IEntityFormData formData:player.getData(ModAttachments.ENTITY_DATA).getFormData()){
                 formData.getStatSheet().sync((ServerPlayer) player,formData.getEntityFormId());
             }
+
         }
 
     }

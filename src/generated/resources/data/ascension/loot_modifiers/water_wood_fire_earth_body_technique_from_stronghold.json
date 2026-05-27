@@ -6,7 +6,7 @@
       "loot_table_id": "minecraft:chests/stronghold_library"
     },
     {
-      "chance": 0.02,
+      "chance": 0.14,
       "condition": "minecraft:random_chance"
     }
   ],

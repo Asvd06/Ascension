@@ -1,13 +1,9 @@
 package net.thejadeproject.ascension.util;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.*;
@@ -15,13 +11,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class ModTags {
     public static class DamageTypes{
@@ -46,6 +39,7 @@ public class ModTags {
         public static final TagKey<Item> SPEAR = createTag("spear");
         public static final TagKey<Item> SPEAR_ENCHANTABLE = createTag("spear_enchantable");
         public static final TagKey<Item> FIST = createTag("fist");
+        public static final TagKey<Item> MACE = createTag("mace");
 
 
         public static final TagKey<Item> FLAMES = createTag("flames");
@@ -69,6 +63,12 @@ public class ModTags {
         public static final TagKey<Item> REPAIR_BLACKLIST = createTag("repair_slip_blacklist");
 
         public static final TagKey<Item> WOOLABLE = createTag("crafting/woolable");
+
+        public static final TagKey<Item> SOULFORGE_SWORDS = createTag("soulforge/swords");
+        public static final TagKey<Item> SOULFORGE_BLADES = createTag("soulforge/blades");
+        public static final TagKey<Item> SOULFORGE_SPEARS = createTag("soulforge/spears");
+        public static final TagKey<Item> SOULFORGE_AXES = createTag("soulforge/axes");
+        public static final TagKey<Item> SOULFORGE_MACES = createTag("soulforge/maces");
 
 
 

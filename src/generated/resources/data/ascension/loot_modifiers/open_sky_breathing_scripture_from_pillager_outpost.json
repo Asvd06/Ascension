@@ -3,12 +3,12 @@
   "conditions": [
     {
       "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/village/village_plains_house"
+      "loot_table_id": "minecraft:chests/pillager_outpost"
     },
     {
-      "chance": 0.05,
+      "chance": 0.17,
       "condition": "minecraft:random_chance"
     }
   ],
-  "techniqueId": "ascension:basic_cultivation_technique"
+  "techniqueId": "ascension:open_sky_breathing_scripture"
 }

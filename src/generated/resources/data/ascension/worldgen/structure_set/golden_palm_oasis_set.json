@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 123124512,
+    "separation": 12,
+    "spacing": 20
+  },
+  "structures": [
+    {
+      "structure": "ascension:golden_palm_oasis",
+      "weight": 1
+    }
+  ]
+}

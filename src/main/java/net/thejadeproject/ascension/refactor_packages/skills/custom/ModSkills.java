@@ -20,11 +20,12 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SwordDraw;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.GaleStep;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulForgeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.VoidstepSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulForgeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.MarrowFurnaceCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.BloodfeastBanquetSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.OpenSkyBreathingCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.poison.PoisonRefiningMeditationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.FistCultivationSkill;
@@ -95,6 +96,10 @@ public class ModSkills {
 
     public static final DeferredHolder<ISkill,? extends FiveElementCirculation> FIVE_ELEMENT_CIRCULATION =
             SKILLS.register("five_element_circulation", FiveElementCirculation::new);
+
+    public static final DeferredHolder<ISkill, ? extends OpenSkyBreathingCultivationSkill> OPEN_SKY_BREATHING_SKILL =
+            SKILLS.register("open_sky_breathing_skill", OpenSkyBreathingCultivationSkill::new);
+
     // Passives
 
     // Actives
@@ -257,6 +262,8 @@ public class ModSkills {
             SKILLS.register("soul_suppression", SoulSuppression::new);
     public static final DeferredHolder<ISkill, ? extends SoulLanternSkill> SOUL_LANTERN =
             SKILLS.register("soul_lantern", SoulLanternSkill::new);
+    public static final DeferredHolder<ISkill, ? extends SoulForgeSkill> SOUL_FORGE =
+            SKILLS.register("soul_forge", SoulForgeSkill::new);
 
     // ──── WEAPON SKILLS ────────────────────────────────────────────
     // Cultivation

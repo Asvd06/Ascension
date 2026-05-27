@@ -150,7 +150,7 @@ public class StemSlowCropBlock extends CropBlock {
 
         for (ItemStack drop : drops) {
             if (!drop.isEmpty()) {
-                drop.set(ModDataComponents.HERB_AGE_TICKS.get(), ageTicks);
+                drop.set(ModDataComponents.HERB_AGE_TIER.get(), ageTicks);
                 drop.set(ModDataComponents.HERB_QUALITY.get(), quality);
             }
         }

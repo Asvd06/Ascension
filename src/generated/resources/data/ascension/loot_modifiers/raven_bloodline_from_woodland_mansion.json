@@ -1,0 +1,16 @@
+{
+  "type": "ascension:add_bloodline_random_purity",
+  "bloodlineId": "ascension:raven_bloodline",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/woodland_mansion"
+    },
+    {
+      "chance": 0.12,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "maxPurity": 45,
+  "minPurity": 10
+}

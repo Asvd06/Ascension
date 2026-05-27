@@ -100,7 +100,9 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends GenericTechnique> ADVANCED_CULTIVATION_TECHNIQUE = TECHNIQUES.register("advanced_cultivation_technique",()->
             new GenericTechnique(ModPaths.ESSENCE.getId(),Component.translatable("ascension.technique.advanced_cultivation_technique"),10.0,Set.of())
                     .setStatChangeHandler(baseEssenceHandler));
-
+    public static final DeferredHolder<ITechnique, ? extends OpenSkyBreathingTechnique> OPEN_SKY_BREATHING_SCRIPTURE =
+            TECHNIQUES.register("open_sky_breathing_scripture",
+                    () -> new OpenSkyBreathingTechnique(baseEssenceHandler));
 
 
 
@@ -260,8 +262,7 @@ public class ModTechniques {
 
     // ──── SOUL TECHNIQUES ────────────────────────────────────────────
     public static final DeferredHolder<ITechnique, ? extends ScholarlySoulTechnique> SCHOLARLY_SOUL_TECHNIQUE =
-            TECHNIQUES.register("scholarly_soul_technique",
-                    () -> new ScholarlySoulTechnique(baseSoulHandler));
+            TECHNIQUES.register("scholarly_soul_technique", () -> new ScholarlySoulTechnique(baseSoulHandler));
     public static final DeferredHolder<ITechnique, ? extends PaleMoonTechnique> PALE_MOON_SCRIPTURE =
             TECHNIQUES.register("pale_moon_scripture", () -> new PaleMoonTechnique(baseSoulHandler));
     public static final DeferredHolder<ITechnique, ? extends GibbousMoonTechnique> GIBBOUS_MOON_SCRIPTURE =
@@ -270,6 +271,10 @@ public class ModTechniques {
             TECHNIQUES.register("dawning_sun_scripture", () -> new DawningSunTechnique(baseSoulHandler));
     public static final DeferredHolder<ITechnique, ? extends ZenithSunTechnique> ZENITH_SUN_SCRIPTURE =
             TECHNIQUES.register("zenith_sun_scripture", () -> new ZenithSunTechnique(baseSoulHandler));
+    public static final DeferredHolder<ITechnique, ? extends SoulForgedWeaponTechnique> SOUL_FORGED_WEAPON_MANUAL =
+            TECHNIQUES.register("soul_forged_weapon_manual", () -> new SoulForgedWeaponTechnique(baseSoulHandler));
+    public static final DeferredHolder<ITechnique, ? extends JadeSpiritTechnique> JADE_SPIRIT_SCRIPTURE =
+            TECHNIQUES.register("jade_spirit_scripture", () -> new JadeSpiritTechnique(baseSoulHandler));
 
 
 
@@ -356,6 +361,16 @@ public class ModTechniques {
                             "ascension.chapter.white_lightning_ten_stage_technique.8",
                             "ascension.chapter.white_lightning_ten_stage_technique.9",
                             "ascension.chapter.white_lightning_ten_stage_technique.10"
+                    )
+            );
+            TechniqueManualRegistry.register(
+                    SOUL_FORGED_WEAPON_MANUAL.getId(),
+                    4,
+                    List.of(
+                            "ascension.chapter.soul_forged_weapon_manual.1",
+                            "ascension.chapter.soul_forged_weapon_manual.2",
+                            "ascension.chapter.soul_forged_weapon_manual.3",
+                            "ascension.chapter.soul_forged_weapon_manual.4"
                     )
             );
 
