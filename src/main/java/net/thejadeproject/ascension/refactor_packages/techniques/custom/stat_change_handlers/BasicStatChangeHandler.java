@@ -11,8 +11,12 @@ import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.util.value_modifiers.ValueContainerModifier;
 
 import java.util.HashMap;
+import java.util.UUID;
+
 //FOR NOW JUST ADDS IT TO ACTIVE FORM. WILL BE CHANGED LATER
 public class BasicStatChangeHandler{
+
+    private final UUID handlerId = UUID.randomUUID();
 
     private HashMap<ResourceLocation, ValueContainerModifier> minorRealmStatModifierMap = new HashMap<>();
     private HashMap<ResourceLocation, ValueContainerModifier> majorRealmStatModifierMap = new HashMap<>();
@@ -22,7 +26,7 @@ public class BasicStatChangeHandler{
 
 
     public ResourceLocation create(String prefix,int majorRealm,int minorRealm){
-        return ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,prefix+"_"+majorRealm+"_"+minorRealm);
+        return ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,prefix+"_"+majorRealm+"_"+minorRealm+"_"+handlerId);
     }
     public BasicStatChangeHandler addMinorRealmStatModifier(ResourceLocation stat,ValueContainerModifier modifier){
         minorRealmStatModifierMap.put(stat,modifier);
