@@ -858,6 +858,11 @@ public class lang extends LanguageProvider {
         add("command.ascension.cultivation.info.no_paths", "No active cultivation paths.");
         add("command.ascension.cultivation.info.physique", "Physique: %s");
         add("command.ascension.cultivation.info.path_header", "%s — %s %d.%d");
+        add("command.ascension.cultivation.info.bloodline", "Bloodline: %s");
+        add("command.ascension.cultivation.info.bloodline_id", "  ID: %s");
+        add("command.ascension.cultivation.info.qi", "Qi: %s / %s (regen: %s/s)");
+        add("command.ascension.cultivation.info.technique.none", "  Technique: None");
+        add("command.ascension.cultivation.info.foundation", "  Foundation: Stage %s (%s%%)");
 
         add("command.ascension.reset.all", "Your Ascension data was reset.");
         add("command.ascension.reset.attributes", "Your Ascension attributes were reset.");

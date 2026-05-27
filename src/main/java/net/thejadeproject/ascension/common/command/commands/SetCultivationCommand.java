@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodline;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
@@ -106,107 +107,146 @@ public class SetCultivationCommand {
 
     private static int getCultivationInfo(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ServerPlayer player = EntityArgument.getPlayer(context, "target");
-        var entityData = player.getData(ModAttachments.ENTITY_DATA);
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
-        // Header
         context.getSource().sendSuccess(() ->
-                Component.translatable("command.ascension.cultivation.info.header",
-                        player.getName().getString()), false);
+                Component.translatable(
+                        "command.ascension.cultivation.info.header",
+                        player.getName().getString()
+                ), false);
 
-        // Physique display — get ID from registry key
         IPhysique physique = entityData.getPhysique();
         if (physique != null) {
             ResourceLocation physiqueId = AscensionRegistries.Physiques.PHSIQUES_REGISTRY.getKey(physique);
+
             if (physiqueId != null && !physiqueId.toString().equals("minecraft:none")) {
-                var physiqueData = entityData.getActiveFormData().getPhysiqueData();
-                Component physiqueName = physique.getDisplayTitle();
                 context.getSource().sendSuccess(() ->
-                        Component.translatable("command.ascension.cultivation.info.physique",
-                                physiqueName), false);
+                        Component.translatable(
+                                "command.ascension.cultivation.info.physique",
+                                physique.getDisplayTitle()
+                        ), false);
             }
         }
 
+        IBloodline bloodline = entityData.getBloodline();
+        if (bloodline != null) {
+            ResourceLocation bloodlineId = AscensionRegistries.Bloodlines.BLOODLINE_REGISTRY.getKey(bloodline);
+
+            context.getSource().sendSuccess(() ->
+                    Component.translatable(
+                            "command.ascension.cultivation.info.bloodline",
+                            bloodline.getDisplayTitle()
+                    ), false);
+
+            context.getSource().sendSuccess(() ->
+                    Component.translatable(
+                            "command.ascension.cultivation.info.bloodline_id",
+                            bloodlineId != null ? bloodlineId.toString() : "unknown"
+                    ), false);
+        }
+
+        EntityQiContainer qi = entityData.getQiContainer();
+        double qiRegen = entityData.getAscensionAttributeHolder()
+                .getAttribute(net.thejadeproject.ascension.util.ModAttributes.QI_REGEN_RATE)
+                .getValue();
+
+        context.getSource().sendSuccess(() ->
+                Component.translatable(
+                        "command.ascension.cultivation.info.qi",
+                        String.format("%.1f", qi.getCurrentQi()),
+                        String.format("%.1f", qi.getMaxQi()),
+                        String.format("%.2f", qiRegen)
+                ), false);
+
         boolean hasAnyPath = false;
 
-        // Iterate all registered paths — new paths automatically appear here
         for (var entry : AscensionRegistries.Paths.PATHS_REGISTRY.entrySet()) {
             ResourceLocation pathId = entry.getKey().location();
             IPathData data = entityData.getPathData(pathId);
 
-            if (data == null || data.getCurrentTechniqueId() == null) continue;
+            if (data == null) {
+                continue;
+            }
 
             hasAnyPath = true;
+
             var path = entry.getValue();
 
-            // Path name from lang (e.g., ascension.path.essence)
             Component pathName = Component.translatable(
-                    "ascension.path." + pathId.getPath());
+                    "ascension.path." + pathId.getPath()
+            );
 
-            // Realm name from the path's registered realm keys
             Component realmName = path.getMajorRealmName(data.getMajorRealm());
 
-            // Technique name from lang (e.g., ascension.technique.basic_cultivation_technique)
-            ResourceLocation techniqueId = data.getCurrentTechniqueId();
-            Component techniqueName = Component.translatable(
-                    "ascension.technique." + techniqueId.getPath());
-
-            // Path header: "Essence Path — Qi Condensation 1.3"
             context.getSource().sendSuccess(() ->
-                    Component.translatable("command.ascension.cultivation.info.path_header",
-                            pathName, realmName, data.getMajorRealm(), data.getMinorRealm()), false);
+                    Component.translatable(
+                            "command.ascension.cultivation.info.path_header",
+                            pathName,
+                            realmName,
+                            data.getMajorRealm(),
+                            data.getMinorRealm()
+                    ), false);
 
             // Technique
-            context.getSource().sendSuccess(() ->
-                    Component.translatable("command.ascension.cultivation.info.technique",
-                            techniqueName), false);
+            ResourceLocation techniqueId = data.getCurrentTechniqueId();
 
-            // Progress
-            context.getSource().sendSuccess(() ->
-                    Component.translatable("command.ascension.cultivation.info.progress",
-                            String.format("%.2f", data.getCurrentRealmProgress())), false);
+            if (techniqueId != null) {
+                Component techniqueName = Component.translatable(
+                        "ascension.technique." + techniqueId.getPath()
+                );
 
-            // Status
+                context.getSource().sendSuccess(() ->
+                        Component.translatable(
+                                "command.ascension.cultivation.info.technique",
+                                techniqueName
+                        ), false);
+            } else {
+                context.getSource().sendSuccess(() ->
+                        Component.translatable(
+                                "command.ascension.cultivation.info.technique.none"
+                        ), false);
+            }
+
+            // Realm progress
             context.getSource().sendSuccess(() ->
-                    Component.translatable(data.isCultivating()
-                            ? "command.ascension.cultivation.info.cultivating.yes"
-                            : "command.ascension.cultivation.info.cultivating.no"), false);
+                    Component.translatable(
+                            "command.ascension.cultivation.info.progress",
+                            String.format("%.2f", data.getCurrentRealmProgress())
+                    ), false);
+
+            // Cultivating state
+            context.getSource().sendSuccess(() ->
+                    Component.translatable(
+                            data.isCultivating()
+                                    ? "command.ascension.cultivation.info.cultivating.yes"
+                                    : "command.ascension.cultivation.info.cultivating.no"
+                    ), false);
+
+            // Foundation
+            if (data instanceof FoundationPathData foundationPathData) {
+                RealmFoundation foundation = foundationPathData.getCurrentFoundation();
+
+                if (foundation != null) {
+                    context.getSource().sendSuccess(() ->
+                            Component.translatable(
+                                    "command.ascension.cultivation.info.foundation",
+                                    foundation.getFoundationRealm(),
+                                    foundation.getFoundationPercentage()
+                            ), false);
+                }
+            }
         }
 
         if (!hasAnyPath) {
             context.getSource().sendSuccess(() ->
-                    Component.translatable("command.ascension.cultivation.info.no_paths"), false);
+                    Component.translatable(
+                            "command.ascension.cultivation.info.no_paths"
+                    ), false);
         }
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("=== ").append(player.getName().getString()).append(" — Cultivation ===\n");
-
-        EntityQiContainer qi = entityData.getQiContainer();
-        sb.append(String.format("  Qi: %.1f / %.1f (regen: %.2f/s)\n",
-                qi.getCurrentQi(),
-                qi.getMaxQi(),
-                entityData.getAscensionAttributeHolder().getAttribute(net.thejadeproject.ascension.util.ModAttributes.QI_REGEN_RATE).getValue()
-        ));
-
-        for (ResourceLocation pathId : AscensionRegistries.Paths.PATHS_REGISTRY.keySet()) {
-            IPathData data = entityData.getPathData(pathId);
-            if (data == null) continue;
-
-            String pathName = AscensionRegistries.Paths.PATHS_REGISTRY.get(pathId).getDisplayTitle().getString();
-            String realmStr = data.getMajorRealm() + "." + data.getMinorRealm();
-
-            String techniqueStr = "none";
-            if (data.getCurrentTechnique() != null) {
-                ITechnique tech = data.getCurrentTechnique();
-                techniqueStr = (tech != null) ? tech.getDisplayTitle().getString() : data.getCurrentTechniqueId().toString();
-            }
-
-            sb.append("  ").append(pathName).append(": realm ").append(realmStr)
-              .append(" | technique: ").append(techniqueStr).append("\n");
-        }
-
-        context.getSource().sendSuccess(() -> Component.literal(sb.toString()), false);
         return 1;
     }
+
 
     private static int getPhysiqueInfo(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
         ServerPlayer player = EntityArgument.getPlayer(context, "target");
