@@ -143,4 +143,51 @@ public class RealmChangeHandlers {
                     ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"flight")
             )
             .build();
+
+
+    public static RealmChangeHandler BLADE_HANDLER = RealmChangeHandler.fresh()
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"strength_bonus"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatBonus(ModStats.AGILITY.get(),5))
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"strength_multiplier"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatMultiplier(ModStats.AGILITY.get(),0.1)
+            )
+            .build();
+
+    public static RealmChangeHandler SPEAR_HANDLER = RealmChangeHandler.fresh()
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"vitality_bonus"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatBonus(ModStats.VITALITY.get(),3))
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"agility_bonus"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatBonus(ModStats.AGILITY.get(),2))
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"vitality_multiplier"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatMultiplier(ModStats.VITALITY.get(),0.1)
+            )
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"agility_multiplier"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatMultiplier(ModStats.AGILITY.get(),0.05)
+            )
+            .build();
+
+    public static RealmChangeHandler AXEMACE_HANDLER = RealmChangeHandler.fresh()
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"strength_bonus"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatBonus(ModStats.AGILITY.get(),2))
+            .addListener(
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"strength_multiplier"),
+                    RealmChangeHandler.EVERY_MINOR_REALM,
+                    addStatMultiplier(ModStats.AGILITY.get(),0.02)
+            )
+            .build();
+
 }

@@ -102,7 +102,7 @@ public class ModBloodlines {
                                     .addFlatAttribute(ModAttributes.MAX_QI, 100, PHOENIX_KEY)
                                     .addFlatAttribute(ModAttributes.QI_REGEN_RATE, 0.5, PHOENIX_KEY)
                                     .addFlatAttribute(Attributes.MOVEMENT_SPEED, 0.04, PHOENIX_KEY)
-                                    .addFlatAttribute(Attributes.MAX_HEALTH, 20, PHOENIX_KEY)
+                                    .addFlatAttribute(Attributes.MAX_HEALTH, 30, PHOENIX_KEY)
 
                     // .addSuppressionTier(3)
                     // .addSuppressionBloodline(rl("beast_bloodline"))
@@ -134,7 +134,7 @@ public class ModBloodlines {
     /**
      * Awakened Beast Bloodline — Tier 2. Evolved form of the Beast bloodline.
      * Stronger modifiers.
-     * Currently the final tier (evolvesInto = null).
+     * Currently, the final tier (evolvesInto = null).
      */
     public static final DeferredHolder<IBloodline, AwakenedBeastBloodline> AWAKENED_BEAST_BLOODLINE =
             BLOODLINES.register("awakened_beast_bloodline", () ->
@@ -153,8 +153,6 @@ public class ModBloodlines {
                             .addSuppressionTier(3)
             );
 
-    // a few generic bloodlines cause the creative tab was looking a little sparce? Change them as you wish - sortofSmart
-
     public static final DeferredHolder<IBloodline, GenericBloodline> DRAGON_BLOODLINE =
             BLOODLINES.register("dragon_bloodline", () ->
                     new GenericBloodline(Component.translatable("ascension.bloodline.dragon_bloodline"))
@@ -170,8 +168,8 @@ public class ModBloodlines {
                     new GenericBloodline(Component.translatable("ascension.bloodline.astral_bloodline"))
                             .setShortDescription(Component.translatable("ascension.bloodline.astral_bloodline.short"))
                             .setDescription(Component.translatable("ascension.bloodline.astral_bloodline.desc"))
-                            .addFlatAttribute(ModAttributes.MAX_QI, 150, ASTRAL_KEY)
-                            .addFlatAttribute(ModAttributes.QI_REGEN_RATE, 0.4, ASTRAL_KEY)
+                            .addFlatAttribute(ModAttributes.MAX_QI, 200, ASTRAL_KEY)
+                            .addFlatAttribute(ModAttributes.QI_REGEN_RATE, 0.75, ASTRAL_KEY)
             );
 
     public static final DeferredHolder<IBloodline, GenericBloodline> RAVEN_BLOODLINE =

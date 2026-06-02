@@ -1,6 +1,7 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -29,6 +30,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.poison.PoisonRefiningMeditationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.FistCultivationSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.GenericWeaponCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.SwordCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.WhiteLightningCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental.*;
@@ -47,6 +49,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.univ
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.mastery.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.projections.SwordProjectionSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.qi.QiRelease;
+import net.thejadeproject.ascension.util.ModTags;
 
 public class ModSkills {
     public static final DeferredRegister<ISkill> SKILLS =DeferredRegister.create(AscensionRegistries.Skills.SKILL_REGISTRY, AscensionCraft.MOD_ID);
@@ -277,6 +280,54 @@ public class ModSkills {
             SKILLS.register("fist_cultivation_skill", () -> new FistCultivationSkill(
                     "ascension.skill.fist_cultivation_skill", "ascension.skill.fist_cultivation_skill.description",
                     ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "fist_cultivation_skill")
+            ));
+
+    public static final DeferredHolder<ISkill, GenericWeaponCultivationSkill> AXE_CULTIVATION_SKILL =
+            SKILLS.register("axe_cultivation_skill", () -> new GenericWeaponCultivationSkill(
+                    "ascension.skill.axe_cultivation_skill",
+                    "ascension.skill.axe_cultivation_skill.description",
+                    "textures/spells/icon/placeholder.png",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "axe_cultivation_skill"),
+                    ModPaths.AXE.getId(),
+                    ItemTags.AXES,
+                    false,
+                    true
+            ));
+
+    public static final DeferredHolder<ISkill, GenericWeaponCultivationSkill> BLADE_CULTIVATION_SKILL =
+            SKILLS.register("blade_cultivation_skill", () -> new GenericWeaponCultivationSkill(
+                    "ascension.skill.blade_cultivation_skill",
+                    "ascension.skill.blade_cultivation_skill.description",
+                    "textures/spells/icon/placeholder.png",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blade_cultivation_skill"),
+                    ModPaths.BLADE.getId(),
+                    ModTags.Items.BLADE,
+                    false,
+                    true
+            ));
+
+    public static final DeferredHolder<ISkill, GenericWeaponCultivationSkill> SPEAR_CULTIVATION_SKILL =
+            SKILLS.register("spear_cultivation_skill", () -> new GenericWeaponCultivationSkill(
+                    "ascension.skill.spear_cultivation_skill",
+                    "ascension.skill.spear_cultivation_skill.description",
+                    "textures/spells/icon/placeholder.png",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spear_cultivation_skill"),
+                    ModPaths.SPEAR.getId(),
+                    ModTags.Items.SPEAR,
+                    false,
+                    true
+            ));
+
+    public static final DeferredHolder<ISkill, GenericWeaponCultivationSkill> MACE_CULTIVATION_SKILL =
+            SKILLS.register("mace_cultivation_skill", () -> new GenericWeaponCultivationSkill(
+                    "ascension.skill.mace_cultivation_skill",
+                    "ascension.skill.mace_cultivation_skill.description",
+                    "textures/spells/icon/placeholder.png",
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mace_cultivation_skill"),
+                    ModPaths.MACE.getId(),
+                    ModTags.Items.MACE,
+                    false,
+                    true
             ));
 
     // Passives TODO: Give different weapons different damage multi

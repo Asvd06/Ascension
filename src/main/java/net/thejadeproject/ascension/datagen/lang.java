@@ -588,6 +588,27 @@ public class lang extends LanguageProvider {
         add("ascension.technique.jade_spirit_scripture", "Jade Spirit Scripture");
         add("ascension.technique.jade_spirit_scripture.description.short", "An elementary Soul technique focused on clarity and steady refinement.");
         add("ascension.technique.jade_spirit_scripture.description", "An elementary Soul scripture that tempers the spirit like polished jade, offering stable cultivation without any special conditions.");
+        add("ascension.technique.simple_blade_manual", "Worn Blade Manual");
+        add("ascension.technique.simple_blade_manual.description.short", "An old manual stolen from a soldiers grave.");
+        add("ascension.technique.simple_blade_manual.description", "Found in a mass grave left behind by a war long ended, this manual was copied and copied so many times nobody knows the original source anymore");
+        add("ascension.technique.simple_axe_manual", "Common Axe Swinging");
+        add("ascension.technique.simple_axe_manual.description.short", "A common technique taught by every lumberjack.");
+        add("ascension.technique.simple_axe_manual.description", "Despite being a common technique taught by lumberjacks, you shift its moves towards slaughter, gaining enlightenment into the Axe Path.");
+        add("ascension.technique.simple_mace_manual", "Dusty Mace Manual");
+        add("ascension.technique.simple_mace_manual.description.short", "An old man sold it for a penny.");
+        add("ascension.technique.simple_mace_manual.description", "Picked up from a floor stall in a mortal bazaar, this manual teaches of a blunt weapon falling from the sky.");
+        add("ascension.technique.simple_spear_manual", "Serpent Spear Nine Stance");
+        add("ascension.technique.simple_spear_manual.description.short", "Mimic the swaying and lunging of the common grass serpents");
+        add("ascension.technique.simple_spear_manual.description", "Once, a grand spear master wandered into a town, where a child asked him to learn the spear. The master looked at a common serpent slithering around, and devised a basic technique for the kid, who later pawned it off for a golden watch.");
+        add("ascension.technique.simple_sword_manual", "Sword Dance Performance Art");
+        add("ascension.technique.simple_sword_manual.description.short", "An artful sword dance once taught to palace maids of Imperial Donghua.");
+        add("ascension.technique.simple_sword_manual.description", "Long ago, this swords dance was the prized among the Imperial Palace, only for a single maid, out of desperation and poverty, to sell the art to a nearby brothel.");
+        add("ascension.technique.mortal_essence_scripture", "Mortal Essence Scripture");
+        add("ascension.technique.mortal_essence_scripture.description.short", "A common essence scripture looked down upon by cultivators.");
+        add("ascension.technique.mortal_essence_scripture.description", "A technique so bad, it was given by the cultivators to the mortals, seeing no reason to even rememeber its name.");
+        add("ascension.technique.jade_meridians_technique", "Jade Meridian Technique");
+        add("ascension.technique.jade_meridians_technique.description.short", "Meridians like Jade.");
+        add("ascension.technique.jade_meridians_technique.description", "Your essence circulates harshly, battering your meridians and tempering into Jade.");
 
 
         // Multi Part Technique Items
@@ -664,14 +685,22 @@ public class lang extends LanguageProvider {
                         """);
         add("ascension.skill.fist_cultivation_skill", "Fist Comprehension");
         add("ascension.skill.fist_cultivation_skill.description", "To fight without a weapon is to make a weapon of oneself. Every strike refines your martial intent, turning bare flesh into an unstoppable force.");
+        add("ascension.skill.axe_cultivation_skill", "Axe Comprehension");
+        add("ascension.skill.axe_cultivation_skill.description", "A hundred years in a lumber year. A thousand years in an Iron forest. A million years of cutting wood.");
         add("ascension.skill.axe_mastery_skill", "Axe Mastery");
         add("ascension.skill.axe_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Axe.");
+        add("ascension.skill.blade_cultivation_skill", "Vlade Comprehension");
+        add("ascension.skill.blade_cultivation_skill.description", "Only a fool would charge into battle with a dull blade, but a bigger fool would be somebody constantly sharpening his blade and never going to battle.");
         add("ascension.skill.blade_mastery_skill", "Blade Mastery");
         add("ascension.skill.blade_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Blade.");
         add("ascension.skill.bow_mastery_skill", "Bow Mastery");
         add("ascension.skill.bow_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Bow.");
+        add("ascension.skill.mace_cultivation_skill", "Mace Comprehension");
+        add("ascension.skill.mace_cultivation_skill.description", "Jump and kill things");
         add("ascension.skill.mace_mastery_skill", "Mace Mastery");
         add("ascension.skill.mace_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Mace.");
+        add("ascension.skill.spear_cultivation_skill", "Spear Comprehension");
+        add("ascension.skill.spear_cultivation_skill.description", "To pierce a thousand falling blossoms is to surpass the realm of man, to become one with the Spear is to contend against an army alone.");
         add("ascension.skill.spear_mastery_skill", "Spear Mastery");
         add("ascension.skill.spear_mastery_skill.description", "As your worldview and realm increase, so to does your command over the Spear.");
         add("ascension.skill.sword_mastery_skill", "Sword Mastery");

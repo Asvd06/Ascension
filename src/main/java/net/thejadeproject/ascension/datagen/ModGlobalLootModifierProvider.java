@@ -352,6 +352,24 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wind_essence_technique")
         ));
 
+        add("mortal_essence_scripture_from_village_plains_house", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chest/village/village_plains_house")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.15f).build(),
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mortal_essence_scripture")
+        ));
+
+        add("jade_meridians_technique_from_panda", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/panda")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.08f).build(),
+                        MobRankLootCondition.exact("mortal", 2).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "jade_meridians_technique")
+        ));
+
         add("heart_fire_technique_from_nether_fortress", new AddTechniqueManualModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),

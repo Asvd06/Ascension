@@ -17,7 +17,6 @@ public class ModPhysiques {
     public static final DeferredRegister<IPhysique> PHYSIQUES = DeferredRegister.create(AscensionRegistries.Physiques.PHSIQUES_REGISTRY, AscensionCraft.MOD_ID);
 
 
-
     /*
         .addPath(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID,"essence")) allows you to choose what path to give the Physique what it can cultivate.
     Without a path it can not cultivate anything. You can add as many paths as you want or as little as you want.
@@ -427,10 +426,11 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.dual_soul.desc.short"))
     );
 
-    // Add an evolution into a demon-esque physique (you've been corrupted) or a soul only physique or soul only physique
-    // IDK maybe depending on how you cure the corruption
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CORRUPTED_ENTITY = PHYSIQUES.register("corrupted_entity", () ->
             new EvolvingPhysique(Component.translatable("ascension.physiques.corrupted_entity"))
+                    .addEvolution(ModPhysiques.ENSOULED_ENTITY.getId())
+                    .addEvolution(ModPhysiques.EMBODIED_ENTITY.getId())
+                    .addEvolution(ModPhysiques.PERFECTED_ABERRANT_ENTITY.getId())
                     .addPath(ModPaths.SOUL.getId())
                     .addPath(ModPaths.ESSENCE.getId())
                     .addPathBonus(ModPaths.SOUL.getId(), 1.6666666667)
@@ -664,8 +664,42 @@ public class ModPhysiques {
                     .setDescription(Component.translatable("ascension.physiques.crystal_soul.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.crystal_soul.desc.short"))
     );
+
+    // Item to complete Soul: Disembodied Nether Star
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ENSOULED_ENTITY = PHYSIQUES.register("ensouled_entity", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.ensouled_entity"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 3.0)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 1.6666666667)
+                    .setDescription(Component.translatable("ascension.physiques.ensouled_entity.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.ensouled_entity.desc.short"))
+    );
+
+    // Item to complete Essence: False Deified Orb
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> EMBODIED_ENTITY = PHYSIQUES.register("embodied_entity", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.embodied_entity"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.6666666667)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 3.0)
+                    .setDescription(Component.translatable("ascension.physiques.embodied_entity.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.embodied_entity.desc.short"))
+    );
+
+    // Items to complete Both: Disembodied Nether Star, False Deified Orb and Sculk Enamored Eyes
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> PERFECTED_ABERRANT_ENTITY = PHYSIQUES.register("perfected_aberrant_entity", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.perfected_aberrant_entity"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 2.6666666667)
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 2.6666666667)
+                    .setDescription(Component.translatable("ascension.physiques.perfected_aberrant_entity.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.perfected_aberrant_entity.desc.short"))
+    );
+
         // Weapon
-        public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_MONSTER = PHYSIQUES.register("sword_monster", () ->
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> SWORD_MONSTER = PHYSIQUES.register("sword_monster", () ->
                 new GenericPhysique(Component.translatable("ascension.physiques.sword_monster"))
                         .addPath(ModPaths.SWORD.getId())
                         .addPathBonus(ModPaths.SWORD.getId(), 2.5)

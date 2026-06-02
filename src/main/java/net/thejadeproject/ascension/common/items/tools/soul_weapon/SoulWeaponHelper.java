@@ -129,7 +129,7 @@ public final class SoulWeaponHelper {
 
 
     public static int getRequiredTempering(int currentGrade, int lifetimeMarks) {
-        return 25 + currentGrade * 15 + lifetimeMarks * 8;
+        return 25 + ((currentGrade * 15 + lifetimeMarks * 8) * 3);
     }
 
     public static int removeOwnedSoulWeapons(Player player) {

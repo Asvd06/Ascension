@@ -18,6 +18,7 @@ import net.thejadeproject.ascension.refactor_packages.techniques.custom.poison.M
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.weapon.BasicWeaponTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.weapon.SwordCultivationTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.weapon.FistCultivationTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueManualRegistry;
@@ -34,6 +35,7 @@ public class ModTechniques {
     // --- Resource location keys for modifiers ---
     public static final ResourceLocation test = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "test");
     public static final ResourceLocation BLOODFEAST_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "bloodfeast_soul_refining");
+    public static final ResourceLocation WHITE_LIGHTNING_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "white_lightning_ten_stage");
     public static final ResourceLocation BASE_BODY_KEY    = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_body");
     public static final ResourceLocation BASE_ESSENCE_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_essence");
     public static final ResourceLocation BASE_SOUL_KEY    = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_soul");
@@ -77,12 +79,6 @@ public class ModTechniques {
             .addMajorRealmStatModifier(ModStats.AGILITY.getId(), new ValueContainerModifier(0.12, ModifierOperation.MULTIPLY_FINAL, BASE_WEAPON_KEY))
             .addMajorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(0.12, ModifierOperation.MULTIPLY_FINAL, BASE_WEAPON_KEY));
 
-    // --- Placeholder handler ---
-    public static BasicStatChangeHandler testHandler = new BasicStatChangeHandler()
-            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),new ValueContainerModifier(2, ModifierOperation.ADD_BASE, test))
-            .addMajorRealmStatModifier(ModStats.VITALITY.getId(),new ValueContainerModifier(0.2,ModifierOperation.MULTIPLY_FINAL,test))
-            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),new ValueContainerModifier(5,ModifierOperation.ADD_BASE,test));
-
     // Temp Poison Handler until Flip makes something proper
     public static BasicStatChangeHandler basePoisonHandler = new BasicStatChangeHandler()
             .addMinorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(3, ModifierOperation.ADD_BASE,       MYRIAD_VENOM_KEY))
@@ -103,6 +99,13 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends OpenSkyBreathingTechnique> OPEN_SKY_BREATHING_SCRIPTURE =
             TECHNIQUES.register("open_sky_breathing_scripture",
                     () -> new OpenSkyBreathingTechnique(baseEssenceHandler));
+
+    public static final DeferredHolder<ITechnique, ? extends GenericTechnique> MORTAL_ESSENCE_SCRIPTURE = TECHNIQUES.register("mortal_essence_scripture", () ->
+            new GenericTechnique(ModPaths.ESSENCE.getId(), Component.translatable("ascension.technique.mortal_essence_scripture"), 1.0, Set.of())
+                    .setStatChangeHandler(baseEssenceHandler));
+    public static final DeferredHolder<ITechnique, ? extends GenericTechnique> JADE_MERIDIANS_TECHNIQUE = TECHNIQUES.register("jade_meridians_technique",()->
+            new GenericTechnique(ModPaths.ESSENCE.getId(),Component.translatable("ascension.technique.jade_meridians_technique"),5.0,Set.of())
+                    .setStatChangeHandler(baseEssenceHandler));
 
 
 
@@ -166,7 +169,22 @@ public class ModTechniques {
     // ──── BODY TECHNIQUES ────────────────────────────────────────────
     public static final DeferredHolder<ITechnique, ? extends WhiteLightningTenStageTechnique> WHITE_LIGHTNING_TEN_STAGE_TECHNIQUE =
             TECHNIQUES.register("white_lightning_ten_stage_technique",
-                    () -> new WhiteLightningTenStageTechnique(baseBodyHandler));
+                    () -> new WhiteLightningTenStageTechnique(new BasicStatChangeHandler()
+                            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),
+                                    new ValueContainerModifier(15, ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
+                            .addMinorRealmStatModifier(ModStats.STRENGTH.getId(),
+                                    new ValueContainerModifier(11,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
+                            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),
+                                    new ValueContainerModifier(6,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
+                            .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(),
+                                    new ValueContainerModifier(4,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
+                            .addMajorRealmAttributeModifier(Attributes.OXYGEN_BONUS,
+                                    new ValueContainerModifier(5,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
+                            .addMajorRealmStatModifier(ModStats.STRENGTH.getId(),
+                                    new ValueContainerModifier(0.2,  ModifierOperation.MULTIPLY_FINAL, WHITE_LIGHTNING_KEY))
+                    )
+            );
+
     public static final DeferredHolder<ITechnique, ? extends HellBoundMarrowTechnique> HELLBOUND_MARROW_SCRIPTURE =
             TECHNIQUES.register("hellbound_marrow_scripture",
                     () -> new HellBoundMarrowTechnique(baseBodyHandler));
@@ -279,56 +297,114 @@ public class ModTechniques {
 
 
     // ──── WEAPON TECHNIQUES ────────────────────────────────────────────
-    public static final DeferredHolder<ITechnique, ? extends GenericTechnique> SWORD_COMPREHENSION_TECHNIQUE =
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SWORD_COMPREHENSION_TECHNIQUE =
             TECHNIQUES.register("sword_comprehension_technique",
-                    () -> new SwordCultivationTechnique(ModPaths.SWORD.getId(),
-                            Component.translatable("ascension.technique.sword_comprehension_technique"), 10.0D, Set.of()
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.sword_comprehension_technique"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.SWORD_CULTIVATION_SKILL.getId(),
+                                    ModSkills.SWORD_MASTERY_SKILL.getId()
+                            ),
+                            List.of(
+                                    new BasicWeaponTechnique.RealmSkillUnlock(
+                                            ModSkills.SWORD_DRAW.getId(),
+                                            2
+                                    )
+                            )
                     ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.HANDLER_1)
             );
 
-    public static final DeferredHolder<ITechnique, ? extends FistCultivationTechnique> FIST_COMPREHENSION_TECHNIQUE =
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_SWORD_MANUAL =
+            TECHNIQUES.register("simple_sword_manual",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.simple_sword_manual"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.SWORD_CULTIVATION_SKILL.getId(),
+                                    ModSkills.SWORD_MASTERY_SKILL.getId()
+                            ),
+                            List.of()
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.HANDLER_1)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> FIST_COMPREHENSION_TECHNIQUE =
             TECHNIQUES.register("fist_comprehension_technique",
-                    () -> new FistCultivationTechnique(ModPaths.FIST.getId(),
-                            Component.translatable("ascension.technique.fist_comprehension_technique"), 10.0D, Set.of()
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.fist_comprehension_technique"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.FIST_CULTIVATION_SKILL.getId()
+                                    //ModSkills.FIST_MASTERY_SKILL.getId()
+                            ),
+                            List.of()
                     ).setStatChangeHandler(baseWeaponHandler)
             );
 
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_AXE_MANUAL =
+            TECHNIQUES.register("simple_axe_manual",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.simple_axe_manual"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.AXE_CULTIVATION_SKILL.getId(),
+                                    ModSkills.AXE_MASTERY_SKILL.getId()
+                            ),
+                            List.of()
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.AXEMACE_HANDLER)
+            );
 
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_SPEAR_MANUAL =
+            TECHNIQUES.register("simple_spear_manual",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.simple_spear_manual"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.SPEAR_CULTIVATION_SKILL.getId(),
+                                    ModSkills.SPEAR_MASTERY_SKILL.getId()
+                            ),
+                            List.of()
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.SPEAR_HANDLER)
+            );
 
-    /* ──── TECHNIQUE IDEAS | Fill in as you please ──────────────────────────────────────────── //
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_MACE_MANUAL =
+            TECHNIQUES.register("simple_mace_manual",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.simple_mace_manual"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.MACE_CULTIVATION_SKILL.getId(),
+                                    ModSkills.MACE_MASTERY_SKILL.getId()
+                            ),
+                            List.of()
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.AXEMACE_HANDLER)
+            );
 
-        public static final DeferredHolder<ITechnique, ? extends IndestructibleVajraTechnique> INDESTRUCTIBLE_VAJRA_SCRIPTURE
-        public static final DeferredHolder<ITechnique, ? extends LotusHeartTechnique> LOTUS_HEART_SUTRA
-        public static final DeferredHolder<ITechnique, ? extends TripleSoulTechnique> TRIPLE_SOUL_LIFE_SUTRA
-
-        public static final DeferredHolder<ITechnique, ? extends AbyssDwellerTechnique> ABYSS_DWELLERS_MANUAL
-        public static final DeferredHolder<ITechnique, ? extends NetherQiTechnique> NETHER_QI_DEVOURING_ART
-
-        public static final DeferredHolder<ITechnique, ? extends MirageArrowTechnique> MIRAGE_ARROW_MANUAL
-        public static final DeferredHolder<ITechnique, ? extends GreatWallTechnique> BASTION_WALL_TECHNIQUE
-        public static final DeferredHolder<ITechnique, ? extends MortalNineSaberTechnique> NINE_BLADES_SABER
-        public static final DeferredHolder<ITechnique, ? extends EdgeTemperingTechnique> EDGE_TEMPERING_METHOD
-        public static final DeferredHolder<ITechnique, ? extends FallingLeafBladeTechnique> FALLING_LEAF_BLADE
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-
-        public static final DeferredHolder<ITechnique, ? extends SoulThreadTechnique> SOUL_THREAD_TECHNIQUE
-        public static final DeferredHolder<ITechnique, ? extends MirrorSoulTechnique> MIRROR_SOUL_TECHNIQUE
-        public static final DeferredHolder<ITechnique, ? extends NineEchoSoulTechnique> NINE_ECHOS_SOUL_ART
-        public static final DeferredHolder<ITechnique, ? extends JadeSpiritTechnique> JADE_SPIRIT_SCRIPTURE
-        public static final DeferredHolder<ITechnique, ? extends GhostLanternTechnique> GHOST_LANTERN_METHOD
-        public static final DeferredHolder<ITechnique, ? extends SoulSeveringTechnique> SOUL_SEVERING_TECHNIQUE
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-        public static final DeferredHolder<ITechnique, ? extends >
-
-        P.S. I don't really mean we should make this many individual classes to extend, maybe just a couple general ones?
-        Unless someone wants to or the technique actually requires it :)
-        I'm just jotting down ideas - sortofsmart
-
-    // ──── TECHNIQUE IDEAS | Fill in as you please ──────────────────────────────────────────── */
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_BLADE_MANUAL =
+            TECHNIQUES.register("simple_blade_manual",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SWORD.getId(),
+                            Component.translatable("ascension.technique.simple_blade_manual"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.BLADE_CULTIVATION_SKILL.getId(),
+                                    ModSkills.BLADE_MASTERY_SKILL.getId()
+                            ), List.of())
+                            .setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.BLADE_HANDLER)
+            );
 
 
     public static void register(IEventBus modEventBus){
