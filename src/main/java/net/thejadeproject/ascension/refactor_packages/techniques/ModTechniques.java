@@ -317,6 +317,46 @@ public class ModTechniques {
                     ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.HANDLER_1)
             );
 
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SPEAR_COMPERHENSION_TECHNIQUE =
+            TECHNIQUES.register("spear_comprehension_technique",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.SPEAR.getId(),
+                            Component.translatable("ascension.technique.spear_comprehension_technique"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.SPEAR_CULTIVATION_SKILL.getId(),
+                                    ModSkills.SPEAR_MASTERY_SKILL.getId()
+                            ),
+                            List.of(
+                                    new BasicWeaponTechnique.RealmSkillUnlock(
+                                            ModSkills.SPEAR_THRUST.getId(),
+                                            2
+                                    )
+                            )
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.SPEAR_HANDLER)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> BLADE_COMPERHENSION_TECHNIQUE =
+            TECHNIQUES.register("blade_comprehension_technique",
+                    () -> new BasicWeaponTechnique(
+                            ModPaths.BLADE.getId(),
+                            Component.translatable("ascension.technique.blade_comprehension_technique"),
+                            10.0D,
+                            Set.of(),
+                            List.of(
+                                    ModSkills.BLADE_CULTIVATION_SKILL.getId(),
+                                    ModSkills.BLADE_MASTERY_SKILL.getId()
+                            ),
+                            List.of(
+                                    new BasicWeaponTechnique.RealmSkillUnlock(
+                                            ModSkills.BLADE_CLEAVE.getId(),
+                                            2
+                                    )
+                            )
+                    ).setStatChangeHandler(baseWeaponHandler).setRealmChangeHandler(RealmChangeHandlers.BLADE_HANDLER)
+            );
+
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_SWORD_MANUAL =
             TECHNIQUES.register("simple_sword_manual",
                     () -> new BasicWeaponTechnique(

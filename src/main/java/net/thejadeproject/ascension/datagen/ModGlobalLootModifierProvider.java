@@ -640,6 +640,39 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "sword_comprehension_technique")
         ));
 
+        add("spear_comprehension_technique_from_pillager_outpost", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/pillager_outpost")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.17f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spear_comprehension_technique")
+        ));
+
+        add("spear_comprehension_technique_from_ocean_ruin", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/underwater_ruin_big")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spear_comprehension_technique")
+        ));
+
+        add("blade_comprehension_technique_from_woodland_mansion", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/woodland_mansion")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blade_comprehension_technique")
+        ));
+
+        add("blade_comprehension_technique_from_bastion", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/bastion_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blade_comprehension_technique")
+        ));
+
+
         add("dawning_sun_scripture_from_nether_fortress", new AddTechniqueManualModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),

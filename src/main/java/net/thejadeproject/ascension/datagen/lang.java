@@ -609,7 +609,12 @@ public class lang extends LanguageProvider {
         add("ascension.technique.jade_meridians_technique", "Jade Meridian Technique");
         add("ascension.technique.jade_meridians_technique.description.short", "Meridians like Jade.");
         add("ascension.technique.jade_meridians_technique.description", "Your essence circulates harshly, battering your meridians and tempering into Jade.");
-
+        add("ascension.technique.spear_comprehension_technique", "Slaughter Spear Whirlwind Art");
+        add("ascension.technique.spear_comprehension_technique.description.short", "Slaughter with a beautiful spear.");
+        add("ascension.technique.spear_comprehension_technique.description", "Tear through the battlefield like a whirlwind, leaving an artwork of blood and death in your wake. Within the domain of your spear, You are the lord.");
+        add("ascension.technique.blade_comprehension_technique", "Mountain Cleaving Blade Art");
+        add("ascension.technique.blade_comprehension_technique.description.short", "Cultivates the Blade Path through sweeping slaughter.");
+        add("ascension.technique.blade_comprehension_technique.description", "A domineering blade scripture built on heavy swings and merciless arcs, crushing both bone and soul alike beneath the force of the mountain.");
 
         // Multi Part Technique Items
         add("item.ascension.scholarly_soul_rectification_of_names", "Rectification of Names");
@@ -750,6 +755,10 @@ public class lang extends LanguageProvider {
         add("ascension.skill.simple_soul_cultivation_skill.description", "A basic soul cultivation method. Quiet the body, steady the spirit, and draw soul essence into your foundation.");
         add("ascension.skill.open_sky_breathing_skill", "Open Sky Breathing");
         add("ascension.skill.open_sky_breathing_skill.description", "Cultivate Essence by drawing qi from the vast sky. This skill only works when the cultivator can see the open sky.");
+        add("ascension.skill.blade_cleave", "Crescent Cleave");
+        add("ascension.skill.blade_cleave.description", "Sweep your blade in a wide crescent arc, cleaving through enemies before you.");
+        add("ascension.skill.spear_thrust", "Hundred Spear Thrust");
+        add("ascension.skill.spear_thrust.description", "Launch the spear out many times in rapid succession, dealing consistent damage in a flurry.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");

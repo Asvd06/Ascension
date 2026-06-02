@@ -18,6 +18,8 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulLanternSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulNeedle;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulSuppression;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.BladeCleave;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SpearThrust;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SwordDraw;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.GaleStep;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
@@ -358,6 +360,10 @@ public class ModSkills {
     // Actives
     public static final DeferredHolder<ISkill, ? extends SwordDraw> SWORD_DRAW =
             SKILLS.register("sword_draw", SwordDraw::new);
+    public static final DeferredHolder<ISkill, ? extends SpearThrust> SPEAR_THRUST =
+            SKILLS.register("spear_thrust", SpearThrust::new);
+    public static final DeferredHolder<ISkill, ? extends BladeCleave> BLADE_CLEAVE =
+            SKILLS.register("blade_cleave", BladeCleave::new);
 
 
 
