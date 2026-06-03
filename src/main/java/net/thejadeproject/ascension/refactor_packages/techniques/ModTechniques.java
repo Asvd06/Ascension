@@ -76,6 +76,7 @@ public class ModTechniques {
             .addMinorRealmStatModifier(ModStats.AGILITY.getId(), new ValueContainerModifier(2, ModifierOperation.ADD_BASE, BASE_WEAPON_KEY))
             .addMinorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(2, ModifierOperation.ADD_BASE, BASE_WEAPON_KEY))
             .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(1, ModifierOperation.ADD_BASE, BASE_WEAPON_KEY))
+            .addMinorRealmStatModifier(ModStats.VITALITY.getId(), new ValueContainerModifier(0.5, ModifierOperation.ADD_BASE, BASE_WEAPON_KEY))
             .addMajorRealmStatModifier(ModStats.AGILITY.getId(), new ValueContainerModifier(0.12, ModifierOperation.MULTIPLY_FINAL, BASE_WEAPON_KEY))
             .addMajorRealmStatModifier(ModStats.STRENGTH.getId(), new ValueContainerModifier(0.12, ModifierOperation.MULTIPLY_FINAL, BASE_WEAPON_KEY));
 
