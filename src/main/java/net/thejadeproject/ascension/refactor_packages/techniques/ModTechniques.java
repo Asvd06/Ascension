@@ -376,7 +376,7 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> FIST_COMPREHENSION_TECHNIQUE =
             TECHNIQUES.register("fist_comprehension_technique",
                     () -> new BasicWeaponTechnique(
-                            ModPaths.SWORD.getId(),
+                            ModPaths.FIST.getId(),
                             Component.translatable("ascension.technique.fist_comprehension_technique"),
                             10.0D,
                             Set.of(),
