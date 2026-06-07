@@ -376,7 +376,7 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> FIST_COMPREHENSION_TECHNIQUE =
             TECHNIQUES.register("fist_comprehension_technique",
                     () -> new BasicWeaponTechnique(
-                            ModPaths.SWORD.getId(),
+                            ModPaths.FIST.getId(),
                             Component.translatable("ascension.technique.fist_comprehension_technique"),
                             10.0D,
                             Set.of(),
@@ -391,7 +391,7 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_AXE_MANUAL =
             TECHNIQUES.register("simple_axe_manual",
                     () -> new BasicWeaponTechnique(
-                            ModPaths.SWORD.getId(),
+                            ModPaths.AXE.getId(),
                             Component.translatable("ascension.technique.simple_axe_manual"),
                             10.0D,
                             Set.of(),
@@ -406,7 +406,7 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_SPEAR_MANUAL =
             TECHNIQUES.register("simple_spear_manual",
                     () -> new BasicWeaponTechnique(
-                            ModPaths.SWORD.getId(),
+                            ModPaths.SPEAR.getId(),
                             Component.translatable("ascension.technique.simple_spear_manual"),
                             10.0D,
                             Set.of(),
@@ -421,7 +421,7 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_MACE_MANUAL =
             TECHNIQUES.register("simple_mace_manual",
                     () -> new BasicWeaponTechnique(
-                            ModPaths.SWORD.getId(),
+                            ModPaths.MACE.getId(),
                             Component.translatable("ascension.technique.simple_mace_manual"),
                             10.0D,
                             Set.of(),
@@ -436,7 +436,7 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends BasicWeaponTechnique> SIMPLE_BLADE_MANUAL =
             TECHNIQUES.register("simple_blade_manual",
                     () -> new BasicWeaponTechnique(
-                            ModPaths.SWORD.getId(),
+                            ModPaths.BLADE.getId(),
                             Component.translatable("ascension.technique.simple_blade_manual"),
                             10.0D,
                             Set.of(),
