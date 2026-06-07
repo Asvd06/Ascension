@@ -19,7 +19,8 @@ public class PhysiqueAcquisitionCounters {
                 Codec.INT.optionalFieldOf("distinct_weapon_types",  0).forGetter(c -> c.distinctWeaponKillTypes),
                 Codec.INT.optionalFieldOf("axe_kills",              0).forGetter(c -> c.axeKills),
                 Codec.INT.optionalFieldOf("warden_kills",           0).forGetter(c -> c.wardenKills),
-                Codec.INT.optionalFieldOf("weak_soul_hits",         0).forGetter(c -> c.weakSoulHits)
+                Codec.INT.optionalFieldOf("weak_soul_hits",         0).forGetter(c -> c.weakSoulHits),
+                WeaponCounters.CODEC.optionalFieldOf("weapons", new WeaponCounters()).forGetter(c -> c.weapons)
         ).apply(inst, T1Counters::new));
 
         public int fireDamageHits;
@@ -35,12 +36,13 @@ public class PhysiqueAcquisitionCounters {
         public int axeKills;
         public int wardenKills;
         public int weakSoulHits;
+        public WeaponCounters weapons;
 
         public T1Counters(int fireDamageHits, int waterDrowningHits, int earthBlocksMined,
                           int woodLogsChopped, int metalOresMined,
                           int swordKills, int fistKills, int spearKills, int bowKills,
                           int distinctWeaponKillTypes, int axeKills, int wardenKills,
-                          int weakSoulHits) {
+                          int weakSoulHits, WeaponCounters weapons) {
             this.fireDamageHits          = fireDamageHits;
             this.waterDrowningHits       = waterDrowningHits;
             this.earthBlocksMined        = earthBlocksMined;
@@ -54,9 +56,12 @@ public class PhysiqueAcquisitionCounters {
             this.axeKills                = axeKills;
             this.wardenKills             = wardenKills;
             this.weakSoulHits            = weakSoulHits;
+            this.weapons = weapons;
         }
 
-        public T1Counters() {}
+        public T1Counters() {
+            this.weapons = new WeaponCounters();
+        }
     }
 
     public static class T2Counters {
@@ -135,6 +140,76 @@ public class PhysiqueAcquisitionCounters {
         }
 
         public T3Counters() {}
+    }
+
+    public static class WeaponCounters {
+        public static final Codec<WeaponCounters> CODEC = RecordCodecBuilder.create(inst -> inst.group(
+                Codec.INT.optionalFieldOf("next_sword_apprentice_roll", 100)
+                        .forGetter(c -> c.nextSwordApprenticeRoll),
+                Codec.INT.optionalFieldOf("next_soul_sword_heart_roll", 200)
+                        .forGetter(c -> c.nextSoulSwordHeartRoll),
+                Codec.INT.optionalFieldOf("next_thin_sword_pulse_roll", 250)
+                        .forGetter(c -> c.nextThinSwordPulseRoll),
+                Codec.INT.optionalFieldOf("next_sword_bone_roll", 300)
+                        .forGetter(c -> c.nextSwordBoneRoll),
+
+                Codec.INT.optionalFieldOf("next_thuggish_form_roll", 80)
+                        .forGetter(c -> c.nextThuggishFormRoll),
+                Codec.INT.optionalFieldOf("next_bruised_knuckle_body_roll", 180)
+                        .forGetter(c -> c.nextBruisedKnuckleBodyRoll),
+                Codec.INT.optionalFieldOf("next_tyrant_body_roll", 200)
+                        .forGetter(c -> c.nextTyrantBodyRoll),
+
+                Codec.INT.optionalFieldOf("next_hardened_general_roll", 80)
+                        .forGetter(c -> c.nextHardenedGeneralRoll),
+                Codec.INT.optionalFieldOf("next_spear_soul_mark_roll", 180)
+                        .forGetter(c -> c.nextSpearSoulMarkRoll),
+                Codec.INT.optionalFieldOf("next_pointed_eyes_roll", 200)
+                        .forGetter(c -> c.nextPointedEyesRoll)
+        ).apply(inst, WeaponCounters::new));
+
+        public int nextSwordApprenticeRoll;
+        public int nextSoulSwordHeartRoll;
+        public int nextThinSwordPulseRoll;
+        public int nextSwordBoneRoll;
+
+        public int nextThuggishFormRoll;
+        public int nextBruisedKnuckleBodyRoll;
+        public int nextTyrantBodyRoll;
+
+        public int nextHardenedGeneralRoll;
+        public int nextSpearSoulMarkRoll;
+        public int nextPointedEyesRoll;
+
+        public WeaponCounters(int nextSwordApprenticeRoll,
+                              int nextSoulSwordHeartRoll,
+                              int nextThinSwordPulseRoll,
+                              int nextSwordBoneRoll,
+                              int nextThuggishFormRoll,
+                              int nextBruisedKnuckleBodyRoll,
+                              int nextTyrantBodyRoll,
+                              int nextHardenedGeneralRoll,
+                              int nextSpearSoulMarkRoll,
+                              int nextPointedEyesRoll) {
+            this.nextSwordApprenticeRoll = nextSwordApprenticeRoll;
+            this.nextSoulSwordHeartRoll = nextSoulSwordHeartRoll;
+            this.nextThinSwordPulseRoll = nextThinSwordPulseRoll;
+            this.nextSwordBoneRoll = nextSwordBoneRoll;
+
+            this.nextThuggishFormRoll = nextThuggishFormRoll;
+            this.nextBruisedKnuckleBodyRoll = nextBruisedKnuckleBodyRoll;
+            this.nextTyrantBodyRoll = nextTyrantBodyRoll;
+
+            this.nextHardenedGeneralRoll = nextHardenedGeneralRoll;
+            this.nextSpearSoulMarkRoll = nextSpearSoulMarkRoll;
+            this.nextPointedEyesRoll = nextPointedEyesRoll;
+        }
+
+        public WeaponCounters() {
+            this(100, 200, 250, 300,
+                    80, 180, 200,
+                    80, 180, 200);
+        }
     }
 
     public static final Codec<PhysiqueAcquisitionCounters> CODEC = RecordCodecBuilder.create(inst -> inst.group(

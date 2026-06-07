@@ -69,7 +69,7 @@ public class SpearMasterySkill extends GenericWeaponMasterySkill {
     @Override protected ResourceLocation getPathId() { return ModPaths.SPEAR.getId(); }
     @Override protected TagKey<Item> getWeaponTag() { return ModTags.Items.SPEAR; }
     @Override protected String getVfxType() { return WeaponSwingVfxEntity.TYPE_SPEAR; }
-    @Override protected String getFallbackColor() { return "simple_blue"; }
+    @Override protected String getFallbackColor() { return "simple_purple"; }
 
     @Override protected Vector3f getEffectRadius() { return new Vector3f(0.8f, 0.8f, 4.5f); }
     @Override protected double getBaseDamage() { return 6.0; }

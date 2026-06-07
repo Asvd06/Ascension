@@ -25,7 +25,7 @@ public class BladeMasterySkill extends GenericWeaponMasterySkill {
 
     static {
         final String T = WeaponSwingVfxEntity.TYPE_SWORD; // shares sword folder
-        VfxColorRegistry.register(T, ModTechniques.SWORD_COMPREHENSION_TECHNIQUE.getId(), "blue");
+        VfxColorRegistry.register(T, ModTechniques.SWORD_COMPREHENSION_TECHNIQUE.getId(), "red");
 
         // ── Add future blade technique mappings below ──
         // VfxColorRegistry.register(T, ModTechniques.MORTAL_NINE_SABER.getId(), "red");
@@ -34,7 +34,7 @@ public class BladeMasterySkill extends GenericWeaponMasterySkill {
     @Override protected ResourceLocation getPathId() { return ModPaths.BLADE.getId(); }
     @Override protected TagKey<Item> getWeaponTag() { return ModTags.Items.BLADE; }
     @Override protected String getVfxType() { return WeaponSwingVfxEntity.TYPE_SWORD; }
-    @Override protected String getFallbackColor() { return "blue"; }
+    @Override protected String getFallbackColor() { return "red"; }
 
     @Override protected Vector3f getEffectRadius() { return new Vector3f(2.0f, 1.5f, 3.0f); }
     @Override protected double getBaseDamage() { return 5.5; }

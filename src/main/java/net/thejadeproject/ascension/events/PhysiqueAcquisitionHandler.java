@@ -10,14 +10,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Block;
@@ -38,6 +37,7 @@ import net.thejadeproject.ascension.common.items.tools.SpearItem;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.data_attachments.attachments.PhysiqueAcquisitionCounters;
 import net.thejadeproject.ascension.common.items.physiques.PhysiqueTransferItem;
+import net.thejadeproject.ascension.util.ModTags;
 
 @EventBusSubscriber(modid = AscensionCraft.MOD_ID)
 public class PhysiqueAcquisitionHandler {
@@ -144,8 +144,13 @@ public class PhysiqueAcquisitionHandler {
         return true;
     }
 
+    private static int advanceNextRollPastCurrent(int currentKills, int nextRoll, int interval) {
+        do {nextRoll += interval;} while (currentKills >= nextRoll);
+        return nextRoll;
+    }
+
     private static boolean isSword(ItemStack stack) {
-        return stack.getItem() instanceof SwordItem;
+        return stack.getItem() instanceof SwordItem || stack.is(ItemTags.SWORDS);
     }
 
     private static boolean isFist(ItemStack stack) {
@@ -153,13 +158,11 @@ public class PhysiqueAcquisitionHandler {
     }
 
     private static boolean isAxe(ItemStack stack) {
-        return stack.getItem() == Items.IRON_AXE || stack.getItem() == Items.DIAMOND_AXE
-                || stack.getItem() == Items.NETHERITE_AXE || stack.getItem() == Items.GOLDEN_AXE
-                || stack.getItem() == Items.STONE_AXE || stack.getItem() == Items.WOODEN_AXE;
+        return stack.getItem() instanceof AxeItem || stack.is(ItemTags.AXES);
     }
 
     private static boolean isSpear(ItemStack stack) {
-        return stack.getItem() instanceof SpearItem;
+        return stack.getItem() instanceof SpearItem || stack.is(ModTags.Items.SPEAR);
     }
 
     private static boolean hasFeatherFalling(ServerPlayer player) {
@@ -316,27 +319,49 @@ public class PhysiqueAcquisitionHandler {
             c.t1.swordKills++;
             c.t1.distinctWeaponKillTypes |= 1;
 
-            if (c.t1.swordKills >= SWORD_KILLS_SWORD_BONE) {
-                c.t1.swordKills -= SWORD_KILLS_SWORD_BONE;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":sword_bone",
-                        CHANCE_SWORD_BONE, 21, 30);
+            if (c.t1.weapons == null) {
+                c.t1.weapons = new PhysiqueAcquisitionCounters.WeaponCounters();
             }
-            if (c.t1.swordKills >= SWORD_KILLS_THIN_SWORD) {
-                c.t1.swordKills -= SWORD_KILLS_THIN_SWORD;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":thin_sword_pulse",
-                        CHANCE_THIN_SWORD_PULSE, 18, 30);
-            }
-            if (c.t1.swordKills >= SWORD_KILLS_SOUL_SWORD) {
-                c.t1.swordKills -= SWORD_KILLS_SOUL_SWORD;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":soul_sword_heart",
-                        CHANCE_SOUL_SWORD_HEART, 19, 30);
-            }
-            if (c.t1.swordKills >= SWORD_KILLS_APPRENTICE) {
-                c.t1.swordKills -= SWORD_KILLS_APPRENTICE;
+            if (c.t1.swordKills >= c.t1.weapons.nextSwordApprenticeRoll) {
+                c.t1.weapons.nextSwordApprenticeRoll = advanceNextRollPastCurrent(
+                        c.t1.swordKills,
+                        c.t1.weapons.nextSwordApprenticeRoll,
+                        SWORD_KILLS_APPRENTICE
+                );
+
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":sword_apprentice",
                         CHANCE_SWORD_APPRENTICE, 21, 40);
             }
+            if (c.t1.swordKills >= c.t1.weapons.nextSoulSwordHeartRoll) {
+                c.t1.weapons.nextSoulSwordHeartRoll = advanceNextRollPastCurrent(
+                        c.t1.swordKills,
+                        c.t1.weapons.nextSoulSwordHeartRoll,
+                        SWORD_KILLS_SOUL_SWORD
+                );
 
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":soul_sword_heart",
+                        CHANCE_SOUL_SWORD_HEART, 19, 30);
+            }
+            if (c.t1.swordKills >= c.t1.weapons.nextThinSwordPulseRoll) {
+                c.t1.weapons.nextThinSwordPulseRoll = advanceNextRollPastCurrent(
+                        c.t1.swordKills,
+                        c.t1.weapons.nextThinSwordPulseRoll,
+                        SWORD_KILLS_THIN_SWORD
+                );
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":thin_sword_pulse",
+                        CHANCE_THIN_SWORD_PULSE, 18, 30);
+            }
+            if (c.t1.swordKills >= c.t1.weapons.nextSwordBoneRoll) {
+                c.t1.weapons.nextSwordBoneRoll = advanceNextRollPastCurrent(
+                        c.t1.swordKills,
+                        c.t1.weapons.nextSwordBoneRoll,
+                        SWORD_KILLS_SWORD_BONE
+                );
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":sword_bone",
+                        CHANCE_SWORD_BONE, 21, 30);
+            }
             if (isBossKill) {
                 c.t2.bossKillsSword++;
                 if (c.t2.bossKillsSword >= BOSS_KILLS_SWORD_MONSTER) {
@@ -351,20 +376,37 @@ public class PhysiqueAcquisitionHandler {
             c.t1.fistKills++;
             c.t1.distinctWeaponKillTypes |= 2;
 
-            if (c.t1.fistKills >= FIST_KILLS_TYRANT) {
-                c.t1.fistKills -= FIST_KILLS_TYRANT;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":tyrant_body",
-                        CHANCE_TYRANT_BODY, 18, 30);
+            if (c.t1.weapons == null) {
+                c.t1.weapons = new PhysiqueAcquisitionCounters.WeaponCounters();
             }
-            if (c.t1.fistKills >= FIST_KILLS_BRUISED) {
-                c.t1.fistKills -= FIST_KILLS_BRUISED;
+            if (c.t1.fistKills >= c.t1.weapons.nextThuggishFormRoll) {
+                c.t1.weapons.nextThuggishFormRoll = advanceNextRollPastCurrent(
+                        c.t1.fistKills,
+                        c.t1.weapons.nextThuggishFormRoll,
+                        FIST_KILLS_THUGGISH
+                );
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":thuggish_form",
+                        CHANCE_THUGGISH_FORM, 24, 44);
+            }
+            if (c.t1.fistKills >= c.t1.weapons.nextBruisedKnuckleBodyRoll) {
+                c.t1.weapons.nextBruisedKnuckleBodyRoll = advanceNextRollPastCurrent(
+                        c.t1.fistKills,
+                        c.t1.weapons.nextBruisedKnuckleBodyRoll,
+                        FIST_KILLS_BRUISED
+                );
+
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":bruised_knuckle_body",
                         CHANCE_BRUISED_KNUCKLE_BODY, 20, 30);
             }
-            if (c.t1.fistKills >= FIST_KILLS_THUGGISH) {
-                c.t1.fistKills -= FIST_KILLS_THUGGISH;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":thuggish_form",
-                        CHANCE_THUGGISH_FORM, 24, 44);
+            if (c.t1.fistKills >= c.t1.weapons.nextTyrantBodyRoll) {
+                c.t1.weapons.nextTyrantBodyRoll = advanceNextRollPastCurrent(
+                        c.t1.fistKills,
+                        c.t1.weapons.nextTyrantBodyRoll,
+                        FIST_KILLS_TYRANT
+                );
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":tyrant_body",
+                        CHANCE_TYRANT_BODY, 18, 30);
             }
         }
 
@@ -382,20 +424,37 @@ public class PhysiqueAcquisitionHandler {
             c.t1.spearKills++;
             c.t1.distinctWeaponKillTypes |= 4;
 
-            if (c.t1.spearKills >= SPEAR_KILLS_POINTED) {
-                c.t1.spearKills -= SPEAR_KILLS_POINTED;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":pointed_eyes",
-                        CHANCE_POINTED_EYES, 17, 29);
+            if (c.t1.weapons == null) {
+                c.t1.weapons = new PhysiqueAcquisitionCounters.WeaponCounters();
             }
-            if (c.t1.spearKills >= SPEAR_KILLS_SPEAR_SOUL) {
-                c.t1.spearKills -= SPEAR_KILLS_SPEAR_SOUL;
+            if (c.t1.spearKills >= c.t1.weapons.nextHardenedGeneralRoll) {
+                c.t1.weapons.nextHardenedGeneralRoll = advanceNextRollPastCurrent(
+                        c.t1.spearKills,
+                        c.t1.weapons.nextHardenedGeneralRoll,
+                        SPEAR_KILLS_GENERAL
+                );
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":hardened_general",
+                        CHANCE_HARDENED_GENERAL, 20, 45);
+            }
+            if (c.t1.spearKills >= c.t1.weapons.nextSpearSoulMarkRoll) {
+                c.t1.weapons.nextSpearSoulMarkRoll = advanceNextRollPastCurrent(
+                        c.t1.spearKills,
+                        c.t1.weapons.nextSpearSoulMarkRoll,
+                        SPEAR_KILLS_SPEAR_SOUL
+                );
+
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":spear_soul_mark",
                         CHANCE_SPEAR_SOUL_MARK, 19, 30);
             }
-            if (c.t1.spearKills >= SPEAR_KILLS_GENERAL) {
-                c.t1.spearKills -= SPEAR_KILLS_GENERAL;
-                tryGiveEssence(player, AscensionCraft.MOD_ID + ":hardened_general",
-                        CHANCE_HARDENED_GENERAL, 20, 45);
+            if (c.t1.spearKills >= c.t1.weapons.nextPointedEyesRoll) {
+                c.t1.weapons.nextPointedEyesRoll = advanceNextRollPastCurrent(
+                        c.t1.spearKills,
+                        c.t1.weapons.nextPointedEyesRoll,
+                        SPEAR_KILLS_POINTED
+                );
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":pointed_eyes",
+                        CHANCE_POINTED_EYES, 17, 29);
             }
         }
 

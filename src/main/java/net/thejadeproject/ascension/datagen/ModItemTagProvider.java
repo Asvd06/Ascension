@@ -3,6 +3,7 @@ package net.thejadeproject.ascension.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -185,6 +186,10 @@ public class ModItemTagProvider extends ItemTagsProvider {
         tag(ItemTags.MACE_ENCHANTABLE)
                 .add(ModItems.SOULBOUND_MACE.get());
 
+
+        tag(ItemTags.DURABILITY_ENCHANTABLE)
+                .addTag(ModTags.Items.BLADE)
+                .addTag(ModTags.Items.SPEAR);
 
         tag(ItemTags.BREAKS_DECORATED_POTS)
                 .addTag(ModTags.Items.BLADE)

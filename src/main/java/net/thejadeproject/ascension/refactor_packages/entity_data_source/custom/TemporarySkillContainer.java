@@ -40,7 +40,7 @@ public class TemporarySkillContainer implements IEntityDataSourceContainer {
     public void encode(RegistryFriendlyByteBuf buf) {
         ByteBufUtil.encodeString(buf,skill.toString());
         buf.writeInt(totalTicks);
-        buf.writeInt(totalTicks);
+        buf.writeInt(ticksLeft);
         ByteBufUtil.encodeString(buf,instanceIdentifier.toString());
     }
 

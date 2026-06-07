@@ -51,10 +51,11 @@ public class ModPaths {
             );
     public static final DeferredHolder<IPath, ? extends GenericPath> BODY = PATHS.register("body",()->
             new FoundationPath(Component.translatable("ascension.path.body"))
-                    .addFoundationRequirement(0,100000)
-                    .addFoundationRequirement(1,200000)
-                    .addFoundationRequirement(2,300000)
-                    .addFoundationRequirement(3,400000)
+                    // Increase if people find this too easy later :)
+                    .addFoundationRequirement(0,10000)
+                    .addFoundationRequirement(1,20000)
+                    .addFoundationRequirement(2,30000)
+                    .addFoundationRequirement(3,40000)
                     .addFoundationRequirement(4,1000000)
                     .addMajorRealmName("ascension.path.body.mortal")
                     .addMajorRealmName("ascension.path.body.skin_tempering")

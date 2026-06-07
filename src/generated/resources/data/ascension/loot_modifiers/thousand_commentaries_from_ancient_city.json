@@ -1,0 +1,14 @@
+{
+  "type": "ascension:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    },
+    {
+      "chance": 0.13,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "ascension:scholarly_soul_thousand_commentaries"
+}

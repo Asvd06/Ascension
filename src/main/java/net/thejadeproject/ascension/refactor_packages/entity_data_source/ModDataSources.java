@@ -5,6 +5,7 @@ import net.neoforged.fml.event.IModBusEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
+import net.thejadeproject.ascension.refactor_packages.entity_data_source.custom.PathSource;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.custom.SkillSource;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.custom.TemporarySkill;
 import net.thejadeproject.ascension.refactor_packages.paths.IPath;
@@ -18,6 +19,8 @@ public class ModDataSources {
     public static final DeferredHolder<IEntityDataSource, ? extends TemporarySkill> TEMP_SKILL_SOURCE = DATA_SOURCES.register("temp_skill_source",TemporarySkill::new);
 
     public static final DeferredHolder<IEntityDataSource, ? extends SkillSource> SKILL_SOURCE = DATA_SOURCES.register("skill_source",SkillSource::new);
+
+    public static final DeferredHolder<IEntityDataSource, ? extends PathSource> PATH_SOURCE = DATA_SOURCES.register("path_source", PathSource::new);
 
 
     public static void register(IEventBus event){

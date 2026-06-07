@@ -306,6 +306,22 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "water_essence_technique")
         ));
 
+        this.add("water_essence_technique_from_fishing_treasure", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("gameplay/fishing/treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.04F).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "water_essence_technique")
+        ));
+
+        this.add("kidney_water_technique_from_fishing_treasure", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("gameplay/fishing/treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.04F).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "kidney_water_technique")
+        ));
+
         add("wood_essence_technique_from_jungle_temple", new AddTechniqueManualModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/jungle_temple")).build(),
@@ -350,6 +366,24 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         MobRankLootCondition.exact("formation_establishment", 1).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "wind_essence_technique")
+        ));
+
+        add("mortal_essence_scripture_from_village_plains_house", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chest/village/village_plains_house")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.15f).build(),
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mortal_essence_scripture")
+        ));
+
+        add("jade_meridians_technique_from_panda", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/panda")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.08f).build(),
+                        MobRankLootCondition.exact("mortal", 2).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "jade_meridians_technique")
         ));
 
         add("heart_fire_technique_from_nether_fortress", new AddTechniqueManualModifier(
@@ -622,6 +656,39 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "sword_comprehension_technique")
         ));
 
+        add("spear_comprehension_technique_from_pillager_outpost", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/pillager_outpost")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.17f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spear_comprehension_technique")
+        ));
+
+        add("spear_comprehension_technique_from_ocean_ruin", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/underwater_ruin_big")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spear_comprehension_technique")
+        ));
+
+        add("blade_comprehension_technique_from_woodland_mansion", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/woodland_mansion")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blade_comprehension_technique")
+        ));
+
+        add("blade_comprehension_technique_from_bastion", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/bastion_treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.16f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "blade_comprehension_technique")
+        ));
+
+
         add("dawning_sun_scripture_from_nether_fortress", new AddTechniqueManualModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build(),
@@ -681,6 +748,26 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                         MobRankLootCondition.between("qi_gathering", 1, "qi_gathering", 3).build()
                 },
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "open_sky_breathing_scripture")
+        ));
+
+        // Physiques from Fishing
+
+        add("water_attuned_from_fishing_treasure", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("gameplay/fishing/treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.05F).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "water_attuned"),
+                15, 55
+        ));
+
+        add("water_body_from_fishing_treasure", new AddPhysiqueRandomPurityModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("gameplay/fishing/treasure")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.05F).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "water_body"),
+                15, 55
         ));
 
         //Herbs
@@ -822,6 +909,21 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/phantom")).build(),
                 LootItemKilledByPlayerCondition.killedByPlayer().build(),
                 LootItemRandomChanceCondition.randomChance(0.12F).build()}, ModItems.WIND_CORE.get()));
+
+
+        this.add("rectification_of_names_from_stronghold_library", new AddItemModifier(new LootItemCondition[]{
+                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/stronghold_library")).build(),
+                LootItemRandomChanceCondition.randomChance(0.18F).build()}, ModItems.SCHOLARLY_SOUL_RECTIFICATION_OF_NAMES.get()));
+        this.add("great_learning_from_woodland_mansion", new AddItemModifier(new LootItemCondition[]{
+                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/woodland_mansion")).build(),
+                LootItemRandomChanceCondition.randomChance(0.16F).build()}, ModItems.SCHOLARLY_SOUL_GREAT_LEARNING.get()));
+        this.add("thousand_commentaries_from_ancient_city", new AddItemModifier(new LootItemCondition[]{
+                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/ancient_city")).build(),
+                LootItemRandomChanceCondition.randomChance(0.13F).build()}, ModItems.SCHOLARLY_SOUL_THOUSAND_COMMENTARIES.get()));
+        this.add("sage_mandate_from_end_city", new AddItemModifier(new LootItemCondition[]{
+                LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/end_city_treasure")).build(),
+                LootItemRandomChanceCondition.randomChance(0.10F).build()}, ModItems.SCHOLARLY_SOUL_SAGE_MANDATE.get()));
+
 
         add("ranked_mob_loot", new AddRankedMobLootModifier(
                 new LootItemCondition[]{

@@ -16,9 +16,11 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulWeaponHelper;
+import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulWeaponType;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.data_attachments.attachments.SoulWeaponData;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.entity_data_source.custom.PathSource;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
@@ -28,7 +30,6 @@ import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.Cast
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.*;
-import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulWeaponType;
 
 public class SoulForgeSkill implements ICastableSkill {
     private static final int COOLDOWN_TICKS = 40;
@@ -60,6 +61,17 @@ public class SoulForgeSkill implements ICastableSkill {
         }
 
         SoulWeaponData soulWeaponData = player.getData(ModAttachments.SOUL_WEAPON);
+
+        if (soulWeaponData.bound && !ensureWeaponPath(player, soulWeaponData)) {
+            soulWeaponData.summoned = false;
+
+            player.displayClientMessage(
+                    Component.translatable("ascension.skill.soul_forge.no_weapon"),
+                    true
+            );
+
+            return;
+        }
 
         if (player.isShiftKeyDown()) {
             showSoulWeaponStatus(player, soulWeaponData);
@@ -103,7 +115,16 @@ public class SoulForgeSkill implements ICastableSkill {
         data.lastSoulMajor = soulPath == null ? 0 : soulPath.getMajorRealm();
         data.lastSoulMinor = soulPath == null ? 0 : soulPath.getMinorRealm();
 
-        ensureWeaponPath(entityData, type.path());
+        if (!ensureWeaponPath(player, data)) {
+            data.clear();
+
+            player.displayClientMessage(
+                    Component.translatable("ascension.skill.soul_forge.no_weapon"),
+                    true
+            );
+
+            return;
+        }
 
         SoulWeaponHelper.updateSoulWeaponAttributes(soulWeapon, data);
         SoulWeaponHelper.writeSoulWeaponComponent(soulWeapon, player, data);
@@ -118,15 +139,27 @@ public class SoulForgeSkill implements ICastableSkill {
         );
     }
 
-    private void ensureWeaponPath(IEntityData entityData, ResourceLocation path) {
-        if (entityData.getPathData(path) != null) return;
+    private boolean ensureWeaponPath(ServerPlayer player, SoulWeaponData data) {
+        if (!data.bound) return true;
 
-        entityData.addPathData(
-                path,
-                AscensionRegistries.Paths.PATHS_REGISTRY
-                        .get(path)
-                        .freshPathData(entityData)
+        SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
+        if (type == null) {return false;}
+
+        ResourceLocation path = type.path();
+        if (path == null) {return false;}
+
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+
+        ResourceLocation sourceId = ResourceLocation.fromNamespaceAndPath(
+                AscensionCraft.MOD_ID,
+                "soul_forge_" + type.id() + "_path"
         );
+
+        entityData.addEntityDataSource(
+                PathSource.create(path, sourceId, false)
+        );
+
+        return entityData.hasPath(path);
     }
 
     private void toggleSoulWeapon(ServerPlayer player, SoulWeaponData data) {
@@ -138,8 +171,6 @@ public class SoulForgeSkill implements ICastableSkill {
     }
 
     private void summonSoulWeapon(ServerPlayer player, SoulWeaponData data) {
-        SoulWeaponHelper.removeOwnedSoulWeapons(player);
-
         SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
 
         if (type == null) {
@@ -150,6 +181,17 @@ public class SoulForgeSkill implements ICastableSkill {
             data.summoned = false;
             return;
         }
+
+        if (!ensureWeaponPath(player, data)) {
+            player.displayClientMessage(
+                    Component.translatable("ascension.skill.soul_forge.no_weapon"),
+                    true
+            );
+            data.summoned = false;
+            return;
+        }
+
+        SoulWeaponHelper.removeOwnedSoulWeapons(player);
 
         ItemStack soulWeapon;
 
@@ -202,10 +244,6 @@ public class SoulForgeSkill implements ICastableSkill {
         );
     }
 
-    private void unsummonSoulWeaponSilently(ServerPlayer player) {
-        SoulWeaponHelper.removeOwnedSoulWeapons(player);
-    }
-
     @Override
     public void onRemoved(IEntityData attachedEntityData, IPersistentSkillData persistentData) {
         if (!(attachedEntityData.getAttachedEntity() instanceof ServerPlayer player)) return;
@@ -251,7 +289,6 @@ public class SoulForgeSkill implements ICastableSkill {
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         return entityData.getPathData(ModPaths.SOUL.getId()) != null;
     }
-
 
     @Override public CastType getCastType() { return CastType.INSTANT; }
     @Override public int getCooldown(CastEndData castEndData) { return COOLDOWN_TICKS; }

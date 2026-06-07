@@ -36,16 +36,21 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.CastType;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.SkillTargetingHelper;
 
 import java.util.HashSet;
 import java.util.List;
 
 public class SwordDraw implements ICastableSkill {
     private static final double QI_COST = 28.0D;
-    private static final double DASH_DISTANCE = 6.0D;
     private static final double HIT_RADIUS = 1.25D;
-    private static final float BASE_DAMAGE = 18.0F;
-    private static final int COOLDOWN_TICKS = 180;
+    private static final float BASE_DAMAGE = 8.0F;
+    private static final int COOLDOWN_TICKS = 160;
+
+    private static final double BASE_DASH_DISTANCE = 6.0D;
+    private static final double DASH_DISTANCE_PER_MAJOR = 2.25D;
+    private static final double DASH_DISTANCE_PER_MINOR = 0.25D;
+    private static final double MAX_DASH_DISTANCE = 20.0D;
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
@@ -92,14 +97,15 @@ public class SwordDraw implements ICastableSkill {
         Vec3 start = player.position();
         Vec3 direction = player.getLookAngle().normalize();
 
+        double dashDistance = calculateDashDistance(player);
 
-        HitResult blockHit = player.pick(DASH_DISTANCE, 0.0F, true);
+        HitResult blockHit = player.pick(dashDistance, 0.0F, true);
 
         Vec3 end;
         if (blockHit.getType() != HitResult.Type.MISS) {
             end = blockHit.getLocation().subtract(direction.scale(0.8D));
         } else {
-            end = start.add(direction.scale(DASH_DISTANCE));
+            end = start.add(direction.scale(dashDistance));
         }
 
         damageTargetsInPath(player, start, end);
@@ -113,26 +119,27 @@ public class SwordDraw implements ICastableSkill {
     }
 
     private void damageTargetsInPath(ServerPlayer player, Vec3 start, Vec3 end) {
-        AABB area = new AABB(start, end).inflate(HIT_RADIUS);
+        Vec3 direction = player.getLookAngle().normalize();
 
-        List<LivingEntity> targets = player.serverLevel().getEntitiesOfClass(
-                LivingEntity.class,
-                area,
-                target -> target.isAlive() && target != player && !target.isSpectator()
+        List<LivingEntity> targets = SkillTargetingHelper.findLivingTargetsBetween(
+                player, start, end, HIT_RADIUS, true
         );
 
         float damage = calculateDamage(player);
 
+        HashSet<ResourceLocation> paths = new HashSet<>();
+        paths.add(ModPaths.SWORD.getId());
+
         AscensionDamageHandler.AscensionDamageSource source =
                 new AscensionDamageHandler.AscensionDamageSource(
-                        new HashSet<>() {{ add(ModPaths.SWORD.getId()); }},
+                        paths,
                         player.damageSources().playerAttack(player)
                 );
 
         for (LivingEntity target : targets) {
             target.hurt(source, damage);
 
-            Vec3 push = player.getLookAngle().normalize().scale(0.5D);
+            Vec3 push = direction.scale(0.5D);
             target.push(push.x, 0.12D, push.z);
             target.hurtMarked = true;
         }
@@ -150,11 +157,25 @@ public class SwordDraw implements ICastableSkill {
         return BASE_DAMAGE + attackDamage * (1.8F + major * 0.35F + minor * 0.04F);
     }
 
+    private double calculateDashDistance(ServerPlayer player) {
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+
+        IPathData swordData = entityData.getPathData(ModPaths.SWORD.getId());
+        int major = swordData != null ? swordData.getMajorRealm() : 0;
+        int minor = swordData != null ? swordData.getMinorRealm() : 0;
+
+        double distance = BASE_DASH_DISTANCE
+                + major * DASH_DISTANCE_PER_MAJOR
+                + minor * DASH_DISTANCE_PER_MINOR;
+
+        return Math.min(distance, MAX_DASH_DISTANCE);
+    }
+
     private void spawnSwordTrail(ServerPlayer player, Vec3 start, Vec3 end) {
         ServerLevel level = player.serverLevel();
 
         Vec3 diff = end.subtract(start);
-        int steps = 14;
+        int steps = Math.max(14, (int) (diff.length() * 2.5D));
 
         for (int i = 0; i <= steps; i++) {
             double progress = i / (double) steps;

@@ -25,6 +25,12 @@ public final class TechniqueSkillHelper {
 
         refreshSkill(
                 entityData,
+                ModSkills.QI_PULL.getId(),
+                majorRealm >= QI_RELEASE_UNLOCK_REALM
+        );
+
+        refreshSkill(
+                entityData,
                 ModSkills.REGENERATION_BOOST.getId(),
                 majorRealm >= REGENERATION_UNLOCK_REALM
         );

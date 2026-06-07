@@ -25,7 +25,7 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
                 ModPaths.BODY.getId(),
                 Component.translatable("ascension.technique.white_lightning_ten_stage_technique"),
                 2.0D,
-                Set.of(ModPaths.FIST.getId())
+                Set.of(ModPaths.FIST.getId(), ModPaths.LIGHTNING.getId())
         );
 
         setStatChangeHandler(statChangeHandler);
@@ -53,6 +53,7 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
         );
 
         heldEntity.getPathBonusHandler().addPathBonus(ModPaths.FIST.getId(), 1.0D);
+        heldEntity.getPathBonusHandler().addPathBonus(ModPaths.LIGHTNING.getId(), 1.0D);
         ensurePathData(heldEntity, ModPaths.FIST.getId());
 
         IPathData pathData = heldEntity.getPathData(getPath());

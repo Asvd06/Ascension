@@ -36,6 +36,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.CastType;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.SkillTargetingHelper;
 
 import java.util.HashSet;
 
@@ -109,56 +110,7 @@ public class WhiteLightningFist implements ICastableSkill {
 
 
     private LivingEntity findTarget(Player player) {
-        Vec3 eyePosition = player.getEyePosition();
-        Vec3 viewVector = player.getViewVector(1.0F);
-        Vec3 searchEnd = eyePosition.add(viewVector.scale(REACH));
-
-        HitResult blockHit = player.pick(REACH, 0.0F, false);
-
-        AABB searchBox = player.getBoundingBox()
-                .expandTowards(viewVector.scale(REACH))
-                .inflate(1.0D);
-
-        EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(
-                player.level(),
-                player,
-                eyePosition,
-                searchEnd,
-                searchBox,
-                entity -> entity instanceof LivingEntity
-                        && entity != player
-                        && !entity.isSpectator()
-                        && entity.isPickable()
-        );
-
-        if (entityHit == null) return null;
-
-        if (
-                blockHit.getType() != HitResult.Type.MISS
-                        && eyePosition.distanceToSqr(blockHit.getLocation()) < eyePosition.distanceToSqr(entityHit.getLocation())
-        ) {
-            return null;
-        }
-
-        return (LivingEntity) entityHit.getEntity();
-    }
-
-
-    private float getBodyBonus(Player player) {
-        if (!player.hasData(ModAttachments.ENTITY_DATA)) return 0.0F;
-
-        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
-
-        IPathData bodyData = entityData.getPathData(ModPaths.BODY.getId());
-        if (bodyData == null) return 0.0F;
-
-        int majorRealm = bodyData.getMajorRealm();
-        int minorRealm = bodyData.getMinorRealm();
-
-        float majorBonus = (majorRealm + 1) * 1.5F;
-        float minorBonus = minorRealm * 0.15F;
-
-        return majorBonus + minorBonus;
+        return SkillTargetingHelper.findLookTarget(player, REACH, 1.0D, true);
     }
 
     private void playCastEffects(Player player, LivingEntity target) {

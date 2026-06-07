@@ -32,9 +32,9 @@ public class WeaponSwingVfxEntity extends Entity {
     // ── VFX type constants (logic tags) ─────────────────────────────────────
 
     public static final String TYPE_SWORD = "sword_swing";
-    public static final String TYPE_AXE   = "axe_swing";
-    public static final String TYPE_SPEAR = "spear_thrust";
-    public static final String TYPE_MACE  = "mace_smash";
+    public static final String TYPE_AXE   = "axe_particle";
+    public static final String TYPE_SPEAR = "spear_particle";
+    public static final String TYPE_MACE  = "mace_particle";
     public static final String TYPE_FIST = "fist_punch";
 
     // ── Animation fields ───────────────────────────────────────────────────
