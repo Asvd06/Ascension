@@ -21,8 +21,8 @@ import java.util.function.Predicate;
 
 public class SculkEnamoredEyesItem extends Item {
     public static final int REQUIRED_ABERRANT_INSIGHT = 333;
-    private static final int REQUIRED_ECHO_SHARDS = 3;
-    private static final int REQUIRED_XP_LEVELS = 33;
+    private static final int REQUIRED_ECHO_SHARDS = 33;
+    private static final int REQUIRED_XP_LEVELS = 333;
 
     public SculkEnamoredEyesItem(Properties properties) {
         super(properties);

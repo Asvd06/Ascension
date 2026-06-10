@@ -15,7 +15,7 @@ import net.thejadeproject.ascension.refactor_packages.physiques.custom.helpers.P
 import java.util.List;
 
 public class FalseDeifiedOrbItem extends Item {
-    public static final int REQUIRED_VITAL_ASSERTIONS = 3;
+    public static final int REQUIRED_VITAL_ASSERTIONS = 33;
 
     public FalseDeifiedOrbItem(Properties properties) {
         super(properties);
