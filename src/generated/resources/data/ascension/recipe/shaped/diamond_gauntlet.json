@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "J": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "J J",
+    "JJJ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ascension:diamond_gauntlet"
+  }
+}

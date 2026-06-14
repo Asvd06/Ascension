@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "J": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "J J",
+    "JJJ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ascension:wooden_gauntlet"
+  }
+}
