@@ -31,10 +31,10 @@ public class FistCultivationTechnique extends GenericTechnique {
                 ModForms.MORTAL_VESSEL.getId()
         );
 
-        //heldEntity.giveSkill(
-                //ModSkills.FIST_MASTERY_SKILL.getId(),
-                //ModForms.MORTAL_VESSEL.getId()
-        //);
+        heldEntity.giveSkill(
+                ModSkills.FIST_MASTERY_SKILL.getId(),
+                ModForms.MORTAL_VESSEL.getId()
+        );
 
         refreshUniversalTechniqueSkills(heldEntity);
 
@@ -58,10 +58,10 @@ public class FistCultivationTechnique extends GenericTechnique {
                 ModForms.MORTAL_VESSEL.getId()
         );
 
-        //heldEntity.removeSkill(
-                //ModSkills.FIST_MASTERY_SKILL.getId(),
-                //ModForms.MORTAL_VESSEL.getId()
-        //);
+        heldEntity.removeSkill(
+                ModSkills.FIST_MASTERY_SKILL.getId(),
+                ModForms.MORTAL_VESSEL.getId()
+        );
 
         refreshRealmUnlockSkills(heldEntity, -1);
         clearUniversalTechniqueSkills(heldEntity);
