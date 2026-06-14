@@ -155,6 +155,20 @@ public class ModItems {
             () -> new SwordItem(Tiers.IRON, new Item.Properties().durability(675).attributes(SwordItem.createAttributes((Tier) Tiers.IRON, 2.4f, (float) -2))));
 
 
+    //Gauntlet
+    public static final DeferredItem<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet",
+            ()->new GauntletItem(Tiers.WOOD, new Item.Properties()));
+    public static final DeferredItem<GauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet",
+            ()->new GauntletItem(Tiers.IRON, new Item.Properties()));
+    public static final DeferredItem<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet",
+            ()->new GauntletItem(Tiers.STONE, new Item.Properties()));
+    public static final DeferredItem<GauntletItem> GOLD_GAUNTLET = ITEMS.register("gold_gauntlet",
+            ()->new GauntletItem(Tiers.GOLD, new Item.Properties()));
+    public static final DeferredItem<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet",
+            ()->new GauntletItem(Tiers.DIAMOND, new Item.Properties()));
+    public static final DeferredItem<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet",
+            ()->new GauntletItem(Tiers.NETHERITE, new Item.Properties()));
+
     // Soulbound Items
 
         // Legacy Item that will be removed in a later version :)

@@ -293,6 +293,10 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.blessed.desc", "Virtue clings to your body like morning light, marking you as one who may walk a higher path.");
         add("ascension.physiques.blessed.desc.short", "You are touched by virtue.");
 
+        add("ascension.physiques.drill_soul", "Drill Soul");
+        add("ascension.physiques.drill_soul.desc", "Your soul revolves like a relentless vortex, driving your fists with a piercing intent that refuses to bend. A spirit forged to break through any barrier and pierce the heavens.");
+        add("ascension.physiques.drill_soul.desc.short", "Your soul is a drill that pierces all opposition.");
+
         add("ascension.physiques.fire_body", "Fire Body");
         add("ascension.physiques.fire_body.desc", "Your body resonates with the flame. Fire is no longer an element — it is an extension of your will, a furnace that never cools.");
         add("ascension.physiques.fire_body.desc.short", "Your body is one with fire.");
@@ -1011,6 +1015,13 @@ public class lang extends LanguageProvider {
         add("item.ascension.gold_spear", "Gold Spear");
         add("item.ascension.diamond_spear", "Diamond Spear");
         add("item.ascension.netherite_spear", "Netherite Spear");
+
+        add("item.ascension.wooden_gauntlet", "Wooden Gauntlet");
+        add("item.ascension.stone_gauntlet", "Stone Gauntlet");
+        add("item.ascension.iron_gauntlet", "Iron Gauntlet");
+        add("item.ascension.gold_gauntlet", "Gold Gauntlet");
+        add("item.ascension.diamond_gauntlet", "Diamond Gauntlet");
+        add("item.ascension.netherite_gauntlet", "Netherite Gauntlet");
 
         add("item.ascension.spiritual_stone_pickaxe", "Spiritual Stone Pickaxe");
         add("item.ascension.spiritual_stone_axe", "Spiritual Stone Axe");

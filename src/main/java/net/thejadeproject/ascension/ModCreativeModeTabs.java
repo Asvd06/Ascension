@@ -105,6 +105,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.DIAMOND_SPEAR);
                         output.accept(ModItems.NETHERITE_SPEAR);
 
+                        output.accept(ModItems.WOODEN_GAUNTLET.get());
+                        output.accept(ModItems.STONE_GAUNTLET.get());
+                        output.accept(ModItems.IRON_GAUNTLET.get());
+                        output.accept(ModItems.GOLD_GAUNTLET.get());
+                        output.accept(ModItems.DIAMOND_GAUNTLET.get());
+                        output.accept(ModItems.NETHERITE_GAUNTLET.get());
 
                         output.accept(ModItems.CULTIVATORS_SWORD_IRON);
 

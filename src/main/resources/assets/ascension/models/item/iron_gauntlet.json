@@ -1,0 +1,20 @@
+{
+  "loader": "neoforge:separate_transforms",
+  "base": {
+    "parent": "ascension:item/iron_gauntlet_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "ascension:item/iron_gauntlet"
+      }
+    },
+    "fixed": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "ascension:item/iron_gauntlet"
+      }
+    }
+  }
+}
