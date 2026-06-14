@@ -1,0 +1,14 @@
+{
+  "type": "ascension:add_item",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/ancient_city"
+    },
+    {
+      "chance": 0.06666667,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "ascension:sculk_enamored_eyes"
+}

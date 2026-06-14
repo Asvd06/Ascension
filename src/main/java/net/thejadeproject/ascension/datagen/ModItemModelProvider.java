@@ -172,6 +172,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.LIVING_CORE.get());
         basicItem(ModItems.UNDEAD_CORE.get());
 
+        basicItem(ModItems.DISEMBODIED_NETHER_SOUL.get());
+        basicItem(ModItems.FALSE_DEIFIED_ORB.get());
+        basicItem(ModItems.SCULK_ENAMORED_EYES.get());
+
         //Elemental Cores
         basicItem(ModItems.FIRE_CORE.get());
         basicItem(ModItems.WATER_CORE.get());

@@ -54,7 +54,6 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
 
         heldEntity.getPathBonusHandler().addPathBonus(ModPaths.FIST.getId(), 1.0D);
         heldEntity.getPathBonusHandler().addPathBonus(ModPaths.LIGHTNING.getId(), 1.0D);
-        ensurePathData(heldEntity, ModPaths.FIST.getId());
 
         IPathData pathData = heldEntity.getPathData(getPath());
 
@@ -80,6 +79,7 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
         );
 
         heldEntity.getPathBonusHandler().removePathBonus(ModPaths.FIST.getId(), 1.0D);
+        heldEntity.getPathBonusHandler().removePathBonus(ModPaths.LIGHTNING.getId(), 1.0D);
 
         refreshRealmUnlockSkills(heldEntity, -1);
         refreshUniversalTechniqueSkills(heldEntity);
@@ -132,12 +132,4 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
         return otherTechnique instanceof WhiteLightningTenStageTechnique;
     }
 
-    private void ensurePathData(IEntityData entityData, ResourceLocation path) {
-        if (entityData.getPathData(path) != null) return;
-
-        entityData.addPathData(
-                path,
-                AscensionRegistries.Paths.PATHS_REGISTRY.get(path).freshPathData(entityData)
-        );
-    }
 }

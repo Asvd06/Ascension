@@ -17,6 +17,9 @@ import net.thejadeproject.ascension.common.blocks.ModBlocks;
 
 import net.thejadeproject.ascension.common.items.artifacts.talismans.*;
 import net.thejadeproject.ascension.common.items.bloodlines.BloodlineTransferItem;
+import net.thejadeproject.ascension.common.items.physiques.evolution.DisembodiedNetherSoulItem;
+import net.thejadeproject.ascension.common.items.physiques.evolution.FalseDeifiedOrbItem;
+import net.thejadeproject.ascension.common.items.physiques.evolution.SculkEnamoredEyesItem;
 import net.thejadeproject.ascension.common.items.techniques.TechniqueBinderItem;
 import net.thejadeproject.ascension.common.items.techniques.TechniquePageItem;
 import net.thejadeproject.ascension.common.items.tools.*;
@@ -29,7 +32,7 @@ import net.thejadeproject.ascension.common.items.artifacts.*;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 
 import net.thejadeproject.ascension.common.items.herbs.*;
-import net.thejadeproject.ascension.common.items.physiques.PhysiqueTransferItem;
+import net.thejadeproject.ascension.common.items.physiques.*;
 import net.thejadeproject.ascension.common.items.pills.*;
 import net.thejadeproject.ascension.common.items.stones.SpatialStoneItem;
 import net.thejadeproject.ascension.common.items.techniques.ScholarlySoulChapterItem;
@@ -313,6 +316,13 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final DeferredItem<Item> UNDEAD_CORE = ITEMS.register("undead_core",
             () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> DISEMBODIED_NETHER_SOUL = ITEMS.register("disembodied_nether_soul",
+            () -> new DisembodiedNetherSoulItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final DeferredItem<Item> FALSE_DEIFIED_ORB = ITEMS.register("false_deified_orb",
+            () -> new FalseDeifiedOrbItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final DeferredItem<Item> SCULK_ENAMORED_EYES = ITEMS.register("sculk_enamored_eyes",
+            () -> new SculkEnamoredEyesItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
     //Spiritual Fires
     public static final DeferredItem<Item> CRIMSON_LOTUS_FLAME = ITEMS.register("crimson_lotus_flame",

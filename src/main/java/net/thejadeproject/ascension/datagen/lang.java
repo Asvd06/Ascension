@@ -390,6 +390,15 @@ public class lang extends LanguageProvider {
         add("ascension.physiques.molten_casted", "Molten Casted Body");
         add("ascension.physiques.molten_casted.desc", "Using lava as a crucible to melt the body then quenching it in water, treat the body as steel, reforging it into something better.");
         add("ascension.physiques.molten_casted.desc.short", "A melting and quenching strengthened the body");
+        add("ascension.physiques.ensouled_entity", "Ensouled Entity");
+        add("ascension.physiques.ensouled_entity.desc", "The missing soul has awakened within the artificial vessel. No longer merely a product of demonic experiments, this being has gained a true self, allowing its corrupted origin to refine into overwhelming spiritual power.");
+        add("ascension.physiques.ensouled_entity.desc.short", "An artificial being completed by the awakening of a true soul.");
+        add("ascension.physiques.embodied_entity", "Embodied Entity");
+        add("ascension.physiques.embodied_entity.desc", "The missing vital core has taken root within the artificial body. What was once incomplete now pulses with impossible life, refining essence through a vessel that has finally become whole.");
+        add("ascension.physiques.embodied_entity.desc.short", "An artificial being completed by the restoration of a true living body.");
+        add("ascension.physiques.perfected_aberrant_entity", "Perfected Aberrant Entity");
+        add("ascension.physiques.perfected_aberrant_entity.desc", "The flaw at the center of the artificial being has been corrected. Soul and essence now circulate as one complete system, transforming a failed demonic experiment into a perfected aberration.");
+        add("ascension.physiques.perfected_aberrant_entity.desc.short", "An artificial being completed through the union of soul, essence, and aberrant stability.");
 
 
         // Elemental body merged physiques (2-element)
@@ -444,6 +453,28 @@ public class lang extends LanguageProvider {
         add("ascension.message.physique_evolution.essence_bone_divine_marked", "Heavenly lightning brands your Essence Bone. Enter the Crimson Lotus Flame and begin the Divine ritual.");
         add("ascension.message.physique_evolution.essence_bone_pill_fuel", "Refinement fuel gathered: %s/%s minutes.");
         add("ascension.message.physique_evolution.yinyang_pending", "Your eyes stir. A breakthrough will complete the balance.");
+        add("ascension.message.physique_evolution.corrupted_entity.disembodied_nether_soul_progress", "Disembodied Nether Soul: %s / %s");
+        add("ascension.message.physique_evolution.corrupted_entity.false_deified_orb_near_death", "The False Deified Orb trembles near death.");
+        add("ascension.message.physique_evolution.corrupted_entity.false_deified_orb_stabilizing", "The False Deified Orb is still stabilizing: %ss");
+        add("ascension.message.physique_evolution.corrupted_entity.false_deified_orb_progress", "False Deified Orb: %s / %s");
+        add("ascension.item.disembodied_nether_soul.incomplete", "The Disembodied Nether Soul is incomplete: %s / %s");
+        add("ascension.item.disembodied_nether_soul.tooltip.soul_guilt", "Soul Guilt: ");
+        add("ascension.item.disembodied_nether_soul.tooltip.ready", "Ready to complete the missing soul.");
+        add("ascension.item.false_deified_orb.unstable", "The False Deified Orb is unstable: %s / %s");
+        add("ascension.item.false_deified_orb.body_not_whole", "Your body must be whole before it can be completed.");
+        add("ascension.item.false_deified_orb.tooltip.vital_assertions", "Vital Assertions: ");
+        add("ascension.item.false_deified_orb.tooltip.ready", "Ready to complete the missing body.");
+        add("ascension.item.sculk_enamored_eyes.already_awakened", "The Sculk Enamored Eyes are already awakened.");
+        add("ascension.item.sculk_enamored_eyes.needs_experience", "The Eyes demand 33 levels of experience.");
+        add("ascension.item.sculk_enamored_eyes.needs_echo_shards", "The Eyes demand 3 Echo Shards.");
+        add("ascension.item.sculk_enamored_eyes.awakened", "The Sculk Enamored Eyes awaken.");
+        add("ascension.item.sculk_enamored_eyes.not_awakened", "The Sculk Enamored Eyes have not awakened.");
+        add("ascension.item.sculk_enamored_eyes.missing_completion_items", "Perfect completion requires a completed Disembodied Nether Soul and False Deified Orb.");
+        add("ascension.item.sculk_enamored_eyes.cannot_perfect", "Your current physique cannot be perfected this way.");
+        add("ascension.item.sculk_enamored_eyes.tooltip.aberrant_insight", "Aberrant Insight: ");
+        add("ascension.item.sculk_enamored_eyes.tooltip.ready", "Ready to bind soul and essence into one aberrant whole.");
+        add("ascension.item.sculk_enamored_eyes.tooltip.awaken_hint", "Awaken at the heart of an Ancient City.");
+        add("ascension.item.corrupted_entity_completion.cannot_complete", "Your current physique cannot be completed this way.");
 
 
         // Bloodlines
@@ -1051,6 +1082,11 @@ public class lang extends LanguageProvider {
         add("ascension.harmony_pill.not_elemental_body", "You do not possess an Elemental Body physique.");
         add("ascension.harmony_pill.already_transforming", "The transformation is already underway.");
         add("ascension.transformation.started", "The five elements surge through your body. Endure.");
+
+
+        add("item.ascension.disembodied_nether_soul", "Disembodied Nether Soul");
+        add("item.ascension.false_deified_orb", "False Deified Orb");
+        add("item.ascension.sculk_enamored_eyes", "Sculk Enamored Eyes");
 
 
         //Spiritual Fires

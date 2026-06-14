@@ -44,6 +44,9 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.UNSTABLE_5_ELEMENT_ESSENCE);
                         output.accept(ModItems.FIVE_ELEMENT_HARMONY_PILL);
                         output.accept(ModItems.TALISMAN_PAPER);
+                        output.accept(ModItems.DISEMBODIED_NETHER_SOUL);
+                        output.accept(ModItems.FALSE_DEIFIED_ORB);
+                        output.accept(ModItems.SCULK_ENAMORED_EYES);
 
                         output.accept(ModItems.ANCESTOR_JOURNAL);
 

@@ -925,6 +925,30 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 LootItemRandomChanceCondition.randomChance(0.10F).build()}, ModItems.SCHOLARLY_SOUL_SAGE_MANDATE.get()));
 
 
+        add("disembodied_nether_soul_from_wither", new AddItemModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/wither")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.33333334F).build()
+                }, ModItems.DISEMBODIED_NETHER_SOUL.get()
+        ));
+
+        add("false_deified_orb_from_ender_dragon", new AddItemModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("entities/ender_dragon")).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build(),
+                        LootItemRandomChanceCondition.randomChance(0.33333334F).build()
+                }, ModItems.FALSE_DEIFIED_ORB.get()
+        ));
+
+        add("sculk_enamored_eyes_from_ancient_city", new AddItemModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/ancient_city")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.06666667F).build()
+                }, ModItems.SCULK_ENAMORED_EYES.get()
+        ));
+
+
         add("ranked_mob_loot", new AddRankedMobLootModifier(
                 new LootItemCondition[]{
                         LootItemKilledByPlayerCondition.killedByPlayer().build()

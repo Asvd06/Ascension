@@ -23,6 +23,11 @@ public final class SoulWeaponHelper {
 
     private static final ResourceLocation SOUL_DAMAGE_BONUS_ID = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_weapon_damage_bonus");
 
+    private static final float MAJOR_REALM_DAMAGE = 2.5F;
+    private static final float MINOR_REALM_DAMAGE = 0.25F;
+    private static final float GRADE_DAMAGE = 2.0F;
+    private static final float LIFETIME_MARK_DAMAGE = GRADE_DAMAGE * 0.75F;
+
     private SoulWeaponHelper() {}
 
     public static boolean isSoulWeapon(ItemStack stack) {
@@ -46,10 +51,10 @@ public final class SoulWeaponHelper {
             int forgedMarks,
             String type
     ) {
-        float soulPower = soulMajor * 2.5F
-                + soulMinor * 0.25F
-                + grade * 2.0F
-                + forgedMarks * 1.25F;
+        float soulPower = soulMajor * MAJOR_REALM_DAMAGE
+                + soulMinor * MINOR_REALM_DAMAGE
+                + grade * GRADE_DAMAGE
+                + forgedMarks * LIFETIME_MARK_DAMAGE;
 
         return soulPower * getTypeMultiplier(type);
     }
@@ -119,6 +124,7 @@ public final class SoulWeaponHelper {
         boolean advancedMajorRealm = soulMajor > data.lastSoulMajor;
 
         if (advancedMajorRealm) {
+            data.lifetimeMarks += data.currentGrade;
             data.currentGrade = 0;
             data.currentTempering = 0;
         }
@@ -129,7 +135,14 @@ public final class SoulWeaponHelper {
 
 
     public static int getRequiredTempering(int currentGrade, int lifetimeMarks) {
-        return 25 + ((currentGrade * 15 + lifetimeMarks * 8) * 3);
+        int base = 25;
+        int activeGradeCost = currentGrade * 45;
+        int inheritedCost = lifetimeMarks * 18;
+        int highGradeTax = currentGrade > 10
+                ? (currentGrade - 10) * (currentGrade - 10) * 6
+                : 0;
+
+        return base + activeGradeCost + inheritedCost + highGradeTax;
     }
 
     public static int removeOwnedSoulWeapons(Player player) {

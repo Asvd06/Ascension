@@ -665,7 +665,6 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.crystal_soul.desc.short"))
     );
 
-    // Item to complete Soul: Disembodied Nether Star
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> ENSOULED_ENTITY = PHYSIQUES.register("ensouled_entity", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.ensouled_entity"))
                     .addPath(ModPaths.SOUL.getId())
@@ -676,7 +675,6 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.ensouled_entity.desc.short"))
     );
 
-    // Item to complete Essence: False Deified Orb
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> EMBODIED_ENTITY = PHYSIQUES.register("embodied_entity", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.embodied_entity"))
                     .addPath(ModPaths.SOUL.getId())
@@ -687,7 +685,6 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.embodied_entity.desc.short"))
     );
 
-    // Items to complete Both: Disembodied Nether Star, False Deified Orb and Sculk Enamored Eyes
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> PERFECTED_ABERRANT_ENTITY = PHYSIQUES.register("perfected_aberrant_entity", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.perfected_aberrant_entity"))
                     .addPath(ModPaths.SOUL.getId())

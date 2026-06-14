@@ -241,6 +241,30 @@ public class ModDataComponents {
                     .build()
     );
 
+    public static final Supplier<DataComponentType<Integer>> SOUL_GUILT = DATA_COMPONENTS.register(
+            "soul_guilt",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .build()
+    );
+
+    public static final Supplier<DataComponentType<Integer>> VITAL_ASSERTIONS = DATA_COMPONENTS.register(
+            "vital_assertions",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .build()
+    );
+
+    public static final Supplier<DataComponentType<Integer>> ABERRANT_INSIGHT = DATA_COMPONENTS.register(
+            "aberrant_insight",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .build()
+    );
+
 
 
 

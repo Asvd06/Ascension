@@ -82,7 +82,6 @@ public final class SoulWeaponHandler {
         while (data.currentTempering >= SoulWeaponHelper.getRequiredTempering(data.currentGrade, data.lifetimeMarks)) {
             data.currentTempering -= SoulWeaponHelper.getRequiredTempering(data.currentGrade, data.lifetimeMarks);
             data.currentGrade++;
-            data.lifetimeMarks++;
             gradedUp = true;
         }
 
