@@ -121,6 +121,12 @@ public class ModItemModelProvider extends ItemModelProvider {
         handheldItem(ModItems.DIAMOND_SPEAR.get());
         handheldItem(ModItems.NETHERITE_SPEAR.get());
 
+        //handheldItem(ModItems.WOODEN_GAUNTLET.get());
+        //handheldItem(ModItems.STONE_GAUNTLET.get());
+        //handheldItem(ModItems.IRON_GAUNTLET.get());
+        //handheldItem(ModItems.GOLD_GAUNTLET.get());
+        //handheldItem(ModItems.DIAMOND_GAUNTLET.get());
+        //handheldItem(ModItems.NETHERITE_GAUNTLET.get());
 
         handheldItem(ModItems.SPIRITUAL_STONE_AXE.get());
         handheldItem(ModItems.SPIRITUAL_STONE_PICKAXE.get());

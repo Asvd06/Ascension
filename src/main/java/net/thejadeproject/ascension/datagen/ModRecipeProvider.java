@@ -488,6 +488,41 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ModItems.DIAMOND_SPEAR.get()), Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.MISC, ModItems.NETHERITE_SPEAR.get()).unlocks(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT)).save(recipeOutput, "ascension:smithing/netherite_spear");
 
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.WOODEN_GAUNTLET.get())
+                .pattern("J J")
+                .pattern("JJJ")
+                .define('J', ItemTags.PLANKS)
+                .unlockedBy("has_wood", has(ItemTags.PLANKS)).save(recipeOutput, "ascension:shaped/wooden_gauntlet");
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.STONE_GAUNTLET.get())
+                .pattern("J J")
+                .pattern("JJJ")
+                .define('J', Items.COBBLESTONE)
+                .unlockedBy("has_cobble", has(Items.COBBLESTONE)).save(recipeOutput, "ascension:shaped/stone_gauntlet");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.IRON_GAUNTLET.get())
+                .pattern("J J")
+                .pattern("JJJ")
+                .define('J', Items.IRON_INGOT)
+                .unlockedBy("has_iron", has(Items.IRON_INGOT)).save(recipeOutput, "ascension:shaped/iron_gauntlet");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_GAUNTLET.get())
+                .pattern("J J")
+                .pattern("JJJ")
+                .define('J', Items.GOLD_INGOT)
+                .unlockedBy("has_gold", has(Items.GOLD_INGOT)).save(recipeOutput, "ascension:shaped/gold_gauntlet");
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.DIAMOND_GAUNTLET.get())
+                .pattern("J J")
+                .pattern("JJJ")
+                .define('J', Items.DIAMOND)
+                .unlockedBy("has_diamond", has(Items.DIAMOND)).save(recipeOutput, "ascension:shaped/diamond_gauntlet");
+        SmithingTransformRecipeBuilder.smithing(
+                Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE),
+                Ingredient.of(ModItems.DIAMOND_GAUNTLET.get()),
+                Ingredient.of(Items.NETHERITE_INGOT),
+                RecipeCategory.MISC,
+                ModItems.NETHERITE_GAUNTLET.get()
+        ).unlocks(getHasName(Items.NETHERITE_INGOT), has(Items.NETHERITE_INGOT)).save(recipeOutput, "ascension:smithing/netherite_gauntlet");
+
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.SPIRITUAL_STONE_BLOCK.get())
                 .pattern("JJJ")
                 .pattern("JJJ")

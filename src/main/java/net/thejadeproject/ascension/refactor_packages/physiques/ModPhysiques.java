@@ -223,6 +223,16 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.generous_spirit.desc.short"))
     );
 
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> DRILL_SOUL = PHYSIQUES.register("drill_soul", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.drill_soul"))
+                    .addPath(ModPaths.SOUL.getId())
+                    .addPath(ModPaths.FIST.getId())
+                    .addPathBonus(ModPaths.SOUL.getId(), 1.0)
+                    .addPathBonus(ModPaths.FIST.getId(), 1.0)
+                    .setDescription(Component.translatable("ascension.physiques.drill_soul.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.drill_soul.desc.short"))
+    );
+
         // Weapon
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> FLOW_SEVERING_EYES = PHYSIQUES.register("flow_severing_eyes", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.flow_severing_eyes"))

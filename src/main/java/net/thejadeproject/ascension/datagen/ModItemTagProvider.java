@@ -124,6 +124,16 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(Items.MACE)
                 .add(ModItems.SOULBOUND_MACE.get());
 
+        tag(ModTags.Items.FIST)
+                .add(ModItems.WOODEN_GAUNTLET.get())
+                .add(ModItems.STONE_GAUNTLET.get())
+                .add(ModItems.IRON_GAUNTLET.get())
+                .add(ModItems.GOLD_GAUNTLET.get())
+                .add(ModItems.DIAMOND_GAUNTLET.get())
+                .add(ModItems.NETHERITE_GAUNTLET.get())
+                //.add(ModItems.SOULBOUND_GAUNTLET.get())
+        ;
+
         tag(ModTags.Items.SOULFORGE_SWORDS)
                 .add(Items.WOODEN_SWORD)
                 .add(Items.STONE_SWORD)

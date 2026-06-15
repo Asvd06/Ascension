@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "J": {
+      "item": "minecraft:cobblestone"
+    }
+  },
+  "pattern": [
+    "J J",
+    "JJJ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ascension:stone_gauntlet"
+  }
+}
