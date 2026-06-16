@@ -322,10 +322,9 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.flame_touched.desc.short"))
     );
 
-    // Add an evolution method or pill to cure these, but then need to be eaten consistently over a period, like maybe an in-game week or month,
-    // and if they miss a pill take damage, but at the end get a good physique
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> DECAYING_MERIDIANS = PHYSIQUES.register("decaying_meridians", () ->
             new EvolvingPhysique(Component.translatable("ascension.physiques.decaying_meridians"))
+                    .addEvolution(ModPhysiques.POISON_SLIGHTED_MERIDIANS.getId())
                     .addPath(ModPaths.ESSENCE.getId())
                     .addPath(ModPaths.POISON.getId())
                     .addPathBonus(ModPaths.ESSENCE.getId(), 1.35)
@@ -334,10 +333,9 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.decaying_meridians.desc.short"))
     );
 
-    // Add an evolution method or pill to cure these, but then need to be eaten consistently over a period, like maybe an in-game week or month,
-    // and if they miss a pill take damage, but at the end get a good physique
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> TWISTED_VESSELS = PHYSIQUES.register("twisted_vessels", () ->
             new EvolvingPhysique(Component.translatable("ascension.physiques.twisted_vessels"))
+                    .addEvolution(ModPhysiques.STRENGTHENED_VESSELS.getId())
                     .addPath(ModPaths.ESSENCE.getId())
                     .addPathBonus(ModPaths.ESSENCE.getId(), 1.25)
                     .setDescription(Component.translatable("ascension.physiques.twisted_vessels.desc"))
@@ -633,6 +631,24 @@ public class ModPhysiques {
                     .addPathBonus(ModPaths.POISON.getId(), 3.5)
                     .setDescription(Component.translatable("ascension.physiques.myriad_poison_vessel.desc"))
                     .setShortDescription(Component.translatable("ascension.physiques.myriad_poison_vessel.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> POISON_SLIGHTED_MERIDIANS = PHYSIQUES.register("poison_slighted_meridians", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.poison_slighted_meridians"))
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 2.0)
+                    .addPath(ModPaths.POISON.getId())
+                    .addPathBonus(ModPaths.POISON.getId(), 1.0)
+                    .setDescription(Component.translatable("ascension.physiques.poison_slighted_meridians.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.poison_slighted_meridians.desc.short"))
+    );
+
+    public static final DeferredHolder<IPhysique, ? extends GenericPhysique> STRENGTHENED_VESSELS = PHYSIQUES.register("strengthened_vessels", () ->
+            new GenericPhysique(Component.translatable("ascension.physiques.strengthened_vessels"))
+                    .addPath(ModPaths.ESSENCE.getId())
+                    .addPathBonus(ModPaths.ESSENCE.getId(), 2.0)
+                    .setDescription(Component.translatable("ascension.physiques.strengthened_vessels.desc"))
+                    .setShortDescription(Component.translatable("ascension.physiques.strengthened_vessels.desc.short"))
     );
 
         // Body
