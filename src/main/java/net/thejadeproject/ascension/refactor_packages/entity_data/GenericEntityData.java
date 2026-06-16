@@ -50,6 +50,7 @@ import net.thejadeproject.ascension.refactor_packages.skill_casting.SkillCastHan
 import net.thejadeproject.ascension.refactor_packages.skills.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueSkillHelper;
 
 import java.util.*;
 //TODO set up some sort of tick handler for entity data and all its parts that need it
@@ -851,6 +852,7 @@ public class GenericEntityData implements IEntityData {
         ITechnique technique = pathData.getCurrentTechnique();
         technique.onTechniqueRemoved(this,techniqueData);
         pathData.setCurrentTechnique(null);
+        TechniqueSkillHelper.refreshUniversal(this);
 
         if(getAttachedEntity() instanceof ServerPlayer serverPlayer && serverPlayer.connection != null) {
             PacketDistributor.sendToPlayer(serverPlayer, new SyncPathData(pathDataLocation.get(path), pathData));

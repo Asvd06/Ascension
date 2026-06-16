@@ -354,8 +354,11 @@ public class SimplePathData implements IPathData{
         int size = buf.readInt();
         techniqueHistory.clear();
         for(int i=0;i<size;i++){
-            if(buf.readBoolean()) techniqueHistory.add(ByteBufUtil.readResourceLocation(buf));
-            techniqueHistory.add(null);
+            if(buf.readBoolean()) {
+                techniqueHistory.add(ByteBufUtil.readResourceLocation(buf));
+            } else {
+                techniqueHistory.add(null);
+            }
         }
         size = buf.readInt();
         techniqueData.clear();

@@ -123,6 +123,7 @@ public class BasicWeaponTechnique extends GenericTechnique {
 
     @Override
     public BasicWeaponTechnique setRealmChangeHandler(RealmChangeHandler handler){
+        super.setRealmChangeHandler(handler);
         return this;
     }
 

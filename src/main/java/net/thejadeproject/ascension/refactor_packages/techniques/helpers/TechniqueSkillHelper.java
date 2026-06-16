@@ -3,6 +3,7 @@ package net.thejadeproject.ascension.refactor_packages.techniques.helpers;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 
 public final class TechniqueSkillHelper {
@@ -16,42 +17,57 @@ public final class TechniqueSkillHelper {
     private TechniqueSkillHelper() {
     }
 
-    public static void refreshUniversal(IEntityData entityData, int majorRealm) {
+    public static void refreshUniversal(IEntityData entityData) {
+        int highestMajorRealm = getHighestActiveTechniqueMajorRealm(entityData);
+
         refreshSkill(
                 entityData,
                 ModSkills.QI_RELEASE.getId(),
-                majorRealm >= QI_RELEASE_UNLOCK_REALM
+                highestMajorRealm >= QI_RELEASE_UNLOCK_REALM
         );
 
         refreshSkill(
                 entityData,
                 ModSkills.QI_PULL.getId(),
-                majorRealm >= QI_RELEASE_UNLOCK_REALM
+                highestMajorRealm >= QI_RELEASE_UNLOCK_REALM
         );
 
         refreshSkill(
                 entityData,
                 ModSkills.REGENERATION_BOOST.getId(),
-                majorRealm >= REGENERATION_UNLOCK_REALM
+                highestMajorRealm >= REGENERATION_UNLOCK_REALM
         );
 
         refreshSkill(
                 entityData,
                 ModSkills.QI_SUSTAINED_BODY.getId(),
-                majorRealm >= QI_SUSTAINED_UNLOCK_REALM
+                highestMajorRealm >= QI_SUSTAINED_UNLOCK_REALM
         );
 
         refreshSkill(
                 entityData,
                 ModSkills.TRUE_FLIGHT.getId(),
-                majorRealm >= TRUE_FLIGHT_UNLOCK_REALM
+                highestMajorRealm >= TRUE_FLIGHT_UNLOCK_REALM
         );
 
         refreshSkill(
                 entityData,
                 ModSkills.AIR_STEP.getId(),
-                majorRealm >= QI_FLIGHT_UNLOCK_REALM
+                highestMajorRealm >= QI_FLIGHT_UNLOCK_REALM
         );
+    }
+
+    private static int getHighestActiveTechniqueMajorRealm(IEntityData entityData) {
+        int highestMajorRealm = -1;
+
+        for (IPathData pathData : entityData.getAllPathData()) {
+            if (pathData == null) continue;
+            if (pathData.getCurrentTechniqueId() == null) continue;
+
+            highestMajorRealm = Math.max(highestMajorRealm, pathData.getMajorRealm());
+        }
+
+        return highestMajorRealm;
     }
 
 

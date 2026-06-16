@@ -12,7 +12,7 @@ public class RealmChangeUtil {
             RealmChangeHandler handler){
         if(oldMajorRealm < newMajorRealm || (oldMajorRealm == newMajorRealm && newMinorRealm>oldMinorRealm)){
             int majorRealmsChanged = newMajorRealm-oldMajorRealm;
-            for(int i =newMajorRealm+1;i<=oldMajorRealm;i++){
+            for(int i = oldMajorRealm + 1; i <= newMajorRealm; i++){
                 handler.dispatch(entityData,data,i,0,RealmChangeType.GAINED);
             }
 

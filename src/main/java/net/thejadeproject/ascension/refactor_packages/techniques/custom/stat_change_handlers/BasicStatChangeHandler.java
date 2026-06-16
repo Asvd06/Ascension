@@ -101,8 +101,8 @@ public class BasicStatChangeHandler{
     public void applyChanges(IEntityData entityData, ITechnique technique, int oldMajorRealm, int oldMinorRealm, int newMajorRealm, int newMinorRealm){
         if(oldMajorRealm < newMajorRealm || (oldMajorRealm == newMajorRealm && newMinorRealm>oldMinorRealm)){
             int majorRealmsChanged = newMajorRealm-oldMajorRealm;
-            for(int i =1;i<=majorRealmsChanged;i++){
-                applyAllMajorRealmChanges(entityData,oldMajorRealm);
+            for(int i = oldMajorRealm + 1; i <= newMajorRealm; i++){
+                applyAllMajorRealmChanges(entityData, i);
             }
 
             if(newMajorRealm != oldMajorRealm) {

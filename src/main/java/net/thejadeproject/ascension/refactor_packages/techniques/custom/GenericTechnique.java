@@ -112,7 +112,7 @@ public class GenericTechnique implements ITechnique {
         //System.out.println("realm: ("+oldMajorRealm+","+oldMinorRealm+") -> ("+newMajorRealm+","+newMinorRealm+")");
         statChangeHandler.applyChanges(entityData,this,oldMajorRealm,oldMinorRealm,newMajorRealm,newMinorRealm);
 
-        TechniqueSkillHelper.refreshUniversal(entityData, newMajorRealm);
+        TechniqueSkillHelper.refreshUniversal(entityData);
 
         RealmChangeUtil.realmChanged(entityData,this,entityData.getTechniqueData(this.getPath()),oldMajorRealm,oldMinorRealm,newMajorRealm,newMinorRealm,realmChangeHandler);
 
@@ -131,16 +131,11 @@ public class GenericTechnique implements ITechnique {
     }
 
     protected void refreshUniversalTechniqueSkills(IEntityData entityData) {
-        IPathData pathData = entityData.getPathData(getPath());
-
-        TechniqueSkillHelper.refreshUniversal(
-                entityData,
-                pathData == null ? 0 : pathData.getMajorRealm()
-        );
+        TechniqueSkillHelper.refreshUniversal(entityData);
     }
 
     protected void clearUniversalTechniqueSkills(IEntityData entityData) {
-        TechniqueSkillHelper.refreshUniversal(entityData, -1);
+        TechniqueSkillHelper.refreshUniversal(entityData);
     }
 
     @Override
