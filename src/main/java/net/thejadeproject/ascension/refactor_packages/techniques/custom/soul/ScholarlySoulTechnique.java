@@ -113,6 +113,11 @@ public class ScholarlySoulTechnique extends GenericTechnique {
                 ModSkills.SOUL_SUPPRESSION.getId(),
                 majorRealm >= SOUL_SUPPRESSION_UNLOCK_REALM
         );
+        TechniqueSkillHelper.refreshSkill(
+                entityData,
+                ModSkills.SOUL_SHIFT.getId(),
+                majorRealm >= SOUL_NEEDLE_UNLOCK_REALM
+        );
     }
 
     public boolean canCultivateMajorRealm(ITechniqueData techniqueData, int majorRealm) {

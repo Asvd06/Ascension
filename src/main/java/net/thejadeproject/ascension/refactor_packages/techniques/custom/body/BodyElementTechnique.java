@@ -9,10 +9,12 @@ import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.BodyTechniqueData;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueSkillHelper;
 
 import java.util.Set;
 
@@ -37,9 +39,17 @@ public class BodyElementTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
+
+        IPathData pathData = heldEntity.getPathData(getPath());
+
         heldEntity.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
         heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 1.0D);
         refreshUniversalTechniqueSkills(heldEntity);
+
+        refreshRealmUnlockSkills(
+                heldEntity,
+                pathData == null ? 0 : pathData.getMajorRealm()
+        );
     }
 
     @Override
@@ -51,6 +61,27 @@ public class BodyElementTechnique extends GenericTechnique {
         heldEntity.getPathBonusHandler().removePathBonus(ModPaths.BODY.getId(), 1.0D);
         heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
+        refreshRealmUnlockSkills(heldEntity, -1);
+    }
+
+    @Override
+    public void onRealmChange(
+            IEntityData entityData,
+            int oldMajorRealm,
+            int oldMinorRealm,
+            int newMajorRealm,
+            int newMinorRealm
+    ) {
+        super.onRealmChange(entityData, oldMajorRealm, oldMinorRealm, newMajorRealm, newMinorRealm);
+        refreshRealmUnlockSkills(entityData, newMajorRealm);
+    }
+
+    private void refreshRealmUnlockSkills(IEntityData entityData, int majorRealm) {
+        TechniqueSkillHelper.refreshSkill(
+                entityData,
+                ModSkills.BODY_FLASH_STEP.getId(),
+                majorRealm >= 4
+        );
     }
 
     @Override

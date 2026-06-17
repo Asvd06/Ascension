@@ -110,6 +110,12 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
                 majorRealm >= FIST_UNLOCK_REALM
         );
 
+        refreshSkill(
+                entityData,
+                ModSkills.BODY_FLASH_STEP.getId(),
+                majorRealm >= PURGE_UNLOCK_REALM
+        );
+
     }
 
     private void refreshSkill(IEntityData entityData, ResourceLocation skillId, boolean shouldHave) {

@@ -7,10 +7,12 @@ import net.thejadeproject.ascension.data_attachments.attachments.SoulWeaponData;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueSkillHelper;
 
 import java.util.Set;
 
@@ -41,6 +43,8 @@ public class SoulForgedWeaponTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
+        IPathData pathData = heldEntity.getPathData(getPath());
+
         heldEntity.giveSkill(
                 ModSkills.SIMPLE_SOUL_CULTIVATION_SKILL.getId(),
                 ModForms.MORTAL_VESSEL.getId()
@@ -52,6 +56,10 @@ public class SoulForgedWeaponTechnique extends GenericTechnique {
         );
 
         refreshUniversalTechniqueSkills(heldEntity);
+        refreshRealmUnlockSkills(
+                heldEntity,
+                pathData == null ? 0 : pathData.getMajorRealm()
+        );
     }
 
     @Override
@@ -73,6 +81,27 @@ public class SoulForgedWeaponTechnique extends GenericTechnique {
         }
 
         refreshUniversalTechniqueSkills(heldEntity);
+        refreshRealmUnlockSkills(heldEntity, -1);
+    }
+
+    @Override
+    public void onRealmChange(
+            IEntityData entityData,
+            int oldMajorRealm,
+            int oldMinorRealm,
+            int newMajorRealm,
+            int newMinorRealm
+    ) {
+        super.onRealmChange(entityData, oldMajorRealm, oldMinorRealm, newMajorRealm, newMinorRealm);
+        refreshRealmUnlockSkills(entityData, newMajorRealm);
+    }
+
+    private void refreshRealmUnlockSkills(IEntityData entityData, int majorRealm) {
+        TechniqueSkillHelper.refreshSkill(
+                entityData,
+                ModSkills.SOUL_SHIFT.getId(),
+                majorRealm >= 2
+        );
     }
 
     @Override

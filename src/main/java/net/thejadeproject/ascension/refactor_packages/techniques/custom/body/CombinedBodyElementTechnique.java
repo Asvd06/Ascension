@@ -9,10 +9,12 @@ import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.stat_change_handlers.BasicStatChangeHandler;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.technique_data.BodyTechniqueData;
+import net.thejadeproject.ascension.refactor_packages.techniques.helpers.TechniqueSkillHelper;
 
 import java.util.Set;
 
@@ -32,9 +34,17 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
 
     @Override
     public void onTechniqueAdded(IEntityData heldEntity) {
+
+        IPathData pathData = heldEntity.getPathData(getPath());
+
         heldEntity.giveSkill(skillId, ModForms.MORTAL_VESSEL.getId());
         heldEntity.getPathBonusHandler().addPathBonus(ModPaths.BODY.getId(), 0.5 * (elements.size() + 1));
         refreshUniversalTechniqueSkills(heldEntity);
+
+        refreshRealmUnlockSkills(
+                heldEntity,
+                pathData == null ? 0 : pathData.getMajorRealm()
+        );
     }
 
     @Override
@@ -46,6 +56,27 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
         heldEntity.getPathBonusHandler().removePathBonus(ModPaths.BODY.getId(), 0.5 * (elements.size() + 1));
         heldEntity.removeSkill(skillId, ModForms.MORTAL_VESSEL.getId());
         refreshUniversalTechniqueSkills(heldEntity);
+        refreshRealmUnlockSkills(heldEntity, -1);
+    }
+
+    @Override
+    public void onRealmChange(
+            IEntityData entityData,
+            int oldMajorRealm,
+            int oldMinorRealm,
+            int newMajorRealm,
+            int newMinorRealm
+    ) {
+        super.onRealmChange(entityData, oldMajorRealm, oldMinorRealm, newMajorRealm, newMinorRealm);
+        refreshRealmUnlockSkills(entityData, newMajorRealm);
+    }
+
+    private void refreshRealmUnlockSkills(IEntityData entityData, int majorRealm) {
+        TechniqueSkillHelper.refreshSkill(
+                entityData,
+                ModSkills.BODY_FLASH_STEP.getId(),
+                majorRealm >= 3
+        );
     }
 
     @Override
@@ -53,6 +84,8 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
         var tech = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
         return !(tech instanceof CombinedBodyElementTechnique) && !(tech instanceof FiveElementBodyTechnique);
     }
+
+
 
     @Override
     public ITechniqueData freshTechniqueData(IEntityData heldEntity) { return new BodyTechniqueData(); }
