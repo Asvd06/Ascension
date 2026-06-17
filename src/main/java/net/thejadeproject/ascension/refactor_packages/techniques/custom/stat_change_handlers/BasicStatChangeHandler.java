@@ -60,9 +60,14 @@ public class BasicStatChangeHandler{
             ResourceLocation identifier = create("minor",majorRealm,minorRealm);
             entityData.getActiveFormData().getStatSheet().addStatModifier(getStat(stat),duplicate(identifier,minorRealmStatModifierMap.get(stat)));
         }
-        for(Holder<Attribute> attributeHolder : minorRealmAttributeModifierMap.keySet()){
-            ResourceLocation identifier = create("minor",majorRealm,minorRealm);
-            entityData.getAscensionAttributeHolder().getAttribute(attributeHolder).addModifier(duplicate(identifier,minorRealmAttributeModifierMap.get(attributeHolder)));
+        for (Holder<Attribute> attributeHolder : minorRealmAttributeModifierMap.keySet()) {
+            ResourceLocation identifier = create("minor", majorRealm, minorRealm);
+            var attributeContainer = entityData.getAscensionAttributeHolder().getAttribute(attributeHolder);
+            if (attributeContainer == null) {
+                AscensionCraft.LOGGER.warn("Skipping missing Ascension attribute modifier: {}", attributeHolder);
+                continue;
+            }
+            attributeContainer.addModifier(duplicate(identifier, minorRealmAttributeModifierMap.get(attributeHolder)));
         }
     }
     public void applyAllMajorRealmChanges(IEntityData entityData,int majorRealm){
@@ -70,9 +75,14 @@ public class BasicStatChangeHandler{
             ResourceLocation identifier = create("major",majorRealm,0);
             entityData.getActiveFormData().getStatSheet().addStatModifier(getStat(stat),duplicate(identifier,majorRealmStatModifierMap.get(stat)));
         }
-        for(Holder<Attribute> attributeHolder : majorRealmAttributeModifierMap.keySet()){
-            ResourceLocation identifier = create("major",majorRealm,0);
-            entityData.getAscensionAttributeHolder().getAttribute(attributeHolder).addModifier(duplicate(identifier,majorRealmAttributeModifierMap.get(attributeHolder)));
+        for (Holder<Attribute> attributeHolder : majorRealmAttributeModifierMap.keySet()) {
+            ResourceLocation identifier = create("major", majorRealm, 0);
+            var attributeContainer = entityData.getAscensionAttributeHolder().getAttribute(attributeHolder);
+            if (attributeContainer == null) {
+                AscensionCraft.LOGGER.warn("Skipping missing Ascension attribute modifier: {}", attributeHolder);
+                continue;
+            }
+            attributeContainer.addModifier(duplicate(identifier, majorRealmAttributeModifierMap.get(attributeHolder)));
         }
     }
     public void removeMajorRealmChanges(IEntityData entityData,int majorRealm){
@@ -81,9 +91,14 @@ public class BasicStatChangeHandler{
             Stat statInstance = AscensionRegistries.Stats.STATS_REGISTRY.get(stat);
             entityData.getActiveFormData().getStatSheet().removeStatModifier(statInstance,identifier);
         }
-        for(Holder<Attribute> attributeHolder : majorRealmAttributeModifierMap.keySet()){
-            ResourceLocation identifier = create("major",majorRealm,0);
-            entityData.getAscensionAttributeHolder().getAttribute(attributeHolder).removeModifier(identifier);
+        for (Holder<Attribute> attributeHolder : majorRealmAttributeModifierMap.keySet()) {
+            ResourceLocation identifier = create("major", majorRealm, 0);
+            var attributeContainer = entityData.getAscensionAttributeHolder().getAttribute(attributeHolder);
+            if (attributeContainer == null) {
+                AscensionCraft.LOGGER.warn("Skipping missing Ascension attribute modifier removal: {}", attributeHolder);
+                continue;
+            }
+            attributeContainer.removeModifier(identifier);
         }
     }
     public void removeMinorRealmChanges(IEntityData entityData,int majorRealm,int minorRealm){
@@ -92,9 +107,14 @@ public class BasicStatChangeHandler{
             Stat statInstance = AscensionRegistries.Stats.STATS_REGISTRY.get(stat);
             entityData.getActiveFormData().getStatSheet().removeStatModifier(statInstance,identifier);
         }
-        for(Holder<Attribute> attributeHolder : minorRealmAttributeModifierMap.keySet()){
-            ResourceLocation identifier = create("minor",majorRealm,minorRealm);
-            entityData.getAscensionAttributeHolder().getAttribute(attributeHolder).removeModifier(identifier);
+        for (Holder<Attribute> attributeHolder : minorRealmAttributeModifierMap.keySet()) {
+            ResourceLocation identifier = create("minor", majorRealm, minorRealm);
+            var attributeContainer = entityData.getAscensionAttributeHolder().getAttribute(attributeHolder);
+            if (attributeContainer == null) {
+                AscensionCraft.LOGGER.warn("Skipping missing Ascension attribute modifier removal: {}", attributeHolder);
+                continue;
+            }
+            attributeContainer.removeModifier(identifier);
         }
     }
     //TODO can be streamlined with a getRealms between method, then i either include or exclude each end

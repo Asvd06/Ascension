@@ -179,10 +179,10 @@ public class ModTechniques {
                                     new ValueContainerModifier(6,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
                             .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(),
                                     new ValueContainerModifier(4,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
-                            .addMajorRealmAttributeModifier(Attributes.OXYGEN_BONUS,
-                                    new ValueContainerModifier(5,  ModifierOperation.ADD_BASE, WHITE_LIGHTNING_KEY))
                             .addMajorRealmStatModifier(ModStats.STRENGTH.getId(),
-                                    new ValueContainerModifier(0.2,  ModifierOperation.MULTIPLY_FINAL, WHITE_LIGHTNING_KEY))
+                                    new ValueContainerModifier(0.20,  ModifierOperation.MULTIPLY_FINAL, WHITE_LIGHTNING_KEY))
+                            .addMajorRealmStatModifier(ModStats.INTELLIGENCE.getId(),
+                                    new ValueContainerModifier(0.05,  ModifierOperation.MULTIPLY_FINAL, WHITE_LIGHTNING_KEY))
                     )
             );
 

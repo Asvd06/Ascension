@@ -45,7 +45,7 @@ public class CultivationUtil {
             return false;
         }
         ITechnique technique = pathData.getCurrentTechnique();
-
+        if (technique == null) return false;
 
         double base = amount*(entityData.getPathBonusHandler().getPathBonus(path));
         for(ResourceLocation attributedPath : attributedPaths){

@@ -89,7 +89,12 @@ public class AscensionRegistries {
                     .create();
 
     }
-    public static <T> T getRegistryObject(ResourceLocation location,Registry<T> registry){
+    public static <T> T getRegistryObject(ResourceLocation location, Registry<T> registry) {
+        if (location == null) {
+            AscensionCraft.LOGGER.warn("Tried to load null registry object from registry: {}", registry.key().location());
+            return null;
+        }
+
         try{
             return registry.get(location);
         }catch (Exception e){
