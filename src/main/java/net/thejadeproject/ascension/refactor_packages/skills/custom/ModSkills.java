@@ -21,9 +21,7 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attac
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.BladeCleave;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SpearThrust;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.weapon.SwordDraw;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.GaleStep;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.QiFlightSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.VoidstepSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.movement.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulForgeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.MarrowFurnaceCultivationSkill;
@@ -113,6 +111,8 @@ public class ModSkills {
             SKILLS.register("qi_release", QiRelease::new);
     public static final DeferredHolder<ISkill,? extends QiPull> QI_PULL =
             SKILLS.register("qi_pull", QiPull::new);
+    public static final DeferredHolder<ISkill,? extends EssenceShortRangeTeleportation> ESSENCE_SHORT_RANGE_TELEPORTATION =
+            SKILLS.register("essence_short_range_teleportation", EssenceShortRangeTeleportation::new);
 
     // ──── ELEMENTAL SKILLS ────────────────────────────────────────────
     // Cultivation
@@ -135,6 +135,8 @@ public class ModSkills {
             SKILLS.register("gale_step", GaleStep::new);
     public static final DeferredHolder<ISkill, ? extends ThunderPalm> THUNDER_PALM =
             SKILLS.register("thunder_palm", ThunderPalm::new);
+    public static final DeferredHolder<ISkill, ? extends WindJump> WIND_JUMP =
+            SKILLS.register("wind_jump", WindJump::new);
 
     // ──── BODY SKILLS ────────────────────────────────────────────
     // Cultivation — T1
@@ -243,6 +245,8 @@ public class ModSkills {
     // Actives
     public static final DeferredHolder<ISkill, ? extends WhiteLightningFist> WHITE_LIGHTNING_FIST =
             SKILLS.register("white_lightning_fist", WhiteLightningFist::new);
+    public static final DeferredHolder<ISkill, ? extends BodyFlashStep> BODY_FLASH_STEP =
+            SKILLS.register("body_flash_step", BodyFlashStep::new);
 
 
 
@@ -272,6 +276,8 @@ public class ModSkills {
             SKILLS.register("soul_lantern", SoulLanternSkill::new);
     public static final DeferredHolder<ISkill, ? extends SoulForgeSkill> SOUL_FORGE =
             SKILLS.register("soul_forge", SoulForgeSkill::new);
+    public static final DeferredHolder<ISkill, ? extends SoulShift> SOUL_SHIFT =
+            SKILLS.register("soul_shift", SoulShift::new);
 
     // ──── WEAPON SKILLS ────────────────────────────────────────────
     // Cultivation

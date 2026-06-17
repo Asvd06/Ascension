@@ -798,6 +798,14 @@ public class lang extends LanguageProvider {
         add("ascension.skills.qi_pull.desc", "Condenses Qi at a targeted point, pulling nearby entities toward it.");
         add("ascension.skills.qi_release", "Qi Release");
         add("ascension.skills.qi_release.desc", "Releases a burst of Qi, pushing away nearby entities.");
+        add("ascension.skill.body_flash_step", "Body Flash Step");
+        add("ascension.skill.body_flash_step.description", "Burst forward with raw bodily force.");
+        add("ascension.skill.essence_short_range_teleportation", "Short-Range Teleportation");
+        add("ascension.skill.essence_short_range_teleportation.description", "Fold essence through space, blinking a short distance in the direction you face.");
+        add("ascension.skill.soul_shift", "Soul Shift");
+        add("ascension.skill.soul_shift.description", "Slip sideways through the soul. Crouch while casting to shift backward instead.");
+        add("ascension.skill.wind_jump", "Wind Jump");
+        add("ascension.skill.wind_jump.description", "Kick off the wind while airborne, gaining another burst of height and momentum.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");
