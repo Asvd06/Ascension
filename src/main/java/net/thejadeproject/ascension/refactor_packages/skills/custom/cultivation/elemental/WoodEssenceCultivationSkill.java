@@ -23,17 +23,17 @@ public class WoodEssenceCultivationSkill extends ElementalEssenceCultivationSkil
 
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
-        int plants = countNearbyBlocks(caster, 3, this::isWoodResonantBlock);
+        int plants = countNearbyBlocks(caster, 4, this::isWoodResonantBlock);
 
         if (plants >= 24) {
-            return 1.35D;
+            return 1.65D;
         }
 
         if (plants >= 8) {
-            return 1.15D;
+            return 1.25D;
         }
 
-        return 0.85D;
+        return 0.95D;
     }
 
     private boolean isWoodResonantBlock(BlockState state) {
