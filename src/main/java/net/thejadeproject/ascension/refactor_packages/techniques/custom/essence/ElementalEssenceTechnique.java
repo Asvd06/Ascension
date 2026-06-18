@@ -145,6 +145,13 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
                     majorRealm >= 2
             );
         }
+
+        refreshSkill(
+                entityData,
+                ModSkills.ESSENCE_SHORT_RANGE_TELEPORTATION.getId(),
+                majorRealm >= 3
+        );
+
     }
 
     private void refreshSkill(IEntityData entityData, ResourceLocation skillId, boolean shouldHave) {
