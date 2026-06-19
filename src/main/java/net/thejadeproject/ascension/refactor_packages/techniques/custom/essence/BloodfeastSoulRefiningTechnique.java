@@ -147,9 +147,11 @@ public class BloodfeastSoulRefiningTechnique extends GenericTechnique {
         IPathData pathData = heldEntity.getPathData(getPath());
         ResourceLocation techniqueId = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.getKey(this);
 
-        if (pathData != null && techniqueId != null && pathData.getTechniqueData(techniqueId) == null) {
+        if (!heldEntity.isLoading() && pathData != null && techniqueId != null && pathData.getTechniqueData(techniqueId) == null) {
             pathData.setTechniqueData(techniqueId, freshTechniqueData(heldEntity));
         }
+
+        super.onTechniqueAdded(heldEntity);
 
         heldEntity.giveSkill(
                 ModSkills.BLOODFEAST_BANQUET_SKILL.getId(),
@@ -162,15 +164,22 @@ public class BloodfeastSoulRefiningTechnique extends GenericTechnique {
     @Override
     public void onTechniqueRemoved(IEntityData heldEntity, ITechniqueData techniqueData) {
         IPathData pathData = heldEntity.getPathData(getPath());
+        ResourceLocation techniqueId = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.getKey(this);
 
-        if (pathData != null) {
-            pathData.handleRealmChange(pathData.getMajorRealm(), 0, heldEntity);
+        if (pathData != null && techniqueId != null && techniqueData != null && pathData.getTechniqueData(techniqueId) == null) {
+            pathData.setTechniqueData(techniqueId, techniqueData);
         }
+
+        super.onTechniqueRemoved(heldEntity, techniqueData);
 
         heldEntity.removeSkill(
                 ModSkills.BLOODFEAST_BANQUET_SKILL.getId(),
                 ModForms.MORTAL_VESSEL.getId()
         );
+
+        if (pathData != null && techniqueId != null) {
+            pathData.removeTechniqueData(techniqueId);
+        }
 
         refreshUniversalTechniqueSkills(heldEntity);
     }
