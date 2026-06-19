@@ -24,14 +24,14 @@ public class LightningEssenceCultivationSkill extends ElementalEssenceCultivatio
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
         if (caster instanceof Player player && ElementalEssenceSkillEvents.hasActiveLightningBoost(player)) {
-            return 2.50D;
+            return 5.50D;
         }
 
         boolean stormingUnderOpenSky = caster.level().isThundering()
                 && caster.level().canSeeSky(caster.blockPosition());
 
         if (stormingUnderOpenSky) {
-            return 1.20D;
+            return 1.50D;
         }
 
         return 1.00D;

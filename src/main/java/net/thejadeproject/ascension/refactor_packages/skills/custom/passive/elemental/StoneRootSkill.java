@@ -22,7 +22,7 @@ public class StoneRootSkill extends SimplePassiveSkill implements ITickingSkill 
         player.addEffect(new MobEffectInstance(
                 MobEffects.DAMAGE_RESISTANCE,
                 40,
-                0,
+                5,
                 true,
                 false,
                 false

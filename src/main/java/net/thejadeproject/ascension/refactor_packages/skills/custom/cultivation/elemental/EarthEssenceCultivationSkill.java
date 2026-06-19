@@ -28,14 +28,14 @@ public class EarthEssenceCultivationSkill extends ElementalEssenceCultivationSki
         boolean underground = caster.blockPosition().getY() < caster.level().getSeaLevel();
 
         if (onEarth && underground) {
-            return 1.35D;
+            return 1.65D;
         }
 
         if (onEarth || underground) {
             return 1.0D;
         }
 
-        return 0.80D;
+        return 0.70D;
     }
 
     private boolean isEarthResonantBlock(BlockState state) {
