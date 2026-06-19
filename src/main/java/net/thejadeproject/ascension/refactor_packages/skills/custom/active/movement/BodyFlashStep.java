@@ -18,10 +18,10 @@ public class BodyFlashStep extends SimpleInstantCastSkill {
 
     private static final double QI_COST = 16.0D;
 
-    private static final double BASE_SPEED = 1.65D;
+    private static final double BASE_SPEED = 1.75D;
     private static final double SPEED_PER_MAJOR = 0.22D;
     private static final double SPEED_PER_MINOR = 0.025D;
-    private static final double MAX_SPEED = 3.2D;
+    private static final double MAX_SPEED = 5.2D;
 
     private static final int COOLDOWN_TICKS = 45;
 
