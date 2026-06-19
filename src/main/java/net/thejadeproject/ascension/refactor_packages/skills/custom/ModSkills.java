@@ -1,5 +1,5 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom;
-
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.AstralEssenceCultivationSkill;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.neoforged.bus.api.IEventBus;
@@ -103,6 +103,9 @@ public class ModSkills {
 
     public static final DeferredHolder<ISkill, ? extends OpenSkyBreathingCultivationSkill> OPEN_SKY_BREATHING_SKILL =
             SKILLS.register("open_sky_breathing_skill", OpenSkyBreathingCultivationSkill::new);
+
+    public static final DeferredHolder<ISkill, ? extends AstralEssenceCultivationSkill> ASTRAL_ESSENCE_CULTIVATION_SKILL =
+            SKILLS.register("astral_essence_cultivation_skill", AstralEssenceCultivationSkill::new);
 
     // Passives
 

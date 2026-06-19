@@ -108,7 +108,9 @@ public class ModTechniques {
             new GenericTechnique(ModPaths.ESSENCE.getId(),Component.translatable("ascension.technique.jade_meridians_technique"),5.0,Set.of())
                     .setStatChangeHandler(baseEssenceHandler));
 
-
+    public static final DeferredHolder<ITechnique, ? extends AstralEssenceTechnique> ASTRAL_ESSENCE_TECHNIQUE =
+            TECHNIQUES.register("astral_essence_technique",
+                    () -> new AstralEssenceTechnique(baseEssenceHandler));
 
     public static final DeferredHolder<ITechnique, ? extends BloodfeastSoulRefiningTechnique>
             BLOODFEAST_SOUL_REFINING_SCRIPTURE = TECHNIQUES.register(
