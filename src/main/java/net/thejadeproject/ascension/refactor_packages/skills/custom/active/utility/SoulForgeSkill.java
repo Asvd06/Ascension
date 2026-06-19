@@ -156,7 +156,7 @@ public class SoulForgeSkill implements ICastableSkill {
         );
 
         entityData.addEntityDataSource(
-                PathSource.create(path, sourceId, false)
+                PathSource.create(path, sourceId, true)
         );
 
         return entityData.hasPath(path);
@@ -249,6 +249,17 @@ public class SoulForgeSkill implements ICastableSkill {
         if (!(attachedEntityData.getAttachedEntity() instanceof ServerPlayer player)) return;
 
         SoulWeaponData data = player.getData(ModAttachments.SOUL_WEAPON);
+
+        SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
+        if (type != null) {
+            ResourceLocation sourceId = ResourceLocation.fromNamespaceAndPath(
+                    AscensionCraft.MOD_ID,
+                    "soul_forge_" + type.id() + "_path"
+            );
+
+            attachedEntityData.removeEntitySource(sourceId);
+        }
+
         data.clear();
 
         SoulWeaponHelper.removeOwnedSoulWeapons(player);
