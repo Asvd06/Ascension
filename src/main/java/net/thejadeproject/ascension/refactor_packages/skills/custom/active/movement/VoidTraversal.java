@@ -30,9 +30,9 @@ public class VoidTraversal extends SimpleInstantCastSkill implements ITickingSki
 
     private static final double BASE_QI_COST = 90.0D;
 
-    private static final int BASE_DURATION_TICKS = 50;
+    private static final int BASE_DURATION_TICKS = 150;
     private static final int DURATION_PER_MAJOR = 5;
-    private static final int MAX_DURATION_TICKS = 140;
+    private static final int MAX_DURATION_TICKS = 340;
 
     private static final double BASE_MOVEMENT_MULTIPLIER = 4.0D;
     private static final double MULTIPLIER_PER_MAJOR = 0.5D;
@@ -42,10 +42,11 @@ public class VoidTraversal extends SimpleInstantCastSkill implements ITickingSki
     private static final double STEP_SIZE = 0.25D;
     private static final double MIN_MOVEMENT_SQR = 1.0E-5D;
 
-    private static final boolean DEBUG_ACTION_BAR = true;
+    private static final boolean DEBUG_ACTION_BAR = false;
     private static final int DEBUG_MESSAGE_INTERVAL_TICKS = 10;
 
-    private static final int COOLDOWN_TICKS = 220;
+
+    private static final int COOLDOWN_TICKS = 120;
 
     private static final Map<UUID, VoidTraversalState> ACTIVE_TRAVERSALS = new HashMap<>();
 
@@ -221,8 +222,25 @@ public class VoidTraversal extends SimpleInstantCastSkill implements ITickingSki
         Vec3 exitPosition = resolveFinalTraversalDestination(player, state, currentPosition);
         double actualExtraBlocks = exitPosition.distanceTo(currentPosition);
 
-        player.teleportTo(exitPosition.x, exitPosition.y, exitPosition.z);
-        player.setDeltaMovement(player.getDeltaMovement().scale(0.15D));
+        float yRot = player.getYRot();
+        float xRot = player.getXRot();
+
+        player.connection.teleport(
+                exitPosition.x,
+                exitPosition.y,
+                exitPosition.z,
+                yRot,
+                xRot
+        );
+
+        player.setYRot(yRot);
+        player.setXRot(xRot);
+        player.setYHeadRot(yRot);
+        player.setYBodyRot(yRot);
+
+        player.noPhysics = false;
+        player.setNoGravity(false);
+        player.setDeltaMovement(Vec3.ZERO);
         player.fallDistance = 0.0F;
         player.hurtMarked = true;
 
@@ -314,27 +332,60 @@ public class VoidTraversal extends SimpleInstantCastSkill implements ITickingSki
         Vec3 horizontalTraveled = new Vec3(traveled.x, 0.0D, traveled.z);
 
         if (horizontalTraveled.lengthSqr() < MIN_MOVEMENT_SQR) {
-            return isPositionSafe(player, currentPosition)
-                    ? currentPosition
-                    : state.lastSafePosition;
+            return resolveExitPositionNear(
+                    player,
+                    currentPosition,
+                    state.lastSafePosition
+            );
         }
 
         Vec3 direction = horizontalTraveled.normalize();
 
         double extraDistance = horizontalTraveled.length() * (state.movementMultiplier - 1.0D);
 
-        Vec3 destination = resolveSafeDestination(
-                player,
-                currentPosition,
-                direction,
-                extraDistance
-        );
+        Vec3 idealDestination = currentPosition.add(direction.scale(extraDistance));
 
-        if (!isPositionSafe(player, destination)) {
-            return state.lastSafePosition;
+        return resolveExitPositionNear(
+                player,
+                idealDestination,
+                state.lastSafePosition
+        );
+    }
+
+    private Vec3 resolveExitPositionNear(
+            ServerPlayer player,
+            Vec3 preferredPosition,
+            Vec3 fallbackPosition
+    ) {
+        if (isPositionSafe(player, preferredPosition)) {
+            return preferredPosition;
         }
 
-        return destination;
+        double baseY = Math.floor(preferredPosition.y * 2.0D) / 2.0D;
+
+        for (int i = 1; i <= 40; i++) {
+            double y = baseY + i * 0.5D;
+            Vec3 candidate = new Vec3(preferredPosition.x, y, preferredPosition.z);
+
+            if (isPositionSafe(player, candidate)) {
+                return candidate;
+            }
+        }
+
+        for (int i = 1; i <= 16; i++) {
+            double y = baseY - i * 0.5D;
+            Vec3 candidate = new Vec3(preferredPosition.x, y, preferredPosition.z);
+
+            if (isPositionSafe(player, candidate)) {
+                return candidate;
+            }
+        }
+
+        if (isPositionSafe(player, fallbackPosition)) {
+            return fallbackPosition;
+        }
+
+        return player.position();
     }
 
     private boolean isPositionSafe(ServerPlayer player, Vec3 position) {
@@ -467,5 +518,14 @@ public class VoidTraversal extends SimpleInstantCastSkill implements ITickingSki
 
     private String format(double value) {
         return String.format("%.2f", value);
+    }
+
+    public static boolean isTraversing(Entity entity) {
+        return entity instanceof ServerPlayer player
+                && ACTIVE_TRAVERSALS.containsKey(player.getUUID());
+    }
+
+    public static boolean isTraversing(UUID uuid) {
+        return ACTIVE_TRAVERSALS.containsKey(uuid);
     }
 }
