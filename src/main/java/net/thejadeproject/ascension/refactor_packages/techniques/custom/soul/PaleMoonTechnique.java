@@ -108,7 +108,7 @@ public class PaleMoonTechnique extends GenericTechnique {
         TechniqueSkillHelper.refreshSkill(
                 entityData,
                 ModSkills.SOUL_SHIFT.getId(),
-                majorRealm >= SOUL_SUPPRESSION_UNLOCK_REALM
+                majorRealm >= 1
         );
     }
 

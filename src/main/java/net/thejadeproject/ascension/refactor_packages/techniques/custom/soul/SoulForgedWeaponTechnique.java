@@ -100,7 +100,7 @@ public class SoulForgedWeaponTechnique extends GenericTechnique {
         TechniqueSkillHelper.refreshSkill(
                 entityData,
                 ModSkills.SOUL_SHIFT.getId(),
-                majorRealm >= 2
+                majorRealm >= 1
         );
     }
 
