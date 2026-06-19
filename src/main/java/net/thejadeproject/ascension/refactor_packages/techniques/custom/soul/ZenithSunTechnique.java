@@ -102,7 +102,7 @@ public class ZenithSunTechnique extends GenericTechnique {
         TechniqueSkillHelper.refreshSkill(
                 entityData,
                 ModSkills.SOUL_SHIFT.getId(),
-                majorRealm >= SOUL_NEEDLE_UNLOCK_REALM
+                majorRealm >= 1
         );
     }
 

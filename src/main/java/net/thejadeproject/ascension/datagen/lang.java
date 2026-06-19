@@ -806,6 +806,8 @@ public class lang extends LanguageProvider {
         add("ascension.skill.soul_shift.description", "Slip sideways through the soul. Crouch while casting to shift backward instead.");
         add("ascension.skill.wind_jump", "Wind Jump");
         add("ascension.skill.wind_jump.description", "Kick off the wind while airborne, gaining another burst of height and momentum.");
+        add("ascension.skill.void_traversal", "Void Traversal");
+        add("ascension.skill.void_traversal.description", "Step into the folds of empty space, crossing far greater distance than the world should allow.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");

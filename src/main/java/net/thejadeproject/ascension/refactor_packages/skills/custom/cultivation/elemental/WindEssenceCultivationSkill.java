@@ -29,12 +29,12 @@ public class WindEssenceCultivationSkill extends ElementalEssenceCultivationSkil
             return 0.75D;
         }
 
-        if (heightAboveSea >= 140) {
-            return 1.60D;
+        if (heightAboveSea >= 240) {
+            return 2.50D;
         }
 
         if (heightAboveSea >= 80) {
-            return 1.35D;
+            return 1.65D;
         }
 
         if (heightAboveSea >= 32) {

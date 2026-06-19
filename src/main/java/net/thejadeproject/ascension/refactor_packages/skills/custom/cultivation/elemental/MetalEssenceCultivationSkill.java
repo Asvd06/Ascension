@@ -25,8 +25,12 @@ public class MetalEssenceCultivationSkill extends ElementalEssenceCultivationSki
     protected double getEnvironmentMultiplier(Entity caster) {
         int oreCount = countNearbyBlocks(caster, 3, this::isMetalResonantBlock);
 
+        if (oreCount >= 20) {
+            return 2.25D;
+        }
+
         if (oreCount >= 8) {
-            return 1.55D;
+            return 1.75D;
         }
 
         if (oreCount >= 2) {

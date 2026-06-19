@@ -19,6 +19,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.entit
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.path_data.SyncPathData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.physique.SyncPhysique;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.techniques.ShowMergePromptPayload;
+import net.thejadeproject.ascension.refactor_packages.network.client_bound.skills.SyncVoidTraversalState;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.ToggleSuppressedPacket;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.ExtractHerbFromPouchPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.InsertCarriedHerbIntoPouchPayload;
@@ -107,8 +108,12 @@ public class ModPayloads {
                 ShowAscensionToast::handlePayload
         );
 
+        registrar.playToClient(
+                SyncVoidTraversalState.TYPE,
+                SyncVoidTraversalState.STREAM_CODEC,
+                SyncVoidTraversalState::handlePayload
+        );
 
-        // Temp for display purposes
         registrar.playToClient(
                 SyncMobCultivation.TYPE,
                 SyncMobCultivation.STREAM_CODEC,

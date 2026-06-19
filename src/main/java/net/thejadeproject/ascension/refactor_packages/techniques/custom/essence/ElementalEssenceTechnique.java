@@ -144,6 +144,11 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
                     ModSkills.GALE_STEP.getId(),
                     majorRealm >= 2
             );
+            refreshSkill(
+                    entityData,
+                    ModSkills.WIND_JUMP.getId(),
+                    majorRealm >= 2
+            );
         }
 
         refreshSkill(

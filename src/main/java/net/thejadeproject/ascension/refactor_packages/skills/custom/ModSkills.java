@@ -70,8 +70,8 @@ public class ModSkills {
     public static final DeferredHolder<ISkill, ? extends QiFlightSkill> AIR_STEP =
             SKILLS.register("air_step", QiFlightSkill::new);
 
-    public static final DeferredHolder<ISkill, ? extends VoidstepSkill> VOIDSTEP =
-            SKILLS.register("voidstep", VoidstepSkill::new);
+    public static final DeferredHolder<ISkill, ? extends VoidTraversal> VOID_TRAVERSAL =
+            SKILLS.register("void_traversal", VoidTraversal::new);
 
     public static final DeferredHolder<ISkill,? extends EnterSpiritForm> ENTER_SPIRIT_FORM =
             SKILLS.register("enter_spirit_form", EnterSpiritForm::new);
@@ -435,6 +435,9 @@ public class ModSkills {
         registerTickingSkill(AXE_MASTERY_SKILL);
         registerTickingSkill(SPEAR_MASTERY_SKILL);
         registerTickingSkill(MACE_MASTERY_SKILL);
+
+
+        registerTickingSkill(VOID_TRAVERSAL);
     }
 
     private static void registerTickingSkill(DeferredHolder<ISkill, ? extends ISkill> skillHolder) {
