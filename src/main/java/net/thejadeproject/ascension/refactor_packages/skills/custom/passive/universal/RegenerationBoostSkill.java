@@ -8,12 +8,17 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.Simp
 
 public class RegenerationBoostSkill extends SimplePassiveSkill implements ITickingSkill {
 
-    //TODO: Completely random healing rate that need to be tuned later
-
     private static final int HEAL_INTERVAL_TICKS = 30;
 
-    private static final float BASE_HEAL_AMOUNT = 1.0F;
-    private static final float HEAL_AMOUNT_PER_MAJOR_REALM = 3.0F;
+    private static final int UNLOCK_MAJOR_REALM = 3;
+
+    private static final float BASE_FLAT_HEAL_AMOUNT = 5.0F;
+    private static final float FLAT_HEAL_AMOUNT_PER_EFFECTIVE_REALM = 5.0F;
+
+    private static final float BASE_MAX_HEALTH_HEAL_FRACTION = 0.0025F;
+    private static final float MAX_HEALTH_HEAL_FRACTION_PER_EFFECTIVE_REALM = 0.0035F;
+
+    private static final float MISSING_HEALTH_HEAL_FRACTION_PER_EFFECTIVE_REALM = 0.0025F;
 
     @Override
     protected String getTitleKey() {
@@ -31,7 +36,10 @@ public class RegenerationBoostSkill extends SimplePassiveSkill implements ITicki
         if (player.getHealth() >= player.getMaxHealth()) return;
 
         int highestMajorRealm = getHighestMajorRealm(entityData);
-        float healAmount = getHealAmount(highestMajorRealm);
+        if (highestMajorRealm < UNLOCK_MAJOR_REALM) return;
+
+        float healAmount = getHealAmount(player, highestMajorRealm);
+        if (healAmount <= 0.0F) return;
 
         player.heal(healAmount);
     }
@@ -53,7 +61,28 @@ public class RegenerationBoostSkill extends SimplePassiveSkill implements ITicki
         return highestMajorRealm;
     }
 
-    private float getHealAmount(int majorRealm) {
-        return BASE_HEAL_AMOUNT + majorRealm * HEAL_AMOUNT_PER_MAJOR_REALM;
+    private float getHealAmount(ServerPlayer player, int majorRealm) {
+        int effectiveRealm = Math.max(1, majorRealm - UNLOCK_MAJOR_REALM + 1);
+
+        float maxHealth = player.getMaxHealth();
+        float missingHealth = maxHealth - player.getHealth();
+
+        float flatHeal =
+                BASE_FLAT_HEAL_AMOUNT
+                        + effectiveRealm * FLAT_HEAL_AMOUNT_PER_EFFECTIVE_REALM;
+
+        float maxHealthHeal =
+                maxHealth
+                        * (
+                        BASE_MAX_HEALTH_HEAL_FRACTION
+                                + effectiveRealm * MAX_HEALTH_HEAL_FRACTION_PER_EFFECTIVE_REALM
+                );
+
+        float missingHealthHeal =
+                missingHealth
+                        * effectiveRealm
+                        * MISSING_HEALTH_HEAL_FRACTION_PER_EFFECTIVE_REALM;
+
+        return flatHeal + maxHealthHeal + missingHealthHeal;
     }
 }
