@@ -13,6 +13,7 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 import net.thejadeproject.ascension.refactor_packages.stats.custom.ModStats;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.body.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.GenericTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.elemental.BasicElementalTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.*;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.poison.MyriadVenomRefinementTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.soul.*;
@@ -41,6 +42,7 @@ public class ModTechniques {
     public static final ResourceLocation BASE_SOUL_KEY    = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_soul");
     public static final ResourceLocation BASE_WEAPON_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_weapon");
     public static final ResourceLocation MYRIAD_VENOM_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "myriad_venom_refinement");
+    public static final ResourceLocation BASE_ELEMENT_KEY = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "base_element");
 
     // --- Base path handlers ---
     // Body: main VIT + STR, secondary AGI, tertiary INT
@@ -88,6 +90,14 @@ public class ModTechniques {
             .addMajorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, MYRIAD_VENOM_KEY))
             .addMajorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(0.15, ModifierOperation.MULTIPLY_FINAL, MYRIAD_VENOM_KEY));
 
+    // Base Elemental Technique Handler
+    public static BasicStatChangeHandler baseElementHandler = new BasicStatChangeHandler()
+            .addMinorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(2, ModifierOperation.ADD_BASE, BASE_ELEMENT_KEY))
+            .addMinorRealmStatModifier(ModStats.AGILITY.getId(),      new ValueContainerModifier(2, ModifierOperation.ADD_BASE, BASE_ELEMENT_KEY))
+            .addMinorRealmStatModifier(ModStats.VITALITY.getId(),     new ValueContainerModifier(1, ModifierOperation.ADD_BASE, BASE_ELEMENT_KEY))
+            .addMinorRealmStatModifier(ModStats.STRENGTH.getId(),     new ValueContainerModifier(1, ModifierOperation.ADD_BASE, BASE_ELEMENT_KEY))
+            .addMajorRealmStatModifier(ModStats.INTELLIGENCE.getId(), new ValueContainerModifier(0.12, ModifierOperation.MULTIPLY_FINAL, BASE_ELEMENT_KEY))
+            .addMajorRealmStatModifier(ModStats.AGILITY.getId(),      new ValueContainerModifier(0.12, ModifierOperation.MULTIPLY_FINAL, BASE_ELEMENT_KEY));
 
 
     // ──── ESSENCE TECHNIQUES ────────────────────────────────────────────
@@ -137,6 +147,99 @@ public class ModTechniques {
     public static final DeferredHolder<ITechnique, ? extends MyriadVenomRefinementTechnique> MYRIAD_VENOM_REFINEMENT_SCRIPTURE =
             TECHNIQUES.register("myriad_venom_refinement_scripture",
                     () -> new MyriadVenomRefinementTechnique(basePoisonHandler)
+            );
+
+// ──── ELEMENTAL TECHNIQUES ────────────────────────────────────────────
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_FIRE_MANUAL =
+            TECHNIQUES.register("simple_fire_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.FIRE.getId(),
+                            Component.translatable("ascension.technique.simple_fire_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.FIRE_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_WATER_MANUAL =
+            TECHNIQUES.register("simple_water_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.WATER.getId(),
+                            Component.translatable("ascension.technique.simple_water_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.WATER_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_WOOD_MANUAL =
+            TECHNIQUES.register("simple_wood_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.WOOD.getId(),
+                            Component.translatable("ascension.technique.simple_wood_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.WOOD_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_EARTH_MANUAL =
+            TECHNIQUES.register("simple_earth_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.EARTH.getId(),
+                            Component.translatable("ascension.technique.simple_earth_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.EARTH_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_METAL_MANUAL =
+            TECHNIQUES.register("simple_metal_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.METAL.getId(),
+                            Component.translatable("ascension.technique.simple_metal_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.METAL_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_LIGHTNING_MANUAL =
+            TECHNIQUES.register("simple_lightning_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.LIGHTNING.getId(),
+                            Component.translatable("ascension.technique.simple_lightning_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.LIGHTNING_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_WIND_MANUAL =
+            TECHNIQUES.register("simple_wind_manual", () ->
+                    new BasicElementalTechnique(
+                            ModPaths.WIND.getId(),
+                            Component.translatable("ascension.technique.simple_wind_manual"),
+                            1.0D,
+                            Set.of(),
+                            ModSkills.WIND_CULTIVATION_SKILL.getId(),
+                            List.of(),
+                            List.of()
+                    ).setStatChangeHandler(baseElementHandler)
             );
 
     // ──── ESSENCE-ELEMENTAL HYBRID TECHNIQUES ────────────────────────────────────────────

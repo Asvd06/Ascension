@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence;
 
 import net.lucent.easygui.gui.textures.ITextureData;
 import net.lucent.easygui.gui.textures.TextureData;

@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence;
 
 import net.lucent.easygui.gui.textures.ITextureData;
 import net.lucent.easygui.gui.textures.TextureData;
@@ -11,42 +11,42 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.EarthEssenceTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.ElementalEssenceTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.WoodEssenceTechnique;
 
-public class EarthEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
+public class WoodEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
 
     @Override
     protected ResourceLocation getElementPath() {
-        return ModPaths.EARTH.getId();
+        return ModPaths.WOOD.getId();
     }
 
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
-        BlockState below = caster.level().getBlockState(caster.blockPosition().below());
-        boolean onEarth = isEarthResonantBlock(below);
-        boolean underground = caster.blockPosition().getY() < caster.level().getSeaLevel();
+        int plants = countNearbyBlocks(caster, 4, this::isWoodResonantBlock);
 
-        if (onEarth && underground) {
+        if (plants >= 24) {
             return 1.65D;
         }
 
-        if (onEarth || underground) {
-            return 1.0D;
+        if (plants >= 8) {
+            return 1.25D;
         }
 
-        return 0.70D;
+        return 0.95D;
     }
 
-    private boolean isEarthResonantBlock(BlockState state) {
-        return state.is(BlockTags.BASE_STONE_OVERWORLD)
-                || state.is(BlockTags.SAND)
-                || state.is(BlockTags.TERRACOTTA);
+    private boolean isWoodResonantBlock(BlockState state) {
+        return state.is(BlockTags.SAPLINGS)
+                || state.is(BlockTags.LEAVES)
+                || state.is(BlockTags.LOGS)
+                || state.is(BlockTags.FLOWERS)
+                || state.is(BlockTags.CROPS);
     }
 
     @Override
     protected Class<? extends ElementalEssenceTechnique> getTechniqueClass() {
-        return EarthEssenceTechnique.class;
+        return WoodEssenceTechnique.class;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -55,12 +55,11 @@ public class EarthEssenceCultivationSkill extends ElementalEssenceCultivationSki
         return new TextureData(
                 ResourceLocation.fromNamespaceAndPath(
                         AscensionCraft.MOD_ID,
-                        "textures/spells/icon/earth_essence_cultivation_skill.png"
+                        "textures/spells/icon/wood_essence_cultivation_skill.png"
                 ),
                 16,
                 16
         );
     }
-
 
 }

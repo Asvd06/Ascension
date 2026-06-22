@@ -25,15 +25,14 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.active.movem
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulForgeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.GenericCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.MarrowFurnaceCultivationSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.BloodfeastBanquetSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.OpenSkyBreathingCultivationSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental.*;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.poison.PoisonRefiningMeditationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.soul.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.FistCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.GenericWeaponCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.weapon.SwordCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.body.WhiteLightningCultivationSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.five_element.FiveElementCirculation;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.*;
@@ -116,6 +115,20 @@ public class ModSkills {
 
     // ──── ELEMENTAL SKILLS ────────────────────────────────────────────
     // Cultivation
+    public static final DeferredHolder<ISkill, ? extends ISkill> FIRE_CULTIVATION_SKILL =
+            SKILLS.register("fire_cultivation_skill", FireCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ISkill> WATER_CULTIVATION_SKILL =
+            SKILLS.register("water_cultivation_skill", WaterCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ISkill> WOOD_CULTIVATION_SKILL =
+            SKILLS.register("wood_cultivation_skill", WoodCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ISkill> EARTH_CULTIVATION_SKILL =
+            SKILLS.register("earth_cultivation_skill", EarthCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ISkill> METAL_CULTIVATION_SKILL =
+            SKILLS.register("metal_cultivation_skill", MetalCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ISkill> LIGHTNING_CULTIVATION_SKILL =
+            SKILLS.register("lightning_cultivation_skill", LightningCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ? extends ISkill> WIND_CULTIVATION_SKILL =
+            SKILLS.register("wind_cultivation_skill", WindCultivationSkill::new);
 
     // Passives
     public static final DeferredHolder<ISkill, ? extends FlameTemperedBodySkill> FLAME_TEMPERED_BODY =
