@@ -143,12 +143,14 @@ public class SoulForgeSkill implements ICastableSkill {
         if (!data.bound) return true;
 
         SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
-        if (type == null) {return false;}
+        if (type == null) return false;
 
         ResourceLocation path = type.path();
-        if (path == null) {return false;}
+        if (path == null) return false;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+
+        if (entityData.hasPath(path)) {return true;}
 
         ResourceLocation sourceId = ResourceLocation.fromNamespaceAndPath(
                 AscensionCraft.MOD_ID,
