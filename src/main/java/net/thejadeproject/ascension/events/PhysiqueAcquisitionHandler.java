@@ -154,7 +154,7 @@ public class PhysiqueAcquisitionHandler {
     }
 
     private static boolean isFist(ItemStack stack) {
-        return stack.isEmpty() || stack.getItem() == Items.AIR || stack.is(ModTags.Items.GAUNTLET);
+        return stack.isEmpty() || stack.getItem() == Items.AIR || stack.is(ModTags.Items.FIST);
     }
 
     private static boolean isAxe(ItemStack stack) {
