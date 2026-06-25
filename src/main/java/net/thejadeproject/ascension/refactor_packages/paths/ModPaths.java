@@ -10,6 +10,7 @@ import net.thejadeproject.ascension.refactor_packages.paths.custom.FoundationPat
 import net.thejadeproject.ascension.refactor_packages.paths.custom.GenericPath;
 import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.stability.LnStabilityHandler;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
+import net.thejadeproject.ascension.refactor_packages.techniques.ModTechniques;
 
 public class ModPaths {
     public static final DeferredRegister<IPath> PATHS =DeferredRegister.create(AscensionRegistries.Paths.PATHS_REGISTRY, AscensionCraft.MOD_ID);
@@ -88,52 +89,64 @@ public class ModPaths {
 
 
     // 5 Elements Paths
-    public static final DeferredHolder<IPath, ? extends GenericPath> FIRE = PATHS.register("fire",()->
+    public static final DeferredHolder<IPath, ? extends GenericPath> FIRE = PATHS.register("fire", () ->
             new ComprehensionPath(Component.translatable("ascension.path.fire"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_FIRE_MANUAL::getId)
                     .addMajorRealmName("ascension.path.fire.kindling")
                     .addMajorRealmName("ascension.path.fire.ignition")
                     .addMajorRealmName("ascension.path.fire.true_flame")
                     .addMajorRealmName("ascension.path.fire.origin_flame")
     );
-    public static final DeferredHolder<IPath, ? extends GenericPath> WATER = PATHS.register("water",()->
+
+    public static final DeferredHolder<IPath, ? extends GenericPath> WATER = PATHS.register("water", () ->
             new ComprehensionPath(Component.translatable("ascension.path.water"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_WATER_MANUAL::getId)
                     .addMajorRealmName("ascension.path.water.tidepool")
                     .addMajorRealmName("ascension.path.water.current")
                     .addMajorRealmName("ascension.path.water.true_water")
                     .addMajorRealmName("ascension.path.water.origin_water")
     );
-    public static final DeferredHolder<IPath, ? extends GenericPath> WOOD = PATHS.register("wood",()->
+
+    public static final DeferredHolder<IPath, ? extends GenericPath> WOOD = PATHS.register("wood", () ->
             new ComprehensionPath(Component.translatable("ascension.path.wood"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_WOOD_MANUAL::getId)
                     .addMajorRealmName("ascension.path.wood.sprout")
                     .addMajorRealmName("ascension.path.wood.growth")
                     .addMajorRealmName("ascension.path.wood.true_wood")
                     .addMajorRealmName("ascension.path.wood.origin_wood")
     );
-    public static final DeferredHolder<IPath, ? extends GenericPath> EARTH = PATHS.register("earth",()->
+
+    public static final DeferredHolder<IPath, ? extends GenericPath> EARTH = PATHS.register("earth", () ->
             new ComprehensionPath(Component.translatable("ascension.path.earth"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_EARTH_MANUAL::getId)
                     .addMajorRealmName("ascension.path.earth.pebble")
                     .addMajorRealmName("ascension.path.earth.stone")
                     .addMajorRealmName("ascension.path.earth.true_earth")
                     .addMajorRealmName("ascension.path.earth.origin_earth")
     );
-    public static final DeferredHolder<IPath, ? extends GenericPath> METAL = PATHS.register("metal",()->
+
+    public static final DeferredHolder<IPath, ? extends GenericPath> METAL = PATHS.register("metal", () ->
             new ComprehensionPath(Component.translatable("ascension.path.metal"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_METAL_MANUAL::getId)
                     .addMajorRealmName("ascension.path.metal.ore")
                     .addMajorRealmName("ascension.path.metal.ingot")
                     .addMajorRealmName("ascension.path.metal.true_metal")
                     .addMajorRealmName("ascension.path.metal.origin_metal")
     );
 
-    //Deviated Elements Paths
-    public static final DeferredHolder<IPath, ? extends GenericPath> LIGHTNING = PATHS.register("lightning",()->
+    // Deviated Elements
+    public static final DeferredHolder<IPath, ? extends GenericPath> LIGHTNING = PATHS.register("lightning", () ->
             new ComprehensionPath(Component.translatable("ascension.path.lightning"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_LIGHTNING_MANUAL::getId)
                     .addMajorRealmName("ascension.path.lightning.spark")
                     .addMajorRealmName("ascension.path.lightning.lesser_lightning")
                     .addMajorRealmName("ascension.path.lightning.true_lightning")
                     .addMajorRealmName("ascension.path.lightning.origin_lightning")
     );
-    public static final DeferredHolder<IPath, ? extends GenericPath> WIND = PATHS.register("wind",()->
+
+    public static final DeferredHolder<IPath, ? extends GenericPath> WIND = PATHS.register("wind", () ->
             new ComprehensionPath(Component.translatable("ascension.path.wind"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_WIND_MANUAL::getId)
                     .addMajorRealmName("ascension.path.wind.gust")
                     .addMajorRealmName("ascension.path.wind.lesser_breeze")
                     .addMajorRealmName("ascension.path.wind.true_wind")
@@ -144,6 +157,7 @@ public class ModPaths {
     // Weapon Paths
     public static final DeferredHolder<IPath, ? extends GenericPath> SWORD = PATHS.register("sword",()->
             new ComprehensionPath(Component.translatable("ascension.path.sword"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_SWORD_MANUAL::getId)
                     .addMajorRealmName("ascension.path.sword.initiate")
                     .addMajorRealmName("ascension.path.sword.intent")
                     .addMajorRealmName("ascension.path.sword.aura")
@@ -151,6 +165,7 @@ public class ModPaths {
     );
     public static final DeferredHolder<IPath, ? extends GenericPath> AXE = PATHS.register("axe",()->
             new ComprehensionPath(Component.translatable("ascension.path.axe"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_AXE_MANUAL::getId)
                     .addMajorRealmName("ascension.path.axe.initiate")
                     .addMajorRealmName("ascension.path.axe.intent")
                     .addMajorRealmName("ascension.path.axe.aura")
@@ -158,6 +173,7 @@ public class ModPaths {
     );
     public static final DeferredHolder<IPath, ? extends GenericPath> BLADE = PATHS.register("blade",()->
             new ComprehensionPath(Component.translatable("ascension.path.blade"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_BLADE_MANUAL::getId)
                     .addMajorRealmName("ascension.path.blade.initiate")
                     .addMajorRealmName("ascension.path.blade.intent")
                     .addMajorRealmName("ascension.path.blade.aura")
@@ -165,6 +181,7 @@ public class ModPaths {
     );
     public static final DeferredHolder<IPath, ? extends GenericPath> SPEAR = PATHS.register("spear",()->
             new ComprehensionPath(Component.translatable("ascension.path.spear"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_SPEAR_MANUAL::getId)
                     .addMajorRealmName("ascension.path.spear.initiate")
                     .addMajorRealmName("ascension.path.spear.intent")
                     .addMajorRealmName("ascension.path.spear.aura")
@@ -186,6 +203,7 @@ public class ModPaths {
     );
     public static final DeferredHolder<IPath, ? extends GenericPath> MACE = PATHS.register("mace",()->
             new ComprehensionPath(Component.translatable("ascension.path.mace"))
+                    .setDefaultTechnique(ModTechniques.SIMPLE_MACE_MANUAL::getId)
                     .addMajorRealmName("ascension.path.mace.initiate")
                     .addMajorRealmName("ascension.path.mace.intent")
                     .addMajorRealmName("ascension.path.mace.aura")

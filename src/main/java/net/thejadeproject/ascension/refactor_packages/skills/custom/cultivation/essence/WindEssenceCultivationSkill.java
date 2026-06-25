@@ -1,61 +1,60 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence;
 
 import net.lucent.easygui.gui.textures.ITextureData;
 import net.lucent.easygui.gui.textures.TextureData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.Tags;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.ElementalEssenceTechnique;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.MetalEssenceTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.WindEssenceTechnique;
 
-public class MetalEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
+public class WindEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
 
     @Override
     protected ResourceLocation getElementPath() {
-        return ModPaths.METAL.getId();
+        return ModPaths.WIND.getId();
     }
 
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
-        int oreCount = countNearbyBlocks(caster, 3, this::isMetalResonantBlock);
+        int seaLevel = caster.level().getSeaLevel();
+        int heightAboveSea = caster.blockPosition().getY() - seaLevel;
+        boolean openSky = caster.level().canSeeSky(caster.blockPosition());
 
-        if (oreCount >= 20) {
-            return 2.25D;
+        if (!openSky) {
+            return 0.75D;
         }
 
-        if (oreCount >= 8) {
-            return 1.75D;
+        if (heightAboveSea >= 240) {
+            return 2.50D;
         }
 
-        if (oreCount >= 2) {
-            return 1.20D;
+        if (heightAboveSea >= 80) {
+            return 1.65D;
         }
 
-        return 0.80D;
-    }
+        if (heightAboveSea >= 32) {
+            return 1.15D;
+        }
 
-    private boolean isMetalResonantBlock(BlockState state) {
-        return state.is(Tags.Blocks.ORES);
+        return 1.00D;
     }
 
     @Override
     protected Class<? extends ElementalEssenceTechnique> getTechniqueClass() {
-        return MetalEssenceTechnique.class;
+        return WindEssenceTechnique.class;
     }
-
     @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon(IEntityData entityData) {
         return new TextureData(
                 ResourceLocation.fromNamespaceAndPath(
                         AscensionCraft.MOD_ID,
-                        "textures/spells/icon/placeholder.png"
+                        "textures/spells/icon/wind_essence_cultivation_skill.png"
                 ),
                 16,
                 16

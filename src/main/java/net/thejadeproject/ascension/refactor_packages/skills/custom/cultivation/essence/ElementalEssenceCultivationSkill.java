@@ -1,4 +1,4 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence;
 
 import net.lucent.easygui.gui.RenderableElement;
 import net.lucent.easygui.gui.UIFrame;
@@ -9,25 +9,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.NeoForge;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.particle.aura.AuraColourHelper;
-import net.thejadeproject.ascension.particle.aura.AuraParticleColor;
-import net.thejadeproject.ascension.particle.aura.AuraParticlePresets;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements.DescriptionDisplayContainer;
 import net.thejadeproject.ascension.refactor_packages.gui.elements.skills.cultivation.CultivationProgressBar;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
-import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
@@ -37,7 +27,6 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.CastType;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastData;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.ICastableSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastData;
-import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.ElementalEssenceTechnique;
 import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
 
@@ -47,6 +36,7 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
 
     private static final ResourceLocation ESSENCE_PATH = ModPaths.ESSENCE.getId();
     private static final double STANDARD_ESSENCE_RATE = 2.0D;
+    private static final double ELEMENTAL_SPLASH_RATE = 0.25D;
 
     protected abstract ResourceLocation getElementPath();
 
@@ -78,11 +68,25 @@ public abstract class ElementalEssenceCultivationSkill implements ICastableSkill
 //        }
 
         if (!caster.level().isClientSide()) {
+            double environmentMultiplier = getEnvironmentMultiplier(caster);
+            double essenceAmount = STANDARD_ESSENCE_RATE * environmentMultiplier;
+            double elementalAmount = essenceAmount * ELEMENTAL_SPLASH_RATE;
 
-            CultivationUtil.tryCultivate(caster,ESSENCE_PATH,List.of(getElementPath()),STANDARD_ESSENCE_RATE
-                    * getEnvironmentMultiplier(caster));
+            boolean cultivatedEssence = CultivationUtil.tryCultivate(
+                    caster,
+                    ESSENCE_PATH,
+                    List.of(getElementPath()),
+                    essenceAmount
+            );
 
-
+            if (cultivatedEssence) {
+                CultivationUtil.tryCultivate(
+                        caster,
+                        getElementPath(),
+                        List.of(ESSENCE_PATH),
+                        elementalAmount
+                );
+            }
         }
 
         return caster.getData(ModAttachments.INPUT_STATES).isHeld("skill_cast");

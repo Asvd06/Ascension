@@ -1,48 +1,54 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence;
 
 import net.lucent.easygui.gui.textures.ITextureData;
 import net.lucent.easygui.gui.textures.TextureData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
+import net.thejadeproject.ascension.refactor_packages.events.skills.ElementalEssenceSkillEvents;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.ElementalEssenceTechnique;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.FireEssenceTechnique;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.LightningEssenceTechnique;
 
-public class FireEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
+public class LightningEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
 
     @Override
     protected ResourceLocation getElementPath() {
-        return ModPaths.FIRE.getId();
+        return ModPaths.LIGHTNING.getId();
     }
 
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
-        if (caster.isInLava()) {
-            return 2.25D;
+        if (caster instanceof Player player && ElementalEssenceSkillEvents.hasActiveLightningBoost(player)) {
+            return 5.50D;
         }
 
-        if (caster.isOnFire()) {
+        boolean stormingUnderOpenSky = caster.level().isThundering()
+                && caster.level().canSeeSky(caster.blockPosition());
+
+        if (stormingUnderOpenSky) {
             return 1.50D;
         }
 
-        return 0.75D;
+        return 1.00D;
     }
 
     @Override
     protected Class<? extends ElementalEssenceTechnique> getTechniqueClass() {
-        return FireEssenceTechnique.class;
+        return LightningEssenceTechnique.class;
     }
+
     @OnlyIn(Dist.CLIENT)
     @Override
     public ITextureData getIcon(IEntityData entityData) {
         return new TextureData(
                 ResourceLocation.fromNamespaceAndPath(
                         AscensionCraft.MOD_ID,
-                        "textures/spells/icon/fire_essence_cultivation_skill.png"
+                        "textures/spells/icon/lightning_essence_cultivation_skill.png"
                 ),
                 16,
                 16

@@ -117,6 +117,14 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.NETHERITE_SPEAR.get())
                 .add(ModItems.SOULBOUND_SPEAR.get());
 
+        tag(ModTags.Items.GAUNTLET)
+                .add(ModItems.WOODEN_GAUNTLET.get())
+                .add(ModItems.STONE_GAUNTLET.get())
+                .add(ModItems.IRON_GAUNTLET.get())
+                .add(ModItems.GOLD_GAUNTLET.get())
+                .add(ModItems.DIAMOND_GAUNTLET.get())
+                .add(ModItems.NETHERITE_GAUNTLET.get());
+
         tag(ItemTags.AXES)
                 .add(ModItems.SOULBOUND_AXE.get());
 
@@ -179,12 +187,14 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .addTag(ItemTags.SWORDS)
                 .addTag(ModTags.Items.BLADE)
                 .addTag(ModTags.Items.SPEAR)
+                .addTag(ModTags.Items.GAUNTLET)
                 .add(ModItems.SOULBOUND_AXE.get());
 
         tag(ItemTags.WEAPON_ENCHANTABLE)
                 .addTag(ItemTags.SWORDS)
                 .addTag(ModTags.Items.BLADE)
                 .addTag(ModTags.Items.SPEAR)
+                .addTag(ModTags.Items.GAUNTLET)
                 .add(ModItems.SOULBOUND_AXE.get())
                 .add(ModItems.SOULBOUND_MACE.get());
 
@@ -199,7 +209,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
         tag(ItemTags.DURABILITY_ENCHANTABLE)
                 .addTag(ModTags.Items.BLADE)
-                .addTag(ModTags.Items.SPEAR);
+                .addTag(ModTags.Items.SPEAR)
+                .addTag(ModTags.Items.GAUNTLET);
 
         tag(ItemTags.BREAKS_DECORATED_POTS)
                 .addTag(ModTags.Items.BLADE)

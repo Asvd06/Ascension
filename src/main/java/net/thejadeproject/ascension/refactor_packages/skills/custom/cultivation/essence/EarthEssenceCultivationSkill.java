@@ -1,45 +1,52 @@
-package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.elemental;
+package net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence;
 
 import net.lucent.easygui.gui.textures.ITextureData;
 import net.lucent.easygui.gui.textures.TextureData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.refactor_packages.events.skills.ElementalEssenceSkillEvents;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
+import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.EarthEssenceTechnique;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.ElementalEssenceTechnique;
-import net.thejadeproject.ascension.refactor_packages.techniques.custom.essence.LightningEssenceTechnique;
 
-public class LightningEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
+public class EarthEssenceCultivationSkill extends ElementalEssenceCultivationSkill {
 
     @Override
     protected ResourceLocation getElementPath() {
-        return ModPaths.LIGHTNING.getId();
+        return ModPaths.EARTH.getId();
     }
 
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
-        if (caster instanceof Player player && ElementalEssenceSkillEvents.hasActiveLightningBoost(player)) {
-            return 5.50D;
+        BlockState below = caster.level().getBlockState(caster.blockPosition().below());
+        boolean onEarth = isEarthResonantBlock(below);
+        boolean underground = caster.blockPosition().getY() < caster.level().getSeaLevel();
+
+        if (onEarth && underground) {
+            return 1.65D;
         }
 
-        boolean stormingUnderOpenSky = caster.level().isThundering()
-                && caster.level().canSeeSky(caster.blockPosition());
-
-        if (stormingUnderOpenSky) {
-            return 1.50D;
+        if (onEarth || underground) {
+            return 1.0D;
         }
 
-        return 1.00D;
+        return 0.70D;
+    }
+
+    private boolean isEarthResonantBlock(BlockState state) {
+        return state.is(BlockTags.BASE_STONE_OVERWORLD)
+                || state.is(BlockTags.SAND)
+                || state.is(BlockTags.TERRACOTTA);
     }
 
     @Override
     protected Class<? extends ElementalEssenceTechnique> getTechniqueClass() {
-        return LightningEssenceTechnique.class;
+        return EarthEssenceTechnique.class;
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -48,11 +55,12 @@ public class LightningEssenceCultivationSkill extends ElementalEssenceCultivatio
         return new TextureData(
                 ResourceLocation.fromNamespaceAndPath(
                         AscensionCraft.MOD_ID,
-                        "textures/spells/icon/lightning_essence_cultivation_skill.png"
+                        "textures/spells/icon/earth_essence_cultivation_skill.png"
                 ),
                 16,
                 16
         );
     }
+
 
 }
