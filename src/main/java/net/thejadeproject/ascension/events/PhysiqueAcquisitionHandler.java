@@ -13,9 +13,10 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
@@ -33,6 +34,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerWakeUpEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 import net.thejadeproject.ascension.AscensionCraft;
+import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.tools.SpearItem;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.data_attachments.attachments.PhysiqueAcquisitionCounters;
@@ -53,6 +55,11 @@ public class PhysiqueAcquisitionHandler {
     private static final float CHANCE_ARROW_BLESSED        = 0.54f;
     private static final float CHANCE_FLOW_SEVERING_EYES   = 0.45f;
 
+    private static final float CHANCE_FIRE_BODY            = 0.20f;
+    private static final float CHANCE_EARTH_BODY           = 0.20f;
+    private static final float CHANCE_WOOD_BODY            = 0.20f;
+    private static final float CHANCE_METAL_BODY           = 0.20f;
+
     private static final float CHANCE_WEAK_SOUL            = 0.50f;
     private static final float CHANCE_TWISTED_VESSELS      = 0.26f;
 
@@ -66,6 +73,7 @@ public class PhysiqueAcquisitionHandler {
     private static final float CHANCE_SOUL_GAZE            = 0.32f;
     private static final float CHANCE_DREAMING_SOUL        = 0.20f;
     private static final float CHANCE_ACADEMIC_SPIRIT      = 0.26f;
+    private static final float CHANCE_DRILL_SOUL           = 0.26f;
     private static final float CHANCE_THUNDERING_SOUL_CORE = 0.35f;
     private static final float CHANCE_SOUL_SWORD_HEART     = 0.21f;
     private static final float CHANCE_DUAL_SOUL            = 0.30f;
@@ -80,7 +88,9 @@ public class PhysiqueAcquisitionHandler {
     private static final float CHANCE_WILD_CLEAVER_VETERAN = 0.26f;
 
     private static final float CHANCE_MYRIAD_POISON_VESSEL   = 0.18f;
+    private static final float CHANCE_GENEROUS_SPIRIT        = 0.18f;
     private static final float CHANCE_TITAN_BORN             = 0.15f;
+    private static final float CHANCE_MORTAL_ESSENCE_BONE    = 0.075f;
     private static final float CHANCE_BLOOD_WRAITH           = 0.14f;
     private static final float CHANCE_CRYSTAL_SOUL           = 0.11f;
     private static final float CHANCE_SWORD_MONSTER          = 0.13f;
@@ -163,6 +173,20 @@ public class PhysiqueAcquisitionHandler {
         return stack.getItem() instanceof SpearItem || stack.is(ModTags.Items.SPEAR);
     }
 
+    private static boolean isEssenceBoneOre(Block block) {
+        return block == Blocks.DEEPSLATE_EMERALD_ORE
+                || block == Blocks.NETHER_QUARTZ_ORE
+                || block == Blocks.ANCIENT_DEBRIS
+                || block == ModBlocks.JADE_ORE.get()
+                || block == ModBlocks.SPIRITUAL_STONE_CLUSTER.get();
+    }
+
+    private static boolean hasVillagerNearby(ServerPlayer player, double radius) {
+        return !player.level()
+                .getEntitiesOfClass(AbstractVillager.class, player.getBoundingBox().inflate(radius))
+                .isEmpty();
+    }
+
     private static boolean hasFeatherFalling(ServerPlayer player) {
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
         ItemEnchantments enchantments = boots.get(DataComponents.ENCHANTMENTS);
@@ -209,6 +233,9 @@ public class PhysiqueAcquisitionHandler {
                 c.t1.fireDamageHits -= FIRE_HITS_FOR_ATTUNED;
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":fire_attuned",
                         CHANCE_FIRE_ATTUNED, 20, 40);
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":fire_body",
+                        CHANCE_FIRE_BODY, 12, 28);
             }
 
             if (c.t2.nearDeathFireHits >= NEAR_DEATH_FIRE_ASHEN) {
@@ -311,7 +338,6 @@ public class PhysiqueAcquisitionHandler {
         ItemStack weapon = player.getMainHandItem();
         boolean veryLowHp = player.getHealth() <= 2.0f;
         boolean isBossKill = event.getEntity().getMaxHealth() >= 100f;
-        var entityType = event.getEntity().getType();
 
         if (isSword(weapon)) {
             c.t1.swordKills++;
@@ -370,6 +396,11 @@ public class PhysiqueAcquisitionHandler {
             }
         }
 
+        if (event.getEntity() instanceof Raider && hasVillagerNearby(player, 32.0D)) {
+            tryGiveEssence(player, AscensionCraft.MOD_ID + ":generous_spirit",
+                    CHANCE_GENEROUS_SPIRIT, 16, 30);
+        }
+
         if (isFist(weapon)) {
             c.t1.fistKills++;
             c.t1.distinctWeaponKillTypes |= 2;
@@ -396,6 +427,9 @@ public class PhysiqueAcquisitionHandler {
 
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":bruised_knuckle_body",
                         CHANCE_BRUISED_KNUCKLE_BODY, 20, 30);
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":drill_soul",
+                        CHANCE_DRILL_SOUL, 16, 28);
             }
             if (c.t1.fistKills >= c.t1.weapons.nextTyrantBodyRoll) {
                 c.t1.weapons.nextTyrantBodyRoll = advanceNextRollPastCurrent(
@@ -520,6 +554,11 @@ public class PhysiqueAcquisitionHandler {
         Block block = event.getState().getBlock();
         BlockPos pos = event.getPos();
 
+        if (isEssenceBoneOre(block)) {
+            tryGiveEssence(player, AscensionCraft.MOD_ID + ":mortal_essence_bone",
+                    CHANCE_MORTAL_ESSENCE_BONE, 10, 24);
+        }
+
         if (event.getState().is(BlockTags.STONE_ORE_REPLACEABLES)
                 || block == Blocks.DEEPSLATE || block == Blocks.STONE || block == Blocks.COBBLESTONE) {
             c.t1.earthBlocksMined++;
@@ -527,6 +566,9 @@ public class PhysiqueAcquisitionHandler {
                 c.t1.earthBlocksMined -= EARTH_BLOCKS_FOR_ATTUNED;
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":earth_attuned",
                         CHANCE_EARTH_ATTUNED, 25, 45);
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":earth_body",
+                        CHANCE_EARTH_BODY, 12, 28);
             }
         }
 
@@ -536,16 +578,24 @@ public class PhysiqueAcquisitionHandler {
                 c.t1.woodLogsChopped -= WOOD_LOGS_FOR_ATTUNED;
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":wood_attuned",
                         CHANCE_WOOD_ATTUNED, 20, 38);
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":wood_body",
+                        CHANCE_WOOD_BODY, 12, 28);
             }
         }
 
         if (event.getState().is(BlockTags.IRON_ORES) || event.getState().is(BlockTags.GOLD_ORES)
-                || event.getState().is(BlockTags.COPPER_ORES) || event.getState().is(BlockTags.COAL_ORES)) {
+                || event.getState().is(BlockTags.COPPER_ORES) || event.getState().is(BlockTags.COAL_ORES))
+        {
             c.t1.metalOresMined++;
             if (c.t1.metalOresMined >= METAL_ORES_FOR_ATTUNED) {
                 c.t1.metalOresMined -= METAL_ORES_FOR_ATTUNED;
+
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":metal_attuned",
                         CHANCE_METAL_ATTUNED, 23, 45);
+
+                tryGiveEssence(player, AscensionCraft.MOD_ID + ":metal_body",
+                        CHANCE_METAL_BODY, 12, 28);
             }
         }
 

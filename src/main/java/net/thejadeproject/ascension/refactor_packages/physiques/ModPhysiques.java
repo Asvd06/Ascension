@@ -73,7 +73,6 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.dull_mind.desc.short"))
     );
 
-    // Add an evolution method and sequence for this? maybe idk otherwise like a pill to make it better? who knows.
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> WEAK_SOUL = PHYSIQUES.register("weak_soul", () ->
             new EvolvingPhysique(Component.translatable("ascension.physiques.weak_soul"))
                     .addPath(ModPaths.SOUL.getId())
@@ -280,7 +279,7 @@ public class ModPhysiques {
 
 
     // ── T2 ─────────────────────────────────────────────────────────
-        // Essence = 6
+        // Essence
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> LIGHTNING_ATTUNED = PHYSIQUES.register("lightning_attuned", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.lightning_attuned"))
                     .addPath(ModPaths.ESSENCE.getId())
@@ -343,7 +342,7 @@ public class ModPhysiques {
     );
 
 
-    // Soul = 11
+    // Soul
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> CLEAR_SPIRIT = PHYSIQUES.register("clear_spirit", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.clear_spirit"))
                     .addPath(ModPaths.SOUL.getId())
@@ -447,7 +446,7 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.corrupted_entity.desc.short"))
     );
 
-        // Weapon = 7
+        // Weapon
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> IRON_BULWARK_SPINE = PHYSIQUES.register("iron_bulwark_spine", () ->
             new GenericPhysique(Component.translatable("ascension.physiques.iron_bulwark_spine"))
                     .addPath(ModPaths.SHIELD.getId())
@@ -520,7 +519,7 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.arrow_blessed.desc.short"))
     );
 
-        // Body = 6
+        // Body
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> BLESSED = PHYSIQUES.register("blessed",()->
             new EvolvingPhysique(Component.translatable("ascension.physiques.blessed"))
                     .addEvolution(ModPhysiques.VIRTUOSO_BUDDHA.getId())
@@ -575,8 +574,6 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.wrathful_vajra.desc.short"))
     );
 
-    // Something like an evolution result for a lower tier body, where you need to be on be submerged in lava for a long period and then after a timer,
-    // immediately be submerged in water, and if you do it fast enough you gain it? or maybe not
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> MOLTEN_CASTED = PHYSIQUES.register("molten_casted",()->
             new EvolvingPhysique(Component.translatable("ascension.physiques.molten_casted"))
                     .addPath(ModPaths.BODY.getId())
@@ -589,7 +586,7 @@ public class ModPhysiques {
                     .setShortDescription(Component.translatable("ascension.physiques.molten_casted.desc.short"))
     );
 
-        // Demonic = 1
+        // Demonic
     public static final DeferredHolder<IPhysique, ? extends GenericPhysique> BLOOD_FIEND = PHYSIQUES.register("blood_fiend",()->
                 new EvolvingPhysique(Component.translatable("ascension.physiques.blood_fiend"))
                         .addEvolution(ModPhysiques.BLOOD_WRAITH.getId())
