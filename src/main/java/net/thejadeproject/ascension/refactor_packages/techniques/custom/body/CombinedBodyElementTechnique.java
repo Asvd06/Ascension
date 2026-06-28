@@ -24,7 +24,7 @@ public class CombinedBodyElementTechnique extends GenericTechnique {
     private final ResourceLocation skillId;
 
     public CombinedBodyElementTechnique(Component title, double baseRate, Set<ResourceLocation> elements, BasicStatChangeHandler handler, ResourceLocation skillId) {
-        super(ModPaths.BODY.getId(), title, baseRate, Set.of());
+        super(ModPaths.BODY.getId(), title, baseRate, elements);
         this.elements = Set.copyOf(elements);
         this.skillId = skillId;
         setStatChangeHandler(handler);

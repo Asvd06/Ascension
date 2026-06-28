@@ -22,7 +22,18 @@ public class FiveElementBodyTechnique extends GenericTechnique {
     private final ResourceLocation skillId;
 
     public FiveElementBodyTechnique(BasicStatChangeHandler handler, ResourceLocation skillId) {
-        super(ModPaths.BODY.getId(), Component.translatable("ascension.technique.five_element_body_technique"), 15.0, Set.of());
+        super(
+                ModPaths.BODY.getId(),
+                Component.translatable("ascension.technique.five_element_body_technique"),
+                15.0,
+                Set.of(
+                        ModPaths.FIRE.getId(),
+                        ModPaths.WATER.getId(),
+                        ModPaths.WOOD.getId(),
+                        ModPaths.EARTH.getId(),
+                        ModPaths.METAL.getId()
+                )
+        );
         this.skillId = skillId;
         setStatChangeHandler(handler);
     }

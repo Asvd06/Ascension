@@ -151,6 +151,7 @@ public class ModTechniques {
 
 // ──── ELEMENTAL TECHNIQUES ────────────────────────────────────────────
 
+    // No Lang Yet
     public static final DeferredHolder<ITechnique, ? extends BasicElementalTechnique> SIMPLE_FIRE_MANUAL =
             TECHNIQUES.register("simple_fire_manual", () ->
                     new BasicElementalTechnique(

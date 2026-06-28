@@ -23,7 +23,7 @@ public class BodyElementTechnique extends GenericTechnique {
     private final ResourceLocation skillId;
 
     public BodyElementTechnique(ResourceLocation element, Component title, double baseRate, BasicStatChangeHandler handler, ResourceLocation skillId) {
-        super(ModPaths.BODY.getId(), title, baseRate, Set.of());
+        super(ModPaths.BODY.getId(), title, baseRate, Set.of(element));
         this.element = element;
         this.skillId = skillId;
         setStatChangeHandler(handler);
