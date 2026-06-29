@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class SculkEnamoredEyesItem extends Item {
-    public static final int REQUIRED_ABERRANT_INSIGHT = 333;
-    private static final int REQUIRED_ECHO_SHARDS = 33;
-    private static final int REQUIRED_XP_LEVELS = 333;
+    public static final int REQUIRED_ABERRANT_INSIGHT = 3333;
+    private static final int INSIGHT_PER_XP_LEVEL = 1;
+    private static final int INSIGHT_PER_ECHO_SHARD = 33;
 
     public SculkEnamoredEyesItem(Properties properties) {
         super(properties);
@@ -60,26 +60,63 @@ public class SculkEnamoredEyesItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        if (!player.getAbilities().instabuild) {
-            if (player.experienceLevel < REQUIRED_XP_LEVELS) {
-                player.displayClientMessage(Component.translatable("ascension.item.sculk_enamored_eyes.needs_experience")
-                        .withStyle(ChatFormatting.RED), true);
-                return InteractionResult.FAIL;
-            }
+        if (player.getAbilities().instabuild) {
+            stack.set(ModDataComponents.ABERRANT_INSIGHT.get(), REQUIRED_ABERRANT_INSIGHT);
 
-            if (!consumeItems(player, Items.ECHO_SHARD, REQUIRED_ECHO_SHARDS)) {
-                player.displayClientMessage(Component.translatable("ascension.item.sculk_enamored_eyes.needs_echo_shards")
-                        .withStyle(ChatFormatting.RED), true);
-                return InteractionResult.FAIL;
-            }
+            player.displayClientMessage(Component.translatable("ascension.item.sculk_enamored_eyes.awakened")
+                    .withStyle(ChatFormatting.DARK_AQUA), true);
 
-            player.giveExperienceLevels(-REQUIRED_XP_LEVELS);
+            return InteractionResult.CONSUME;
         }
 
-        stack.set(ModDataComponents.ABERRANT_INSIGHT.get(), REQUIRED_ABERRANT_INSIGHT);
+        int before = getAberrantInsight(stack);
+        int remaining = REQUIRED_ABERRANT_INSIGHT - before;
 
-        player.displayClientMessage(Component.translatable("ascension.item.sculk_enamored_eyes.awakened")
-                .withStyle(ChatFormatting.DARK_AQUA), true);
+        int gained = 0;
+
+        int shardsToConsume = Math.min(
+                countItems(player, Items.ECHO_SHARD),
+                remaining / INSIGHT_PER_ECHO_SHARD
+        );
+
+        if (shardsToConsume > 0) {
+            consumeItems(player, Items.ECHO_SHARD, shardsToConsume);
+            gained += shardsToConsume * INSIGHT_PER_ECHO_SHARD;
+            remaining -= shardsToConsume * INSIGHT_PER_ECHO_SHARD;
+        }
+
+        int levelsToConsume = Math.min(player.experienceLevel, remaining / INSIGHT_PER_XP_LEVEL);
+
+        if (levelsToConsume > 0) {
+            player.giveExperienceLevels(-levelsToConsume);
+            gained += levelsToConsume * INSIGHT_PER_XP_LEVEL;
+            remaining -= levelsToConsume * INSIGHT_PER_XP_LEVEL;
+        }
+
+        if (gained == 0 && remaining > 0 && countItems(player, Items.ECHO_SHARD) > 0) {
+            consumeItems(player, Items.ECHO_SHARD, 1);
+            gained += remaining;
+        }
+
+        if (gained <= 0) {
+            player.displayClientMessage(Component.translatable("ascension.item.sculk_enamored_eyes.needs_offering")
+                    .withStyle(ChatFormatting.RED), true);
+            return InteractionResult.FAIL;
+        }
+
+        int after = Math.min(REQUIRED_ABERRANT_INSIGHT, before + gained);
+        stack.set(ModDataComponents.ABERRANT_INSIGHT.get(), after);
+
+        if (after >= REQUIRED_ABERRANT_INSIGHT) {
+            player.displayClientMessage(Component.translatable("ascension.item.sculk_enamored_eyes.awakened")
+                    .withStyle(ChatFormatting.DARK_AQUA), true);
+        } else {
+            player.displayClientMessage(Component.translatable(
+                    "ascension.item.sculk_enamored_eyes.progress",
+                    after,
+                    REQUIRED_ABERRANT_INSIGHT
+            ).withStyle(ChatFormatting.DARK_AQUA), true);
+        }
 
         return InteractionResult.CONSUME;
     }
@@ -215,5 +252,23 @@ public class SculkEnamoredEyesItem extends Item {
         }
 
         return true;
+    }
+
+    private static int countItems(ServerPlayer player, Item item) {
+        int found = 0;
+
+        for (ItemStack stack : player.getInventory().items) {
+            if (stack.is(item)) {
+                found += stack.getCount();
+            }
+        }
+
+        for (ItemStack stack : player.getInventory().offhand) {
+            if (stack.is(item)) {
+                found += stack.getCount();
+            }
+        }
+
+        return found;
     }
 }

@@ -478,6 +478,8 @@ public class lang extends LanguageProvider {
         add("ascension.item.sculk_enamored_eyes.tooltip.aberrant_insight", "Aberrant Insight: ");
         add("ascension.item.sculk_enamored_eyes.tooltip.ready", "Ready to bind soul and essence into one aberrant whole.");
         add("ascension.item.sculk_enamored_eyes.tooltip.awaken_hint", "Awaken at the heart of an Ancient City.");
+        add("ascension.item.sculk_enamored_eyes.needs_offering", "The Eyes demand Echo Shards or experience.");
+        add("ascension.item.sculk_enamored_eyes.progress", "Sculk Enamored Eyes: %s / %s Aberrant Insight");
         add("ascension.item.corrupted_entity_completion.cannot_complete", "Your current physique cannot be completed this way.");
 
 
