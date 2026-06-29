@@ -1770,6 +1770,7 @@ public class lang extends LanguageProvider {
         add("config.jade.plugin_ascension.pill_cauldron", "Pill Cauldron");
         add("config.jade.plugin_ascension.flame_stand", "Flame Stand");
         add("config.jade.plugin_ascension.cauldron_pedestal", "Cauldron Pedestal");
+        add("config.jade.plugin_ascension.mob_cultivation_rank", "Mob Cultivation Rank");
 
 
 

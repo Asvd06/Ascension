@@ -2,16 +2,18 @@ package net.thejadeproject.ascension.compat.jade;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.blocks.custom.CauldronPedestalBlock;
 import net.thejadeproject.ascension.common.blocks.custom.FlameStandBlock;
 import net.thejadeproject.ascension.common.blocks.custom.PillCauldronLowHumanBlock;
 import net.thejadeproject.ascension.common.blocks.entity.CauldronPedestalBlockEntity;
 import net.thejadeproject.ascension.common.blocks.entity.FlameStandBlockEntity;
 import net.thejadeproject.ascension.common.blocks.entity.PillCauldronLowHumanEntity;
+import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.mob_cultivation.MobCultivationData;
 import snownee.jade.api.*;
 import snownee.jade.api.config.IPluginConfig;
 
@@ -55,6 +57,10 @@ public class JadeModPlugin implements IWailaPlugin {
         registration.registerBlockComponent(
                 PedestalProvider.INSTANCE,
                 CauldronPedestalBlock.class);
+
+        registration.registerEntityComponent(
+                MobCultivationProvider.INSTANCE,
+                LivingEntity.class);
     }
 
     // ── Cauldron tooltip ──────────────────────────────────────────
@@ -182,6 +188,33 @@ public class JadeModPlugin implements IWailaPlugin {
         public ResourceLocation getUid() { return UID; }
     }
 
+    // ── Mob Cultivation tooltip ─────────────────────────────────────
+
+    public enum MobCultivationProvider implements IEntityComponentProvider {
+        INSTANCE;
+
+        private static final ResourceLocation UID =
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "mob_cultivation_rank");
+
+        @Override
+        public void appendTooltip(ITooltip tooltip, EntityAccessor accessor, IPluginConfig config) {
+            if (!(accessor.getEntity() instanceof LivingEntity entity)) return;
+
+            MobCultivationData data = entity.getData(ModAttachments.MOB_RANK);
+            if (data == null || !data.isInitialized() || data.isUnranked()) return;
+
+            String realm = formatRealm(data.getRealmId());
+            int stage = data.getStage();
+
+            tooltip.add(Component.literal("§6Realm: §f" + realm + " §7• §eStage " + stage));
+        }
+
+        @Override
+        public ResourceLocation getUid() {
+            return UID;
+        }
+    }
+
     // ── Shared helpers ────────────────────────────────────────────
 
     private static Component buildTempLine(int temp, int minTemp, int maxTemp) {
@@ -220,5 +253,24 @@ public class JadeModPlugin implements IWailaPlugin {
             bar.append(i < filled ? "█" : "§7█");
         }
         return bar.toString();
+    }
+
+    private static String formatRealm(String realmId) {
+        String[] parts = realmId.split("_");
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < parts.length; i++) {
+            if (parts[i].isEmpty()) continue;
+
+            String word = parts[i];
+            builder.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1));
+
+            if (i < parts.length - 1) {
+                builder.append(" ");
+            }
+        }
+
+        return builder.toString();
     }
 }

@@ -16,11 +16,8 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.mob_cultivation.MobCultivationData;
 import org.joml.Matrix4f;
 
-/*
-* TODO: Remove in favour of Sensing Skill eventually
-* */
 
-@EventBusSubscriber(modid = AscensionCraft.MOD_ID, value = Dist.CLIENT)
+//@EventBusSubscriber(modid = AscensionCraft.MOD_ID, value = Dist.CLIENT)
 public class MobCultivationOverlay {
 
     private static final double MAX_RENDER_DISTANCE_SQR = 64.0 * 64.0;
