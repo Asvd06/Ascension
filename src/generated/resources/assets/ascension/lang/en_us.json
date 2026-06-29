@@ -108,8 +108,6 @@
   "ascension.item.sculk_enamored_eyes.awakened": "The Sculk Enamored Eyes awaken.",
   "ascension.item.sculk_enamored_eyes.cannot_perfect": "Your current physique cannot be perfected this way.",
   "ascension.item.sculk_enamored_eyes.missing_completion_items": "Perfect completion requires a completed Disembodied Nether Soul and False Deified Orb.",
-  "ascension.item.sculk_enamored_eyes.needs_echo_shards": "The Eyes demand 3 Echo Shards.",
-  "ascension.item.sculk_enamored_eyes.needs_experience": "The Eyes demand 33 levels of experience.",
   "ascension.item.sculk_enamored_eyes.needs_offering": "The Eyes demand Echo Shards or experience.",
   "ascension.item.sculk_enamored_eyes.not_awakened": "The Sculk Enamored Eyes have not awakened.",
   "ascension.item.sculk_enamored_eyes.progress": "Sculk Enamored Eyes: %s / %s Aberrant Insight",

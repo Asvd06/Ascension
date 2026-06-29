@@ -469,8 +469,6 @@ public class lang extends LanguageProvider {
         add("ascension.item.false_deified_orb.tooltip.vital_assertions", "Vital Assertions: ");
         add("ascension.item.false_deified_orb.tooltip.ready", "Ready to complete the missing body.");
         add("ascension.item.sculk_enamored_eyes.already_awakened", "The Sculk Enamored Eyes are already awakened.");
-        add("ascension.item.sculk_enamored_eyes.needs_experience", "The Eyes demand 33 levels of experience.");
-        add("ascension.item.sculk_enamored_eyes.needs_echo_shards", "The Eyes demand 3 Echo Shards.");
         add("ascension.item.sculk_enamored_eyes.awakened", "The Sculk Enamored Eyes awaken.");
         add("ascension.item.sculk_enamored_eyes.not_awakened", "The Sculk Enamored Eyes have not awakened.");
         add("ascension.item.sculk_enamored_eyes.missing_completion_items", "Perfect completion requires a completed Disembodied Nether Soul and False Deified Orb.");

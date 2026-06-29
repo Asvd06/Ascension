@@ -126,6 +126,7 @@ public class PathDisplayContainer extends RenderableElement {
             };
             displayContainer.addChild(selectionButton);
         }
+        displayContainer.refreshVisibility();
     }
 
 

@@ -63,10 +63,11 @@ public class DescriptionDisplayContainer extends ScrollBox implements IInformati
         setWidth(getParent().getWidth());
         setHeight(getParent().getHeight());
 
-        titleLabel.setWidth(getWidth()-4);
-        descriptionLabel.setWidth(getWidth()-4);
+        titleLabel.setWidth(getWidth() - 4);
+        descriptionLabel.setWidth(getWidth() - 4);
         titleLabel.getPositioning().updatePositionMatrix();
         descriptionLabel.getPositioning().updatePositionMatrix();
 
+        refreshVisibility();
     }
 }

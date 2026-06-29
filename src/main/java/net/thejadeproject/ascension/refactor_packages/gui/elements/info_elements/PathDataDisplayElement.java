@@ -51,9 +51,11 @@ public class PathDataDisplayElement extends ScrollBox implements IInformationCon
         setWidth(getParent().getWidth());
         setHeight(getParent().getHeight());
 
-        progress.setWidth(getWidth()-4);
-        descriptionLabel.setWidth(getWidth()-4);
+        progress.setWidth(getWidth() - 4);
+        descriptionLabel.setWidth(getWidth() - 4);
         progress.getPositioning().updatePositionMatrix();
         descriptionLabel.getPositioning().updatePositionMatrix();
+
+        refreshVisibility();
     }
 }

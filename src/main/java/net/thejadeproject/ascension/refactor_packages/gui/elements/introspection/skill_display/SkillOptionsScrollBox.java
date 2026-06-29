@@ -38,15 +38,17 @@ public class SkillOptionsScrollBox extends ScrollBox {
 
     @Override
     public int getMaxYScroll() {
-        return Math.max(0,(getChildren().size()+2)*12-getHeight());
+        return super.getMaxYScroll();
     }
 
     @Override
     public void updateVisibility(RenderableElement element) {
-        boolean condition =
-                !(element.getPositioning().getY()+element.getHeight() <= 0) &&
-                        !(element.getPositioning().getY() > getHeight());
-        element.setVisible(condition);
+        int y = element.getPositioning().getY();
+
+        boolean visible = y >= 0 && y + element.getHeight() <= getHeight();
+
+        element.setVisible(visible);
+        element.setActive(visible);
     }
 
     public void loadSkills(){
@@ -56,6 +58,7 @@ public class SkillOptionsScrollBox extends ScrollBox {
             SkillSelectionButton btn = new SkillSelectionButton(getUiFrame(),skill);
             addChild(btn);
         }
+        refreshVisibility();
     }
     @Override
     public void updatePos(RenderableElement element) {
