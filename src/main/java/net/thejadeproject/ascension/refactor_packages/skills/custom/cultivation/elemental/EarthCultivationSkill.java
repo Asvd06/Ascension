@@ -19,14 +19,14 @@ public class EarthCultivationSkill extends ElementalCultivationSkill {
         boolean underground = caster.blockPosition().getY() < caster.level().getSeaLevel();
 
         if (onEarth && underground) {
-            return 1.65D;
+            return 1.45D;
         }
 
         if (onEarth || underground) {
             return 1.0D;
         }
 
-        return 0.70D;
+        return 0.80D;
     }
 
     private boolean isEarthResonantBlock(BlockState state) {

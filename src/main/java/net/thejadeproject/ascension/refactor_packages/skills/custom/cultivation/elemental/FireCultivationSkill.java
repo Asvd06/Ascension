@@ -12,8 +12,8 @@ public class FireCultivationSkill extends ElementalCultivationSkill {
 
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
-        if (caster.isInLava()) return 2.25D;
-        if (caster.isOnFire()) return 1.50D;
-        return 0.75D;
+        if (caster.isInLava()) return 1.75D;
+        if (caster.isOnFire()) return 1.20D;
+        return 0.85D;
     }
 }

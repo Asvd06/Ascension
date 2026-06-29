@@ -21,11 +21,11 @@ public class WindCultivationSkill extends ElementalCultivationSkill {
         }
 
         if (heightAboveSea >= 240) {
-            return 2.50D;
+            return 1.50D;
         }
 
         if (heightAboveSea >= 80) {
-            return 1.65D;
+            return 1.35D;
         }
 
         if (heightAboveSea >= 32) {

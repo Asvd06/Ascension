@@ -13,7 +13,7 @@ public class WaterCultivationSkill extends ElementalCultivationSkill {
     @Override
     protected double getEnvironmentMultiplier(Entity caster) {
         if (caster.isUnderWater()) {
-            return 1.50D;
+            return 1.30D;
         }
 
         return 0.90D;

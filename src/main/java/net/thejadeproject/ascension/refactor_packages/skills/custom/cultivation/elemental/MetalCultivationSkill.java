@@ -17,11 +17,11 @@ public class MetalCultivationSkill extends ElementalCultivationSkill {
         int oreCount = countNearbyBlocks(caster, 3, this::isMetalResonantBlock);
 
         if (oreCount >= 20) {
-            return 2.25D;
+            return 1.75D;
         }
 
         if (oreCount >= 8) {
-            return 1.75D;
+            return 1.55D;
         }
 
         if (oreCount >= 2) {

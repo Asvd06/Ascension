@@ -17,14 +17,14 @@ public class WoodCultivationSkill extends ElementalCultivationSkill {
         int plants = countNearbyBlocks(caster, 4, this::isWoodResonantBlock);
 
         if (plants >= 24) {
-            return 1.65D;
+            return 1.45D;
         }
 
         if (plants >= 8) {
             return 1.25D;
         }
 
-        return 0.95D;
+        return 0.85D;
     }
 
     private boolean isWoodResonantBlock(BlockState state) {
