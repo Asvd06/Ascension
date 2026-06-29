@@ -757,6 +757,12 @@ public class lang extends LanguageProvider {
         add("ascension.skill.gibbous_moon_cultivation_skill", "Gibbous Moon Cultivation");
         add("ascension.skill.gibbous_moon_cultivation_skill.description", "Cultivates the Soul by drawing upon the swelling power of the gibbous moon. Must be practised under open sky. Greatly empowered when gazing directly at the moon. Harmful beneath direct sunlight.");
         add("ascension.skill.gibbous_moon_cultivation_skill.blocked_indoors", "You cannot cultivate the Gibbous Moon Scripture indoors.");
+        add("ascension.skill.dawning_sun_cultivation_skill", "Dawning Sun Cultivation");
+        add("ascension.skill.dawning_sun_cultivation_skill.description", "Cultivates the Soul by drawing upon the dawning sun. Must be practised under open sky. Stronger when gazing directly at the sun. Harmful beneath moonlight.");
+        add("ascension.skill.dawning_sun_cultivation_skill.blocked_indoors", "You cannot cultivate the Dawning Sun Scripture indoors.");
+        add("ascension.skill.zenith_sun_cultivation_skill", "Zenith Sun Cultivation");
+        add("ascension.skill.zenith_sun_cultivation_skill.description", "Cultivates the Soul by drawing upon the blazing peak of the zenith sun. Must be practised under open sky. Greatly empowered when gazing directly at the sun. Harmful beneath moonlight.");
+        add("ascension.skill.zenith_sun_cultivation_skill.blocked_indoors", "You cannot cultivate the Zenith Sun Scripture indoors.");
         add("ascension.skill.bloodfeast_banquet", "§4Bloodfeast Banquet");
         add("ascension.skill.bloodfeast_banquet.description", "§4Draw upon the life-force of nearby creatures, feasting on their blood to fuel your cultivation. The greater your realm, the wider your table.");
         add("ascension.skill.soul_needle", "Soul Needle");
