@@ -8,26 +8,32 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.Simp
 
 public class QiSustainedBodySkill extends SimplePassiveSkill implements ITickingSkill {
 
+    private static final int CHECK_INTERVAL_TICKS = 20;
+    private static final int TARGET_FOOD_LEVEL = 20;
+    private static final float TARGET_SATURATION = 20.0F;
+
     @Override
     protected String getTitleKey() {
         return "ascension.skill.qi_sustained_body";
     }
 
     @Override
-    protected String getDescriptionKey() { return "ascension.skill.qi_sustained_body.description"; }
+    protected String getDescriptionKey() {
+        return "ascension.skill.qi_sustained_body.description";
+    }
 
     @Override
     public void onPlayerTick(ServerPlayer player, IEntityData entityData) {
-        if (player.tickCount % 20 != 0) return;
+        if (player.tickCount % CHECK_INTERVAL_TICKS != 0) return;
 
         FoodData foodData = player.getFoodData();
 
-        if (foodData.getFoodLevel() < 20) {
-            foodData.setFoodLevel(20);
+        if (foodData.getFoodLevel() < TARGET_FOOD_LEVEL) {
+            foodData.setFoodLevel(TARGET_FOOD_LEVEL);
         }
 
-        if (foodData.getSaturationLevel() < 5.0F) {
-            foodData.setSaturation(5.0F);
+        if (foodData.getSaturationLevel() < TARGET_SATURATION) {
+            foodData.setSaturation(TARGET_SATURATION);
         }
     }
 }
