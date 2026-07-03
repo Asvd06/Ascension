@@ -13,6 +13,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
@@ -203,6 +204,15 @@ public class PhysiqueAcquisitionHandler {
         return false;
     }
 
+    private static boolean isDecayMagicDamage(DamageSource src) {
+        return src.is(DamageTypes.MAGIC)
+                || src.is(DamageTypes.INDIRECT_MAGIC)
+                || src.is(DamageTypes.WITHER)
+                || src.is(DamageTypes.WITHER_SKULL)
+                || src.is(DamageTypes.DRAGON_BREATH)
+                || src.is(DamageTypes.STING);
+    }
+
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Post event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
@@ -290,7 +300,7 @@ public class PhysiqueAcquisitionHandler {
             }
         }
 
-        if (src.is(DamageTypes.MAGIC) && player.hasEffect(net.minecraft.world.effect.MobEffects.POISON)) {
+        if (player.hasEffect(MobEffects.POISON) && event.getNewDamage() > 0.0F && isDecayMagicDamage(src)) {
             c.t2.poisonHitsReceived++;
 
             if (c.t2.poisonHitsReceived >= POISON_HITS_DECAYING) {

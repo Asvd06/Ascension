@@ -438,6 +438,14 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
                 ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "spleen_earth_technique")
         ));
 
+        add("myriad_venom_refinement_scripture_from_desert_pyramid", new AddTechniqueManualModifier(
+                new LootItemCondition[]{
+                        LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/desert_pyramid")).build(),
+                        LootItemRandomChanceCondition.randomChance(0.11f).build()
+                },
+                ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "myriad_venom_refinement_scripture")
+        ));
+
         add("lung_metal_technique_from_mineshaft", new AddTechniqueManualModifier(
                 new LootItemCondition[]{
                         LootTableIdCondition.builder(ResourceLocation.withDefaultNamespace("chests/abandoned_mineshaft")).build(),

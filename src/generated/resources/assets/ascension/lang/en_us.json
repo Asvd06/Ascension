@@ -1214,6 +1214,7 @@
   "command.ascension.reset.techniques": "Your techniques were reset.",
   "config.jade.plugin_ascension.cauldron_pedestal": "Cauldron Pedestal",
   "config.jade.plugin_ascension.flame_stand": "Flame Stand",
+  "config.jade.plugin_ascension.mob_cultivation_rank": "Mob Cultivation Rank",
   "config.jade.plugin_ascension.pill_cauldron": "Pill Cauldron",
   "container.ascension.other_upgrades": "§6Upgrades",
   "container.ascension.spatial_stones": "§5Spatial Stones",
