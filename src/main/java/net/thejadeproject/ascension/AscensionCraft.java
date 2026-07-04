@@ -456,7 +456,7 @@ public class AscensionCraft {
             ));
             rareTrades.add((entity, randomSource) -> new MerchantOffer(
                     new ItemCost(ModItems.SPIRITUAL_STONE.get(), 64),
-                    makePageStack(AscensionCraft.MOD_ID + ":soul_forged_weapon_manual", 4),
+                    makePageStack(AscensionCraft.MOD_ID + ":soul_forged_weapon_manual", 3),
                     1, 10, 0f
             ));
         }
