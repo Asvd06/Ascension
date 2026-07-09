@@ -36,7 +36,15 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
     private static final Map<Item, Double> POISON_ITEM_VALUES = new HashMap<>();
 
     static {
-        POISON_ITEM_VALUES.put(ModItems.QI_DEVOURING_PARASITE_PILL.get(), 2.0D);
+        POISON_ITEM_VALUES.put(ModItems.CRACKED_MERIDIANS_POISON_PILL.get(), 1.85D);
+        POISON_ITEM_VALUES.put(ModItems.BLINDED_SENSES_POISON_PILL.get(), 1.9D);
+        POISON_ITEM_VALUES.put(ModItems.PARALYZED_BODY_POISON_PILL.get(), 1.95D);
+        POISON_ITEM_VALUES.put(ModItems.VENOMOUS_MERIDIAN_POISON_PILL.get(), 2.0D);
+        POISON_ITEM_VALUES.put(ModItems.SCORCHING_YANG_POISON_PILL.get(), 2.05D);
+        POISON_ITEM_VALUES.put(ModItems.QI_DEVOURING_PARASITE_PILL.get(), 2.20D);
+        POISON_ITEM_VALUES.put(ModItems.CORROSIVE_POISON_PILL.get(), 2.10D);
+        POISON_ITEM_VALUES.put(ModItems.FROST_SILKWORM_POISON_PILL.get(), 2.15D);
+
         POISON_ITEM_VALUES.put(Items.SPIDER_EYE,           1.0D);
         POISON_ITEM_VALUES.put(Items.FERMENTED_SPIDER_EYE, 1.5D);
         POISON_ITEM_VALUES.put(Items.POISONOUS_POTATO,     0.8D);
@@ -97,7 +105,6 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
             venomData.incrementConsumption();
         }
 
-        // Path bonus is handled inside tryCultivate; pass raw gain only.
         double gain = BASE_GAIN * itemBaseValue * realmMultiplier * purityScale;
 
         CultivationUtil.tryCultivate(player, ModPaths.POISON.getId(), List.of(), gain);
