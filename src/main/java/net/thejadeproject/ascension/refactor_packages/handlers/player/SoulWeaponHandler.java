@@ -125,9 +125,6 @@ public final class SoulWeaponHandler {
                 continue;
             }
 
-            stack = SoulWeaponHelper.migrateLegacySoulWeapon(stack, player, data);
-            player.getInventory().setItem(i, stack);
-
             ownedSoulWeapons++;
 
             if (!data.bound || !data.summoned || ownedSoulWeapons > 1) {

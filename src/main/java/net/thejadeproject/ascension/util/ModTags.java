@@ -70,6 +70,7 @@ public class ModTags {
         public static final TagKey<Item> SOULFORGE_SPEARS = createTag("soulforge/spears");
         public static final TagKey<Item> SOULFORGE_AXES = createTag("soulforge/axes");
         public static final TagKey<Item> SOULFORGE_MACES = createTag("soulforge/maces");
+        public static final TagKey<Item> SOULFORGE_GAUNTLETS = createTag("soulforge/gauntlets");
 
 
 

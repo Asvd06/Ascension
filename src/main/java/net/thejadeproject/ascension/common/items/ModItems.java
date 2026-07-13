@@ -170,18 +170,6 @@ public class ModItems {
             ()->new GauntletItem(Tiers.NETHERITE, new Item.Properties()));
 
     // Soulbound Items
-
-        // Legacy Item that will be removed in a later version :)
-    public static final DeferredItem<Item> SOULBOUND_WEAPON = ITEMS.register(
-            "soulbound_weapon",
-            () -> new SoulboundWeaponItem(
-                    Tiers.IRON,
-                    new Item.Properties()
-                            .stacksTo(1)
-                            .rarity(Rarity.RARE)
-            )
-    );
-
         // Actual Soul Bound Items
         public static final DeferredItem<SoulboundConstructItem> SOULBOUND_SWORD = ITEMS.register(
                 "soulbound_sword",
@@ -240,6 +228,17 @@ public class ModItems {
                             .rarity(Rarity.RARE)
                             .attributes(MaceItem.createAttributes())
                             .component(DataComponents.TOOL, MaceItem.createToolProperties())
+            )
+    );
+
+    public static final DeferredItem<SoulboundConstructItem> SOULBOUND_GAUNTLET = ITEMS.register(
+            "soul_gauntlet",
+            () -> new SoulboundConstructItem(
+                    SoulWeaponType.FIST,
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.RARE)
+                            .attributes(GauntletItem.createAttributes(Tiers.IRON))
             )
     );
 

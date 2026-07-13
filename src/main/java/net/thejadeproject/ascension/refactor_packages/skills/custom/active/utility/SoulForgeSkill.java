@@ -14,7 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.common.items.ModItems;
+import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.common.items.tools.soul_weapon.ISoulboundItem;
 import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulWeaponHelper;
 import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulWeaponType;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
@@ -25,7 +26,6 @@ import net.thejadeproject.ascension.refactor_packages.gui.elements.info_elements
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.IPhysiqueData;
-import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastEndData;
 import net.thejadeproject.ascension.refactor_packages.skill_casting.casting.CastResult;
 import net.thejadeproject.ascension.refactor_packages.skills.IPersistentSkillData;
@@ -74,7 +74,10 @@ public class SoulForgeSkill implements ICastableSkill {
         }
 
         if (player.isShiftKeyDown()) {
-            showSoulWeaponStatus(player, soulWeaponData);
+            if (canAttemptUnbind(player, soulWeaponData)) {
+                attemptUnbind(player, soulWeaponData);
+            }
+
             return;
         }
 
@@ -107,7 +110,6 @@ public class SoulForgeSkill implements ICastableSkill {
         data.currentGrade = 0;
         data.currentTempering = 0;
         data.summoned = false;
-        data.lifetimeMarks = 0;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
 
@@ -141,26 +143,13 @@ public class SoulForgeSkill implements ICastableSkill {
 
     private boolean ensureWeaponPath(ServerPlayer player, SoulWeaponData data) {
         if (!data.bound) return true;
-
         SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
         if (type == null) return false;
-
         ResourceLocation path = type.path();
         if (path == null) return false;
-
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
-
         if (entityData.hasPath(path)) {return true;}
-
-        ResourceLocation sourceId = ResourceLocation.fromNamespaceAndPath(
-                AscensionCraft.MOD_ID,
-                "soul_forge_" + type.id() + "_path"
-        );
-
-        entityData.addEntityDataSource(
-                PathSource.create(path, sourceId, true)
-        );
-
+        entityData.addEntityDataSource(PathSource.create(path, getWeaponPathSourceId(type), true));
         return entityData.hasPath(path);
     }
 
@@ -180,6 +169,7 @@ public class SoulForgeSkill implements ICastableSkill {
                     Component.translatable("ascension.skill.soul_forge.no_weapon"),
                     true
             );
+
             data.summoned = false;
             return;
         }
@@ -189,29 +179,24 @@ public class SoulForgeSkill implements ICastableSkill {
                     Component.translatable("ascension.skill.soul_forge.no_weapon"),
                     true
             );
+
             data.summoned = false;
             return;
         }
 
         SoulWeaponHelper.removeOwnedSoulWeapons(player);
 
-        ItemStack soulWeapon;
-
-        if (data.storedWeapon.isEmpty()) {
-            soulWeapon = type.createSoulboundStack();
-        } else if (data.storedWeapon.is(ModItems.SOULBOUND_WEAPON.get())) {
-            soulWeapon = type.createSoulboundStack();
-            SoulWeaponHelper.copyForgedComponents(data.storedWeapon, soulWeapon);
-        } else {
-            soulWeapon = data.storedWeapon.copyWithCount(1);
-        }
+        ItemStack soulWeapon = createStoredSoulWeapon(data.storedWeapon, type);
 
         SoulWeaponHelper.updateSoulWeaponAttributes(soulWeapon, data);
         SoulWeaponHelper.writeSoulWeaponComponent(soulWeapon, player, data);
-        data.storedWeapon = soulWeapon.copyWithCount(1);
 
         if (!player.getInventory().add(soulWeapon)) {
-            player.displayClientMessage(Component.literal("Your inventory is full."), true);
+            player.displayClientMessage(
+                    Component.literal("Your inventory is full."),
+                    true
+            );
+
             data.summoned = false;
             return;
         }
@@ -254,12 +239,7 @@ public class SoulForgeSkill implements ICastableSkill {
 
         SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
         if (type != null) {
-            ResourceLocation sourceId = ResourceLocation.fromNamespaceAndPath(
-                    AscensionCraft.MOD_ID,
-                    "soul_forge_" + type.id() + "_path"
-            );
-
-            attachedEntityData.removeEntitySource(sourceId);
+            attachedEntityData.removeEntitySource(getWeaponPathSourceId(type));
         }
 
         data.clear();
@@ -272,35 +252,117 @@ public class SoulForgeSkill implements ICastableSkill {
         );
     }
 
-    private void showSoulWeaponStatus(ServerPlayer player, SoulWeaponData data) {
-        if (!data.bound) {
-            player.displayClientMessage(
-                    Component.translatable("ascension.skill.soul_forge.status.unbound"),
-                    false
-            );
-            return;
-        }
-
-        int required = SoulWeaponHelper.getRequiredTempering(data.currentGrade, data.lifetimeMarks);
-
-        player.displayClientMessage(
-                Component.translatable(
-                        "ascension.skill.soul_forge.status.bound",
-                        data.weaponType,
-                        data.currentGrade,
-                        data.currentTempering,
-                        required,
-                        data.summoned
-                ),
-                false
-        );
-    }
-
     private boolean hasSoulPath(ServerPlayer player) {
         if (!player.hasData(ModAttachments.ENTITY_DATA)) return false;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         return entityData.getPathData(ModPaths.SOUL.getId()) != null;
+    }
+
+    private ItemStack createStoredSoulWeapon(ItemStack storedWeapon, SoulWeaponType expectedType) {
+        if (storedWeapon.isEmpty()) {
+            return expectedType.createSoulboundStack();
+        }
+
+        if (isCorrectSoulWeaponType(storedWeapon, expectedType)) {
+            return storedWeapon.copyWithCount(1);
+        }
+
+        ItemStack replacement = expectedType.createSoulboundStack();
+        var component = storedWeapon.get(ModDataComponents.SOUL_WEAPON.get());
+
+        if (component != null && expectedType.id().equals(component.type())) {
+            SoulWeaponHelper.copyForgedComponents(storedWeapon, replacement);
+        }
+
+        return replacement;
+    }
+
+    private boolean isCorrectSoulWeaponType(ItemStack stack, SoulWeaponType expectedType) {
+        if (!(stack.getItem() instanceof ISoulboundItem soulboundItem)) {
+            return false;
+        }
+        return soulboundItem.getSoulWeaponType() == expectedType;
+    }
+
+    private boolean canAttemptUnbind(ServerPlayer player, SoulWeaponData data) {
+        if (!data.bound || !data.summoned) return false;
+
+        ItemStack mainHand = player.getMainHandItem();
+        ItemStack offHand = player.getOffhandItem();
+
+        if (!mainHand.isEmpty()) return false;
+
+        return SoulWeaponHelper.isSoulWeapon(offHand) && SoulWeaponHelper.isOwner(offHand, player);
+    }
+
+    private static final int UNBIND_CONFIRMATION_TICKS = 100;
+
+    private void attemptUnbind(
+            ServerPlayer player,
+            SoulWeaponData data
+    ) {
+        long currentTick = player.level().getGameTime();
+
+        if (data.unbindConfirmUntilTick < currentTick) {
+            data.unbindConfirmUntilTick = currentTick + UNBIND_CONFIRMATION_TICKS;
+
+            player.displayClientMessage(
+                    Component.translatable(
+                            "ascension.skill.soul_forge.unbind_warning"
+                    ),
+                    true
+            );
+
+            return;
+        }
+
+        unbindSoulWeapon(player, data);
+    }
+
+    private void unbindSoulWeapon(
+            ServerPlayer player,
+            SoulWeaponData data
+    ) {
+        SoulWeaponType oldType =
+                SoulWeaponType.fromId(data.weaponType);
+
+        IEntityData entityData =
+                player.getData(ModAttachments.ENTITY_DATA);
+
+        if (oldType != null) {
+            ResourceLocation sourceId =
+                    getWeaponPathSourceId(oldType);
+
+            entityData.removeEntitySource(sourceId);
+        }
+
+        int inheritedMarks = data.currentGrade;
+
+        data.lifetimeMarks += inheritedMarks;
+        data.currentGrade = 0;
+        data.currentTempering = 0;
+
+        SoulWeaponHelper.removeOwnedSoulWeapons(player);
+
+        data.bound = false;
+        data.summoned = false;
+        data.weaponType = "";
+        data.storedWeapon = ItemStack.EMPTY;
+        data.unbindConfirmUntilTick = 0L;
+
+        player.displayClientMessage(
+                Component.translatable(
+                        "ascension.skill.soul_forge.unbound",
+                        inheritedMarks,
+                        data.lifetimeMarks
+                ),
+                true
+        );
+    }
+
+    private ResourceLocation getWeaponPathSourceId(SoulWeaponType type) {
+        return ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_forge_" + type.id() + "_path");
     }
 
     @Override public CastType getCastType() { return CastType.INSTANT; }

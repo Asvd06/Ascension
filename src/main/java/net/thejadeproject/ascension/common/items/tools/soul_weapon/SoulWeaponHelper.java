@@ -32,10 +32,7 @@ public final class SoulWeaponHelper {
 
     public static boolean isSoulWeapon(ItemStack stack) {
         return !stack.isEmpty()
-                && (
-                stack.getItem() instanceof ISoulboundItem
-                        || stack.is(ModItems.SOULBOUND_WEAPON.get())
-        )
+                && (stack.getItem() instanceof ISoulboundItem)
                 && stack.has(ModDataComponents.SOUL_WEAPON.get());
     }
 
@@ -193,29 +190,6 @@ public final class SoulWeaponHelper {
         data.storedWeapon = stack.copyWithCount(1);
     }
 
-    public static ItemStack migrateLegacySoulWeapon(
-            ItemStack stack,
-            ServerPlayer player,
-            SoulWeaponData data
-    ) {
-        if (!stack.is(ModItems.SOULBOUND_WEAPON.get())) {
-            return stack;
-        }
-
-        SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
-        if (type == null) {
-            return stack;
-        }
-
-        ItemStack migrated = type.createSoulboundStack();
-
-        SoulWeaponHelper.copyForgedComponents(stack, migrated);
-        SoulWeaponHelper.writeSoulWeaponComponent(migrated, player, data);
-
-        data.storedWeapon = migrated.copyWithCount(1);
-
-        return migrated;
-    }
 
     public static void updateSoulWeaponAttributes(ItemStack stack, SoulWeaponData data) {
         ItemAttributeModifiers current = stack.get(DataComponents.ATTRIBUTE_MODIFIERS);

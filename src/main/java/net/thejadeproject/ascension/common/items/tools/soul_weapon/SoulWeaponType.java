@@ -40,6 +40,12 @@ public enum SoulWeaponType {
             ModTags.Items.SOULFORGE_SWORDS,
             ModPaths.SWORD.getId(),
             ModItems.SOULBOUND_SWORD
+    ),
+    FIST(
+           "fist",
+           ModTags.Items.SOULFORGE_GAUNTLETS,
+           ModPaths.FIST.getId(),
+           ModItems.SOULBOUND_GAUNTLET
     );
 
     private final String id;

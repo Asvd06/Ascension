@@ -5,6 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 
 public class SoulWeaponData {
+    public long unbindConfirmUntilTick = 0L;
+
     public static final Codec<SoulWeaponData> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             Codec.BOOL.optionalFieldOf("bound", false).forGetter(d -> d.bound),
             Codec.STRING.optionalFieldOf("weapon_type", "").forGetter(d -> d.weaponType),

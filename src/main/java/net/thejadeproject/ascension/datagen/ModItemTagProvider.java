@@ -167,6 +167,14 @@ public class ModItemTagProvider extends ItemTagsProvider {
                 .add(ModItems.DIAMOND_SPEAR.get())
                 .add(ModItems.NETHERITE_SPEAR.get());
 
+        tag(ModTags.Items.SOULFORGE_GAUNTLETS)
+                .add(ModItems.WOODEN_GAUNTLET.get())
+                .add(ModItems.STONE_GAUNTLET.get())
+                .add(ModItems.IRON_GAUNTLET.get())
+                .add(ModItems.GOLD_GAUNTLET.get())
+                .add(ModItems.DIAMOND_GAUNTLET.get())
+                .add(ModItems.NETHERITE_GAUNTLET.get());
+
         tag(ModTags.Items.SOULFORGE_AXES)
                 .add(Items.WOODEN_AXE)
                 .add(Items.STONE_AXE)

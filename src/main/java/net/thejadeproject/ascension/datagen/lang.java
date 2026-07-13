@@ -821,6 +821,8 @@ public class lang extends LanguageProvider {
         add("ascension.skill.soul_forge.status.unbound", "No soul weapon is bound.");
         add("ascension.skill.soul_forge.status.bound", "Soul Weapon: %s | Grade: %s | Tempering: %s / %s | Summoned: %s");
         add("ascension.skill.soul_forge.no_soul_path", "You need the Soul path to use Soul Forge.");
+        add("ascension.skill.soul_forge.unbind_warning", " Cast Soul Forge again while sneaking within 5 seconds to sever the bond");
+        add("ascension.skill.soul_forge.unbound", "The soul bond was severed. %s active grades became forged marks, leaving you with %s total marks.");
         add("ascension.skill.simple_soul_cultivation_skill", "Basic Soul Cultivation");
         add("ascension.skill.simple_soul_cultivation_skill.description", "A basic soul cultivation method. Quiet the body, steady the spirit, and draw soul essence into your foundation.");
         add("ascension.skill.open_sky_breathing_skill", "Open Sky Breathing");
@@ -1067,6 +1069,7 @@ public class lang extends LanguageProvider {
         add("item.ascension.gold_gauntlet", "Gold Gauntlet");
         add("item.ascension.diamond_gauntlet", "Diamond Gauntlet");
         add("item.ascension.netherite_gauntlet", "Netherite Gauntlet");
+        add("item.ascension.soul_gauntlet", "Soul Gauntlet");
 
         add("item.ascension.spiritual_stone_pickaxe", "Spiritual Stone Pickaxe");
         add("item.ascension.spiritual_stone_axe", "Spiritual Stone Axe");
