@@ -17,6 +17,7 @@ import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.FoundationPathData;
+import net.thejadeproject.ascension.refactor_packages.paths.data.foundation.RealmFoundation;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 
 import java.text.DecimalFormat;
@@ -120,7 +121,10 @@ public class FoundationProgressBar extends RenderableElement {
             if(!(pathData instanceof FoundationPathData foundationPathData)) return;
             //System.out.println("show progress for path : "+selectedPath);
             tooltip = new EasyTooltip(getUiFrame());
-            tooltip.appendText(foundationPathData.getCurrentFoundation().getCurrentRealmName());
+            RealmFoundation foundation = foundationPathData.getCurrentFoundation();
+            double progressPercentage = Math.clamp(foundation.getProgressInStage() * 100.0D, 0.0D, 100.0D);
+            Component tooltipText = foundation.getCurrentRealmName().copy().append(Component.literal(" (" + format.format(progressPercentage) + "%)"));
+            tooltip.appendText(tooltipText);
             getUiFrame().setTooltip(tooltip);
         }
     }

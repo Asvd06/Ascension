@@ -105,16 +105,10 @@ public class SoulForgeSkill implements ICastableSkill {
 
         SoulWeaponHelper.copyForgedComponents(held, soulWeapon);
 
-
-        data.currentGrade = 50;
-        data.currentTempering = 0;
-        data.lifetimeMarks = 25;
-
-
         data.bound = true;
         data.weaponType = type.id();
-//        data.currentGrade = 0;
-//        data.currentTempering = 0;
+        data.currentGrade = 0;
+        data.currentTempering = 0;
         data.summoned = false;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
