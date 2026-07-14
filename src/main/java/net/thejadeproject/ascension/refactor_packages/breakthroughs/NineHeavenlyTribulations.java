@@ -18,6 +18,8 @@ import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 
 public class NineHeavenlyTribulations implements IBreakthroughInstance {
 
+    public static final int NETWORK_TYPE = 0;
+
     private static final int TOTAL_TRIBULATIONS = 9;
     private static final int STRIKE_INTERVAL_TICKS = 40;
 
@@ -167,6 +169,7 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance {
 
     @Override
     public void encode(RegistryFriendlyByteBuf buf) {
+        buf.writeVarInt(NETWORK_TYPE);
         buf.writeDouble(baseDamage);
         buf.writeInt(currentTribulation);
         buf.writeInt(ticksSinceFired);
@@ -180,7 +183,7 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance {
         );
     }
 
-    public static NineHeavenlyTribulations fromNetwork(RegistryFriendlyByteBuf buf) {
+    public static NineHeavenlyTribulations fromNetworkBody(RegistryFriendlyByteBuf buf) {
         return new NineHeavenlyTribulations(
                 buf.readDouble(),
                 buf.readInt(),

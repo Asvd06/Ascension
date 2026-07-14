@@ -82,6 +82,8 @@ public interface ITechnique {
     IBreakthroughInstance breakthroughInstanceFromCompound(CompoundTag tag,int majorRealm,int minorRealm,ITechniqueData techniqueData);
     IBreakthroughInstance breakthroughInstanceFromNetwork(RegistryFriendlyByteBuf buf,int majorRealm,int minorRealm,ITechniqueData techniqueData);
 
+    default double getThreeNinesChanceMultiplier(IEntityData entityData) {return 1.0D;}
+
     static ITechniqueData getFromCompound(IEntityData entityData, ITechnique technique, CompoundTag tag){
         try {
             return technique.fromCompound(tag);

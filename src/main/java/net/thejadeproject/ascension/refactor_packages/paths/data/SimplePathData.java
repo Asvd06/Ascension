@@ -25,6 +25,7 @@ public class SimplePathData implements IPathData{
 
     private boolean cultivating;
     private IBreakthroughInstance breakthroughInstance;
+    private boolean regularTribulationForced;
 
     //────────────────────────multi realm data──────────────────────────
     //index = major realm, val = technique used for that realm
@@ -205,6 +206,16 @@ public class SimplePathData implements IPathData{
         this.breakthroughInstance = instance;
     }
 
+    @Override
+    public boolean isRegularTribulationForced() {
+        return regularTribulationForced;
+    }
+
+    @Override
+    public void setRegularTribulationForced(boolean forced) {
+        this.regularTribulationForced = forced;
+    }
+
 
     //────────────────────────Data Handling──────────────────────────
 
@@ -236,6 +247,11 @@ public class SimplePathData implements IPathData{
         if (breakthroughInstance != null) {
             tag.put("breakthrough", breakthroughInstance.write());
         }
+
+        tag.putBoolean(
+                "regular_tribulation_forced",
+                regularTribulationForced
+        );
 
         return tag;
     }
@@ -272,6 +288,7 @@ public class SimplePathData implements IPathData{
         if (breakthroughInstance != null) {
             breakthroughInstance.encode(buf);
         }
+        buf.writeBoolean(regularTribulationForced);
     }
 
     @Override
@@ -351,6 +368,9 @@ public class SimplePathData implements IPathData{
                                 getCurrentTechniqueData()
                         );
             }
+
+            regularTribulationForced =
+                    tag.getBoolean("regular_tribulation_forced");
 
         } catch (Exception e){
             AscensionCraft.LOGGER.error("error when trying to load path data for path: "+path,e);

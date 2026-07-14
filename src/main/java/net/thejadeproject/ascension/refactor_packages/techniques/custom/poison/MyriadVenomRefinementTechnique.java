@@ -119,21 +119,4 @@ public class MyriadVenomRefinementTechnique extends GenericTechnique {
     public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) {
         return new MyriadVenomTechniqueData(null, buf);
     }
-
-    @Override
-    public IBreakthroughInstance freshBreakthroughData(IEntityData heldEntity) {
-        return new NineHeavenlyTribulations(1);
-    }
-
-    @Override
-    public IBreakthroughInstance breakthroughInstanceFromCompound(
-            CompoundTag tag, int majorRealm, int minorRealm, ITechniqueData data) {
-        return new NineHeavenlyTribulations(1);
-    }
-
-    @Override
-    public IBreakthroughInstance breakthroughInstanceFromNetwork(
-            RegistryFriendlyByteBuf buf, int majorRealm, int minorRealm, ITechniqueData data) {
-        return new NineHeavenlyTribulations(1);
-    }
 }

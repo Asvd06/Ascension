@@ -9,8 +9,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
@@ -429,22 +427,12 @@ public class BloodfeastSoulRefiningTechnique extends GenericTechnique {
         return new BloodfeastTechniqueData(buf);
     }
 
+
     // ── Breakthrough ─────────────────────────────────────────────────────────
 
     @Override
-    public IBreakthroughInstance freshBreakthroughData(IEntityData heldEntity) {
-        return new NineHeavenlyTribulations(1);
+    public double getThreeNinesChanceMultiplier(IEntityData entityData) {
+        return 8.0D;
     }
 
-    @Override
-    public IBreakthroughInstance breakthroughInstanceFromCompound(
-            CompoundTag tag, int majorRealm, int minorRealm, ITechniqueData data) {
-        return new NineHeavenlyTribulations(1);
-    }
-
-    @Override
-    public IBreakthroughInstance breakthroughInstanceFromNetwork(
-            RegistryFriendlyByteBuf buf, int majorRealm, int minorRealm, ITechniqueData data) {
-        return new NineHeavenlyTribulations(1);
-    }
 }

@@ -96,4 +96,9 @@ public class FiveElementBodyTechnique extends GenericTechnique {
 
     @Override
     public ITechniqueData fromNetwork(RegistryFriendlyByteBuf buf) { return null; }
+
+    @Override
+    public double getThreeNinesChanceMultiplier(IEntityData entityData) {
+        return 8.0D;
+    }
 }

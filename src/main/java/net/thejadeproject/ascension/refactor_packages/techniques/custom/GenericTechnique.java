@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.HeavenlyTribulationFactory;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -185,23 +186,17 @@ public class GenericTechnique implements ITechnique {
 
     @Override
     public IBreakthroughInstance freshBreakthroughData(IEntityData heldEntity) {
-        IPathData pathData = heldEntity.getPathData(getPath());
-
-        int targetRealm = pathData == null ? 1 : pathData.getMajorRealm() + 1;
-        double maximumHealth = Math.max(1.0D, heldEntity.getAttributeValue(Attributes.MAX_HEALTH));
-        double baseFraction = 0.015D + 0.0025D * targetRealm;
-
-        return new NineHeavenlyTribulations(maximumHealth * baseFraction);
+        return HeavenlyTribulationFactory.create(heldEntity, this);
     }
 
     @Override
     public IBreakthroughInstance breakthroughInstanceFromCompound(CompoundTag tag, int majorRealm, int minorRealm, ITechniqueData data) {
-        return NineHeavenlyTribulations.fromCompound(tag);
+        return HeavenlyTribulationFactory.fromCompound(tag);
     }
 
     @Override
     public IBreakthroughInstance breakthroughInstanceFromNetwork(RegistryFriendlyByteBuf buf, int majorRealm, int minorRealm, ITechniqueData data) {
-        return NineHeavenlyTribulations.fromNetwork(buf);
+        return HeavenlyTribulationFactory.fromNetwork(buf);
     }
 
 

@@ -62,4 +62,9 @@ public class AstralEssenceTechnique extends GenericTechnique {
         ITechnique other = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique);
         return other instanceof AstralEssenceTechnique;
     }
+
+    @Override
+    public double getThreeNinesChanceMultiplier(IEntityData entityData) {
+        return 4.0D;
+    }
 }

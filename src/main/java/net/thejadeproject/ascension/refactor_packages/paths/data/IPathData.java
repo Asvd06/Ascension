@@ -131,6 +131,19 @@ public interface IPathData {
         return getCurrentRealmProgress() + 0.000001D >= requiredProgress;
     }
 
+    boolean isRegularTribulationForced();
+
+    void setRegularTribulationForced(boolean forced);
+
+    default boolean consumeRegularTribulationForced() {
+        if (!isRegularTribulationForced()) {
+            return false;
+        }
+
+        setRegularTribulationForced(false);
+        return true;
+    }
+
 
 
     //────────────────────────HELPERS──────────────────────────

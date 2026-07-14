@@ -138,4 +138,9 @@ public class WhiteLightningTenStageTechnique extends GenericTechnique {
         return otherTechnique instanceof WhiteLightningTenStageTechnique;
     }
 
+    @Override
+    public double getThreeNinesChanceMultiplier(IEntityData entityData) {
+        return 8.0D;
+    }
+
 }
