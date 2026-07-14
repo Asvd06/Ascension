@@ -71,13 +71,16 @@ import net.thejadeproject.ascension.menus.ModMenuTypes;
 
 import net.thejadeproject.ascension.refactor_packages.alchemy.ModPillEffects;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.ModBloodlines;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.GenericEntityData;
+import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.ModDataSources;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.forms.forms.ModForms;
 import net.thejadeproject.ascension.refactor_packages.handlers.player.InputHandler;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.attributes.SyncAttributeHolder;
 import net.thejadeproject.ascension.refactor_packages.paths.ModPaths;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.ModSkills;
 import net.thejadeproject.ascension.refactor_packages.stats.custom.ModStats;
@@ -224,6 +227,14 @@ public class AscensionCraft {
     public void onPlayerDeath(LivingDeathEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
+        IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
+        for (IPathData pathData : List.copyOf(entityData.getAllPathData())) {
+            IBreakthroughInstance breakthrough = pathData.getBreakthroughInstance();
+            if (breakthrough != null) {
+                breakthrough.onEntityDeath(entityData, pathData.getPath());
+            }
+        }
+
         CompoundTag playerData = player.getPersistentData();
         ListTag talismansList = new ListTag();
 
@@ -251,6 +262,11 @@ public class AscensionCraft {
         if (!event.isWasDeath()) return;
 
         ServerPlayer newPlayer = (ServerPlayer) event.getEntity();
+
+        IEntityData newEntityData = newPlayer.getData(ModAttachments.ENTITY_DATA);
+        for (IPathData pathData : newEntityData.getAllPathData()) {pathData.setBreakthroughInstance(null);
+        }
+
         ServerPlayer oldPlayer = (ServerPlayer) event.getOriginal();
 
         CompoundTag oldData = oldPlayer.getPersistentData();

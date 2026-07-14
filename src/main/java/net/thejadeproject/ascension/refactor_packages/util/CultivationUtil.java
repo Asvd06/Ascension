@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.common.NeoForge;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulImmolationHelper;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -60,22 +61,22 @@ public class CultivationUtil {
             pathData.setCurrentRealmProgress(technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm()));
 
             //TODO for now just force breakthrough
-            if(pathData.getMinorRealm() < technique.getMaxMinorRealm(pathData.getMajorRealm()) && technique.canBreakthroughMinorRealm(
+            if (pathData.getMinorRealm() < technique.getMaxMinorRealm(pathData.getMajorRealm()) && technique.canBreakthroughMinorRealm(
                     entity.getData(ModAttachments.ENTITY_DATA),
                     pathData.getMajorRealm(),
                     pathData.getMinorRealm(),
                     pathData.getCurrentRealmProgress()
             )){
                 pathData.handleRealmChange(pathData.getMajorRealm(),pathData.getMinorRealm()+1,entity.getData(ModAttachments.ENTITY_DATA));
-            } else if(pathData.getMajorRealm()<technique.getMaxMajorRealm() && technique.getStabilityHandler() != null) {
+            } else if (technique.canBreakthrough(entityData, pathData.getMajorRealm(), pathData.getMinorRealm(), pathData.getCurrentRealmProgress())) {
 
-                pathData.handleRealmChange(pathData.getMajorRealm()+1,0,entityData);
-                //pathData.setCurrentRealmStability(pathData.getCurrentRealmStability()+1);
+                pathData.beginBreakthrough(entityData);
+
             }
-        }else {
+        } else {
             pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress()+finalRate);
         }
-        if(entity instanceof ServerPlayer player && player.connection != null) pathData.sync(player);
+        if (entity instanceof ServerPlayer player && player.connection != null) pathData.sync(player);
         return true;
     }
 }

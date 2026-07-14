@@ -22,6 +22,7 @@ import net.thejadeproject.ascension.refactor_packages.attributes.AttributeValueC
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodline;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.IBloodlineData;
 import net.thejadeproject.ascension.refactor_packages.bloodlines.ModBloodlines;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.IEntityDataSource;
 import net.thejadeproject.ascension.refactor_packages.entity_data_source.IEntityDataSourceContainer;
 import net.thejadeproject.ascension.refactor_packages.events.PhysiqueChangeEvent;
@@ -1126,15 +1127,29 @@ public class GenericEntityData implements IEntityData {
 
     @Override
     public void tick() {
-        if (((LivingEntity) attachedEntity).tickCount % 20 == 0) {
+        if (!(attachedEntity instanceof LivingEntity livingEntity)) {
+            return;
+        }
+
+        if (livingEntity.tickCount % 20 == 0) {
             entityQiContainer.tryRegenQi();
         }
 
-        Collection<IEntityDataSourceContainer> containers = sourceContainers.values();
-        for(IEntityDataSourceContainer container : containers){
-            container.getDataSource().tick(this,container);
+        for (IEntityDataSourceContainer container : sourceContainers.values()) {
+            container.getDataSource().tick(this, container);
         }
 
+        if (attachedEntity.level().isClientSide()) {
+            return;
+        }
+
+        for (IPathData pathData : List.copyOf(getAllPathData())) {
+            IBreakthroughInstance breakthrough = pathData.getBreakthroughInstance();
+
+            if (breakthrough != null) {
+                breakthrough.tick(this, pathData.getPath());
+            }
+        }
     }
     //============================= ENTITY DATA SOURCES ===============================
     @Override

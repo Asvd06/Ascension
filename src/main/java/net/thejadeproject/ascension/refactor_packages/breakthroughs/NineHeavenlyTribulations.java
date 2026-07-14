@@ -1,87 +1,208 @@
 package net.thejadeproject.ascension.refactor_packages.breakthroughs;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
-import net.thejadeproject.ascension.util.ModDamageTypes;
-import net.thejadeproject.ascension.util.ModTags;
+import net.thejadeproject.ascension.refactor_packages.paths.data.IPathData;
 
-public class NineHeavenlyTribulations implements IBreakthroughInstance{
+public class NineHeavenlyTribulations implements IBreakthroughInstance {
+
+    private static final int TOTAL_TRIBULATIONS = 9;
+    private static final int STRIKE_INTERVAL_TICKS = 40;
+
     private int currentTribulation;
     private int ticksSinceFired;
-    private final int MIN_TICKS = 40;
-    private final int lightningHeight = 350;
-    private final  double baseDamage;
-    public NineHeavenlyTribulations(double baseDamage){
-        this.baseDamage = baseDamage;
+    private final double baseDamage;
+
+    public NineHeavenlyTribulations(double baseDamage) {
+        this(baseDamage, 0, 0);
     }
 
-    public boolean tryFire(IEntityData entityData){
-        Entity entity = entityData.getAttachedEntity();
-        int x= entity.getBlockX();
-        int z= entity.getBlockZ();
-        for(int y = entity.getBlockY()+1;y<lightningHeight;y++){
-            if(!entity.level().getBlockState(new BlockPos(x,y,z)).isAir()) return false;
-        }
-
-        //fire
-        double damage = baseDamage;
-        damage *= (currentTribulation+1);
-        damage *= (1+ (double) ticksSinceFired /MIN_TICKS);
-        entity.hurt(new DamageSource(entity.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.LIGHTNING_BOLT)), (float) damage);
-        //System.out.println("dealing : "+damage);
-        if(!entity.level().isClientSide()){
-            LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(entity.level());
-
-            if (lightning != null) {
-                lightning.moveTo(entity.getX(), entity.getY(), entity.getZ());
-
-                entity.level().addFreshEntity(lightning);
-            }
-        }
-        return true;
-    }
-    public void endBreakthrough(IEntityData entityData,ResourceLocation path){
-        entityData.getPathData(path).handleRealmChange(entityData.getPathData(path).getMajorRealm()+1,0,entityData);
-        entityData.getPathData(path).setBreakingThrough(false);
-
-    }
-    @Override
-    public void tick(IEntityData entity, ResourceLocation path) {
-
-        if(currentTribulation >=9)endBreakthrough(entity,path);
-
-        ticksSinceFired ++;
-        if(ticksSinceFired >= MIN_TICKS && tryFire(entity)) {
-            ticksSinceFired = 0;
-            currentTribulation += 1;
-        }
-
+    private NineHeavenlyTribulations(double baseDamage, int currentTribulation, int ticksSinceFired) {
+        this.baseDamage = Math.max(0.0D, baseDamage);
+        this.currentTribulation = Math.max(0, currentTribulation);
+        this.ticksSinceFired = Math.max(0, ticksSinceFired);
     }
 
     @Override
-    public void onEntityDeath(IEntityData entity, ResourceLocation path) {
-        entity.getPathData(path).setBreakingThrough(false);
+    public void tick(IEntityData entityData, ResourceLocation path) {
+        IPathData pathData = entityData.getPathData(path);
 
+        if (pathData == null || pathData.getBreakthroughInstance() != this) {
+            return;
+        }
 
+        Entity attachedEntity = entityData.getAttachedEntity();
+
+        if (!(attachedEntity instanceof LivingEntity livingEntity) || !(livingEntity.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        if (!livingEntity.isAlive()) {
+            onEntityDeath(entityData, path);
+            return;
+        }
+
+        if (currentTribulation >= TOTAL_TRIBULATIONS) {
+            completeBreakthrough(entityData, path);
+            return;
+        }
+
+        ticksSinceFired = Math.min(STRIKE_INTERVAL_TICKS, ticksSinceFired + 1);
+
+        if (ticksSinceFired < STRIKE_INTERVAL_TICKS) {
+            return;
+        }
+
+        if (!canReceiveTribulation(serverLevel, livingEntity)) {
+            return;
+        }
+
+        fireTribulation(serverLevel, livingEntity, path);
+
+        if (!livingEntity.isAlive() || pathData.getBreakthroughInstance() != this) {
+            return;
+        }
+
+        ticksSinceFired = 0;
+        currentTribulation++;
+
+        if (currentTribulation >= TOTAL_TRIBULATIONS) {
+            completeBreakthrough(entityData, path);
+        } else {
+            sync(pathData, livingEntity);
+        }
+    }
+
+    private boolean canReceiveTribulation(ServerLevel level, LivingEntity entity) {
+        return level.canSeeSky(entity.blockPosition().above());
+    }
+
+    private void fireTribulation(ServerLevel level, LivingEntity entity, ResourceLocation path) {
+        int strikeNumber = currentTribulation + 1;
+
+        double damage = baseDamage * strikeNumber;
+
+        AscensionCraft.LOGGER.info(
+                "[Tribulation] {} strike {}/{} for {} damage={}",
+                path,
+                strikeNumber,
+                TOTAL_TRIBULATIONS,
+                entity.getName().getString(),
+                damage
+        );
+
+        DamageSource source = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.LIGHTNING_BOLT));
+        entity.hurt(source, (float) damage);
+
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(level);
+
+        if (lightning != null) {
+            lightning.moveTo(entity.getX(), entity.getY(), entity.getZ());
+            lightning.setVisualOnly(true);
+            level.addFreshEntity(lightning);
+        }
+    }
+
+    private void completeBreakthrough(IEntityData entityData, ResourceLocation path) {
+        IPathData pathData = entityData.getPathData(path);
+
+        if (pathData == null || pathData.getBreakthroughInstance() != this) {
+            return;
+        }
+
+        int oldMajorRealm = pathData.getMajorRealm();
+
+        pathData.setBreakthroughInstance(null);
+        pathData.handleRealmChange(pathData.getMajorRealm() + 1, 0, entityData);
+        Entity attachedEntity = entityData.getAttachedEntity();
+
+        AscensionCraft.LOGGER.info(
+                "[Tribulation] Completed for {} on path {}: realm {} -> {}",
+                attachedEntity.getName().getString(),
+                path,
+                oldMajorRealm,
+                pathData.getMajorRealm()
+        );
+
+        if (attachedEntity instanceof ServerPlayer player && player.connection != null) {
+            pathData.sync(player);
+        }
+    }
+
+    @Override
+    public void onEntityDeath(IEntityData entityData, ResourceLocation path) {
+        IPathData pathData = entityData.getPathData(path);
+
+        if (pathData != null && pathData.getBreakthroughInstance() == this) {
+            AscensionCraft.LOGGER.info(
+                    "[Tribulation] Failed due to death for {} on path {} after {}/{} strikes",
+                    entityData.getAttachedEntity().getName().getString(),
+                    path,
+                    currentTribulation,
+                    TOTAL_TRIBULATIONS
+            );
+
+            pathData.setBreakthroughInstance(null);
+        }
+    }
+
+    private void sync(IPathData pathData, LivingEntity entity) {
+        if (entity instanceof ServerPlayer player && player.connection != null) {
+            pathData.sync(player);
+        }
     }
 
     @Override
     public CompoundTag write() {
-        return null;
+        CompoundTag tag = new CompoundTag();
+
+        tag.putDouble("base_damage", baseDamage);
+        tag.putInt("current_tribulation", currentTribulation);
+        tag.putInt("ticks_since_fired", ticksSinceFired);
+
+        return tag;
     }
 
     @Override
     public void encode(RegistryFriendlyByteBuf buf) {
+        buf.writeDouble(baseDamage);
+        buf.writeInt(currentTribulation);
+        buf.writeInt(ticksSinceFired);
+    }
 
+    public static NineHeavenlyTribulations fromCompound(CompoundTag tag) {
+        return new NineHeavenlyTribulations(
+                tag.getDouble("base_damage"),
+                tag.getInt("current_tribulation"),
+                tag.getInt("ticks_since_fired")
+        );
+    }
+
+    public static NineHeavenlyTribulations fromNetwork(RegistryFriendlyByteBuf buf) {
+        return new NineHeavenlyTribulations(
+                buf.readDouble(),
+                buf.readInt(),
+                buf.readInt()
+        );
+    }
+
+    public int getCurrentTribulation() {
+        return currentTribulation;
+    }
+
+    public int getTotalTribulations() {
+        return TOTAL_TRIBULATIONS;
     }
 }

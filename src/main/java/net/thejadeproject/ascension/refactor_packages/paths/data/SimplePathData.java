@@ -4,6 +4,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.thejadeproject.ascension.AscensionCraft;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegistries;
 import net.thejadeproject.ascension.refactor_packages.techniques.ITechnique;
@@ -23,7 +24,7 @@ public class SimplePathData implements IPathData{
     private ResourceLocation currentTechnique;
 
     private boolean cultivating;
-    private boolean breakingThrough;
+    private IBreakthroughInstance breakthroughInstance;
 
     //────────────────────────multi realm data──────────────────────────
     //index = major realm, val = technique used for that realm
@@ -69,11 +70,6 @@ public class SimplePathData implements IPathData{
         return cultivating;
     }
 
-    @Override
-    public boolean isBreakingThrough() {
-        return breakingThrough;
-    }
-
     /**
      *
      * @param technique the technique we are checking for
@@ -117,11 +113,6 @@ public class SimplePathData implements IPathData{
     }
 
     //────────────────────────ACCESSORS──────────────────────────
-    @Override
-    public void setBreakingThrough(boolean state) {
-        breakingThrough = state;
-    }
-
     @Override
     public void setCultivating(boolean state) {
         cultivating = state;
@@ -203,6 +194,18 @@ public class SimplePathData implements IPathData{
         if(getCurrentTechnique() != null) getCurrentTechnique().onRealmChange(entityData,getMajorRealm()+1,0,getMajorRealm(),getMinorRealm());
 
     }
+    //────────────────────────Breakthrough──────────────────────────
+    @Override
+    public IBreakthroughInstance getBreakthroughInstance() {
+        return breakthroughInstance;
+    }
+
+    @Override
+    public void setBreakthroughInstance(IBreakthroughInstance instance) {
+        this.breakthroughInstance = instance;
+    }
+
+
     //────────────────────────Data Handling──────────────────────────
 
     @Override
@@ -227,6 +230,12 @@ public class SimplePathData implements IPathData{
             techniqueHistory.add(StringTag.valueOf(technique == null ? "none" : technique.toString()));
         }
         tag.put("technique_history",techniqueHistory);
+
+        tag.putBoolean("cultivating", isCultivating());
+
+        if (breakthroughInstance != null) {
+            tag.put("breakthrough", breakthroughInstance.write());
+        }
 
         return tag;
     }
@@ -257,9 +266,12 @@ public class SimplePathData implements IPathData{
                 techniqueData.get(technique).encode(buf);
             }
         }
-        //breakthrough stuff
-        buf.writeBoolean(breakingThrough);
+        //breakthrough
+        buf.writeBoolean(breakthroughInstance != null);
 
+        if (breakthroughInstance != null) {
+            breakthroughInstance.encode(buf);
+        }
     }
 
     @Override
@@ -325,7 +337,22 @@ public class SimplePathData implements IPathData{
 
             }
 
-        }catch (Exception e){
+            this.cultivating = tag.getBoolean("cultivating");
+            this.breakthroughInstance = null;
+
+            if (tag.contains("breakthrough", Tag.TAG_COMPOUND)
+                    && getCurrentTechnique() != null) {
+
+                this.breakthroughInstance =
+                        getCurrentTechnique().breakthroughInstanceFromCompound(
+                                tag.getCompound("breakthrough"),
+                                getMajorRealm(),
+                                getMinorRealm(),
+                                getCurrentTechniqueData()
+                        );
+            }
+
+        } catch (Exception e){
             AscensionCraft.LOGGER.error("error when trying to load path data for path: "+path,e);
 
             minorRealm = 0;
@@ -335,7 +362,7 @@ public class SimplePathData implements IPathData{
             currentTechnique = null;
             techniqueHistory.clear();
             techniqueData.clear();
-            breakingThrough = false;
+            breakthroughInstance = null;
 
         }
 
@@ -368,7 +395,17 @@ public class SimplePathData implements IPathData{
             ITechniqueData techniqueDataInstance = AscensionRegistries.Techniques.TECHNIQUES_REGISTRY.get(technique).fromNetwork(buf);
             techniqueData.put(technique,techniqueDataInstance);
         }
-        breakingThrough = buf.readBoolean();
+        boolean hasBreakthrough = buf.readBoolean();
+        breakthroughInstance = null;
 
+        if (hasBreakthrough) {
+            ITechnique technique = getCurrentTechnique();
+
+            if (technique == null) {
+                throw new IllegalStateException("Received breakthrough data without a current technique for path " + path);
+            }
+
+            breakthroughInstance = technique.breakthroughInstanceFromNetwork(buf, getMajorRealm(), getMinorRealm(), getCurrentTechniqueData());
+        }
     }
 }

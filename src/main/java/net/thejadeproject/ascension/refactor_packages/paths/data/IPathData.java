@@ -6,7 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
+import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.forms.IEntityFormData;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.path_data.SyncPathData;
@@ -23,8 +25,10 @@ public interface IPathData {
     //────────────────────────GETTERS──────────────────────────
     ResourceLocation getPath();
     ResourceLocation getCurrentTechniqueId();
-    default ITechnique getCurrentTechnique(){
-        return AscensionRegistries.getRegistryObject(getCurrentTechniqueId(),AscensionRegistries.Techniques.TECHNIQUES_REGISTRY);
+    default ITechnique getCurrentTechnique() {
+        ResourceLocation techniqueId = getCurrentTechniqueId();
+        if (techniqueId == null) return null;
+        return AscensionRegistries.getRegistryObject(techniqueId, AscensionRegistries.Techniques.TECHNIQUES_REGISTRY);
     }
 
     int getMajorRealm();
@@ -33,7 +37,6 @@ public interface IPathData {
 
 
     boolean isCultivating();
-    boolean isBreakingThrough();
 
     //checks if the data has a history of cultivating this technique
     boolean hasTechnique(ResourceLocation technique);
@@ -64,7 +67,6 @@ public interface IPathData {
     }
 
     //────────────────────────ACCESSORS──────────────────────────
-    void setBreakingThrough(boolean state);
     void setCultivating(boolean state);
 
     void setMinorRealm(int minorRealm);
@@ -78,6 +80,46 @@ public interface IPathData {
     ITechniqueData removeTechniqueData(ResourceLocation technique);
 
     void removeTechniqueHistoryEntry(int realm);
+
+    //────────────────────────BREAKTHROUGH──────────────────────────
+    IBreakthroughInstance getBreakthroughInstance();
+
+    void setBreakthroughInstance(IBreakthroughInstance instance);
+
+    default boolean isBreakingThrough() {
+        return getBreakthroughInstance() != null;
+    }
+
+    default boolean beginBreakthrough(IEntityData entityData) {
+        if (entityData == null || entityData.getAttachedEntity() == null) return false;
+        if (entityData.getAttachedEntity().level().isClientSide()) return false;
+        if (isBreakingThrough()) return false;
+
+        ITechnique technique = getCurrentTechnique();
+        if (technique == null) return false;
+
+        if (!technique.canBreakthrough(entityData, getMajorRealm(), getMinorRealm(), getCurrentRealmProgress())) {
+            return false;
+        }
+
+        IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
+
+        if (instance == null) return false;
+
+        setCultivating(false);
+        setBreakthroughInstance(instance);
+
+        AscensionCraft.LOGGER.info(
+                "[Tribulation] Started for {} on path {}",
+                entityData.getAttachedEntity().getName().getString(),
+                getPath()
+        );
+
+        return true;
+    }
+
+
+
     //────────────────────────HELPERS──────────────────────────
 
     default void handleRealmChange(int newMajorRealm, int newMinorRealm, IEntityData entityData){
