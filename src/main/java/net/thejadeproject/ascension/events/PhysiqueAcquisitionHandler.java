@@ -36,6 +36,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
+import net.thejadeproject.ascension.common.items.tools.BladeItem;
 import net.thejadeproject.ascension.common.items.tools.SpearItem;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.data_attachments.attachments.PhysiqueAcquisitionCounters;
@@ -97,6 +98,25 @@ public class PhysiqueAcquisitionHandler {
     private static final float CHANCE_SWORD_MONSTER          = 0.13f;
     private static final float CHANCE_MOLTEN_CASTED          = 0.16f;
 
+    private static final float CHANCE_THUNDERFORGED_BODY  = 0.22f;
+    private static final float CHANCE_GALEBOUND_BODY      = 0.22f;
+    private static final float CHANCE_VENOM_TEMPERED_BODY = 0.22f;
+
+    private static final float CHANCE_TIDAL_SOUL          = 0.22f;
+    private static final float CHANCE_MOUNTAIN_SOUL       = 0.20f;
+    private static final float CHANCE_VERDANT_SOUL        = 0.20f;
+    private static final float CHANCE_METALBOUND_SOUL     = 0.20f;
+    private static final float CHANCE_GALEBORNE_SOUL      = 0.22f;
+    private static final float CHANCE_VENOMOUS_SOUL       = 0.22f;
+
+    private static final float CHANCE_AXE_HEWN_FRAME      = 0.23f;
+    private static final float CHANCE_PIERCING_SPINE      = 0.23f;
+    private static final float CHANCE_BLADEFLOW_MERIDIANS = 0.22f;
+    private static final float CHANCE_AXEHEART_MERIDIANS  = 0.21f;
+    private static final float CHANCE_IRON_FIST_MERIDIANS = 0.22f;
+
+    private static final float CHANCE_DEMON_FORGED_FLESH  = 0.20f;
+
     private static final int FIRE_HITS_FOR_ATTUNED          = 80;
     private static final int WATER_HITS_FOR_ATTUNED         = 60;
     private static final int EARTH_BLOCKS_FOR_ATTUNED       = 300;
@@ -132,6 +152,25 @@ public class PhysiqueAcquisitionHandler {
     private static final long MOLTEN_QUENCH_WINDOW_MS       = 10_000L;
     private static final int POISON_CYCLES_FOR_MYRIAD       = 3;
 
+    private static final int THUNDERFORGED_STRIKES        = 3;
+    private static final int GALEBOUND_FALLS              = 10;
+    private static final int VENOM_TEMPERED_HITS          = 75;
+
+    private static final int TIDAL_SOUL_DROWNING_HITS     = 120;
+    private static final int MOUNTAIN_SOUL_BLOCKS         = 750;
+    private static final int VERDANT_SOUL_LOGS            = 400;
+    private static final int METALBOUND_SOUL_ORES         = 300;
+    private static final int GALEBORNE_SOUL_WIND_HITS     = 25;
+    private static final int VENOMOUS_SOUL_KILLS          = 60;
+
+    private static final int AXE_KILLS_AXE_HEWN           = 200;
+    private static final int SPEAR_KILLS_PIERCING_SPINE   = 200;
+    private static final int BLADE_KILLS_BLADEFLOW        = 180;
+    private static final int AXE_KILLS_AXEHEART           = 250;
+    private static final int FIST_KILLS_IRON_MERIDIANS    = 240;
+
+    private static final int DEMON_FORGED_WITHER_HITS     = 40;
+
     private static final int BOSS_KILLS_SOUL_GAZE           = 100;
     private static final int BOSS_KILLS_BLOOD_WRAITH        = 100;
     private static final int BOSS_KILLS_SWORD_MONSTER       = 100;
@@ -139,7 +178,17 @@ public class PhysiqueAcquisitionHandler {
     private static final Map<UUID, ItemStack> PENDING_DUAL_SOUL = new HashMap<>();
 
     private static PhysiqueAcquisitionCounters getCounters(Player player) {
-        return player.getData(ModAttachments.PHYSIQUE_COUNTERS);
+        PhysiqueAcquisitionCounters counters = player.getData(ModAttachments.PHYSIQUE_COUNTERS);
+
+        if (counters.hybridElements == null) {
+            counters.hybridElements = new PhysiqueAcquisitionCounters.HybridElementCounters();
+        }
+
+        if (counters.hybridWeapons == null) {
+            counters.hybridWeapons = new PhysiqueAcquisitionCounters.HybridWeaponCounters();
+        }
+
+        return counters;
     }
 
     private static boolean tryGiveEssence(ServerPlayer player, String physiqueId,
@@ -151,6 +200,22 @@ public class PhysiqueAcquisitionHandler {
             player.drop(essence, false);
         }
         return true;
+    }
+
+    private static int consumeProgressRoll(ServerPlayer player, int progress, int threshold, String physiqueId, float chance, int minPurity, int maxPurity) {
+        if (progress < threshold) return progress;
+
+        progress -= threshold;
+        tryGiveEssence(player, AscensionCraft.MOD_ID + ":" + physiqueId, chance, minPurity, maxPurity);
+        return progress;
+    }
+
+    private static int tryCumulativeRoll(ServerPlayer player, int progress, int nextRoll, int interval, String physiqueId, float chance, int minPurity, int maxPurity) {
+        if (progress < nextRoll) return nextRoll;
+
+        nextRoll = advanceNextRollPastCurrent(progress, nextRoll, interval);
+        tryGiveEssence(player, AscensionCraft.MOD_ID + ":" + physiqueId, chance, minPurity, maxPurity);
+        return nextRoll;
     }
 
     private static int advanceNextRollPastCurrent(int currentKills, int nextRoll, int interval) {
@@ -172,6 +237,10 @@ public class PhysiqueAcquisitionHandler {
 
     private static boolean isSpear(ItemStack stack) {
         return stack.getItem() instanceof SpearItem || stack.is(ModTags.Items.SPEAR);
+    }
+
+    private static boolean isBlade(ItemStack stack) {
+        return stack.is(ModTags.Items.BLADE) || stack.getItem() instanceof BladeItem;
     }
 
     private static boolean isEssenceBoneOre(Block block) {
@@ -218,6 +287,7 @@ public class PhysiqueAcquisitionHandler {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         PhysiqueAcquisitionCounters c = getCounters(player);
         DamageSource src = event.getSource();
+        PhysiqueAcquisitionCounters.HybridElementCounters hybrid = c.hybridElements;
 
         if (src.is(DamageTypeTags.IS_FIRE)) {
             c.t1.fireDamageHits++;
@@ -263,6 +333,7 @@ public class PhysiqueAcquisitionHandler {
 
         if (src.is(DamageTypes.DROWN)) {
             c.t1.waterDrowningHits++;
+            hybrid.tidalSoulDrowningHits++;
 
             if (c.t3.lavaSoakComplete) {
                 long timeSinceLava = System.currentTimeMillis() - c.t3.enteredLavaTime;
@@ -280,6 +351,10 @@ public class PhysiqueAcquisitionHandler {
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":water_attuned",
                         CHANCE_WATER_ATTUNED, 22, 42);
             }
+
+            hybrid.tidalSoulDrowningHits = consumeProgressRoll(player, hybrid.tidalSoulDrowningHits, TIDAL_SOUL_DROWNING_HITS,
+                    "tidal_soul", CHANCE_TIDAL_SOUL, 17, 30
+            );
         }
 
         if (src.is(DamageTypes.WITHER) || src.is(DamageTypes.MAGIC)) {
@@ -302,6 +377,7 @@ public class PhysiqueAcquisitionHandler {
 
         if (player.hasEffect(MobEffects.POISON) && event.getNewDamage() > 0.0F && isDecayMagicDamage(src)) {
             c.t2.poisonHitsReceived++;
+            hybrid.venomTemperedHits++;
 
             if (c.t2.poisonHitsReceived >= POISON_HITS_DECAYING) {
                 c.t2.poisonHitsReceived -= POISON_HITS_DECAYING;
@@ -319,6 +395,10 @@ public class PhysiqueAcquisitionHandler {
                     }
                 }
             }
+
+            hybrid.venomTemperedHits = consumeProgressRoll(player, hybrid.venomTemperedHits, VENOM_TEMPERED_HITS,
+                    "venom_tempered_body", CHANCE_VENOM_TEMPERED_BODY, 17, 30
+            );
         }
 
         if (player.hasEffect(net.minecraft.world.effect.MobEffects.POISON)
@@ -339,12 +419,29 @@ public class PhysiqueAcquisitionHandler {
                         CHANCE_IRON_BULWARK_SPINE, 16, 27);
             }
         }
+
+        if (src.is(DamageTypes.WIND_CHARGE) && event.getNewDamage() > 0.0F) {
+            hybrid.galeborneSoulWindHits++;
+
+            hybrid.galeborneSoulWindHits = consumeProgressRoll(player, hybrid.galeborneSoulWindHits, GALEBORNE_SOUL_WIND_HITS,
+                    "galeborne_soul", CHANCE_GALEBORNE_SOUL, 17, 30
+            );
+        }
+
+        if ((src.is(DamageTypes.WITHER) || src.is(DamageTypes.WITHER_SKULL)) && event.getNewDamage() > 0.0F && player.getHealth() <= player.getMaxHealth() * 0.5F) {
+            hybrid.demonForgedHits++;
+
+            hybrid.demonForgedHits = consumeProgressRoll(player, hybrid.demonForgedHits, DEMON_FORGED_WITHER_HITS,
+                    "demon_forged_flesh", CHANCE_DEMON_FORGED_FLESH, 16, 28
+            );
+        }
     }
 
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         if (!(event.getSource().getEntity() instanceof ServerPlayer player)) return;
         PhysiqueAcquisitionCounters c = getCounters(player);
+        PhysiqueAcquisitionCounters.HybridWeaponCounters hybridWeapons = c.hybridWeapons;
         ItemStack weapon = player.getMainHandItem();
         boolean veryLowHp = player.getHealth() <= 2.0f;
         boolean isBossKill = event.getEntity().getMaxHealth() >= 100f;
@@ -413,6 +510,7 @@ public class PhysiqueAcquisitionHandler {
 
         if (isFist(weapon)) {
             c.t1.fistKills++;
+            hybridWeapons.fistKills++;
             c.t1.distinctWeaponKillTypes |= 2;
 
             if (c.t1.weapons == null) {
@@ -450,20 +548,35 @@ public class PhysiqueAcquisitionHandler {
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":tyrant_body",
                         CHANCE_TYRANT_BODY, 18, 30);
             }
+
+            hybridWeapons.nextIronFistMeridiansRoll = tryCumulativeRoll(player, hybridWeapons.fistKills, hybridWeapons.nextIronFistMeridiansRoll, FIST_KILLS_IRON_MERIDIANS,
+                    "iron_fist_meridians", CHANCE_IRON_FIST_MERIDIANS, 18, 30
+            );
         }
 
         if (isAxe(weapon)) {
             c.t1.distinctWeaponKillTypes |= 16;
             c.t1.axeKills++;
+            hybridWeapons.axeKills++;
+
             if (c.t1.axeKills >= AXE_KILLS_WILD_CLEAVER) {
                 c.t1.axeKills -= AXE_KILLS_WILD_CLEAVER;
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":wild_cleaver_veteran",
                         CHANCE_WILD_CLEAVER_VETERAN, 16, 28);
             }
+
+            hybridWeapons.nextAxeHewnFrameRoll = tryCumulativeRoll(player, hybridWeapons.axeKills, hybridWeapons.nextAxeHewnFrameRoll, AXE_KILLS_AXE_HEWN,
+                    "axe_hewn_frame", CHANCE_AXE_HEWN_FRAME, 18, 30
+            );
+            hybridWeapons.nextAxeheartMeridiansRoll = tryCumulativeRoll(player, hybridWeapons.axeKills, hybridWeapons.nextAxeheartMeridiansRoll, AXE_KILLS_AXEHEART,
+                    "axeheart_meridians", CHANCE_AXEHEART_MERIDIANS, 18, 30
+            );
         }
 
         if (isSpear(weapon)) {
             c.t1.spearKills++;
+            hybridWeapons.spearKills++;
+
             c.t1.distinctWeaponKillTypes |= 4;
 
             if (c.t1.weapons == null) {
@@ -498,6 +611,18 @@ public class PhysiqueAcquisitionHandler {
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":pointed_eyes",
                         CHANCE_POINTED_EYES, 17, 29);
             }
+
+            hybridWeapons.nextPiercingSpineRoll = tryCumulativeRoll(player, hybridWeapons.spearKills, hybridWeapons.nextPiercingSpineRoll, SPEAR_KILLS_PIERCING_SPINE,
+                    "piercing_spine", CHANCE_PIERCING_SPINE, 18, 30
+            );
+        }
+
+        if (isBlade(weapon)) {
+            hybridWeapons.bladeKills++;
+
+            hybridWeapons.nextBladeflowMeridiansRoll = tryCumulativeRoll(player, hybridWeapons.bladeKills, hybridWeapons.nextBladeflowMeridiansRoll, BLADE_KILLS_BLADEFLOW,
+                    "bladeflow_meridians", CHANCE_BLADEFLOW_MERIDIANS, 18, 30
+            );
         }
 
         if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)
@@ -535,6 +660,14 @@ public class PhysiqueAcquisitionHandler {
                         CHANCE_BLOOD_WRAITH, 16, 25);
             }
         }
+
+        if (player.hasEffect(MobEffects.POISON) && event.getEntity().getMaxHealth() >= 120.0F) {
+            c.hybridElements.venomousSoulKills++;
+
+            c.hybridElements.venomousSoulKills = consumeProgressRoll(player, c.hybridElements.venomousSoulKills, VENOMOUS_SOUL_KILLS,
+                    "venomous_soul", CHANCE_VENOMOUS_SOUL, 17, 30
+            );
+        }
     }
 
     @SubscribeEvent
@@ -543,6 +676,7 @@ public class PhysiqueAcquisitionHandler {
         PhysiqueAcquisitionCounters c = getCounters(player);
 
         c.t2.lightningStrikesReceived++;
+        c.hybridElements.thunderforgedStrikes++;
 
         if (player.isInWater()) {
             tryGiveEssence(player, AscensionCraft.MOD_ID + ":lightning_attuned",
@@ -555,6 +689,10 @@ public class PhysiqueAcquisitionHandler {
                 c.t2.lightningStrikesReceived -= 2;
             }
         }
+
+        c.hybridElements.thunderforgedStrikes = consumeProgressRoll(player, c.hybridElements.thunderforgedStrikes, THUNDERFORGED_STRIKES,
+                "thunderforged_body", CHANCE_THUNDERFORGED_BODY, 18, 30
+        );
     }
 
     @SubscribeEvent
@@ -569,21 +707,32 @@ public class PhysiqueAcquisitionHandler {
                     CHANCE_MORTAL_ESSENCE_BONE, 10, 24);
         }
 
-        if (event.getState().is(BlockTags.STONE_ORE_REPLACEABLES)
-                || block == Blocks.DEEPSLATE || block == Blocks.STONE || block == Blocks.COBBLESTONE) {
+        if (event.getState().is(BlockTags.STONE_ORE_REPLACEABLES) || block == Blocks.DEEPSLATE || block == Blocks.STONE || block == Blocks.COBBLESTONE) {
             c.t1.earthBlocksMined++;
+
             if (c.t1.earthBlocksMined >= EARTH_BLOCKS_FOR_ATTUNED) {
                 c.t1.earthBlocksMined -= EARTH_BLOCKS_FOR_ATTUNED;
+
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":earth_attuned",
                         CHANCE_EARTH_ATTUNED, 25, 45);
 
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":earth_body",
                         CHANCE_EARTH_BODY, 12, 28);
             }
+
+            if (pos.getY() < 0) {
+                c.hybridElements.mountainSoulBlocks++;
+
+                c.hybridElements.mountainSoulBlocks = consumeProgressRoll(player, c.hybridElements.mountainSoulBlocks, MOUNTAIN_SOUL_BLOCKS,
+                        "mountain_soul", CHANCE_MOUNTAIN_SOUL, 17, 30
+                );
+            }
         }
 
         if (event.getState().is(BlockTags.LOGS)) {
             c.t1.woodLogsChopped++;
+            c.hybridElements.verdantSoulLogs++;
+
             if (c.t1.woodLogsChopped >= WOOD_LOGS_FOR_ATTUNED) {
                 c.t1.woodLogsChopped -= WOOD_LOGS_FOR_ATTUNED;
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":wood_attuned",
@@ -592,12 +741,18 @@ public class PhysiqueAcquisitionHandler {
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":wood_body",
                         CHANCE_WOOD_BODY, 12, 28);
             }
+
+            c.hybridElements.verdantSoulLogs = consumeProgressRoll(player, c.hybridElements.verdantSoulLogs, VERDANT_SOUL_LOGS,
+                    "verdant_soul", CHANCE_VERDANT_SOUL, 17, 30
+            );
         }
 
         if (event.getState().is(BlockTags.IRON_ORES) || event.getState().is(BlockTags.GOLD_ORES)
                 || event.getState().is(BlockTags.COPPER_ORES) || event.getState().is(BlockTags.COAL_ORES))
         {
             c.t1.metalOresMined++;
+            c.hybridElements.metalboundSoulOres++;
+
             if (c.t1.metalOresMined >= METAL_ORES_FOR_ATTUNED) {
                 c.t1.metalOresMined -= METAL_ORES_FOR_ATTUNED;
 
@@ -607,6 +762,10 @@ public class PhysiqueAcquisitionHandler {
                 tryGiveEssence(player, AscensionCraft.MOD_ID + ":metal_body",
                         CHANCE_METAL_BODY, 12, 28);
             }
+
+            c.hybridElements.metalboundSoulOres = consumeProgressRoll(player, c.hybridElements.metalboundSoulOres, METALBOUND_SOUL_ORES,
+                    "metalbound_soul", CHANCE_METALBOUND_SOUL, 17, 30
+            );
         }
 
         if (pos.getY() < 0) {
@@ -632,11 +791,17 @@ public class PhysiqueAcquisitionHandler {
                     CHANCE_WIND_ATTUNED, 18, 30);
         }
 
-        if (distance >= TITAN_BORN_FALL_DISTANCE
-                && !hasFeatherFalling(player)
-                && !player.hasEffect(net.minecraft.world.effect.MobEffects.SLOW_FALLING)) {
+        if (distance >= TITAN_BORN_FALL_DISTANCE && !hasFeatherFalling(player) && !player.hasEffect(MobEffects.SLOW_FALLING)) {
             tryGiveEssence(player, AscensionCraft.MOD_ID + ":titan_born",
                     CHANCE_TITAN_BORN, 15, 25);
+        }
+
+        if (distance >= 20.0F && !hasFeatherFalling(player) && !player.hasEffect(MobEffects.SLOW_FALLING)) {
+            c.hybridElements.galeboundFalls++;
+
+            c.hybridElements.galeboundFalls = consumeProgressRoll(player, c.hybridElements.galeboundFalls, GALEBOUND_FALLS,
+                    "galebound_body", CHANCE_GALEBOUND_BODY, 17, 30
+            );
         }
     }
 

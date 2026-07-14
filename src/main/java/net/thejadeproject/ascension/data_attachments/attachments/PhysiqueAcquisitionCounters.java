@@ -212,25 +212,163 @@ public class PhysiqueAcquisitionCounters {
         }
     }
 
-    public static final Codec<PhysiqueAcquisitionCounters> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            T1Counters.CODEC.optionalFieldOf("t1", new T1Counters()).forGetter(c -> c.t1),
-            T2Counters.CODEC.optionalFieldOf("t2", new T2Counters()).forGetter(c -> c.t2),
-            T3Counters.CODEC.optionalFieldOf("t3", new T3Counters()).forGetter(c -> c.t3)
-    ).apply(inst, PhysiqueAcquisitionCounters::new));
+    public static class HybridElementCounters {
+
+        public static final Codec<HybridElementCounters> CODEC =
+                RecordCodecBuilder.create(inst -> inst.group(
+                        Codec.INT.optionalFieldOf("thunderforged_strikes", 0)
+                                .forGetter(c -> c.thunderforgedStrikes),
+                        Codec.INT.optionalFieldOf("galebound_falls", 0)
+                                .forGetter(c -> c.galeboundFalls),
+                        Codec.INT.optionalFieldOf("venom_tempered_hits", 0)
+                                .forGetter(c -> c.venomTemperedHits),
+
+                        Codec.INT.optionalFieldOf("tidal_soul_drowning_hits", 0)
+                                .forGetter(c -> c.tidalSoulDrowningHits),
+                        Codec.INT.optionalFieldOf("mountain_soul_blocks", 0)
+                                .forGetter(c -> c.mountainSoulBlocks),
+                        Codec.INT.optionalFieldOf("verdant_soul_logs", 0)
+                                .forGetter(c -> c.verdantSoulLogs),
+                        Codec.INT.optionalFieldOf("metalbound_soul_ores", 0)
+                                .forGetter(c -> c.metalboundSoulOres),
+                        Codec.INT.optionalFieldOf("galeborne_soul_wind_hits", 0)
+                                .forGetter(c -> c.galeborneSoulWindHits),
+                        Codec.INT.optionalFieldOf("venomous_soul_kills", 0)
+                                .forGetter(c -> c.venomousSoulKills),
+
+                        Codec.INT.optionalFieldOf("demon_forged_hits", 0)
+                                .forGetter(c -> c.demonForgedHits)
+                ).apply(inst, HybridElementCounters::new));
+
+        public int thunderforgedStrikes;
+        public int galeboundFalls;
+        public int venomTemperedHits;
+
+        public int tidalSoulDrowningHits;
+        public int mountainSoulBlocks;
+        public int verdantSoulLogs;
+        public int metalboundSoulOres;
+        public int galeborneSoulWindHits;
+        public int venomousSoulKills;
+
+        public int demonForgedHits;
+
+        public HybridElementCounters(
+                int thunderforgedStrikes,
+                int galeboundFalls,
+                int venomTemperedHits,
+                int tidalSoulDrowningHits,
+                int mountainSoulBlocks,
+                int verdantSoulLogs,
+                int metalboundSoulOres,
+                int galeborneSoulWindHits,
+                int venomousSoulKills,
+                int demonForgedHits
+        ) {
+            this.thunderforgedStrikes = thunderforgedStrikes;
+            this.galeboundFalls = galeboundFalls;
+            this.venomTemperedHits = venomTemperedHits;
+            this.tidalSoulDrowningHits = tidalSoulDrowningHits;
+            this.mountainSoulBlocks = mountainSoulBlocks;
+            this.verdantSoulLogs = verdantSoulLogs;
+            this.metalboundSoulOres = metalboundSoulOres;
+            this.galeborneSoulWindHits = galeborneSoulWindHits;
+            this.venomousSoulKills = venomousSoulKills;
+            this.demonForgedHits = demonForgedHits;
+        }
+
+        public HybridElementCounters() {}
+    }
+
+    public static class HybridWeaponCounters {
+
+        public static final Codec<HybridWeaponCounters> CODEC =
+                RecordCodecBuilder.create(inst -> inst.group(
+                        Codec.INT.optionalFieldOf("axe_kills", 0)
+                                .forGetter(c -> c.axeKills),
+                        Codec.INT.optionalFieldOf("spear_kills", 0)
+                                .forGetter(c -> c.spearKills),
+                        Codec.INT.optionalFieldOf("fist_kills", 0)
+                                .forGetter(c -> c.fistKills),
+                        Codec.INT.optionalFieldOf("blade_kills", 0)
+                                .forGetter(c -> c.bladeKills),
+
+                        Codec.INT.optionalFieldOf("next_axe_hewn_frame_roll", 200)
+                                .forGetter(c -> c.nextAxeHewnFrameRoll),
+                        Codec.INT.optionalFieldOf("next_piercing_spine_roll", 200)
+                                .forGetter(c -> c.nextPiercingSpineRoll),
+                        Codec.INT.optionalFieldOf("next_bladeflow_meridians_roll", 180)
+                                .forGetter(c -> c.nextBladeflowMeridiansRoll),
+                        Codec.INT.optionalFieldOf("next_axeheart_meridians_roll", 250)
+                                .forGetter(c -> c.nextAxeheartMeridiansRoll),
+                        Codec.INT.optionalFieldOf("next_iron_fist_meridians_roll", 240)
+                                .forGetter(c -> c.nextIronFistMeridiansRoll)
+                ).apply(inst, HybridWeaponCounters::new));
+
+        public int axeKills;
+        public int spearKills;
+        public int fistKills;
+        public int bladeKills;
+
+        public int nextAxeHewnFrameRoll;
+        public int nextPiercingSpineRoll;
+        public int nextBladeflowMeridiansRoll;
+        public int nextAxeheartMeridiansRoll;
+        public int nextIronFistMeridiansRoll;
+
+        public HybridWeaponCounters(
+                int axeKills,
+                int spearKills,
+                int fistKills,
+                int bladeKills,
+                int nextAxeHewnFrameRoll,
+                int nextPiercingSpineRoll,
+                int nextBladeflowMeridiansRoll,
+                int nextAxeheartMeridiansRoll,
+                int nextIronFistMeridiansRoll
+        ) {
+            this.axeKills = axeKills;
+            this.spearKills = spearKills;
+            this.fistKills = fistKills;
+            this.bladeKills = bladeKills;
+            this.nextAxeHewnFrameRoll = nextAxeHewnFrameRoll;
+            this.nextPiercingSpineRoll = nextPiercingSpineRoll;
+            this.nextBladeflowMeridiansRoll = nextBladeflowMeridiansRoll;
+            this.nextAxeheartMeridiansRoll = nextAxeheartMeridiansRoll;
+            this.nextIronFistMeridiansRoll = nextIronFistMeridiansRoll;
+        }
+
+        public HybridWeaponCounters() {
+            this(
+                    0, 0, 0, 0,
+                    200, 200, 180, 250, 240
+            );
+        }
+    }
+
+    public static final Codec<PhysiqueAcquisitionCounters> CODEC =
+            RecordCodecBuilder.create(inst -> inst.group(
+                    T1Counters.CODEC.optionalFieldOf("t1", new T1Counters()).forGetter(c -> c.t1),
+                    T2Counters.CODEC.optionalFieldOf("t2", new T2Counters()).forGetter(c -> c.t2),
+                    T3Counters.CODEC.optionalFieldOf("t3", new T3Counters()).forGetter(c -> c.t3),
+                    HybridElementCounters.CODEC.optionalFieldOf("hybrid_elements", new HybridElementCounters()).forGetter(c -> c.hybridElements),
+                    HybridWeaponCounters.CODEC.optionalFieldOf("hybrid_weapons", new HybridWeaponCounters()).forGetter(c -> c.hybridWeapons)
+            ).apply(inst, PhysiqueAcquisitionCounters::new));
 
     public T1Counters t1;
     public T2Counters t2;
     public T3Counters t3;
+    public HybridElementCounters hybridElements;
+    public HybridWeaponCounters hybridWeapons;
 
-    public PhysiqueAcquisitionCounters(T1Counters t1, T2Counters t2, T3Counters t3) {
+    public PhysiqueAcquisitionCounters(T1Counters t1, T2Counters t2, T3Counters t3, HybridElementCounters hybridElements, HybridWeaponCounters hybridWeapons) {
         this.t1 = t1;
         this.t2 = t2;
         this.t3 = t3;
+        this.hybridElements = hybridElements;
+        this.hybridWeapons = hybridWeapons;
     }
 
     public PhysiqueAcquisitionCounters() {
-        this.t1 = new T1Counters();
-        this.t2 = new T2Counters();
-        this.t3 = new T3Counters();
-    }
+        this(new T1Counters(), new T2Counters(), new T3Counters(), new HybridElementCounters(), new HybridWeaponCounters());}
 }
