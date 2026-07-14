@@ -20,6 +20,7 @@ import net.thejadeproject.ascension.refactor_packages.network.client_bound.entit
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.physique.SyncPhysique;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.entity_data.techniques.ShowMergePromptPayload;
 import net.thejadeproject.ascension.refactor_packages.network.client_bound.skills.SyncVoidTraversalState;
+import net.thejadeproject.ascension.refactor_packages.network.server_bound.StartTribulationPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.ToggleSuppressedPacket;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.ExtractHerbFromPouchPayload;
 import net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch.InsertCarriedHerbIntoPouchPayload;
@@ -214,6 +215,12 @@ public class ModPayloads {
                 OpenSpatialRingPayload.TYPE,
                 OpenSpatialRingPayload.STREAM_CODEC,
                 OpenSpatialRingPayload::handlePayload
+        );
+
+        registrar.playToServer(
+                StartTribulationPayload.TYPE,
+                StartTribulationPayload.STREAM_CODEC,
+                StartTribulationPayload::handlePayload
         );
 
     }

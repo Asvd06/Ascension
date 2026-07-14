@@ -169,4 +169,9 @@ public class FoundationPath extends GenericPath{
                         + foundationStage
         );
     }
+
+    @Override
+    public boolean requiresTribulation() {
+        return true;
+    }
 }

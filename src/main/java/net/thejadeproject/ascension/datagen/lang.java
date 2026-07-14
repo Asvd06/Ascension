@@ -1913,7 +1913,7 @@ public class lang extends LanguageProvider {
 
 
 
-
+        add("ascension.gui.attempt_breakthrough", "Breakthrough");
 
 
 

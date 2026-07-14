@@ -41,6 +41,8 @@ public class PathDisplayContainer extends RenderableElement {
     EasyLabel selectedTechniqueLabel;
     PathProgressBar pathProgressBar;
     FoundationProgressBar foundationProgressBar;
+    private BreakthroughButton breakthroughButton;
+    private ResourceLocation selectedPath;
     public PathDisplayContainer(UIFrame frame) {
         super(frame);
         setWidth(bg.getWidth());
@@ -73,6 +75,11 @@ public class PathDisplayContainer extends RenderableElement {
         pathContainer.getPositioning().setY(46);
         addChild(pathContainer);
 
+        breakthroughButton = new BreakthroughButton(frame);
+        breakthroughButton.getPositioning().setX(126);
+        breakthroughButton.getPositioning().setY(118);
+        addChild(breakthroughButton);
+
         pathProgressBar = new PathProgressBar(frame,null);
 
         pathProgressBar.getPositioning().setX(127);
@@ -92,26 +99,46 @@ public class PathDisplayContainer extends RenderableElement {
         addChild(foundationProgressBar);
         //TODO add description box
     }
-    public void selectPath(ResourceLocation path){
-        IPathData pathData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA).getPathData(path);
+    public void selectPath(ResourceLocation path) {
+        Minecraft minecraft = Minecraft.getInstance();
+
+        if (minecraft.player == null) return;
+
+        IEntityData entityData = minecraft.player.getData(ModAttachments.ENTITY_DATA);
+        IPathData pathData = entityData.getPathData(path);
+
+        if (pathData == null) return;
+
+        selectedPath = path;
+        boolean canStartTribulation = pathData.canStartTribulation(entityData);
+        breakthroughButton.setPath(path);
+        breakthroughButton.setVisible(canStartTribulation);
+        pathContainer.setHeight(canStartTribulation ? 68 : 85);
+
         pathContainer.removeChildren();
         selectedTechniqueLabel.setText(Component.literal("none"));
         pathProgressBar.setPath(path);
         foundationProgressBar.setPath(path);
-        if(pathData.getCurrentTechniqueId() == null){
-            IPath pathInstance = AscensionRegistries.Paths.PATHS_REGISTRY.get(path);
 
-            RenderableElement element = pathInstance.getInformationContainer(getUiFrame(),pathData);
-            pathContainer.addChild(element);
-            if(element instanceof IInformationContainer informationContainer)informationContainer.refresh();
-        }else{
+        RenderableElement element;
+
+        if (pathData.getCurrentTechniqueId() == null) {
+            IPath pathInstance = AscensionRegistries.Paths.PATHS_REGISTRY.get(path);
+            element = pathInstance.getInformationContainer(getUiFrame(), pathData);
+
+        } else {
             ITechnique technique = pathData.getCurrentTechnique();
             selectedTechniqueLabel.setText(technique.getDisplayTitle());
-            RenderableElement element = technique.getInformationContainer(getUiFrame(),pathData);
-            pathContainer.addChild(element);
-            if(element instanceof IInformationContainer informationContainer)informationContainer.refresh();
+            element = technique.getInformationContainer(getUiFrame(), pathData);
+        }
+
+        pathContainer.addChild(element);
+
+        if (element instanceof IInformationContainer informationContainer) {
+            informationContainer.refresh();
         }
     }
+
     public void addPaths(){
         //TODO handle filter from text box
         IEntityData entityData = Minecraft.getInstance().player.getData(ModAttachments.ENTITY_DATA);

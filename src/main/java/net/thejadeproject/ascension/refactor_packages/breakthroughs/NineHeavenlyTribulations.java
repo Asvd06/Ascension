@@ -94,15 +94,6 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance {
 
         double damage = baseDamage * strikeNumber;
 
-        AscensionCraft.LOGGER.info(
-                "[Tribulation] {} strike {}/{} for {} damage={}",
-                path,
-                strikeNumber,
-                TOTAL_TRIBULATIONS,
-                entity.getName().getString(),
-                damage
-        );
-
         DamageSource source = new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.LIGHTNING_BOLT));
         entity.hurt(source, (float) damage);
 
@@ -123,18 +114,24 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance {
         }
 
         int oldMajorRealm = pathData.getMajorRealm();
+        int nextMajorRealm = oldMajorRealm + 1;
 
         pathData.setBreakthroughInstance(null);
-        pathData.handleRealmChange(pathData.getMajorRealm() + 1, 0, entityData);
+        pathData.handleRealmChange(nextMajorRealm, 0, entityData);
         Entity attachedEntity = entityData.getAttachedEntity();
 
-        AscensionCraft.LOGGER.info(
-                "[Tribulation] Completed for {} on path {}: realm {} -> {}",
-                attachedEntity.getName().getString(),
-                path,
-                oldMajorRealm,
-                pathData.getMajorRealm()
-        );
+        if (nextMajorRealm > pathData.getMaxMajorRealm()) {
+            AscensionCraft.LOGGER.warn(
+                    "[Tribulation] Refused to advance {} beyond maximum realm {} on path {}",
+                    attachedEntity.getName().getString(),
+                    pathData.getMaxMajorRealm(),
+                    path
+            );
+
+            pathData.setBreakthroughInstance(null);
+            return;
+        }
+
 
         if (attachedEntity instanceof ServerPlayer player && player.connection != null) {
             pathData.sync(player);
@@ -146,13 +143,6 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance {
         IPathData pathData = entityData.getPathData(path);
 
         if (pathData != null && pathData.getBreakthroughInstance() == this) {
-            AscensionCraft.LOGGER.info(
-                    "[Tribulation] Failed due to death for {} on path {} after {}/{} strikes",
-                    entityData.getAttachedEntity().getName().getString(),
-                    path,
-                    currentTribulation,
-                    TOTAL_TRIBULATIONS
-            );
 
             pathData.setBreakthroughInstance(null);
         }

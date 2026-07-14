@@ -93,19 +93,12 @@ public interface IPathData {
     default boolean beginBreakthrough(IEntityData entityData) {
         if (entityData == null || entityData.getAttachedEntity() == null) return false;
         if (entityData.getAttachedEntity().level().isClientSide()) return false;
-        if (isBreakingThrough()) return false;
+        if (!canStartTribulation(entityData)) return false;
 
         ITechnique technique = getCurrentTechnique();
-        if (technique == null) return false;
-
-        if (!technique.canBreakthrough(entityData, getMajorRealm(), getMinorRealm(), getCurrentRealmProgress())) {
-            return false;
-        }
-
         IBreakthroughInstance instance = technique.freshBreakthroughData(entityData);
 
         if (instance == null) return false;
-
         setCultivating(false);
         setBreakthroughInstance(instance);
 
@@ -116,6 +109,26 @@ public interface IPathData {
         );
 
         return true;
+    }
+
+    default boolean canStartTribulation(IEntityData entityData) {
+        if (entityData == null) return false;
+        if (isBreakingThrough()) return false;
+
+        ITechnique technique = getCurrentTechnique();
+        if (technique == null) return false;
+
+        IPath pathInstance = AscensionRegistries.getRegistryObject(getPath(), AscensionRegistries.Paths.PATHS_REGISTRY);
+        if (pathInstance == null || !pathInstance.requiresTribulation()) return false;
+
+        int majorRealm = getMajorRealm();
+        int minorRealm = getMinorRealm();
+        if (majorRealm >= getMaxMajorRealm()) return false;
+        if (minorRealm != getMaxMinorRealm(majorRealm)) return false;
+
+        double requiredProgress = technique.getMaxQiForRealm(majorRealm, minorRealm);
+
+        return getCurrentRealmProgress() + 0.000001D >= requiredProgress;
     }
 
 
