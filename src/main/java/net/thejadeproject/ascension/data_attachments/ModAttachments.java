@@ -10,10 +10,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.data_attachments.attachments.PhysiqueAcquisitionCounters;
-import net.thejadeproject.ascension.data_attachments.attachments.PlayerInputStates;
-import net.thejadeproject.ascension.data_attachments.attachments.SoulImmolationData;
-import net.thejadeproject.ascension.data_attachments.attachments.SoulWeaponData;
+import net.thejadeproject.ascension.data_attachments.attachments.*;
 import net.thejadeproject.ascension.mob_cultivation.MobCultivationData;
 import net.thejadeproject.ascension.refactor_packages.entity_data.EntityDataProvider;
 import net.thejadeproject.ascension.refactor_packages.entity_data.GenericEntityData;
@@ -62,6 +59,15 @@ public class ModAttachments {
                     () -> AttachmentType
                             .builder(() -> new SoulImmolationData())
                             .serialize(SoulImmolationData.CODEC)
+                            .copyOnDeath()
+                            .build()
+            );
+
+    public static final Supplier<AttachmentType<SoulToolData>> SOUL_TOOL =
+            ATTACHMENT_TYPES.register(
+                    "soul_tool",
+                    () -> AttachmentType.builder(SoulToolData::new)
+                            .serialize(SoulToolData.CODEC)
                             .copyOnDeath()
                             .build()
             );

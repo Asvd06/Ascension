@@ -70,6 +70,13 @@ public class EntityQiContainer {
         return true;
     }
 
+    public void addQi(double amount) {
+        if (!Double.isFinite(amount) || amount <= 0.0D) {
+            return;
+        }
+        setCurrentQi(getCurrentQi() + amount);
+    }
+
 
     public void sync(){
         if(attachedEntity.getAttachedEntity() instanceof ServerPlayer player && player.connection != null){

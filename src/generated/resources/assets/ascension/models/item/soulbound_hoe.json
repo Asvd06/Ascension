@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:item/handheld",
+  "overrides": [
+    {
+      "model": "ascension:item/soulbound_hoe_black_iron",
+      "predicate": {
+        "ascension:soul_tool_core": 0.1
+      }
+    },
+    {
+      "model": "ascension:item/soulbound_hoe_frost_silver",
+      "predicate": {
+        "ascension:soul_tool_core": 0.2
+      }
+    },
+    {
+      "model": "ascension:item/soulbound_hoe_jade",
+      "predicate": {
+        "ascension:soul_tool_core": 0.3
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "ascension:item/soul_implement/soulbound_hoe"
+  }
+}

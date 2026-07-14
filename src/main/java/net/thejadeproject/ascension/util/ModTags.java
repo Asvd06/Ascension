@@ -72,6 +72,9 @@ public class ModTags {
         public static final TagKey<Item> SOULFORGE_MACES = createTag("soulforge/maces");
         public static final TagKey<Item> SOULFORGE_GAUNTLETS = createTag("soulforge/gauntlets");
 
+        public static final TagKey<Item> SOULBOUND_TOOLS = createTag("soulbound_tools");
+
+
 
 
         public static HashMap<String,TagKey<Item>> daoItemTags = new HashMap<>();
@@ -102,8 +105,16 @@ public class ModTags {
         public static final TagKey<Block> INCORRECT_FOR_SPIRITUAL_STONE_TOOL = createTag("incorrect_for_spiritual_stone_tool");
         public static final TagKey<Block> NEEDS_SPIRITUAL_STONE_TOOL = createTag("need_for_spiritual_stone_tool");
 
+        public static final TagKey<Block> NEEDS_FROST_SILVER_TOOL = createTag("needs_frost_silver_tool");
+        public static final TagKey<Block> INCORRECT_FOR_FROST_SILVER_TOOL = createTag("incorrect_for_frost_silver_tool");
+        public static final TagKey<Block> NEEDS_JADE_TOOL = createTag("needs_jade_tool");
+
         public static final TagKey<Block> STORAGE_BLOCKS_BLACK_IRON = createCommonTag("storage_blocks/black_iron");
         public static final TagKey<Block> STORAGE_BLOCKS_FROST_SILVER = createCommonTag("storage_blocks/frost_silver");
+
+        public static final TagKey<Block> SOUL_TOOL_VEIN_MINEABLE = createTag("soul_tool_vein_mineable");
+        public static final TagKey<Block> SOUL_TOOL_RESONANT_BLOCKS = createTag("soul_tool_resonant_blocks");
+        public static final TagKey<Block> SOUL_TOOL_PROSPERITY_BLOCKS = createTag("soul_tool_prosperity_blocks");
 
 
         public static final TagKey<Block> HERB = createCommonTag("herb");

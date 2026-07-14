@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "ascension:item/soul_implement/soulbound_pickaxe_frost_silver"
+  }
+}

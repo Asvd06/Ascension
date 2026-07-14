@@ -156,6 +156,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         withExistingParent("soulbound_mace", "item/handheld")
                 .texture("layer0", "ascension:item/soulbound_weapon_mace");
 
+        soulImplementItem(ModItems.SOULBOUND_PICKAXE.get());
+        soulImplementItem(ModItems.SOULBOUND_SHOVEL.get());
+        soulImplementItem(ModItems.SOULBOUND_HOE.get());
+        soulImplementItem(ModItems.SOULBOUND_SHEARS.get());
+
 
 
         //Items
@@ -430,6 +435,36 @@ public class ModItemModelProvider extends ItemModelProvider {
     public ItemModelBuilder basicItemWithSharedTexture(ResourceLocation item,ResourceLocation texture) {
         return (this.getBuilder(item.toString())).parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", ResourceLocation.fromNamespaceAndPath(texture.getNamespace(), "item/" + texture.getPath()));
+    }
+
+    private void soulImplementItem(Item item) {
+        String name = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)).getPath();
+        ResourceLocation corePredicate = ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_tool_core");
+
+        soulImplementVariant(name, "black_iron");
+        soulImplementVariant(name, "frost_silver");
+        soulImplementVariant(name, "jade");
+
+        withExistingParent(name, "item/handheld")
+                .texture(
+                        "layer0", ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "item/soul_implement/" + name))
+                .override()
+                .predicate(corePredicate, 0.1F)
+                .model(new ModelFile.UncheckedModelFile(AscensionCraft.MOD_ID + ":item/" + name + "_black_iron"))
+                .end()
+                .override()
+                .predicate(corePredicate, 0.2F)
+                .model(new ModelFile.UncheckedModelFile(AscensionCraft.MOD_ID + ":item/" + name + "_frost_silver"))
+                .end()
+                .override()
+                .predicate(corePredicate, 0.3F)
+                .model(new ModelFile.UncheckedModelFile(AscensionCraft.MOD_ID + ":item/" + name + "_jade"))
+                .end();
+    }
+
+    private void soulImplementVariant(String baseName, String core) {
+        withExistingParent(baseName + "_" + core, "item/handheld")
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "item/soul_implement/" + baseName + "_" + core));
     }
 
     // New method for tinted ingot models

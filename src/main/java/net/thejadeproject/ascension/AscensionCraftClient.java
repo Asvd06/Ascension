@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,6 +23,7 @@ import net.thejadeproject.ascension.clients.hud.FlameBarOverlay;
 import net.thejadeproject.ascension.clients.renderer.CauldronPedestalRenderer;
 import net.thejadeproject.ascension.clients.renderer.FlameStandRenderer;
 import net.thejadeproject.ascension.clients.renderer.PillCauldronLowHumanBlockEntityRenderer;
+import net.thejadeproject.ascension.common.items.tools.data.soul_tool.SoulToolComponent;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.entity.client.CushionRenderer;
 import net.thejadeproject.ascension.entity.client.form.PlayerBodyEntityRenderer;
@@ -191,7 +193,23 @@ public class AscensionCraftClient {
                             if (clientLevel == null) return 0.0F;
                             return ((int)(clientLevel.getGameTime() / 12L) % 5) * 0.2f;
                         });
+
+                registerSoulToolCoreProperty(ModItems.SOULBOUND_PICKAXE.get());
+                registerSoulToolCoreProperty(ModItems.SOULBOUND_SHOVEL.get());
+                registerSoulToolCoreProperty(ModItems.SOULBOUND_HOE.get());
+                registerSoulToolCoreProperty(ModItems.SOULBOUND_SHEARS.get());
             });
+        }
+
+        private static void registerSoulToolCoreProperty(Item item) {
+            ItemProperties.register(item,
+                    ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_tool_core"),
+                    (stack, level, entity, seed) -> {
+                        SoulToolComponent component = stack.get(ModDataComponents.SOUL_TOOL.get());
+
+                        return component == null ? 0.0F : component.core().modelPredicate();
+                    }
+            );
         }
 
     }

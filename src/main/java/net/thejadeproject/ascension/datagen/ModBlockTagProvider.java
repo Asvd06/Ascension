@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.thejadeproject.ascension.AscensionCraft;
@@ -27,6 +28,17 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(ModTags.Blocks.INCORRECT_FOR_SPIRITUAL_STONE_TOOL)
                 .addTag(BlockTags.INCORRECT_FOR_IRON_TOOL)
                 .remove(ModTags.Blocks.NEEDS_SPIRITUAL_STONE_TOOL);
+        tag(ModTags.Blocks.NEEDS_FROST_SILVER_TOOL);
+        tag(ModTags.Blocks.NEEDS_JADE_TOOL);
+        tag(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
+                .addTag(ModTags.Blocks.NEEDS_FROST_SILVER_TOOL)
+                .addTag(ModTags.Blocks.NEEDS_JADE_TOOL);
+        tag(ModTags.Blocks.INCORRECT_FOR_FROST_SILVER_TOOL)
+                .addTag(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
+                .remove(ModTags.Blocks.NEEDS_FROST_SILVER_TOOL);
+        tag(ModTags.Blocks.INCORRECT_FOR_JADE_TOOL)
+                .addTag(ModTags.Blocks.INCORRECT_FOR_FROST_SILVER_TOOL)
+                .remove(ModTags.Blocks.NEEDS_JADE_TOOL);
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 //FormationsArrays
@@ -410,6 +422,22 @@ public class ModBlockTagProvider extends BlockTagsProvider {
 
         tag(ModTags.Blocks.STORAGE_BLOCKS_FROST_SILVER)
                 .add(ModBlocks.FROST_SILVER_BLOCK.get());
+
+
+        tag(Tags.Blocks.ORES)
+                .add(ModBlocks.BLACK_IRON_ORE.get())
+                .add(ModBlocks.FROST_SILVER_ORE.get())
+                .add(ModBlocks.JADE_ORE.get());
+
+        tag(ModTags.Blocks.SOUL_TOOL_VEIN_MINEABLE)
+                .addTag(Tags.Blocks.ORES)
+                .add(ModBlocks.SPIRITUAL_STONE_CLUSTER.get());
+
+        tag(ModTags.Blocks.SOUL_TOOL_RESONANT_BLOCKS)
+                .addTag(ModTags.Blocks.SOUL_TOOL_VEIN_MINEABLE);
+
+        tag(ModTags.Blocks.SOUL_TOOL_PROSPERITY_BLOCKS)
+                .addTag(ModTags.Blocks.SOUL_TOOL_VEIN_MINEABLE);
 
     }
 }

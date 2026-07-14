@@ -889,6 +889,26 @@ public class lang extends LanguageProvider {
         add("ascension.skill.adamant_spirit.description", "Harden your spirit into an adamantine vessel, reducing incoming damage based on your Metal cultivation.");
         add("ascension.skill.stormheart", "Stormheart");
         add("ascension.skill.stormheart.description", "Movement gathers lightning within your spirit. Once fully charged, your next attack releases the stored storm for greatly increased damage.");
+        add("ascension.skill.soul_implement", "Soul Implement");
+        add("ascension.skill.soul_implement.description", "Manifest a mutable soulbound implement that assimilates materials and shifts between tool forms.");
+        add("ascension.skill.soul_implement.realm_too_low", "Soul Realm %s is required to manifest a Soul Implement.");
+        add("ascension.skill.soul_implement.bound", "A shapeless implement takes root within your soul.");
+        add("ascension.skill.soul_implement.summoned", "Your Soul Implement manifests.");
+        add("ascension.skill.soul_implement.unsummoned", "Your Soul Implement returns to your soul.");
+        add("ascension.skill.soul_implement.inventory_full", "Your inventory is too full to manifest the Soul Implement.");
+        add("ascension.skill.soul_implement.form_changed", "The Soul Implement shifts into a %s.");
+        add("ascension.skill.soul_implement.invalid_manifestation", "This implement does not belong to your soul.");
+        add("ascension.skill.soul_implement.needs_core", "The unformed implement must assimilate a core material first.");
+        add("ascension.skill.soul_implement.unknown_material", "The Soul Implement cannot assimilate this material.");
+        add("ascension.skill.soul_implement.core_not_upgrade", "The current %s core cannot be replaced by %s.");
+        add("ascension.skill.soul_implement.assimilated", "%s assimilation complete: %s.");
+        add("ascension.skill.soul_implement.category_locked", "%s is already occupied by %s. Dissolve the implement to rebuild it.");
+        add("ascension.skill.soul_implement.dissolve_warning", "Cast again while sneaking within 5 seconds to dissolve the entire Soul Implement.");
+        add("ascension.skill.soul_implement.dissolved", "The Soul Implement dissolves, releasing every assimilated structure.");
+        add("ascension.skill.soul_implement.removed", "Your Soul Implement fades as the Soul Forge art leaves you.");
+        add("ascension.skill.soul_implement.returned_from_container", "Your Soul Implement refuses to remain inside an external container.");
+        add("ascension.skill.soul_implement.status.unbound", "No Soul Implement is bound.");
+        add("ascension.skill.soul_implement.status.bound", "Soul Implement: %s | Core: %s | Summoned: %s");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");
@@ -1099,6 +1119,40 @@ public class lang extends LanguageProvider {
         add("item.ascension.soulbound_weapon.grade_advanced", "Your soul weapon has advanced to Grade %s");
         add("item.ascension.soulbound_weapon.tempering", "Tempering: %s / %s");
 
+        add("item.ascension.soulbound_pickaxe", "Soulbound Pickaxe");
+        add("item.ascension.soulbound_shovel", "Soulbound Shovel");
+        add("item.ascension.soulbound_hoe", "Soulbound Hoe");
+        add("item.ascension.soulbound_shears", "Soulbound Shears");
+        add("item.ascension.soul_tool.tooltip", "A mutable implement manifested from the cultivator's soul.");
+        add("item.ascension.soul_tool.form", "Form: %s");
+        add("item.ascension.soul_tool.core", "Core: %s");
+        add("item.ascension.soul_tool.harvest", "Harvest: %s");
+        add("item.ascension.soul_tool.flow", "Flow: %s");
+        add("item.ascension.soul_tool.spirit", "Spirit: %s");
+        add("ascension.soul_tool.form.pickaxe", "Pickaxe");
+        add("ascension.soul_tool.form.shovel", "Shovel");
+        add("ascension.soul_tool.form.hoe", "Hoe");
+        add("ascension.soul_tool.form.shears", "Shears");
+        add("ascension.soul_tool.core.none", "Unformed");
+        add("ascension.soul_tool.core.black_iron", "Black Iron");
+        add("ascension.soul_tool.core.frost_silver", "Frost Silver");
+        add("ascension.soul_tool.core.jade", "Jade");
+        add("ascension.soul_tool.harvest.none", "Empty");
+        add("ascension.soul_tool.harvest.diamond", "Fortunate Edge");
+        add("ascension.soul_tool.harvest.quartz", "Silken Extraction");
+        add("ascension.soul_tool.harvest.spirit_stone", "Resonant Extraction");
+        add("ascension.soul_tool.flow.none", "Empty");
+        add("ascension.soul_tool.flow.redstone", "Accelerated Flow");
+        add("ascension.soul_tool.flow.copper", "Vein Resonance");
+        add("ascension.soul_tool.flow.undead_core", "Phantom Excavation");
+        add("ascension.soul_tool.spirit.none", "Empty");
+        add("ascension.soul_tool.spirit.emerald", "Prosperity Resonance");
+        add("ascension.soul_tool.spirit.lapis", "Insight Extraction");
+        add("ascension.soul_tool.spirit.living_core", "Cycle of Renewal");
+        add("ascension.soul_tool.category.core", "Core");
+        add("ascension.soul_tool.category.harvest", "Harvest");
+        add("ascension.soul_tool.category.flow", "Flow");
+        add("ascension.soul_tool.category.spirit", "Spirit");
 
         add("item.ascension.wooden_spear", "Wooden Spear");
         add("item.ascension.stone_spear", "Stone Spear");

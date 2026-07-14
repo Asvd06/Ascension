@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.Unbreakable;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -26,6 +27,7 @@ import net.thejadeproject.ascension.common.items.tools.*;
 import net.thejadeproject.ascension.common.items.tools.herbs.MortarAndPestle;
 import net.thejadeproject.ascension.common.items.tools.herbs.SpiritualMeal;
 import net.thejadeproject.ascension.common.items.tools.hidden_weapons.NeedleItem;
+import net.thejadeproject.ascension.common.items.tools.soul_tool.*;
 import net.thejadeproject.ascension.common.items.tools.soul_weapon.*;
 import net.thejadeproject.ascension.entity.ModEntities;
 import net.thejadeproject.ascension.common.items.artifacts.*;
@@ -239,6 +241,60 @@ public class ModItems {
                             .stacksTo(1)
                             .rarity(Rarity.RARE)
                             .attributes(GauntletItem.createAttributes(Tiers.IRON))
+            )
+    );
+
+    // Soul Implement
+    public static final DeferredItem<SoulboundPickaxeItem> SOULBOUND_PICKAXE = ITEMS.register(
+                    "soulbound_pickaxe",
+                    () -> new SoulboundPickaxeItem(
+                            new Item.Properties()
+                                    .stacksTo(1)
+                                    .rarity(Rarity.EPIC)
+                                    .fireResistant()
+                                    .component(
+                                            DataComponents.UNBREAKABLE,
+                                            new Unbreakable(false)
+                                    )
+                    )
+            );
+
+    public static final DeferredItem<SoulboundShovelItem> SOULBOUND_SHOVEL = ITEMS.register("soulbound_shovel",
+            () -> new SoulboundShovelItem(
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.EPIC)
+                            .fireResistant()
+                            .component(
+                                    DataComponents.UNBREAKABLE,
+                                    new Unbreakable(false)
+                            )
+            )
+    );
+
+    public static final DeferredItem<SoulboundHoeItem> SOULBOUND_HOE = ITEMS.register("soulbound_hoe",
+            () -> new SoulboundHoeItem(
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.EPIC)
+                            .fireResistant()
+                            .component(
+                                    DataComponents.UNBREAKABLE,
+                                    new Unbreakable(false)
+                            )
+            )
+    );
+
+    public static final DeferredItem<SoulboundShearsItem> SOULBOUND_SHEARS = ITEMS.register("soulbound_shears",
+            () -> new SoulboundShearsItem(
+                    new Item.Properties()
+                            .stacksTo(1)
+                            .rarity(Rarity.EPIC)
+                            .fireResistant()
+                            .component(
+                                    DataComponents.UNBREAKABLE,
+                                    new Unbreakable(false)
+                            )
             )
     );
 

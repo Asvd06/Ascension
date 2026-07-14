@@ -1,6 +1,7 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.defense.TidalWardSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulImplementSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulWeaponSacrificeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.AstralEssenceCultivationSkill;
 import net.minecraft.resources.ResourceLocation;
@@ -332,6 +333,8 @@ public class ModSkills {
             SKILLS.register("soul_forge", SoulForgeSkill::new);
     public static final DeferredHolder<ISkill, ? extends SoulWeaponSacrificeSkill> SOUL_WEAPON_IMMOLATION =
             SKILLS.register("soul_weapon_immolation", SoulWeaponSacrificeSkill::new);
+    public static final DeferredHolder<ISkill, ? extends SoulImplementSkill> SOUL_IMPLEMENT =
+            SKILLS.register("soul_implement", SoulImplementSkill::new);
     public static final DeferredHolder<ISkill, ? extends SoulShift> SOUL_SHIFT =
             SKILLS.register("soul_shift", SoulShift::new);
 

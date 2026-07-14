@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "#ascension:needs_jade_tool"
+  ],
+  "values": [
+    "#ascension:incorrect_for_frost_silver_tool"
+  ]
+}

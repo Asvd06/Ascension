@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.data_components.herb_pouch.HerbPouchComponent;
+import net.thejadeproject.ascension.common.items.tools.data.soul_tool.SoulToolComponent;
 import net.thejadeproject.ascension.common.items.tools.data.soul_weapon.SoulWeaponComponent;
 import net.thejadeproject.ascension.events.SealedEntityData;
 import net.thejadeproject.ascension.common.items.data_components.spatial_ring.SpatialRingComponent;
@@ -30,6 +31,14 @@ public class ModDataComponents {
                     DataComponentType.<SoulWeaponComponent>builder()
                             .persistent(SoulWeaponComponent.CODEC)
                             .networkSynchronized(SoulWeaponComponent.STREAM_CODEC)
+                            .build()
+            );
+
+    public static final Supplier<DataComponentType<SoulToolComponent>> SOUL_TOOL =
+            DATA_COMPONENTS.register("soul_tool", () ->
+                    DataComponentType.<SoulToolComponent>builder()
+                            .persistent(SoulToolComponent.CODEC)
+                            .networkSynchronized(SoulToolComponent.STREAM_CODEC)
                             .build()
             );
 

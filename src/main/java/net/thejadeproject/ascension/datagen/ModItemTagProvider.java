@@ -7,6 +7,7 @@ import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.blocks.ModBlocks;
@@ -52,13 +53,25 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
 
         tag(ItemTags.PICKAXES)
-                .add(ModItems.SPIRITUAL_STONE_PICKAXE.get());
+                .add(ModItems.SPIRITUAL_STONE_PICKAXE.get())
+                .add(ModItems.SOULBOUND_PICKAXE.get());
         tag(ItemTags.AXES)
                 .add(ModItems.SPIRITUAL_STONE_AXE.get());
         tag(ItemTags.SHOVELS)
+                .add(ModItems.SOULBOUND_SHOVEL.get())
                 .add(ModItems.SPIRITUAL_STONE_SHOVEL.get());
         tag(ItemTags.HOES)
+                .add(ModItems.SOULBOUND_HOE.get())
                 .add(ModItems.SPIRITUAL_STONE_HOE.get());
+
+        tag(Tags.Items.TOOLS_SHEAR)
+                .add(ModItems.SOULBOUND_SHEARS.get());
+
+        tag(ModTags.Items.SOULBOUND_TOOLS)
+                .add(ModItems.SOULBOUND_PICKAXE.get())
+                .add(ModItems.SOULBOUND_SHOVEL.get())
+                .add(ModItems.SOULBOUND_HOE.get())
+                .add(ModItems.SOULBOUND_SHEARS.get());
 
 
         tag(ModTags.Items.REPAIR_BLACKLIST)
