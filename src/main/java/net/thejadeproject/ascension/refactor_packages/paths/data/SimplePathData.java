@@ -427,5 +427,7 @@ public class SimplePathData implements IPathData{
 
             breakthroughInstance = technique.breakthroughInstanceFromNetwork(buf, getMajorRealm(), getMinorRealm(), getCurrentTechniqueData());
         }
+
+        setRegularTribulationForced(buf.readBoolean());
     }
 }
