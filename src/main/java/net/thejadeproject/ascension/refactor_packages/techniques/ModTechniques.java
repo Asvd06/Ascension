@@ -163,7 +163,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.FIRE_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.FIRE_SPRAY.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -176,7 +180,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.WATER_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.TIDAL_WARD.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -189,7 +197,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.WOOD_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.THORN_BIND.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -202,7 +214,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.EARTH_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.SEISMIC_SOUL_PULSE.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -215,7 +231,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.METAL_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.SOULSTEEL_BLADES.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -228,7 +248,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.LIGHTNING_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.THUNDER_PALM.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -241,7 +265,11 @@ public class ModTechniques {
                             Set.of(),
                             ModSkills.WIND_CULTIVATION_SKILL.getId(),
                             List.of(),
-                            List.of()
+                            List.of(
+                                    new BasicElementalTechnique.RealmSkillUnlock(
+                                    ModSkills.GALE_STEP.getId(),
+                                    1
+                            ))
                     ).setStatChangeHandler(baseElementHandler)
             );
 
@@ -400,6 +428,85 @@ public class ModTechniques {
             TECHNIQUES.register("soul_forged_weapon_manual", () -> new SoulForgedWeaponTechnique(baseSoulHandler));
     public static final DeferredHolder<ITechnique, ? extends JadeSpiritTechnique> JADE_SPIRIT_SCRIPTURE =
             TECHNIQUES.register("jade_spirit_scripture", () -> new JadeSpiritTechnique(baseSoulHandler));
+
+
+    // ──── SOUL-ELEMENTAL HYBRID TECHNIQUES ───────────────────────────────
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> FIRE_SOUL_TECHNIQUE =
+            TECHNIQUES.register("fire_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "fire_soul_technique",
+                            ModPaths.FIRE.getId(),
+                            2.0D,
+                            ModSkills.FIRE_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> WATER_SOUL_TECHNIQUE =
+            TECHNIQUES.register("water_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "water_soul_technique",
+                            ModPaths.WATER.getId(),
+                            2.0D,
+                            ModSkills.WATER_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> WOOD_SOUL_TECHNIQUE =
+            TECHNIQUES.register("wood_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "wood_soul_technique",
+                            ModPaths.WOOD.getId(),
+                            2.0D,
+                            ModSkills.WOOD_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> EARTH_SOUL_TECHNIQUE =
+            TECHNIQUES.register("earth_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "earth_soul_technique",
+                            ModPaths.EARTH.getId(),
+                            2.0D,
+                            ModSkills.EARTH_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> METAL_SOUL_TECHNIQUE =
+            TECHNIQUES.register("metal_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "metal_soul_technique",
+                            ModPaths.METAL.getId(),
+                            2.0D,
+                            ModSkills.METAL_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> LIGHTNING_SOUL_TECHNIQUE =
+            TECHNIQUES.register("lightning_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "lightning_soul_technique",
+                            ModPaths.LIGHTNING.getId(),
+                            2.0D,
+                            ModSkills.LIGHTNING_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
+
+    public static final DeferredHolder<ITechnique, ? extends ElementalSoulTechnique> WIND_SOUL_TECHNIQUE =
+            TECHNIQUES.register("wind_soul_technique",
+                    () -> new ElementalSoulTechnique(
+                            "wind_soul_technique",
+                            ModPaths.WIND.getId(),
+                            2.0D,
+                            ModSkills.WIND_SOUL_CULTIVATION_SKILL.getId(),
+                            baseSoulHandler
+                    )
+            );
 
 
 

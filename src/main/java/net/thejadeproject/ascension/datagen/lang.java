@@ -671,6 +671,28 @@ public class lang extends LanguageProvider {
         add("ascension.technique.blade_comprehension_technique", "Mountain Cleaving Blade Art");
         add("ascension.technique.blade_comprehension_technique.description.short", "Cultivates the Blade Path through sweeping slaughter.");
         add("ascension.technique.blade_comprehension_technique.description", "A domineering blade scripture built on heavy swings and merciless arcs, crushing both bone and soul alike beneath the force of the mountain.");
+        add("ascension.technique.fire_soul_technique", "Blazing Soul Scripture");
+        add("ascension.technique.fire_soul_technique.description.short", "Tempers the soul within an inner flame.");
+        add("ascension.technique.fire_soul_technique.description", "A soul cultivation scripture that tempers the spirit with fire-aspected energy. Cultivation advances both the Soul and Fire paths.");
+        add("ascension.technique.water_soul_technique", "Tidal Soul Scripture");
+        add("ascension.technique.water_soul_technique.description.short", "Refines the soul through ceaseless spiritual tides.");
+        add("ascension.technique.water_soul_technique.description", "A soul cultivation scripture that washes and refines the spirit with water-aspected energy. Cultivation advances both the Soul and Water paths.");
+        add("ascension.technique.wood_soul_technique", "Verdant Soul Scripture");
+        add("ascension.technique.wood_soul_technique.description.short", "Nurtures the soul with enduring spiritual vitality.");
+        add("ascension.technique.wood_soul_technique.description", "A soul cultivation scripture that nurtures the spirit with wood-aspected energy. Cultivation advances both the Soul and Wood paths.");
+        add("ascension.technique.earth_soul_technique", "Mountain Soul Scripture");
+        add("ascension.technique.earth_soul_technique.description.short", "Anchors the soul with the weight of a mountain.");
+        add("ascension.technique.earth_soul_technique.description", "A soul cultivation scripture that anchors and fortifies the spirit with earth-aspected energy. Cultivation advances both the Soul and Earth paths.");
+        add("ascension.technique.metal_soul_technique", "Adamant Soul Scripture");
+        add("ascension.technique.metal_soul_technique.description.short", "Sharpens the soul into an unyielding spiritual edge.");
+        add("ascension.technique.metal_soul_technique.description", "A soul cultivation scripture that sharpens and hardens the spirit with metal-aspected energy. Cultivation advances both the Soul and Metal paths.");
+        add("ascension.technique.lightning_soul_technique", "Thunder Soul Scripture");
+        add("ascension.technique.lightning_soul_technique.description.short", "Awakens the soul through coursing heavenly thunder.");
+        add("ascension.technique.lightning_soul_technique.description", "A soul cultivation scripture that stimulates the spirit with lightning-aspected energy. Cultivation advances both the Soul and Lightning paths.");
+        add("ascension.technique.wind_soul_technique", "Gale Soul Scripture");
+        add("ascension.technique.wind_soul_technique.description.short", "Refines the soul into a swift and untethered spirit.");
+        add("ascension.technique.wind_soul_technique.description", "A soul cultivation scripture that refines the spirit with wind-aspected energy. Cultivation advances both the Soul and Wind paths.");
+
 
         // Multi Part Technique Items
         add("item.ascension.scholarly_soul_rectification_of_names", "Rectification of Names");
@@ -855,6 +877,18 @@ public class lang extends LanguageProvider {
         add("ascension.skill.wind_jump.description", "Kick off the wind while airborne, gaining another burst of height and momentum.");
         add("ascension.skill.void_traversal", "Void Traversal");
         add("ascension.skill.void_traversal.description", "Step into the folds of empty space, crossing far greater distance than the world should allow.");
+        add("ascension.skill.elemental_soul_cultivation", "%s Soul Cultivation");
+        add("ascension.skill.elemental_soul_cultivation.description", "Draw %s energy into the soul. Successful soul cultivation also grants one quarter of its progress to the corresponding elemental path.");
+        add("ascension.skill.tidal_ward", "Tidal Ward");
+        add("ascension.skill.tidal_ward.description", "Surround yourself with a flowing ward that absorbs most incoming damage until its stored power is exhausted.");
+        add("ascension.skill.seismic_soul_pulse", "Seismic Soul Pulse");
+        add("ascension.skill.seismic_soul_pulse.description", "Release a violent pulse of earth force, damaging and throwing away nearby enemies.");
+        add("ascension.skill.soulsteel_blades", "Soulsteel Blades");
+        add("ascension.skill.soulsteel_blades.description", "Manifest orbiting blades of spiritual metal and launch them toward enemies before you.");
+        add("ascension.skill.adamant_spirit", "Adamant Spirit");
+        add("ascension.skill.adamant_spirit.description", "Harden your spirit into an adamantine vessel, reducing incoming damage based on your Metal cultivation.");
+        add("ascension.skill.stormheart", "Stormheart");
+        add("ascension.skill.stormheart.description", "Movement gathers lightning within your spirit. Once fully charged, your next attack releases the stored storm for greatly increased damage.");
 
         // Body cultivation — T1
         add("ascension.skill.body_cultivation_fire", "§6Fire Body Tempering");

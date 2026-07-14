@@ -121,6 +121,11 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
                     ModSkills.AQUATIC_CIRCULATION.getId(),
                     majorRealm >= 4
             );
+            refreshSkill(
+                    entityData,
+                    ModSkills.TIDAL_WARD.getId(),
+                    majorRealm >= 4
+            );
         } else if (getElementPath().equals(ModPaths.WOOD.getId())) {
             refreshSkill(
                     entityData,
@@ -138,6 +143,11 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
                     ModSkills.THUNDER_PALM.getId(),
                     majorRealm >= 2
             );
+            refreshSkill(
+                    entityData,
+                    ModSkills.STORMHEART.getId(),
+                    majorRealm >= 2
+            );
         } else if (getElementPath().equals(ModPaths.WIND.getId())) {
             refreshSkill(
                     entityData,
@@ -147,6 +157,17 @@ public abstract class ElementalEssenceTechnique extends GenericTechnique {
             refreshSkill(
                     entityData,
                     ModSkills.WIND_JUMP.getId(),
+                    majorRealm >= 2
+            );
+        } else if (getElementPath().equals(ModPaths.METAL.getId())) {
+            refreshSkill(
+                    entityData,
+                    ModSkills.ADAMANT_SPIRIT.getId(),
+                    majorRealm >= 2
+            );
+            refreshSkill(
+                    entityData,
+                    ModSkills.SOULSTEEL_BLADES.getId(),
                     majorRealm >= 2
             );
         }

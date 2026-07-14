@@ -1,4 +1,6 @@
 package net.thejadeproject.ascension.refactor_packages.skills.custom;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.*;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.active.defense.TidalWardSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.utility.SoulWeaponSacrificeSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.essence.AstralEssenceCultivationSkill;
 import net.minecraft.resources.ResourceLocation;
@@ -13,9 +15,6 @@ import net.thejadeproject.ascension.refactor_packages.registries.AscensionRegist
 import net.thejadeproject.ascension.refactor_packages.skills.ISkill;
 import net.thejadeproject.ascension.refactor_packages.skills.ITickingSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.body.WhiteLightningFist;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.FireSpray;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.ThornBind;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.elemental.ThunderPalm;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulLanternSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulNeedle;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.active.attack.soul.SoulSuppression;
@@ -38,13 +37,10 @@ import net.thejadeproject.ascension.refactor_packages.skills.custom.cultivation.
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.BodyCultivationSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.debuff.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.form_change.EnterSpiritForm;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.StoneRootSkill;
+import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.QiSustainedBodySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.RegenerationBoostSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.body.TurbidEnergyPurgeSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.AquaticCirculationSkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.FlameTemperedBodySkill;
-import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.elemental.VerdantRecoverySkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.universal.TrueFlightSkill;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.mastery.*;
 import net.thejadeproject.ascension.refactor_packages.skills.custom.passive.weapon.projections.SwordProjectionSkill;
@@ -143,9 +139,14 @@ public class ModSkills {
             SKILLS.register("verdant_recovery", VerdantRecoverySkill::new);
     public static final DeferredHolder<ISkill, ? extends StoneRootSkill> STONE_ROOT =
             SKILLS.register("stone_root", StoneRootSkill::new);
+    public static final DeferredHolder<ISkill, AdamantSpiritSkill> ADAMANT_SPIRIT =
+            SKILLS.register("adamant_spirit", AdamantSpiritSkill::new);
+    public static final DeferredHolder<ISkill, StormheartSkill> STORMHEART =
+            SKILLS.register("stormheart", StormheartSkill::new);
 
     // Actives
-    public static final DeferredHolder<ISkill,? extends FireSpray> FIRE_SPRAY = SKILLS.register("fire_spray", FireSpray::new);
+    public static final DeferredHolder<ISkill,? extends FireSpray> FIRE_SPRAY =
+            SKILLS.register("fire_spray", FireSpray::new);
     public static final DeferredHolder<ISkill, ? extends ThornBind> THORN_BIND =
             SKILLS.register("thorn_bind", ThornBind::new);
     public static final DeferredHolder<ISkill, ? extends GaleStep> GALE_STEP =
@@ -154,6 +155,14 @@ public class ModSkills {
             SKILLS.register("thunder_palm", ThunderPalm::new);
     public static final DeferredHolder<ISkill, ? extends WindJump> WIND_JUMP =
             SKILLS.register("wind_jump", WindJump::new);
+    public static final DeferredHolder<ISkill, TidalWardSkill> TIDAL_WARD =
+            SKILLS.register("tidal_ward", TidalWardSkill::new);
+    public static final DeferredHolder<ISkill, SeismicSoulPulse> SEISMIC_SOUL_PULSE =
+            SKILLS.register("seismic_soul_pulse", SeismicSoulPulse::new);
+    public static final DeferredHolder<ISkill, SoulsteelBlades> SOULSTEEL_BLADES =
+            SKILLS.register("soulsteel_blades", SoulsteelBlades::new);
+
+
 
     // ──── BODY SKILLS ────────────────────────────────────────────
     // Cultivation — T1
@@ -281,6 +290,34 @@ public class ModSkills {
             SKILLS.register("dawning_sun_cultivation_skill",DawningSunCultivationSkill::new);
     public static final DeferredHolder<ISkill, ? extends ZenithSunCultivationSkill> ZENITH_SUN_CULTIVATION_SKILL =
             SKILLS.register("zenith_sun_cultivation_skill",ZenithSunCultivationSkill::new);
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> FIRE_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("fire_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.FIRE.getId())
+            );
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> WATER_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("water_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.WATER.getId())
+            );
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> WOOD_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("wood_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.WOOD.getId())
+            );
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> EARTH_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("earth_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.EARTH.getId())
+            );
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> METAL_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("metal_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.METAL.getId())
+            );
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> LIGHTNING_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("lightning_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.LIGHTNING.getId())
+            );
+    public static final DeferredHolder<ISkill, ElementalSoulCultivationSkill> WIND_SOUL_CULTIVATION_SKILL =
+            SKILLS.register("wind_soul_cultivation_skill",
+                    () -> new ElementalSoulCultivationSkill(ModPaths.WIND.getId())
+            );
 
     // Passives
 
@@ -454,6 +491,7 @@ public class ModSkills {
 
 
         registerTickingSkill(VOID_TRAVERSAL);
+        registerTickingSkill(STORMHEART);
     }
 
     private static void registerTickingSkill(DeferredHolder<ISkill, ? extends ISkill> skillHolder) {

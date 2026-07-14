@@ -9,16 +9,16 @@
   "ideal_temp": 640,
   "ingredients": [
     {
-      "count": 1,
-      "item": "minecraft:cave_spider_spawn_egg"
+      "count": 5,
+      "item": "minecraft:poisonous_potato"
     },
     {
       "count": 10,
       "item": "minecraft:fermented_spider_eye"
     },
     {
-      "count": 6,
-      "item": "minecraft:lapis_lazuli"
+      "count": 1,
+      "item": "ascension:jade_dew_grass"
     }
   ],
   "max_temp": 1320,
