@@ -236,5 +236,14 @@ public final class SoulWeaponHelper {
                 builder.build().withTooltip(current.showInTooltip()));
     }
 
+    public static ResourceLocation getWeaponPathSourceId(
+            SoulWeaponType type
+    ) {
+        return ResourceLocation.fromNamespaceAndPath(
+                AscensionCraft.MOD_ID,
+                "soul_forge_" + type.id() + "_path"
+        );
+    }
+
 
 }

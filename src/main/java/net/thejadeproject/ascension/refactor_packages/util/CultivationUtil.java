@@ -4,9 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.common.NeoForge;
+import net.thejadeproject.ascension.common.items.tools.soul_weapon.SoulImmolationHelper;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.IBreakthroughInstance;
-import net.thejadeproject.ascension.refactor_packages.breakthroughs.NineHeavenlyTribulations;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
 import net.thejadeproject.ascension.refactor_packages.events.CultivateEvent;
 import net.thejadeproject.ascension.refactor_packages.paths.IPath;
@@ -54,8 +53,9 @@ public class CultivationUtil {
         CultivateEvent event = new CultivateEvent(entity,base,path, attributedPaths);
         NeoForge.EVENT_BUS.post(event);
 
+        double finalRate = event.getRate() * SoulImmolationHelper.getCultivationMultiplier(entity);
 
-        if(pathData.getCurrentRealmProgress()+event.getRate() >= technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm())){
+        if(pathData.getCurrentRealmProgress()+finalRate >= technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm())){
             //TODO minor/major realm breakthrough shenanigans here
             pathData.setCurrentRealmProgress(technique.getMaxQiForRealm(pathData.getMajorRealm(),pathData.getMinorRealm()));
 
@@ -73,7 +73,7 @@ public class CultivationUtil {
                 //pathData.setCurrentRealmStability(pathData.getCurrentRealmStability()+1);
             }
         }else {
-            pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress()+event.getRate());
+            pathData.setCurrentRealmProgress(pathData.getCurrentRealmProgress()+finalRate);
         }
         if(entity instanceof ServerPlayer player && player.connection != null) pathData.sync(player);
         return true;

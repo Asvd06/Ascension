@@ -102,6 +102,11 @@ public class SoulForgedWeaponTechnique extends GenericTechnique {
                 ModSkills.SOUL_SHIFT.getId(),
                 majorRealm >= 1
         );
+        TechniqueSkillHelper.refreshSkill(
+                entityData,
+                ModSkills.SOUL_WEAPON_IMMOLATION.getId(),
+                majorRealm >= 3
+        );
     }
 
     @Override

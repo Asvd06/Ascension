@@ -105,10 +105,16 @@ public class SoulForgeSkill implements ICastableSkill {
 
         SoulWeaponHelper.copyForgedComponents(held, soulWeapon);
 
+
+        data.currentGrade = 50;
+        data.currentTempering = 0;
+        data.lifetimeMarks = 25;
+
+
         data.bound = true;
         data.weaponType = type.id();
-        data.currentGrade = 0;
-        data.currentTempering = 0;
+//        data.currentGrade = 0;
+//        data.currentTempering = 0;
         data.summoned = false;
 
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
@@ -149,7 +155,7 @@ public class SoulForgeSkill implements ICastableSkill {
         if (path == null) return false;
         IEntityData entityData = player.getData(ModAttachments.ENTITY_DATA);
         if (entityData.hasPath(path)) {return true;}
-        entityData.addEntityDataSource(PathSource.create(path, getWeaponPathSourceId(type), true));
+        entityData.addEntityDataSource(PathSource.create(path, SoulWeaponHelper.getWeaponPathSourceId(type), true));
         return entityData.hasPath(path);
     }
 
@@ -239,7 +245,7 @@ public class SoulForgeSkill implements ICastableSkill {
 
         SoulWeaponType type = SoulWeaponType.fromId(data.weaponType);
         if (type != null) {
-            attachedEntityData.removeEntitySource(getWeaponPathSourceId(type));
+            attachedEntityData.removeEntitySource(SoulWeaponHelper.getWeaponPathSourceId(type));
         }
 
         data.clear();
@@ -332,7 +338,7 @@ public class SoulForgeSkill implements ICastableSkill {
 
         if (oldType != null) {
             ResourceLocation sourceId =
-                    getWeaponPathSourceId(oldType);
+                    SoulWeaponHelper.getWeaponPathSourceId(oldType);
 
             entityData.removeEntitySource(sourceId);
         }
@@ -359,10 +365,6 @@ public class SoulForgeSkill implements ICastableSkill {
                 ),
                 true
         );
-    }
-
-    private ResourceLocation getWeaponPathSourceId(SoulWeaponType type) {
-        return ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "soul_forge_" + type.id() + "_path");
     }
 
     @Override public CastType getCastType() { return CastType.INSTANT; }

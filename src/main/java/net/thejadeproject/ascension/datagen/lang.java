@@ -823,6 +823,16 @@ public class lang extends LanguageProvider {
         add("ascension.skill.soul_forge.no_soul_path", "You need the Soul path to use Soul Forge.");
         add("ascension.skill.soul_forge.unbind_warning", " Cast Soul Forge again while sneaking within 5 seconds to sever the bond");
         add("ascension.skill.soul_forge.unbound", "The soul bond was severed. %s active grades became forged marks, leaving you with %s total marks.");
+        add("ascension.skill.soul_weapon_immolation", "Soul Weapon Immolation");
+        add("ascension.skill.soul_weapon_immolation.description", "Sacrifice the accumulated grades of your soul weapon to permanently increase cultivation speed.");
+        add("ascension.skill.soul_weapon_immolation.no_weapon", "You must have your soul weapon summoned to perform the sacrifice.");
+        add("ascension.skill.soul_weapon_immolation.position", "Hold your summoned soul weapon in your main hand, empty your offhand, sneak, and hold the skill to begin the sacrifice.");
+        add("ascension.skill.soul_weapon_immolation.too_weak", "This soul weapon has only %s grades. At least %s grades are required for a meaningful sacrifice.");
+        add("ascension.skill.soul_weapon_immolation.not_improvement", "This weapon's grade of %s would not surpass your existing sacrificed grades of %s.");
+        add("ascension.skill.soul_weapon_immolation.wait", "Your spirit is unsettled. Stop attacking before beginning the sacrifice.");
+        add("ascension.skill.soul_weapon_immolation.started", "The soul weapon begins to dissolve. Hold still for 5 seconds to sacrifice %s grades for a permanent %s%% cultivation-speed bonus.");
+        add("ascension.skill.soul_weapon_immolation.cancelled", "The soul sacrifice was interrupted. Your soul weapon remains intact.");
+        add("ascension.skill.soul_weapon_immolation.completed", "The soul weapon and its %s grades have been consumed. Your permanent cultivation-speed bonus is now %s%%.");
         add("ascension.skill.simple_soul_cultivation_skill", "Basic Soul Cultivation");
         add("ascension.skill.simple_soul_cultivation_skill.description", "A basic soul cultivation method. Quiet the body, steady the spirit, and draw soul essence into your foundation.");
         add("ascension.skill.open_sky_breathing_skill", "Open Sky Breathing");

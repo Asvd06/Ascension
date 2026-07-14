@@ -66,5 +66,6 @@ public class SoulWeaponData {
         lastSoulMajor = 0;
         lastSoulMinor = 0;
         storedWeapon = ItemStack.EMPTY;
+        unbindConfirmUntilTick = 0L;
     }
 }
