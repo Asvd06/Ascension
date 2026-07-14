@@ -527,7 +527,6 @@ public class ModItems {
             () -> new TechniqueBinderItem(new Item.Properties().stacksTo(1)));
 
 
-
     // ── Herbs ─────────────────────────────────────────────────────────────────
     public static final DeferredItem<Item> GOLDEN_SUN_LEAF = ITEMS.register("golden_sun_leaf",
             () -> new HerbItem(new Item.Properties().food(ModFoodProperties.GOLDEN_SUN_LEAF)));

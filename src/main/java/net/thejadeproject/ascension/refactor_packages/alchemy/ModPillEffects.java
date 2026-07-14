@@ -21,23 +21,23 @@ public class ModPillEffects {
 
     //TODO see if i can loop through path registry and create one for each?
     public static final DeferredHolder<IPillEffect, ? extends CultivationPillEffect> BODY_EFFECT = PILL_EFFECTS.register("body_cultivation_pill_effect",()->
-            new CultivationPillEffect(100,ModPaths.BODY.getId(),
+            new CultivationPillEffect(500,ModPaths.BODY.getId(),
                     Component.translatable("ascension.pill_effects.body_cultivation_pill_effect.name")
                     ,Component.translatable("ascension.pill_effects.body_cultivation_pill_effect.description"))
     );
     public static final DeferredHolder<IPillEffect, ? extends CultivationPillEffect> ESSENCE_EFFECT = PILL_EFFECTS.register("essence_cultivation_pill_effect",()->
-            new CultivationPillEffect(100,ModPaths.ESSENCE.getId(),
+            new CultivationPillEffect(500,ModPaths.ESSENCE.getId(),
                     Component.translatable("ascension.pill_effects.essence_cultivation_pill_effect.name")
                     ,Component.translatable("ascension.pill_effects.essence_cultivation_pill_effect.description"))
     );
     public static final DeferredHolder<IPillEffect, ? extends CultivationPillEffect> SOUL_EFFECT = PILL_EFFECTS.register("soul_cultivation_pill_effect",()->
-            new CultivationPillEffect(100,ModPaths.SOUL.getId(),
+            new CultivationPillEffect(500,ModPaths.SOUL.getId(),
                     Component.translatable("ascension.pill_effects.soul_cultivation_pill_effect.name")
                     ,Component.translatable("ascension.pill_effects.soul_cultivation_pill_effect.description"))
     );
 
     public static final DeferredHolder<IPillEffect, ? extends QiRestorePillEffect> QI_REPLENISHING_EFFECT = PILL_EFFECTS.register("qi_replenishing_effect", ()->
-            new QiRestorePillEffect(35,
+            new QiRestorePillEffect(80,
                     Component.translatable("ascension.pill_effects.qi_replenishing_effect.name"),
                     Component.translatable("ascension.pill_effects.qi_replenishing_effect.description"))
     );
@@ -152,12 +152,13 @@ public class ModPillEffects {
 
 
 
-    public static final DeferredHolder<IPillEffect, ? extends MobEffectPillEffect> QI_ENHANCED_REGEN_EFFECT = PILL_EFFECTS.register("qi_enhanced_regen_effect",()->
-            new MobEffectPillEffect(
-                    Component.translatable("ascension.pill_effects.qi_enhanced_regen_effect.name")
-                    ,Component.translatable("ascension.pill_effects.qi_enhanced_regen_effect.description"))
-                    .addEffect(new MobEffectInstance(ModEffects.QI_ENHANCED_REGEN,400,1))
-    );
+    public static final DeferredHolder<IPillEffect, ? extends MobEffectPillEffect> QI_ENHANCED_REGEN_EFFECT =
+            PILL_EFFECTS.register("qi_enhanced_regen_effect", () ->
+                    new MobEffectPillEffect(
+                            Component.translatable("ascension.pill_effects.qi_enhanced_regen_effect.name"),
+                            Component.translatable("ascension.pill_effects.qi_enhanced_regen_effect.description")
+                    ).addEffect(new MobEffectInstance(ModEffects.QI_ENHANCED_REGEN, 400, 1)).scaleAmplifierEvery(2)
+            );
 
     public static final DeferredHolder<IPillEffect, ? extends MarrowCleansePillEffect> MARROW_CLEANSE_PILL_EFFECT =
             PILL_EFFECTS.register("marrow_cleanse_pill_effect", () ->

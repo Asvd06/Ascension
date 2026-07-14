@@ -43,7 +43,7 @@ public class SpiritCondenserBlockEntity extends BlockEntity {
 
     /** Called by the block each tick a qualifying player is on top. */
     public void onPlayerStanding(Player player) {
-        //todo
+        pendingPlayer = player;
     }
 
     public boolean isActive() { return active; }
@@ -52,15 +52,20 @@ public class SpiritCondenserBlockEntity extends BlockEntity {
         boolean wasActive = active;
 
         if (pendingPlayer != null) {
-            active = true;
-            drainTimer++;
-            if (drainTimer >= DRAIN_INTERVAL) {
+            var qiContainer = pendingPlayer.getData(ModAttachments.ENTITY_DATA).getQiContainer();
+            if (qiContainer != null && qiContainer.hasQi(SpiritCondenserBlock.QI_DRAIN_PER_SECOND)) {
+                active = true;
+                drainTimer++;
+                if (drainTimer >= DRAIN_INTERVAL) {
+                    drainTimer = 0;
+                    active = qiContainer.tryConsumeQi(SpiritCondenserBlock.QI_DRAIN_PER_SECOND);
+                }
+            } else {
+                active = false;
                 drainTimer = 0;
-                //TODO drain qi
             }
         } else {
-            // Player stepped off
-            active     = false;
+            active = false;
             drainTimer = 0;
         }
 

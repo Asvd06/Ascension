@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.thejadeproject.ascension.common.blocks.custom.crops.CropAgeCache;
+import net.thejadeproject.ascension.common.blocks.custom.crops.HerbCropSavedData;
 import net.thejadeproject.ascension.common.blocks.custom.crops.GenericSlowCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.crops.StemSlowCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.crops.jadedew.JadeDewGrassCropBlock;
@@ -60,7 +60,7 @@ public class SpiritualMeal extends Item {
                 level.setBlock(pos, crop.getStateForAge(nextAge), 2);
 
                 if (nextAge == maxAge) {
-                    CropAgeCache.store(serverLevel, pos, serverLevel.getGameTime(), HerbQuality.rollQuality());
+                    HerbCropSavedData.get(serverLevel).store(pos, serverLevel.getGameTime(), HerbQuality.rollQuality());
                 }
 
                 serverLevel.sendParticles(

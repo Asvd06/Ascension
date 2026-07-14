@@ -38,8 +38,7 @@ public class PillItem extends Item {
             if (player.isShiftKeyDown()) {
                 if (!level.isClientSide()) {
                     PillProjectile proj = new PillProjectile(
-                            ModEntities.PILL_PROJECTILE.get(), level, player, stack);
-                    proj.setItem(stack);
+                            ModEntities.PILL_PROJECTILE.get(), level, player, stack.copyWithCount(1));
                     proj.shootFromRotation(player, player.getXRot(), player.getYRot(), 0f, 1.5f, 1f);
                     level.addFreshEntity(proj);
                 }
@@ -74,21 +73,22 @@ public class PillItem extends Item {
             return super.finishUsingItem(stack, level, livingEntity);
         }
 
-        double purityScale = PillEffectUtil.getPurityScale(stack);
-        double realmMultiplier = PillEffectUtil.getRealmMultiplier(stack);
-        List<IPillEffect> effects = PillEffectUtil.getPillEffects(stack);
+        ItemStack consumedPill = stack.copyWithCount(1);
+        double purityScale = PillEffectUtil.getPurityScale(consumedPill);
+        double realmMultiplier = PillEffectUtil.getRealmMultiplier(consumedPill);
+        List<IPillEffect> effects = PillEffectUtil.getPillEffects(consumedPill);
 
         ItemStack result = super.finishUsingItem(stack, level, livingEntity);
 
         boolean shouldGoOnCooldown = false;
         for (IPillEffect effect : effects) {
-            effect.tryConsume(livingEntity, stack, purityScale, realmMultiplier);
-            if (effect.shouldGoOnCooldown()) {
+            boolean applied = effect.tryConsume(livingEntity, consumedPill, purityScale, realmMultiplier);
+            if (applied && effect.shouldGoOnCooldown()) {
                 shouldGoOnCooldown = true;
             }
         }
 
-        if (shouldGoOnCooldown) {
+        if (shouldGoOnCooldown && cooldown > 0) {
             player.getCooldowns().addCooldown(this, cooldown);
         }
 
@@ -99,24 +99,24 @@ public class PillItem extends Item {
                                 List<Component> list, TooltipFlag flag) {
         super.appendHoverText(stack, ctx, list, flag);
 
-        Integer majorRealm = stack.get(ModDataComponents.PILL_MAJOR_REALM.get());
-        Integer grade      = stack.get(ModDataComponents.PILL_PURITY.get());
+        boolean hasRealm = stack.has(ModDataComponents.PILL_MAJOR_REALM.get());
+        boolean hasPurity = stack.has(ModDataComponents.PILL_PURITY.get());
         List<IPillEffect> pillEffects = PillEffectUtil.getPillEffects(stack);
 
-        if (majorRealm == null && grade == null) {
+        if (!hasRealm && !hasPurity) {
             list.add(Component.literal("Unrefined")
                     .withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-        }
+        } else {
+            int majorRealm = PillEffectUtil.getMajorRealm(stack);
+            int grade = PillEffectUtil.getPurityGrade(stack);
 
-        // ── Realm line ────────────────────────────────────────────────
-        if (majorRealm != null && grade != null) {
             list.add(Component.literal("Pill Realm: ")
                     .withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(
                                     majorRealm + " — " + PillRealmData.getMajorRealmName(majorRealm))
                             .withStyle(ChatFormatting.WHITE)));
 
-            String gradeName  = PillRealmData.getPurityGradeName(grade);
+            String gradeName = PillRealmData.getPurityGradeName(grade);
             ChatFormatting gradeColor = PillRealmData.getPurityGradeColor(grade);
             list.add(Component.literal("Purity: ")
                     .withStyle(ChatFormatting.YELLOW)
@@ -129,4 +129,5 @@ public class PillItem extends Item {
             list.add(effect.getName());
         }
     }
+
 }

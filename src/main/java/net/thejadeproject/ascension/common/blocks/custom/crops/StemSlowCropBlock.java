@@ -115,7 +115,7 @@ public class StemSlowCropBlock extends CropBlock {
             int nextAge = currentAge + 1;
             level.setBlock(pos, getStateForAge(nextAge), 2);
             if (nextAge == getMaxAge()) {
-                CropAgeCache.store(level, pos, level.getGameTime(), HerbQuality.rollQuality());
+                HerbCropSavedData.get(level).store(pos, level.getGameTime(), HerbQuality.rollQuality());
             }
         }
     }
@@ -140,11 +140,10 @@ public class StemSlowCropBlock extends CropBlock {
         int  quality  = HerbQuality.BASIC;
 
         if (level != null && pos != null) {
-            CropAgeCache.CropData data = CropAgeCache.retrieve(level, pos);
+            HerbCropSavedData.CropData data = HerbCropSavedData.get(level).remove(pos);
             if (data != null) {
                 ageTicks = Math.max(0, level.getGameTime() - data.grownSince());
-                quality  = data.quality();
-                CropAgeCache.remove(level, pos);
+                quality = data.quality();
             }
         }
 

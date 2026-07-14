@@ -110,8 +110,14 @@ public class LowHumanPillCauldronRecipe implements Recipe<PillCauldronInput> {
      */
     public float getIdealPrecision(int temp) {
         if (temp < minTemp || temp > maxTemp) return 0f;
-        int halfRange = Math.max(1, Math.max(idealTemp - minTemp, maxTemp - idealTemp));
-        return 1f - Math.min(1f, Math.abs(temp - idealTemp) / (float) halfRange);
+        if (temp == idealTemp) return 1f;
+
+        int range = temp < idealTemp
+                ? idealTemp - minTemp
+                : maxTemp - idealTemp;
+
+        if (range <= 0) return 0f;
+        return 1f - Math.min(1f, Math.abs(temp - idealTemp) / (float) range);
     }
 
 

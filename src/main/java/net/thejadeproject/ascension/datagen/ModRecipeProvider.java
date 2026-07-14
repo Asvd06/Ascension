@@ -1387,7 +1387,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .ingredient(ModItems.WHITE_JADE_ORCHID.get(), 2)
                 .ingredient(Items.BONE_BLOCK, 4)
                 .chance(0.35D)
-                .temperature(700, 1600, 1100)
+                .temperature(700, 1000, 900)
                 .timeSeconds(20)
                 .realm(4, "lower")
                 .purity(60, 100)

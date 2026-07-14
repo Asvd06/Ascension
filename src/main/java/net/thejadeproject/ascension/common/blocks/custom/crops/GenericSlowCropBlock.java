@@ -42,7 +42,7 @@ import java.util.function.Supplier;
  *
  * ── Age & Quality stamping ────────────────────────────────────────────────
  * When the crop first reaches max age (3) via randomTick, the game-time is
- * stored in CropAgeCache. On harvest, (currentTime - grownSince) is stamped
+ * stored in SavedData. On harvest, (currentTime - grownSince) is stamped
  * as HERB_AGE_TICKS and quality is copied to every drop ItemStack.
  */
 public class GenericSlowCropBlock extends CropBlock {
@@ -126,7 +126,7 @@ public class GenericSlowCropBlock extends CropBlock {
             level.setBlock(pos, getStateForAge(nextAge), 2);
 
             if (nextAge == getMaxAge()) {
-                CropAgeCache.store(level, pos, level.getGameTime(), HerbQuality.rollQuality());
+                HerbCropSavedData.get(level).store(pos, level.getGameTime(), HerbQuality.rollQuality());
             }
         }
     }
@@ -151,11 +151,10 @@ public class GenericSlowCropBlock extends CropBlock {
         int  quality  = HerbQuality.BASIC;
 
         if (level != null && pos != null) {
-            CropAgeCache.CropData data = CropAgeCache.retrieve(level, pos);
+            HerbCropSavedData.CropData data = HerbCropSavedData.get(level).remove(pos);
             if (data != null) {
                 ageTicks = Math.max(0, level.getGameTime() - data.grownSince());
-                quality  = data.quality();
-                CropAgeCache.remove(level, pos);
+                quality = data.quality();
             }
         }
 

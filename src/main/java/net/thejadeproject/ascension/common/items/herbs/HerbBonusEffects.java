@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
+import net.thejadeproject.ascension.util.ModTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,5 +106,23 @@ public class HerbBonusEffects {
 
         if (eligible.isEmpty()) return "";
         return eligible.get(ThreadLocalRandom.current().nextInt(eligible.size()));
+    }
+
+    public static int calcPillRealmBonus(List<ItemStack> inputs) {
+        int weakestBonus = Integer.MAX_VALUE;
+        boolean foundHerb = false;
+
+        for (ItemStack stack : inputs) {
+            if (!isRealmHerb(stack)) continue;
+
+            foundHerb = true;
+            weakestBonus = Math.min(weakestBonus, HerbQuality.getPillRealmBonus(stack));
+        }
+
+        return foundHerb ? weakestBonus : 0;
+    }
+
+    private static boolean isRealmHerb(ItemStack stack) {
+        return !stack.isEmpty() && stack.is(ModTags.Items.HERBS);
     }
 }

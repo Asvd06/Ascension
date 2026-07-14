@@ -10,8 +10,8 @@ public final class SoulImmolationHelper {
     public static final int MINIMUM_SACRIFICE_SCORE = 10;
 
     private static final double BASE_BOOST = 0.10D;
-    private static final double MAX_BOOST = 0.65D;
-    private static final double GROWTH_DIVISOR = 126.0D;
+    private static final double MAX_BOOST = 0.80D;
+    private static final double HALF_LIFE_SCORE = 150.0D;
 
     private SoulImmolationHelper() {}
 
@@ -20,10 +20,7 @@ public final class SoulImmolationHelper {
             return 0;
         }
 
-        return Math.max(
-                0,
-                data.currentGrade + data.lifetimeMarks
-        );
+        return Math.max(0, data.currentGrade + data.lifetimeMarks);
     }
 
     public static double calculateCultivationBoost(int immolationScore) {
@@ -31,16 +28,8 @@ public final class SoulImmolationHelper {
             return 0.0D;
         }
 
-        double boost =
-                BASE_BOOST
-                        + (MAX_BOOST - BASE_BOOST)
-                        * (
-                        1.0D - Math.exp(
-                                -(immolationScore - MINIMUM_SACRIFICE_SCORE)
-                                        / GROWTH_DIVISOR
-                        )
-                );
-
+        double x = immolationScore - MINIMUM_SACRIFICE_SCORE;
+        double boost = MAX_BOOST - (MAX_BOOST - BASE_BOOST) * HALF_LIFE_SCORE / (HALF_LIFE_SCORE + x);
         return Math.min(boost, MAX_BOOST);
     }
 
@@ -49,15 +38,12 @@ public final class SoulImmolationHelper {
             return 1.0D;
         }
 
-        int score = entity.getData(ModAttachments.SOUL_IMMOLATION)
-                .getHighestSacrificedScore();
+        int score = entity.getData(ModAttachments.SOUL_IMMOLATION).getHighestSacrificedScore();
 
         return 1.0D + calculateCultivationBoost(score);
     }
 
     public static int getDisplayedBoostPercent(int immolationScore) {
-        return (int) Math.round(
-                calculateCultivationBoost(immolationScore) * 100.0D
-        );
+        return (int) Math.round(calculateCultivationBoost(immolationScore) * 100.0D);
     }
 }

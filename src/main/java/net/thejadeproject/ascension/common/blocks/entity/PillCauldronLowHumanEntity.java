@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
@@ -24,7 +25,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.crafting.SizedIngredient;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.herbs.HerbBonusEffects;
+import net.thejadeproject.ascension.common.items.physiques.FiveElementHarmonyPillItem;
+import net.thejadeproject.ascension.common.items.pills.PillRealmData;
 import net.thejadeproject.ascension.menus.custom.pill_cauldron.PillCauldronLowHumanMenu;
 import net.thejadeproject.ascension.recipe.LowHumanPillCauldronRecipe;
 import net.thejadeproject.ascension.recipe.ModRecipes;
@@ -63,6 +67,7 @@ public class PillCauldronLowHumanEntity extends BlockEntity implements MenuProvi
     private static final int MIRROR_RIGHT   = 2;
     private static final int OUTPUT_SUCCESS = 3;
     private static final int OUTPUT_FAIL    = 4;
+    private static final int MAX_CURRENT_PILL_REALM = 5;
 
     public final ItemStackHandler itemHandler = new ItemStackHandler(5) {
         @Override
@@ -291,16 +296,30 @@ public class PillCauldronLowHumanEntity extends BlockEntity implements MenuProvi
         return getMatchingRecipe(fs);
     }
 
-    private boolean canOutput(LowHumanPillCauldronRecipe r) {
-        ItemStack successSlot = itemHandler.getStackInSlot(OUTPUT_SUCCESS);
-        ItemStack failSlot    = itemHandler.getStackInSlot(OUTPUT_FAIL);
-        boolean canSuccess = successSlot.isEmpty() ||
-                (ItemStack.isSameItemSameComponents(successSlot, r.getSuccess()) &&
-                        successSlot.getCount() + r.getSuccess().getCount() <= successSlot.getMaxStackSize());
-        boolean canFail = failSlot.isEmpty() ||
-                (ItemStack.isSameItemSameComponents(failSlot, r.getFail()) &&
-                        failSlot.getCount() + r.getFail().getCount() <= failSlot.getMaxStackSize());
-        return canSuccess && canFail;
+    private boolean canOutput(LowHumanPillCauldronRecipe recipe) {
+        ItemStack success = recipe.getSuccess();
+        ItemStack fail = recipe.getFail();
+        return canAcceptOutput(
+                itemHandler.getStackInSlot(OUTPUT_SUCCESS),
+                success,
+                supportsPillData(success)
+        ) && canAcceptOutput(
+                itemHandler.getStackInSlot(OUTPUT_FAIL),
+                fail,
+                false
+        );
+    }
+
+    private boolean canAcceptOutput(ItemStack current, ItemStack output, boolean dynamicComponents) {
+        if (current.isEmpty()) return true;
+        if (dynamicComponents) return false;
+        return ItemStack.isSameItemSameComponents(current, output)
+                && current.getCount() + output.getCount() <= current.getMaxStackSize();
+    }
+
+    private boolean supportsPillData(ItemStack stack) {
+        return stack.has(ModDataComponents.PILL_EFFECTS.get())
+                || stack.getItem() instanceof FiveElementHarmonyPillItem;
     }
 
     private void craftItem(FlameStandBlockEntity flameStand, LowHumanPillCauldronRecipe recipe) {
@@ -321,10 +340,19 @@ public class PillCauldronLowHumanEntity extends BlockEntity implements MenuProvi
         int rawPurity       = Math.min(100, tempPurity + herbPurityBonus);
 
         // ── Realm calculation ─────────────────────────────────────
-        int baseRealm = Math.min(9, Math.max(1,
-                recipe.getPillRealmMajor() + flameStand.getRealmBonus()));
+        int herbRealmBonus = HerbBonusEffects.calcPillRealmBonus(inputs);
+        int baseRealm = Mth.clamp(
+                recipe.getPillRealmMajor() + herbRealmBonus,
+                1,
+                MAX_CURRENT_PILL_REALM
+        );
 
-        int finalMajorRealm = resolveRealm(baseRealm, rawPurity, inputs);
+        int finalMajorRealm = resolveRealm(
+                baseRealm,
+                rawPurity,
+                inputs,
+                recipe.getPurityMin()
+        );
         int finalPurity     = rawPurity;
 
         // If realm was downgraded (degraded craft), re-roll purity to < 90
@@ -340,8 +368,10 @@ public class PillCauldronLowHumanEntity extends BlockEntity implements MenuProvi
         ItemStack output  = (isSuccess ? recipe.getSuccess() : recipe.getFail()).copy();
         int targetSlot    = isSuccess ? OUTPUT_SUCCESS : OUTPUT_FAIL;
 
-        // New signature — no minor realm parameter
-        PillEffectUtil.applyPillData(output, finalMajorRealm, finalPurity, bonusEffect);
+        if (isSuccess && supportsPillData(output)) {
+            int finalGrade = PillRealmData.purityToGrade(finalPurity);
+            PillEffectUtil.applyPillData(output, finalMajorRealm, finalGrade, bonusEffect);
+        }
 
         ItemStack current = itemHandler.getStackInSlot(targetSlot);
         if (current.isEmpty()) {
@@ -370,19 +400,14 @@ public class PillCauldronLowHumanEntity extends BlockEntity implements MenuProvi
      * pill is re-rolled to a random value below 90 by the caller.
      */
     private int resolveRealm(int baseRealm, int purity,
-                             List<ItemStack> inputs) {
-        // ── Downgrade check ───────────────────────────────────────
-        // A purity of 0 would mean the craft failed entirely (handled by fail output).
-        // Downgrade only if purity rolled below 1 (shouldn't happen in practice, but defensive).
-        // The real downgrade trigger: purity fell below Basic threshold (1) is impossible.
-        // Instead: if baseRealm > 1 and purity < 10 (extremely bad craft), downgrade.
-        if (baseRealm > 1 && purity < 10) {
+                             List<ItemStack> inputs, int requiredPurity) {
+        if (baseRealm > 1 && purity < requiredPurity) {
             return baseRealm - 1;
         }
 
         // ── Upgrade check ────────────────────────────────────────
         if (purity < 100) return baseRealm; // must be exactly 100 (Peak) to upgrade
-        if (baseRealm >= 9) return baseRealm; // already at max
+        if (baseRealm >= MAX_CURRENT_PILL_REALM) return baseRealm; // already at max
 
         double upgradeChance = 0.15; // base 15%
         double herbBonus     = HerbBonusEffects.calcHerbRealmUpgradeChance(inputs);

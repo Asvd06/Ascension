@@ -32,8 +32,8 @@
             {
               "component": "ascension:pill_purity",
               "function": "ascension:set_random_int_component",
-              "max": 100,
-              "min": 10
+              "max": 3,
+              "min": 0
             },
             {
               "add": false,

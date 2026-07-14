@@ -183,6 +183,18 @@ public class HerbQuality {
         return 0.0;
     }
 
+    public static int getPillRealmBonus(ItemStack stack) {
+        if (stack.isEmpty()) return 0;
+
+        Long ageComp = stack.get(ModDataComponents.HERB_AGE_TIER.get());
+        long age = ageComp != null ? ageComp : 0L;
+
+        if (age >= AGE_ANCIENT) return 3;
+        if (age >= AGE_ELDER)   return 2;
+        if (age >= AGE_MATURE)  return 1;
+        return 0;
+    }
+
     // ── Tooltip lines ─────────────────────────────────────────────
     /**
      * Appends Quality and Age tooltip lines to the given list.

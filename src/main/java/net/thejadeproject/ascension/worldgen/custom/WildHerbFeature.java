@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.thejadeproject.ascension.common.blocks.custom.crops.CropAgeCache;
+import net.thejadeproject.ascension.common.blocks.custom.crops.HerbCropSavedData;
 import net.thejadeproject.ascension.common.blocks.custom.crops.GenericSlowCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.crops.StemSlowCropBlock;
 import net.thejadeproject.ascension.common.blocks.custom.crops.jadedew.JadeDewGrassCropBlock;
@@ -62,7 +62,7 @@ public class WildHerbFeature extends Feature<WildHerbFeatureConfig> {
         long wildAge    = HerbQuality.AGE_MATURE + (long)(random.nextDouble() * ageRange);
         int  quality    = HerbQuality.rollQuality();
         ServerLevel sl  = level.getLevel();
-        CropAgeCache.store(sl, plantPos, sl.getGameTime() - wildAge, quality);
+        HerbCropSavedData.get(sl).store(plantPos, sl.getGameTime() - wildAge, quality);
 
         return true;
     }

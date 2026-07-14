@@ -25,17 +25,17 @@ public class PillProjectile extends ThrowableItemProjectile {
     public PillProjectile(EntityType<? extends PillProjectile> entityType, Level level, ItemStack pillItem) {
         super(entityType, level);
         this.defaultItem = pillItem.getItem();
-        setItem(pillItem.copy());
+        setItem(pillItem.copyWithCount(1));
     }
     public PillProjectile(EntityType<? extends PillProjectile> entityType, Level level, LivingEntity shooter, ItemStack pillItem) {
         super(entityType, shooter, level);
         this.defaultItem = pillItem.getItem();
-        setItem(pillItem.copy());
+        setItem(pillItem.copyWithCount(1));
     }
     public PillProjectile(EntityType<? extends PillProjectile> entityType, Level level, double x, double y, double z, ItemStack pillItem) {
         super(entityType, x, y, z, level);
         this.defaultItem = pillItem.getItem();
-        setItem(pillItem.copy());
+        setItem(pillItem.copyWithCount(1));
     }
     @Override
     protected Item getDefaultItem() {
@@ -65,10 +65,13 @@ public class PillProjectile extends ThrowableItemProjectile {
         Entity entity = result.getEntity();
 
         if (!this.level().isClientSide && entity instanceof LivingEntity livingEntity) {
-            // Apply the effect to the hit entity
-            List<IPillEffect> effects = PillEffectUtil.getPillEffects(getItem());
-            for(IPillEffect effect : effects){
-                effect.tryConsume(livingEntity,getItem(),PillEffectUtil.getPurityScale(getItem()),PillEffectUtil.getRealmMultiplier(getItem()));
+            ItemStack pill = getItem();
+            double purityScale = PillEffectUtil.getPurityScale(pill);
+            double realmMultiplier = PillEffectUtil.getRealmMultiplier(pill);
+            List<IPillEffect> effects = PillEffectUtil.getPillEffects(pill);
+
+            for (IPillEffect effect : effects) {
+                effect.tryConsume(livingEntity, pill, purityScale, realmMultiplier);
             }
         }
     }

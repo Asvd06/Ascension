@@ -15,9 +15,9 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.common.items.pills.PillRealmData;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniqueManualFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
@@ -165,7 +165,7 @@ public class ModChestLootTables implements LootTableSubProvider {
                                         .setWeight(9))
                                 .add(LootItem.lootTableItem(ModItems.QI_REPLENISHING_PILL.get())
                                         .apply(SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3))
-                                        .apply(SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 100))
+                                        .apply(SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_PEAK))
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
                                         .setWeight(21))
                                 .add(LootItem.lootTableItem(ModItems.NETHERITE_BLADE)

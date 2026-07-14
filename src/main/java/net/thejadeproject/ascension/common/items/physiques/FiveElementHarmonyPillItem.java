@@ -15,6 +15,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.pills.PillRealmData;
+import net.thejadeproject.ascension.refactor_packages.util.PillEffectUtil;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.physiques.ModPhysiques;
 import net.thejadeproject.ascension.refactor_packages.physiques.custom.EvolvingPhysique;
@@ -63,13 +64,14 @@ public class FiveElementHarmonyPillItem extends Item {
             return result;
         }
 
+        int purityGrade = PillEffectUtil.getPurityGrade(stack);
+
         if (!player.getAbilities().instabuild) stack.shrink(1);
 
-        // PILL_PURITY now stores a grade (0-3). Pass the grade directly.
-        // ElementalBodyTransformationEvents.beginTransformation should accept
-        // a grade in place of the old raw purity; adjust its signature if needed.
-        Integer grade = stack.get(ModDataComponents.PILL_PURITY.get());
-        ElementalBodyTransformationEvents.beginTransformation(player, grade != null ? grade : PillRealmData.GRADE_BASIC);
+        ElementalBodyTransformationEvents.beginTransformation(
+                player,
+                purityGrade
+        );
         return result;
     }
 
@@ -77,12 +79,14 @@ public class FiveElementHarmonyPillItem extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
 
-        Integer majorRealm = stack.get(ModDataComponents.PILL_MAJOR_REALM.get());
-        Integer grade      = stack.get(ModDataComponents.PILL_PURITY.get());
+        boolean hasRealm = stack.has(ModDataComponents.PILL_MAJOR_REALM.get());
+        boolean hasPurity = stack.has(ModDataComponents.PILL_PURITY.get());
 
-        if (majorRealm == null && grade == null) {
+        if (!hasRealm && !hasPurity) {
             tooltip.add(Component.literal("Unrefined").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-        } else if (majorRealm != null && grade != null) {
+        } else {
+            int majorRealm = PillEffectUtil.getMajorRealm(stack);
+            int grade = PillEffectUtil.getPurityGrade(stack);
             tooltip.add(Component.literal("Pill Realm: ").withStyle(ChatFormatting.GOLD)
                     .append(Component.literal(majorRealm + " — " + PillRealmData.getMajorRealmName(majorRealm)).withStyle(ChatFormatting.WHITE)));
             tooltip.add(Component.literal("Purity: ").withStyle(ChatFormatting.YELLOW)

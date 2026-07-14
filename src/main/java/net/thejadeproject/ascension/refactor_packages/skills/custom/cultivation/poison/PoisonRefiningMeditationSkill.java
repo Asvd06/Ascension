@@ -6,8 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.ModItems;
-import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.pills.PillItem;
 import net.thejadeproject.ascension.data_attachments.ModAttachments;
 import net.thejadeproject.ascension.refactor_packages.entity_data.IEntityData;
@@ -20,6 +20,7 @@ import net.thejadeproject.ascension.refactor_packages.techniques.ITechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.handlers.MyriadVenomTechniqueData;
 import net.thejadeproject.ascension.refactor_packages.techniques.custom.poison.MyriadVenomRefinementTechnique;
 import net.thejadeproject.ascension.refactor_packages.util.CultivationUtil;
+import net.thejadeproject.ascension.refactor_packages.util.PillEffectUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +31,6 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
     private static final double BASE_GAIN         = 20.0D;
     private static final double BASE_QI_COST      = 15.0D;
     private static final double QI_COST_PER_REALM = 10.0D;
-    private static final double REALM_STEP        = 0.5D;
-    private static final double PURITY_DIVISOR    = 100.0D;
 
     private static final Map<Item, Double> POISON_ITEM_VALUES = new HashMap<>();
 
@@ -82,15 +81,11 @@ public class PoisonRefiningMeditationSkill extends SimplePassiveSkill {
         double qiCost;
 
         if (item instanceof PillItem) {
-            Integer pillMajorRealm = stack.get(ModDataComponents.PILL_MAJOR_REALM.get());
-            Integer pillPurity     = stack.get(ModDataComponents.PILL_PURITY.get());
+            int resolvedRealm = PillEffectUtil.getMajorRealm(stack);
 
-            int resolvedRealm  = pillMajorRealm != null ? pillMajorRealm : 1;
-            int resolvedPurity = pillPurity     != null ? pillPurity     : 1;
-
-            realmMultiplier = 1.0D + (resolvedRealm - 1) * REALM_STEP;
-            purityScale     = resolvedPurity / PURITY_DIVISOR;
-            qiCost          = BASE_QI_COST + (resolvedRealm * QI_COST_PER_REALM);
+            realmMultiplier = PillEffectUtil.getRealmMultiplier(resolvedRealm);
+            purityScale = PillEffectUtil.getPurityScale(stack);
+            qiCost = BASE_QI_COST + (resolvedRealm * QI_COST_PER_REALM);
         } else {
             realmMultiplier = 1.0D;
             purityScale     = 1.0D;

@@ -6,7 +6,7 @@
     "count": 1,
     "id": "ascension:pill_residue"
   },
-  "ideal_temp": 1100,
+  "ideal_temp": 900,
   "ingredients": [
     {
       "count": 2,
@@ -21,7 +21,7 @@
       "item": "minecraft:bone_block"
     }
   ],
-  "max_temp": 1600,
+  "max_temp": 1000,
   "min_temp": 700,
   "pill_realm_major": 4,
   "purity_max": 100,

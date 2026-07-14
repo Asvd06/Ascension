@@ -179,7 +179,7 @@ public class ModDataComponents {
 
 
 
-    // ── Pill: purity (1-100, used for currentGrade names in tooltip) ────
+    // ── Pill: purity grade (0-3) ─────────────────────────────────────
     public static final Supplier<DataComponentType<Integer>> PILL_PURITY = DATA_COMPONENTS.register(
             "pill_purity",
             () -> DataComponentType.<Integer>builder()

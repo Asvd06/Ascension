@@ -36,10 +36,6 @@ public class PillResidue extends Item {
                 //player.die(damageSource);
             }
 
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-
             if(consumer != null) consumer.accept(stack,level,livingEntity);
         }
         return super.finishUsingItem(stack, level, livingEntity);

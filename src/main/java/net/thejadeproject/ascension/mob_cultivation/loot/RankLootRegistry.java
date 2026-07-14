@@ -4,9 +4,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.thejadeproject.ascension.AscensionCraft;
-import net.thejadeproject.ascension.common.blocks.ModBlocks;
 import net.thejadeproject.ascension.common.items.ModItems;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
+import net.thejadeproject.ascension.common.items.pills.PillRealmData;
 import net.thejadeproject.ascension.datagen.loot.functions.SetRandomIntComponentFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniqueManualFunction;
 import net.thejadeproject.ascension.datagen.loot.functions.SetTechniquePageFunction;
@@ -126,13 +126,13 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.SOUL_ANCHOR_TALISMAN.get()), 8, 1.0f, 1, 1),
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         register("formation_establishment", 2, 0.48f, List.of(
@@ -160,20 +160,20 @@ public final class RankLootRegistry {
                 entry(new ItemStack(ModItems.DEATH_RECALL_TALISMAN.get()), 6, 1.0f, 1, 1),
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
 
         ));
 
@@ -210,20 +210,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 2),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         // ═════════════════════════════════════════════════════════════════════
@@ -268,20 +268,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 15,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         register("golden_core", 2, 0.58f, List.of(
@@ -327,20 +327,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 1, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         // Rank 3 — max technique chances + full random page ranges
@@ -389,20 +389,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 3),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         // ═════════════════════════════════════════════════════════════════════
@@ -452,20 +452,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 20,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         register("nascent_soul", 2, 0.68f, List.of(
@@ -513,20 +513,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 2, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         // Rank 3 — max everything
@@ -576,20 +576,20 @@ public final class RankLootRegistry {
 
                 pillEntry(ModItems.ESSENCE_GATHERING_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 3, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.SOUL_FOCUS_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 3, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.INNER_REINFORCEMENT_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 3, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
 
                 pillEntry(ModItems.QI_ENHANCED_REGEN_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 3, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90)),
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED)),
                 pillEntry(ModItems.QI_REPLENISHING_PILL.get(), 22,
                         SetRandomIntComponentFunction.builder(ModDataComponents.PILL_MAJOR_REALM.get(), 3, 4),
-                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), 10, 90))
+                        SetRandomIntComponentFunction.builder(ModDataComponents.PILL_PURITY.get(), PillRealmData.GRADE_BASIC, PillRealmData.GRADE_ADVANCED))
         ));
 
         // Future realms — placeholder scaling
