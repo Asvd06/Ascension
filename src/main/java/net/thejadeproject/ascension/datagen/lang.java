@@ -1124,16 +1124,16 @@ public class lang extends LanguageProvider {
         add("container.ascension.other_upgrades", "§6Upgrades");
 
 
-
         //Advancements
         add("advancements.ascension.root.install", "Ascension Loaded");
         add("advancements.ascension.root.welcome", "Welcome to the world of Ascension! We hope you will cultivate to immortality!");
 
 
-
-        //Death msgs
+        //Pill Residue
         add("death.attack.pill_residue", "%1$s finally learned not to eat Pill Residue leftover in the Pill Cauldron");
-
+        add("ascension.message.pill_residue.cripple", "The impurities ravage your body, leaving your physique crippled.");
+        add("ascension.message.pill_residue.severed_meridians", "The residue tears through your cultivation channels, severing your meridians.");
+        add("ascension.message.pill_residue.dull_mind", "Toxic impurities cloud your spirit, leaving your mind dull and unresponsive.");
 
 
         //Tools and Swords and Armor
@@ -1143,8 +1143,6 @@ public class lang extends LanguageProvider {
         add("item.ascension.gold_blade", "Gold Blade");
         add("item.ascension.diamond_blade", "Diamond Blade");
         add("item.ascension.netherite_blade", "Netherite Blade");
-
-
 
 
         add("item.ascension.cultivators_sword_iron", "Iron Cultivators Sword");
