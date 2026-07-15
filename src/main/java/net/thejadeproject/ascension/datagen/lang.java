@@ -1590,7 +1590,13 @@ public class lang extends LanguageProvider {
 
 
         add("item.ascension.herb_pouch", "Herb Pouch");
-
+        add("gui.ascension.herb_pouch.page", "%s/%s");
+        add("gui.ascension.herb_pouch.capacity", "%s / %s");
+        add("gui.ascension.herb_pouch.extract_first", "Left-click: Take first stored variant");
+        add("gui.ascension.herb_pouch.extract_last", "Right-click: Take last stored variant");
+        add("gui.ascension.herb_pouch.extract_age", "Shift + Left-click: Take all from this age tier");
+        add("gui.ascension.herb_pouch.extract_all", "Shift + Right-click: Take every age tier");
+        add("gui.ascension.herb_pouch.stored_amount", "Stored: %s");
 
 
         //Decorational Blocks

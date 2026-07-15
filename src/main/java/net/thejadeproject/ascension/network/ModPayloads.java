@@ -39,7 +39,7 @@ import net.thejadeproject.ascension.refactor_packages.network.server_bound.skill
 
 public class ModPayloads {
     public static void registerPayloads(final RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar(AscensionCraft.MOD_ID).versioned("1.0");
+        final PayloadRegistrar registrar = event.registrar(AscensionCraft.MOD_ID).versioned("1.1");
 
         //=================================== CLIENT======================================
         registrar.playToClient(

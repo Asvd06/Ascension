@@ -1,34 +1,53 @@
 package net.thejadeproject.ascension.refactor_packages.network.server_bound.herb_pouch;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.thejadeproject.ascension.AscensionCraft;
 import net.thejadeproject.ascension.common.items.data_components.ModDataComponents;
 import net.thejadeproject.ascension.common.items.data_components.herb_pouch.HerbPouchComponent;
+import net.thejadeproject.ascension.common.items.data_components.herb_pouch.HerbPouchExtractionMode;
 import net.thejadeproject.ascension.menus.custom.herb_pouch.HerbPouchMenu;
-import net.thejadeproject.ascension.refactor_packages.network.client_bound.herb_pouch.SyncHerbPouchPayload;
+import net.thejadeproject.ascension.util.ModTags;
 
 import java.util.List;
 
-public record ExtractHerbFromPouchPayload(int summaryIndex, boolean extractAll) implements CustomPacketPayload {
-    public static final Type<ExtractHerbFromPouchPayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(AscensionCraft.MOD_ID, "extract_herb_from_pouch"));
+public record ExtractHerbFromPouchPayload(ItemStack summaryStack, HerbPouchExtractionMode mode) implements CustomPacketPayload {
 
-    public static final StreamCodec<FriendlyByteBuf, ExtractHerbFromPouchPayload> STREAM_CODEC =
+    public static final Type<ExtractHerbFromPouchPayload> TYPE =
+            new Type<>(
+                    ResourceLocation.fromNamespaceAndPath(
+                            AscensionCraft.MOD_ID,
+                            "extract_herb_from_pouch"
+                    )
+            );
+
+    private static final StreamCodec<RegistryFriendlyByteBuf, HerbPouchExtractionMode> MODE_STREAM_CODEC =
+            StreamCodec.of(
+                    (buffer, mode) -> buffer.writeVarInt(mode.networkId()),
+                    buffer -> HerbPouchExtractionMode.fromNetworkId(buffer.readVarInt())
+            );
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, ExtractHerbFromPouchPayload> STREAM_CODEC =
             StreamCodec.composite(
-                    ByteBufCodecs.INT,
-                    ExtractHerbFromPouchPayload::summaryIndex,
-                    ByteBufCodecs.BOOL,
-                    ExtractHerbFromPouchPayload::extractAll,
+                    ItemStack.OPTIONAL_STREAM_CODEC,
+                    ExtractHerbFromPouchPayload::summaryStack,
+                    MODE_STREAM_CODEC,
+                    ExtractHerbFromPouchPayload::mode,
                     ExtractHerbFromPouchPayload::new
             );
+
+    public ExtractHerbFromPouchPayload {
+        summaryStack = summaryStack.copy();
+
+        if (!summaryStack.isEmpty()) {
+            summaryStack.setCount(1);
+        }
+    }
 
     @Override
     public Type<? extends CustomPacketPayload> type() {
@@ -37,48 +56,113 @@ public record ExtractHerbFromPouchPayload(int summaryIndex, boolean extractAll) 
 
     public static void handlePayload(ExtractHerbFromPouchPayload payload, IPayloadContext context) {
         context.enqueueWork(() -> {
-            if (!(context.player() instanceof ServerPlayer player)) return;
-            if (!(player.containerMenu instanceof HerbPouchMenu menu)) return;
-
-            ItemStack pouchStack = menu.getPouchStack();
-            HerbPouchComponent component = pouchStack.get(ModDataComponents.HERB_POUCH_DATA.get());
-            if (component == null) return;
-
-            List<ItemStack> summaries = component.getSummaryStacks();
-            int index = payload.summaryIndex();
-
-            if (index < 0 || index >= summaries.size()) return;
-
-            ItemStack clickedSummary = summaries.get(index);
-
-            if (payload.extractAll()) {
-                HerbPouchComponent.ExtractManyResult result = component.extractAllByItem(clickedSummary);
-                if (result.extracted().isEmpty()) return;
-
-                pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), result.component());
-                menu.setClientPouchData(result.component());
-                PacketDistributor.sendToPlayer(player, new SyncHerbPouchPayload(result.component()));
-
-                for (ItemStack extracted : result.extracted()) {
-                    boolean added = player.getInventory().add(extracted);
-                    if (!added) player.drop(extracted, false);
-                }
-
-                menu.broadcastChanges();
+            if (!(context.player() instanceof ServerPlayer player)) {
                 return;
             }
 
-            HerbPouchComponent.ExtractResult result = component.extractOneByItem(clickedSummary);
-            if (result.extracted().isEmpty()) return;
+            if (!(player.containerMenu instanceof HerbPouchMenu menu)) {
+                return;
+            }
 
-            pouchStack.set(ModDataComponents.HERB_POUCH_DATA.get(), result.component());
-            menu.setClientPouchData(result.component());
-            PacketDistributor.sendToPlayer(player, new SyncHerbPouchPayload(result.component()));
+            ItemStack summary = payload.summaryStack();
 
-            boolean added = player.getInventory().add(result.extracted());
-            if (!added) player.drop(result.extracted(), false);
+            if (
+                    summary.isEmpty()
+                            || !summary.is(ModTags.Items.HERBS)
+            ) {
+                return;
+            }
+
+            HerbPouchComponent component =
+                    menu.getPouchStack().get(
+                            ModDataComponents.HERB_POUCH_DATA.get()
+                    );
+
+            if (component == null) {
+                return;
+            }
+
+            Extraction extraction = switch (payload.mode()) {
+                case FIRST_ONE -> {
+                    HerbPouchComponent.ExtractResult result =
+                            component.extractOneByAgeGroup(
+                                    summary,
+                                    false
+                            );
+
+                    yield new Extraction(
+                            result.component(),
+                            result.extracted().isEmpty()
+                                    ? List.of()
+                                    : List.of(result.extracted())
+                    );
+                }
+
+                case LAST_ONE -> {
+                    HerbPouchComponent.ExtractResult result =
+                            component.extractOneByAgeGroup(
+                                    summary,
+                                    true
+                            );
+
+                    yield new Extraction(
+                            result.component(),
+                            result.extracted().isEmpty()
+                                    ? List.of()
+                                    : List.of(result.extracted())
+                    );
+                }
+
+                case ALL_FROM_AGE_GROUP -> {
+                    HerbPouchComponent.ExtractManyResult result =
+                            component.extractAllByAgeGroup(summary);
+
+                    yield new Extraction(
+                            result.component(),
+                            result.extracted()
+                    );
+                }
+
+                case ALL_FROM_HERB -> {
+                    HerbPouchComponent.ExtractManyResult result =
+                            component.extractAllByItem(summary);
+
+                    yield new Extraction(
+                            result.component(),
+                            result.extracted()
+                    );
+                }
+            };
+
+            if (extraction.stacks().isEmpty()) {
+                return;
+            }
+
+            menu.setPouchData(extraction.component());
+
+            giveStacksToPlayer(
+                    player,
+                    extraction.stacks()
+            );
 
             menu.broadcastChanges();
+            menu.syncPouchData(player);
         });
+    }
+
+    private static void giveStacksToPlayer(ServerPlayer player, List<ItemStack> stacks) {
+        for (ItemStack extracted : stacks) {
+            ItemStack remainder =
+                    extracted.copy();
+
+            player.getInventory().add(remainder);
+
+            if (!remainder.isEmpty()) {
+                player.drop(remainder, false);
+            }
+        }
+    }
+
+    private record Extraction(HerbPouchComponent component, List<ItemStack> stacks) {
     }
 }

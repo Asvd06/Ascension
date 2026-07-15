@@ -10,7 +10,6 @@ import net.thejadeproject.ascension.common.items.data_components.ModDataComponen
 import net.thejadeproject.ascension.common.items.data_components.herb_pouch.HerbPouchComponent;
 import net.thejadeproject.ascension.common.items.data_components.herb_pouch.HerbPouchMenuProvider;
 
-
 public class HerbPouchItem extends Item {
 
     public HerbPouchItem(Item.Properties properties) {
@@ -20,13 +19,20 @@ public class HerbPouchItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (hand != InteractionHand.MAIN_HAND) {
-            return InteractionResultHolder.fail(player.getItemInHand(hand));
+            return InteractionResultHolder.fail(
+                    player.getItemInHand(hand)
+            );
         }
 
         ItemStack stack = player.getMainHandItem();
+        HerbPouchComponent current = stack.get(ModDataComponents.HERB_POUCH_DATA.get());
 
-        if (!stack.has(ModDataComponents.HERB_POUCH_DATA.get())) {
-            stack.set(ModDataComponents.HERB_POUCH_DATA.get(), new HerbPouchComponent(27));
+        if (current == null) {
+            stack.set(ModDataComponents.HERB_POUCH_DATA.get(), new HerbPouchComponent(HerbPouchComponent.DEFAULT_CAPACITY));
+        } else if (current.capacity() < HerbPouchComponent.DEFAULT_CAPACITY) {
+            int upgradedCapacity = Math.max(HerbPouchComponent.DEFAULT_CAPACITY, current.getTotalCount());
+            stack.set(ModDataComponents.HERB_POUCH_DATA.get(), new HerbPouchComponent(upgradedCapacity, current.herbs())
+            );
         }
 
         if (!level.isClientSide) {
