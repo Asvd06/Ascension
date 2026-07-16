@@ -65,6 +65,6 @@ public class AstralEssenceTechnique extends GenericTechnique {
 
     @Override
     public double getThreeNinesChanceMultiplier(IEntityData entityData) {
-        return 4.0D;
+        return 1.0D;
     }
 }

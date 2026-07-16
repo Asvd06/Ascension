@@ -31,7 +31,7 @@ public final class TribulationRewardHelper {
                     "tribulation_rewards"
             );
 
-    private static final double THREE_NINES_STAT_BONUS = 0.05D;
+    private static final double THREE_NINES_STAT_BONUS = 0.125D;
 
     private TribulationRewardHelper() {
     }

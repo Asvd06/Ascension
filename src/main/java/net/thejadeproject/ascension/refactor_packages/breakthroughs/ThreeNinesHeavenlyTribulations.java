@@ -262,6 +262,10 @@ public class ThreeNinesHeavenlyTribulations implements IBreakthroughInstance {
             return;
         }
 
+        int targetRealm = pathData.getMajorRealm() + 1;
+
+        TribulationFailureHelper.createThreeNinesEruption(entityData, targetRealm);
+
         pathData.setRegularTribulationForced(true);
         pathData.setBreakthroughInstance(null);
 

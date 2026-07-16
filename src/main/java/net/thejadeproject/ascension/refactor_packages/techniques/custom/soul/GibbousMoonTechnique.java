@@ -124,6 +124,6 @@ public class GibbousMoonTechnique extends GenericTechnique {
 
     @Override
     public double getThreeNinesChanceMultiplier(IEntityData entityData) {
-        return 8.0D;
+        return 4.0D;
     }
 }

@@ -144,10 +144,15 @@ public class NineHeavenlyTribulations implements IBreakthroughInstance {
     public void onEntityDeath(IEntityData entityData, ResourceLocation path) {
         IPathData pathData = entityData.getPathData(path);
 
-        if (pathData != null && pathData.getBreakthroughInstance() == this) {
-
-            pathData.setBreakthroughInstance(null);
+        if (pathData == null && pathData.getBreakthroughInstance() != this) {
+            return;
         }
+
+        int targetRealm = pathData.getMajorRealm() + 1;
+
+        TribulationFailureHelper.createNineHeavenlyEruption(entityData, targetRealm);
+        pathData.setBreakthroughInstance(null);
+
     }
 
     private void sync(IPathData pathData, LivingEntity entity) {
