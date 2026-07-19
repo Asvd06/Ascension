@@ -20,6 +20,7 @@ import net.minecraft.world.scores.Team;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
@@ -62,6 +63,11 @@ public class MobCultivationEvents {
      */
     private static final Map<ResourceLocation, Integer> RANK_COOLDOWNS = new HashMap<>();
 
+
+    private static final float BOSS_CULTIVATED_CHANCE = 0.85F;
+    private static final String BOSS_MINIMUM_REALM = "qi_gathering";
+    private static final int BOSS_MINIMUM_STAGE = 2;
+
     // -------------------------------------------------------------------------
     // Spawn initialization
     // -------------------------------------------------------------------------
@@ -86,6 +92,14 @@ public class MobCultivationEvents {
         MobCultivationData data = living.getData(ModAttachments.MOB_RANK);
         if (data == null || data.isInitialized()) return;
 
+        ServerLevel level = event.getLevel().getLevel();
+        MobCultivationCategory category = MobCultivationResolver.resolveCategory(living);
+
+        if (category == MobCultivationCategory.BOSS) {
+            initializeBossRank(level, living, data);
+            return;
+        }
+
         // Step 1: all mobs get a mortal 1–3 rank by default.
         MobCultivationDefinition defaultDef = MobCultivationRoller.rollMortalRank(living);
         assignRank(living, data, defaultDef);
@@ -102,7 +116,7 @@ public class MobCultivationEvents {
                 event.getX(), event.getY(), event.getZ(), -1, false);
         if (player == null) return;
 
-        if (event.getLevel().getRandom().nextFloat() > ELITE_RANK_CHANCE) return;
+        if (event.getLevel().getRandom().nextFloat() >= ELITE_RANK_CHANCE) return;
 
         // Step 3: roll from the elite pool — always above mortal by construction.
         MobCultivationDefinition eliteDef = MobCultivationRoller.rollEliteRank(living);
@@ -111,6 +125,43 @@ public class MobCultivationEvents {
         startCooldown(event.getLevel().getLevel(), ELITE_RANK_COOLDOWN);
         EliteGearApplier.applyGear((ServerLevel) event.getLevel().getLevel(), living, eliteDef);
         sendEliteSpawnNotification((ServerLevel) event.getLevel().getLevel(), living, eliteDef);
+    }
+
+    private static void initializeBossRank(ServerLevel level, LivingEntity boss, MobCultivationData data) {
+        if (level.getRandom().nextFloat() >= BOSS_CULTIVATED_CHANCE) {
+            MobCultivationDefinition mortalDef = MobCultivationRoller.rollMortalRank(boss);
+            assignRank(boss, data, mortalDef);
+            return;
+        }
+
+        MobCultivationDefinition bossDef = MobCultivationResolver.resolveBossAroundNearbyPlayer(boss);
+
+        if (bossDef == null) {
+            MobCultivationDefinition rolled = MobCultivationRoller.rollEliteRank(boss);
+
+            int rolledPower = MobCultivationResolver.getRankPower(rolled.realmId(), rolled.stage());
+            int minimumPower = MobCultivationResolver.getRankPower(BOSS_MINIMUM_REALM, BOSS_MINIMUM_STAGE);
+            bossDef = MobCultivationResolver.resolveFromPower(Math.max(rolledPower, minimumPower));
+        }
+
+        assignRank(boss, data, bossDef);
+        sendEliteSpawnNotification(level, boss, bossDef);
+    }
+
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void onBossJoinLevel(EntityJoinLevelEvent event) {
+        if (!(event.getLevel() instanceof ServerLevel level)) return;
+        if (!(event.getEntity() instanceof LivingEntity living)) return;
+
+        if (MobCultivationResolver.resolveCategory(living) != MobCultivationCategory.BOSS) {
+            return;
+        }
+
+        if (!MobCultivationRoller.canInitializeRank(living)) return;
+        MobCultivationData data = living.getData(ModAttachments.MOB_RANK);
+        if (data == null || data.isInitialized()) return;
+        initializeBossRank(level, living, data);
     }
 
     // -------------------------------------------------------------------------

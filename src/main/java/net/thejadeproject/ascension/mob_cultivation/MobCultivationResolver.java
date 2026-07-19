@@ -12,10 +12,14 @@ public final class MobCultivationResolver {
 
     /*
     Fix Armor Stands having Cultivation.
-    Mobs with above mortal cultivation hit you back if you hit them (override ai?).
     */
 
     private static final double DEFAULT_PLAYER_SEARCH_RANGE = 32.0;
+
+
+    private static final double BOSS_PLAYER_SEARCH_RANGE = 96.0D;
+    private static final String BOSS_MINIMUM_REALM = "qi_gathering";
+    private static final int BOSS_MINIMUM_STAGE = 2;
 
     private MobCultivationResolver() {
     }
@@ -189,6 +193,31 @@ public final class MobCultivationResolver {
 
         String realmId = MobCultivationList.getRealmIds().get(realmIndex);
         return MobCultivationList.get(realmId, stage);
+    }
+
+    public static MobCultivationDefinition resolveBossAroundNearbyPlayer(LivingEntity entity) {
+        Player player = findNearestRelevantPlayer(entity, BOSS_PLAYER_SEARCH_RANGE);
+
+        if (player == null) return null;
+
+        int playerPower = resolvePlayerCombatPower(player);
+        int offset = rollBossPowerOffset(entity);
+
+        int minimumPower = getRankPower(BOSS_MINIMUM_REALM, BOSS_MINIMUM_STAGE);
+        int maximumPower = getMaxRankPower();
+        int resultPower = Math.max(minimumPower, Math.min(maximumPower, playerPower + offset));
+
+        return resolveFromPower(resultPower);
+    }
+
+    private static int rollBossPowerOffset(LivingEntity entity) {
+        int roll = entity.getRandom().nextInt(100);
+
+        if (roll < 5) return -2;
+        if (roll < 20) return -1;
+        if (roll < 60) return 0;
+        if (roll < 90) return 1;
+        return 2;
     }
 
     private static int getMaxRankPower() {
