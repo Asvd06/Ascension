@@ -32,19 +32,12 @@ import net.thejadeproject.ascension.refactor_packages.skills.castable.IPreCastDa
 
 public class SoulImplementSkill implements ICastableSkill {
 
-    private static final int REQUIRED_SOUL_REALM = 3;
     private static final int COOLDOWN_TICKS = 10;
     private static final int DISSOLVE_CONFIRMATION_TICKS = 100;
 
     @Override
     public CastResult canCast(Entity caster, IPreCastData preCastData) {
         if (!(caster instanceof ServerPlayer player)) {
-            return new CastResult(
-                    CastResult.Type.FAILURE
-            );
-        }
-
-        if (!hasRequiredSoulRealm(player)) {
             return new CastResult(
                     CastResult.Type.FAILURE
             );
@@ -67,22 +60,7 @@ public class SoulImplementSkill implements ICastableSkill {
             return;
         }
 
-        SoulToolData data =
-                player.getData(ModAttachments.SOUL_TOOL);
-
-        if (!hasRequiredSoulRealm(player)) {
-            SoulToolHelper.unsummon(player, data);
-
-            player.displayClientMessage(
-                    Component.translatable(
-                            "ascension.skill.soul_implement.realm_too_low",
-                            REQUIRED_SOUL_REALM
-                    ),
-                    true
-            );
-
-            return;
-        }
+        SoulToolData data = player.getData(ModAttachments.SOUL_TOOL);
 
         syncCurrentSoulRealm(player, data);
 
@@ -102,15 +80,8 @@ public class SoulImplementSkill implements ICastableSkill {
     private void bindAndSummon(ServerPlayer player, SoulToolData data) {
         IPathData soulPath = getSoulPath(player);
 
-        int major =
-                soulPath == null
-                        ? 0
-                        : soulPath.getMajorRealm();
-
-        int minor =
-                soulPath == null
-                        ? 0
-                        : soulPath.getMinorRealm();
+        int major = soulPath == null ? 0: soulPath.getMajorRealm();
+        int minor = soulPath == null ? 0 : soulPath.getMinorRealm();
 
         data.bind(major, minor);
 
@@ -258,11 +229,6 @@ public class SoulImplementSkill implements ICastableSkill {
         int minor = soulPath == null ? 0 : soulPath.getMinorRealm();
 
         SoulToolHelper.syncSoulRealmProgress(data, major, minor);
-    }
-
-    private boolean hasRequiredSoulRealm(ServerPlayer player) {
-        IPathData soulPath = getSoulPath(player);
-        return soulPath != null && soulPath.getMajorRealm() >= REQUIRED_SOUL_REALM;
     }
 
     private IPathData getSoulPath(ServerPlayer player) {
